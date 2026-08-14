@@ -1,0 +1,184 @@
+:host {
+  all: initial;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+.aw-widget-container {
+  position: fixed;
+  z-index: 999999;
+  display: flex;
+  flex-direction: column;
+}
+
+.aw-widget-container.bottom-right {
+  bottom: 24px;
+  right: 24px;
+  align-items: flex-end;
+}
+
+.aw-widget-container.bottom-left {
+  bottom: 24px;
+  left: 24px;
+  align-items: flex-start;
+}
+
+.aw-launcher {
+  width: 60px;
+  height: 60px;
+  border-radius: 30px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s;
+  position: relative;
+}
+
+.aw-launcher:hover {
+  transform: scale(1.05);
+}
+
+.aw-launcher svg {
+  width: 28px;
+  height: 28px;
+  fill: white;
+}
+
+.aw-chat-window {
+  width: 380px;
+  height: 600px;
+  max-height: calc(100vh - 120px);
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  margin-bottom: 16px;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(20px);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.aw-chat-window.aw-open {
+  opacity: 1;
+  pointer-events: all;
+  transform: translateY(0);
+}
+
+.aw-header {
+  padding: 16px 20px;
+  color: white;
+  font-weight: 600;
+  font-size: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.aw-close-btn {
+  background: transparent;
+  border: none;
+  color: white;
+  cursor: pointer;
+  opacity: 0.8;
+}
+
+.aw-close-btn:hover {
+  opacity: 1;
+}
+
+.aw-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  background: #F9FAFB;
+}
+
+.aw-message {
+  max-width: 85%;
+  padding: 12px 16px;
+  border-radius: 12px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.aw-message.aw-user {
+  background: #E5E7EB;
+  color: #111827;
+  align-self: flex-end;
+  border-bottom-right-radius: 4px;
+}
+
+.aw-message.aw-assistant {
+  color: white;
+  align-self: flex-start;
+  border-bottom-left-radius: 4px;
+}
+
+.aw-input-area {
+  padding: 16px;
+  background: white;
+  border-top: 1px solid #E5E7EB;
+  display: flex;
+  gap: 8px;
+}
+
+.aw-input {
+  flex: 1;
+  border: 1px solid #D1D5DB;
+  border-radius: 20px;
+  padding: 10px 16px;
+  font-size: 14px;
+  outline: none;
+  font-family: inherit;
+}
+
+.aw-input:focus {
+  border-color: var(--theme-color);
+}
+
+.aw-send-btn {
+  background: var(--theme-color);
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.aw-send-btn svg {
+  fill: white;
+  width: 20px;
+  height: 20px;
+}
+
+.aw-send-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.aw-citation {
+  display: inline-block;
+  background: rgba(255,255,255,0.2);
+  color: white;
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 10px;
+  margin-left: 4px;
+  cursor: pointer;
+  vertical-align: super;
+}
+
+.aw-citation:hover {
+  background: rgba(255,255,255,0.4);
+}
