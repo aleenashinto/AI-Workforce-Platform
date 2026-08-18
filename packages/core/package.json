@@ -1,7 +1,8 @@
 {
-  "name": "core",
+  "name": "@ai-workforce/core",
   "version": "1.0.0",
-  "description": "",
+  "private": true,
+  "description": "Core business logic and shared functionality for the AI Workforce Platform",
   "main": "index.ts",
   "scripts": {
     "test": "vitest run"

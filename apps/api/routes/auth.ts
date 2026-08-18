@@ -116,7 +116,7 @@ export default async function authRoutes(fastify: FastifyInstance) {
   };
 
   fastify.get('/auth/google/callback', async (req, reply) => {
-    const { token } = await fastify.googleOAuth2.getAccessTokenFromAuthorizationCodeFlow(req);
+    const { token } = await (fastify as any).googleOAuth2.getAccessTokenFromAuthorizationCodeFlow(req);
     return handleOAuthCallback(req, reply, token, 'google', 'https://www.googleapis.com/oauth2/v2/userinfo', (data) => ({
       id: data.id,
       email: data.email,
@@ -125,7 +125,7 @@ export default async function authRoutes(fastify: FastifyInstance) {
   });
 
   fastify.get('/auth/microsoft/callback', async (req, reply) => {
-    const { token } = await fastify.microsoftOAuth2.getAccessTokenFromAuthorizationCodeFlow(req);
+    const { token } = await (fastify as any).microsoftOAuth2.getAccessTokenFromAuthorizationCodeFlow(req);
     return handleOAuthCallback(req, reply, token, 'microsoft', 'https://graph.microsoft.com/v1.0/me', (data) => ({
       id: data.id,
       email: data.userPrincipalName, // Microsoft usually puts email here
@@ -217,7 +217,7 @@ export default async function authRoutes(fastify: FastifyInstance) {
           text: `Click the following link to reset your password: ${resetLink}`
         });
       } catch (e) {
-        fastify.log.error("Failed to send email", e);
+        fastify.log.error(e as Error, "Failed to send email");
       }
     }
     
@@ -356,7 +356,7 @@ export default async function authRoutes(fastify: FastifyInstance) {
         text: `Welcome! Please verify your email by clicking the following link: ${verifyLink}`
       });
     } catch (e) {
-      fastify.log.error("Failed to send verification email", e);
+      fastify.log.error(e as Error, "Failed to send verification email");
     }
 
     // Auto-provision an organization and membership
@@ -498,7 +498,7 @@ export default async function authRoutes(fastify: FastifyInstance) {
           text: `Please verify your email by clicking the following link: ${verifyLink}`
         });
       } catch (e) {
-        fastify.log.error("Failed to send verification email", e);
+        fastify.log.error(e as Error, "Failed to send verification email");
       }
     }
     return { success: true };

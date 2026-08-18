@@ -1,6 +1,6 @@
 import { FastifyInstance, FastifyPluginAsync } from 'fastify';
-import { getDb, withTenant } from 'db/client';
-import { integrations, audit_logs } from 'db/schema';
+import { getDb, withTenant } from '@ai-workforce/db';
+import { integrations, audit_logs } from '@ai-workforce/db';
 
 const integrationsRoutes: FastifyPluginAsync = async (fastify: FastifyInstance) => {
   const db = getDb(process.env.DATABASE_URL || 'postgres://postgres:postgres@localhost:5432/ai_workforce');
@@ -22,7 +22,7 @@ const integrationsRoutes: FastifyPluginAsync = async (fastify: FastifyInstance) 
       expires_in: 3600
     };
 
-    await withTenant(db, org_id, async (tx) => {
+    await withTenant(db, org_id, async (tx: any) => {
       await tx.insert(integrations).values({
         org_id,
         category: 'knowledge', // or 'crm' etc based on provider

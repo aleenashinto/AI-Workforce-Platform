@@ -14,9 +14,15 @@ importers:
 
   apps/api:
     dependencies:
+      '@ai-workforce/core':
+        specifier: workspace:*
+        version: link:../../packages/core
       '@ai-workforce/db':
         specifier: workspace:*
         version: link:../../packages/db
+      '@ai-workforce/llm':
+        specifier: workspace:*
+        version: link:../../packages/llm
       '@aws-sdk/client-s3':
         specifier: ^3.1107.0
         version: 3.1107.0
@@ -41,18 +47,36 @@ importers:
       bcryptjs:
         specifier: ^3.0.3
         version: 3.0.3
-      core:
-        specifier: workspace:^
-        version: link:../../packages/core
+      bullmq:
+        specifier: ^6.0.11
+        version: 6.0.11(ioredis@6.0.0)
       dotenv:
         specifier: ^17.4.2
         version: 17.4.2
+      drizzle-orm:
+        specifier: ^0.45.2
+        version: 0.45.2(postgres@3.4.9)
       fastify:
         specifier: ^5.11.3
         version: 5.11.3
+      ioredis:
+        specifier: ^6.0.0
+        version: 6.0.0
       nodemailer:
         specifier: ^9.0.5
         version: 9.0.5
+      openai:
+        specifier: ^7.4.0
+        version: 7.4.0(@aws-sdk/credential-provider-node@3.972.78)(@smithy/signature-v4@5.6.12)(ws@8.21.3)(zod@4.4.3)
+      postgres:
+        specifier: ^3.4.9
+        version: 3.4.9
+      uuid:
+        specifier: ^14.0.1
+        version: 14.0.1
+      zod:
+        specifier: ^4.4.3
+        version: 4.4.3
     devDependencies:
       '@types/bcryptjs':
         specifier: ^3.0.0
@@ -232,6 +256,9 @@ importers:
       '@anthropic-ai/sdk':
         specifier: ^0.116.0
         version: 0.116.0(zod@4.4.3)
+      ioredis:
+        specifier: ^6.0.0
+        version: 6.0.0
       openai:
         specifier: ^7.4.0
         version: 7.4.0(@aws-sdk/credential-provider-node@3.972.78)(@smithy/signature-v4@5.6.12)(ws@8.21.3)(zod@4.4.3)

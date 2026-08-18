@@ -2,7 +2,7 @@ import { FastifyInstance } from 'fastify';
 import { db } from '@ai-workforce/db';
 import { leads } from '@ai-workforce/db/schema';
 import { eq, inArray } from 'drizzle-orm';
-import { calculateLeadScore } from '@ai-workforce/core/scoring/lead-scoring';
+import { calculateLeadScore } from '@ai-workforce/core';
 
 export default async function leadsRoutes(fastify: FastifyInstance) {
   fastify.get('/', async (request, reply) => {

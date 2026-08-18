@@ -1,6 +1,6 @@
 import { FastifyInstance, FastifyPluginAsync } from 'fastify';
-import { getDb, withTenant } from 'db/client';
-import { api_keys, audit_logs, organizations } from 'db/schema';
+import { getDb, withTenant } from '@ai-workforce/db';
+import { api_keys, audit_logs, organizations } from '@ai-workforce/db';
 import { eq, and, sql } from 'drizzle-orm';
 import crypto from 'crypto';
 import { requireAction } from '../middleware/authz';
@@ -19,7 +19,7 @@ const securityRoutes: FastifyPluginAsync = async (fastify: FastifyInstance) => {
 
   fastify.get('/keys', { preHandler: requireAction('MANAGE_API_KEYS') }, async (request, reply) => {
     const { org_id } = request.user as any;
-    const keys = await withTenant(db, org_id, async (tx) => {
+    const keys = await withTenant(db, org_id, async (tx: any) => {
       return tx.select({
         id: api_keys.id,
         name: api_keys.name,
@@ -38,7 +38,7 @@ const securityRoutes: FastifyPluginAsync = async (fastify: FastifyInstance) => {
     const rawKey = `ak_${crypto.randomBytes(24).toString('hex')}`;
     const hashedKey = crypto.createHash('sha256').update(rawKey).digest('hex');
 
-    await withTenant(db, org_id, async (tx) => {
+    await withTenant(db, org_id, async (tx: any) => {
       await tx.insert(api_keys).values({
         org_id,
         name,
@@ -62,7 +62,7 @@ const securityRoutes: FastifyPluginAsync = async (fastify: FastifyInstance) => {
     const { org_id, user_id } = request.user as any;
     const { id } = request.params as any;
 
-    await withTenant(db, org_id, async (tx) => {
+    await withTenant(db, org_id, async (tx: any) => {
       await tx.update(api_keys)
         .set({ revoked_at: new Date() })
         .where(and(eq(api_keys.id, id), eq(api_keys.org_id, org_id)));
@@ -82,7 +82,7 @@ const securityRoutes: FastifyPluginAsync = async (fastify: FastifyInstance) => {
   fastify.post('/export', { preHandler: requireAction('MANAGE_SETTINGS') }, async (request, reply) => {
     const { org_id, user_id } = request.user as any;
 
-    await withTenant(db, org_id, async (tx) => {
+    await withTenant(db, org_id, async (tx: any) => {
       await tx.insert(audit_logs).values({
         org_id,
         user_id,
@@ -98,7 +98,7 @@ const securityRoutes: FastifyPluginAsync = async (fastify: FastifyInstance) => {
     const { org_id, user_id } = request.user as any;
     const { retention_days } = request.body as any;
 
-    await withTenant(db, org_id, async (tx) => {
+    await withTenant(db, org_id, async (tx: any) => {
       await tx.update(organizations)
         .set({ retention_days: retention_days.toString() })
         .where(eq(organizations.id, org_id));
@@ -119,7 +119,7 @@ const securityRoutes: FastifyPluginAsync = async (fastify: FastifyInstance) => {
     const { org_id, user_id } = request.user as any;
     const { active } = request.body as any;
 
-    await withTenant(db, org_id, async (tx) => {
+    await withTenant(db, org_id, async (tx: any) => {
       await tx.update(organizations)
         .set({ approval_gate_active: !!active })
         .where(eq(organizations.id, org_id));

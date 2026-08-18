@@ -113,7 +113,6 @@ export const tools = pgTable('tools', {
 
 // Module A: Knowledge Management
 
-import { customType } from 'drizzle-orm/pg-core';
 
 const vector = customType<{ data: number[]; driverData: string }>({
   dataType() {

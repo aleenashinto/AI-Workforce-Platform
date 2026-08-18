@@ -1,4 +1,4 @@
-import "dotenv/config";
+
 
 import { z } from "zod";
 import { zodToJsonSchema } from "zod-to-json-schema";
@@ -109,7 +109,7 @@ export const generateStructured = async <
   userPrompt: string,
   schema: T
 ): Promise<z.infer<T>> => {
-  const openai = getOpenAIClient();
+  const openai = getOpenAIClient() as any;
 
   const response =
     await openai.beta.chat.completions.parse({
@@ -129,7 +129,7 @@ export const generateStructured = async <
         json_schema: {
           name: "output_schema",
           strict: true,
-          schema: zodToJsonSchema(schema),
+          schema: zodToJsonSchema(schema as any),
         },
       },
     });

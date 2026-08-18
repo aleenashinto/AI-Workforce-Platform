@@ -1,7 +1,7 @@
 import { FastifyInstance } from 'fastify';
 import postgres from 'postgres';
 import { OpenAI } from 'openai';
-import { streamText, checkInputGuardrails } from '@ai-workforce/llm';
+import { streamText, checkInputGuardrails, checkOutputGuardrails } from '@ai-workforce/llm';
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY || 'dummy'
@@ -100,6 +100,8 @@ export async function chatRoutes(fastify: FastifyInstance) {
     reply.raw.setHeader('Cache-Control', 'no-cache');
     reply.raw.setHeader('Connection', 'keep-alive');
 
+    let fullAnswer = "";
+    let answer: string | undefined;
     if (process.env.ANTHROPIC_API_KEY && process.env.ANTHROPIC_API_KEY !== 'dummy') {
       try {
         const stream = await streamText('fast', systemPrompt, query);
@@ -114,7 +116,7 @@ export async function chatRoutes(fastify: FastifyInstance) {
       }
     } else {
       // Simulate streaming
-      const answer = isUnanswerable 
+      answer = isUnanswerable 
         ? "I cannot answer this based on the context." 
         : `Based on the documentation [1], here is the answer to your question regarding "${query}".`;
 
@@ -129,7 +131,7 @@ export async function chatRoutes(fastify: FastifyInstance) {
     const metadata = { citations: searchResults.map((r: any) => ({ chunk_id: r.id })) };
 
     // Save assistant message to database (simplified, grabbing full generated text from mock or stream)
-    let fullAnswer = answer;
+    if (typeof answer !== "undefined") fullAnswer = answer;
 
     // Output Guardrails
     const outputCheck = await checkOutputGuardrails(fullAnswer, searchResults.map((r: any) => r.content));

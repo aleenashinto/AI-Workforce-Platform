@@ -3,7 +3,7 @@ import postgres from 'postgres';
 import { db } from '@ai-workforce/db';
 import { memberships, membership_roles } from '@ai-workforce/db/schema';
 import { eq, and } from 'drizzle-orm';
-import { authorize, Action } from 'core';
+import { authorize, Action } from '@ai-workforce/core';
 
 /**
  * Loads the membership roles for the current user from the database,

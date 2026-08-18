@@ -125,7 +125,7 @@ export default async function salesRoutes(fastify: FastifyInstance) {
             company: comp.name,
             linkedin_url: contact.linkedin_url,
             status: 'new',
-            score: Math.floor(Math.random() * 40) + 60, // 60-100
+            score: String(Math.floor(Math.random() * 40) + 60), // 60-100
             score_breakdown: { fit: 30, intent: 40, activity: 10 },
             signals: [
               { id: '1', text: 'Recent funding round ($10M)', url: 'https://news.ycombinator.com', date: new Date().toISOString(), confidence: 0.95 },
