@@ -21,7 +21,7 @@ export default function MailboxesPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('http://localhost:3001/mailboxes')
+    fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001"}/mailboxes`)
       .then(res => res.json())
       .then(data => {
         if (data.success) setMailboxes(data.data);
@@ -30,7 +30,7 @@ export default function MailboxesPage() {
   }, []);
 
   const togglePause = async (id: string, currentlyPaused: boolean) => {
-    const res = await fetch(`http://localhost:3001/mailboxes/${id}/pause`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001"}/mailboxes/${id}/pause`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json'

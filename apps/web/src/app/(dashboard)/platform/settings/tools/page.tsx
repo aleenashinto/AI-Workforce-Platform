@@ -18,7 +18,7 @@ export default function ToolsSettingsPage() {
 
   useEffect(() => {
     // Basic API fetch without auth headers as requested
-    fetch("http://localhost:3001/tools")
+    fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001"}/tools`)
       .then(res => res.json())
       .then(data => {
         if (data.success) {

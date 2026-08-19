@@ -42,7 +42,7 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("http://localhost:3001/auth/me", { credentials: "include" })
+    fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001"}/auth/me`, { credentials: "include" })
       .then(res => {
         if (!res.ok) throw new Error("Not authenticated");
         return res.json();
@@ -88,7 +88,7 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
 
   const logout = async () => {
     try {
-      await fetch("http://localhost:3001/auth/logout", { method: "POST", credentials: "include" });
+      await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001"}/auth/logout`, { method: "POST", credentials: "include" });
     } catch (e) {
       // ignore
     }

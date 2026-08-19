@@ -57,7 +57,7 @@ function VerifyContent() {
     if (hasFetched) return;
     
     setHasFetched(true);
-    fetch("http://localhost:3001/auth/verify-email", {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001"}/auth/verify-email`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ token })
@@ -84,7 +84,7 @@ function VerifyContent() {
     
     setIsResending(true);
     try {
-      await fetch("http://localhost:3001/auth/resend-verification", {
+      await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001"}/auth/resend-verification`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: targetEmail })

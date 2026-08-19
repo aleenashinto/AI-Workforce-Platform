@@ -14,7 +14,7 @@ export default function OrganizationPage() {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    fetch('http://localhost:3001/onboarding/state', {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001"}/onboarding/state`, {
       headers: { 'Content-Type': 'application/json' }
     })
     .then(r => r.json())
@@ -49,7 +49,7 @@ export default function OrganizationPage() {
 
     setLoading(true);
     try {
-      const res = await fetch('http://localhost:3001/onboarding/organization', {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001"}/onboarding/organization`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form)

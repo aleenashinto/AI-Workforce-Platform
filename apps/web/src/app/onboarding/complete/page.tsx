@@ -13,7 +13,7 @@ export default function CompletePage() {
   const [modules, setModules] = useState({ support: true, sales: false });
 
   useEffect(() => {
-    fetch('http://localhost:3001/onboarding/state', {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001"}/onboarding/state`, {
       headers: { 'Content-Type': 'application/json' }
     })
     .then(r => r.json())
@@ -32,7 +32,7 @@ export default function CompletePage() {
   const handleFinish = async () => {
     setLoading(true);
     try {
-      const res = await fetch('http://localhost:3001/onboarding/complete', {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001"}/onboarding/complete`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' }
       });

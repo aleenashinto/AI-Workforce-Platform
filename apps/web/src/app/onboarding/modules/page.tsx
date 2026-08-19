@@ -13,7 +13,7 @@ export default function ModulesPage() {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    fetch('http://localhost:3001/onboarding/state', {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001"}/onboarding/state`, {
       headers: { 'Content-Type': 'application/json' }
     })
     .then(r => r.json())
@@ -33,7 +33,7 @@ export default function ModulesPage() {
     setError("");
     setLoading(true);
     try {
-      const res = await fetch('http://localhost:3001/onboarding/modules', {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001"}/onboarding/modules`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(enabled)

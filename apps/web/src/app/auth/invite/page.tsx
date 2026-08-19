@@ -63,7 +63,7 @@ function InviteAcceptanceInner() {
       return;
     }
 
-    fetch("http://localhost:3001/auth/invite/validate", {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001"}/auth/invite/validate`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ token })
@@ -97,7 +97,7 @@ function InviteAcceptanceInner() {
     // Authenticated user -> try to accept directly
     setIsAccepting(true);
     try {
-      const res = await fetch("http://localhost:3001/auth/invite/accept", {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001"}/auth/invite/accept`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ token }),
@@ -211,7 +211,7 @@ function InviteAcceptanceInner() {
                     You are currently logged in as <strong>{user.email}</strong>, which does not match the invitation email.
                   </p>
                   <button onClick={() => {
-                    fetch("http://localhost:3001/auth/logout", { method: "POST", credentials: "include" })
+                    fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001"}/auth/logout`, { method: "POST", credentials: "include" })
                       .then(() => window.location.reload());
                   }} style={{
                     width:"100%", fontFamily:T.mono, fontSize:"0.85rem", letterSpacing:"0.1em", textTransform:"uppercase",
