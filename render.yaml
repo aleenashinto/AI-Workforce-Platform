@@ -1,30 +1,32 @@
-databases:
-  - name: ai-workforce-db
-    databaseName: ai_workforce
-    user: ai_workforce_user
-    plan: free
-
-  - name: ai-workforce-redis
-    plan: free
-    ipAllowList: [] # only allow internal connections
-
 services:
+  # Backend API Service
   - type: web
-    name: ai-workforce-api-and-worker
+    name: ai-workforce-api
     env: node
-    plan: free
-    buildCommand: corepack enable pnpm && pnpm install && pnpm --filter api build && pnpm --filter worker build
-    startCommand: pnpm --filter api start & pnpm --filter worker start
+    rootDir: apps/api
+    buildCommand: npm install -g pnpm && pnpm install --filter api... && pnpm --filter api run build
+    startCommand: pnpm --filter api run start
     envVars:
       - key: NODE_VERSION
         value: 20
       - key: DATABASE_URL
-        fromDatabase:
-          name: ai-workforce-db
-          property: connectionString
+        sync: false
       - key: REDIS_URL
-        fromDatabase:
-          name: ai-workforce-redis
-          property: connectionString
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
       - key: FRONTEND_URL
-        value: https://ai-workforce-platform-web.vercel.app # Replace if your frontend URL changes
+        sync: false
+
+  # Frontend Web Service
+  - type: web
+    name: ai-workforce-web
+    env: node
+    rootDir: apps/web
+    buildCommand: npm install -g pnpm && pnpm install --filter web... && pnpm --filter web run build
+    startCommand: pnpm --filter web run start
+    envVars:
+      - key: NODE_VERSION
+        value: 20
+      - key: NEXT_PUBLIC_API_URL
+        sync: false
