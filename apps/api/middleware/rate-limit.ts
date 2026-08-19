@@ -8,6 +8,7 @@ const redis = new IORedis(process.env.REDIS_URL || 'redis://127.0.0.1:6379', {
     return 1000;
   }
 });
+const RATE_LIMIT_WINDOW_SECS = 60;
 const MAX_REQUESTS_PER_WINDOW = 100;
 
 export async function rateLimitMiddleware(request: FastifyRequest, reply: FastifyReply) {
