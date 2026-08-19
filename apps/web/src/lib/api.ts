@@ -1,4 +1,7 @@
-const API_URL = (process.env.NEXT_PUBLIC_API_URL || "").replace(/\/+$/, "");
+let API_URL = (process.env.NEXT_PUBLIC_API_URL || "/api").replace(/\/+$/, "");
+if (API_URL.includes("ai-workforce-api.vercel.app")) {
+  API_URL = "/api";
+}
 if (!API_URL) {
   throw new Error("NEXT_PUBLIC_API_URL is not configured in environment variables");
 }
