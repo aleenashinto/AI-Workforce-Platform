@@ -10,12 +10,14 @@ databases:
 
 services:
   - type: web
-    name: ai-workforce-api
+    name: ai-workforce-api-and-worker
     env: node
     plan: free
-    buildCommand: pnpm install && pnpm build
-    startCommand: pnpm --filter api start
+    buildCommand: corepack enable pnpm && pnpm install && pnpm build
+    startCommand: pnpm --filter api start & pnpm --filter worker start
     envVars:
+      - key: NODE_VERSION
+        value: 20
       - key: DATABASE_URL
         fromDatabase:
           name: ai-workforce-db
@@ -26,19 +28,3 @@ services:
           property: connectionString
       - key: FRONTEND_URL
         value: https://ai-workforce-platform-web.vercel.app # Replace if your frontend URL changes
-
-  - type: worker
-    name: ai-workforce-worker
-    env: node
-    plan: free
-    buildCommand: pnpm install && pnpm build
-    startCommand: pnpm --filter worker start
-    envVars:
-      - key: DATABASE_URL
-        fromDatabase:
-          name: ai-workforce-db
-          property: connectionString
-      - key: REDIS_URL
-        fromDatabase:
-          name: ai-workforce-redis
-          property: connectionString
