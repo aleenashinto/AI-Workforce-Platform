@@ -245,7 +245,7 @@ const start = async () => {
 
 // Only start the server if run directly (e.g., node server.js)
 // If imported as a module (e.g., by Vercel serverless function), just export the app
-if (require.main === module) {
+if (require.main === module && !process.env.VERCEL) {
   start();
 }
 
