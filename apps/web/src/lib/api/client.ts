@@ -1,9 +1,6 @@
-let BASE_URL = process.env.NEXT_PUBLIC_API_URL;
+const BASE_URL = (process.env.NEXT_PUBLIC_API_URL || "").replace(/\/+$/, "");
 if (!BASE_URL) {
   throw new Error("NEXT_PUBLIC_API_URL is not configured in environment variables");
-}
-if (BASE_URL.endsWith('/')) {
-  BASE_URL = BASE_URL.slice(0, -1);
 }
 
 async function request(url: string, options: RequestInit = {}) {

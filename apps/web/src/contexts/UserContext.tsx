@@ -42,7 +42,12 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/me`, { credentials: "include" })
+    const getApiUrl = () => {
+      const url = process.env.NEXT_PUBLIC_API_URL || "";
+      return url.replace(/\/+$/, "");
+    };
+
+    fetch(`${getApiUrl()}/auth/me`, { credentials: "include" })
       .then(res => {
         if (!res.ok) throw new Error("Not authenticated");
         return res.json();
@@ -88,7 +93,11 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
 
   const logout = async () => {
     try {
-      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/logout`, { method: "POST", credentials: "include" });
+      const getApiUrl = () => {
+        const url = process.env.NEXT_PUBLIC_API_URL || "";
+        return url.replace(/\/+$/, "");
+      };
+      await fetch(`${getApiUrl()}/auth/logout`, { method: "POST", credentials: "include" });
     } catch (e) {
       // ignore
     }

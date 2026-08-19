@@ -1,9 +1,6 @@
-let API_URL = process.env.NEXT_PUBLIC_API_URL;
+const API_URL = (process.env.NEXT_PUBLIC_API_URL || "").replace(/\/+$/, "");
 if (!API_URL) {
   throw new Error("NEXT_PUBLIC_API_URL is not configured in environment variables");
-}
-if (API_URL.endsWith('/')) {
-  API_URL = API_URL.slice(0, -1);
 }
 export const API_BASE = `${API_URL}/v1`;
 
