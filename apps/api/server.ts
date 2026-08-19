@@ -39,9 +39,13 @@ fastify.register(fastifyJwt, {
 });
 
 fastify.register(fastifyWebsocket);
-const allowedOrigins = process.env.FRONTEND_URL 
-  ? [process.env.FRONTEND_URL, 'http://localhost:3000'] 
-  : ['http://localhost:3000'];
+const allowedOrigins = (origin: string | undefined, cb: (err: Error | null, allow: boolean) => void) => {
+  if (!origin) return cb(null, true);
+  if (origin === 'http://localhost:3000') return cb(null, true);
+  if (process.env.FRONTEND_URL && origin === process.env.FRONTEND_URL) return cb(null, true);
+  if (origin.endsWith('.vercel.app')) return cb(null, true);
+  cb(new Error("Not allowed by CORS"), false);
+};
 
 fastify.register(cors, {
   origin: allowedOrigins,
@@ -229,4 +233,10 @@ const start = async () => {
   }
 };
 
-start();
+// Only start the server if run directly (e.g., node server.js)
+// If imported as a module (e.g., by Vercel serverless function), just export the app
+if (require.main === module) {
+  start();
+}
+
+export default fastify;
