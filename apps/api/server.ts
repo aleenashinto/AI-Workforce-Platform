@@ -243,9 +243,8 @@ const start = async () => {
   }
 };
 
-// Only start the server if run directly
-// If imported as a module (e.g., by Vercel serverless function), just export the app
-if (!process.env.VERCEL && typeof process.env.VITEST === 'undefined') {
+// Only start the server if explicitly requested via START_SERVER=true
+if (process.env.START_SERVER === 'true') {
   start();
 }
 

@@ -1,8 +1,11 @@
 {
+  "builds": [
+    { "src": "dist/serverless.js", "use": "@vercel/node" }
+  ],
   "rewrites": [
     {
       "source": "/(.*)",
-      "destination": "/api/serverless"
+      "destination": "/dist/serverless.js"
     }
   ]
 }

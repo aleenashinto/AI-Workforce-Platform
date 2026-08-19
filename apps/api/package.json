@@ -4,9 +4,9 @@
   "description": "",
   "main": "dist/server.js",
   "scripts": {
-    "dev": "tsx watch server.ts",
+    "dev": "cross-env START_SERVER=true tsx watch server.ts",
     "build": "tsup",
-    "start": "node dist/server.js"
+    "start": "cross-env START_SERVER=true node dist/server.js"
   },
   "keywords": [],
   "author": "",
