@@ -1,0 +1,44 @@
+databases:
+  - name: ai-workforce-db
+    databaseName: ai_workforce
+    user: ai_workforce_user
+    plan: free
+
+  - name: ai-workforce-redis
+    plan: free
+    ipAllowList: [] # only allow internal connections
+
+services:
+  - type: web
+    name: ai-workforce-api
+    env: node
+    plan: free
+    buildCommand: pnpm install && pnpm build
+    startCommand: pnpm --filter api start
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: ai-workforce-db
+          property: connectionString
+      - key: REDIS_URL
+        fromDatabase:
+          name: ai-workforce-redis
+          property: connectionString
+      - key: FRONTEND_URL
+        value: https://ai-workforce-platform-web.vercel.app # Replace if your frontend URL changes
+
+  - type: worker
+    name: ai-workforce-worker
+    env: node
+    plan: free
+    buildCommand: pnpm install && pnpm build
+    startCommand: pnpm --filter worker start
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: ai-workforce-db
+          property: connectionString
+      - key: REDIS_URL
+        fromDatabase:
+          name: ai-workforce-redis
+          property: connectionString
