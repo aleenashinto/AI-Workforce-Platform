@@ -13,7 +13,7 @@ services:
     name: ai-workforce-api-and-worker
     env: node
     plan: free
-    buildCommand: corepack enable pnpm && pnpm install && pnpm build
+    buildCommand: corepack enable pnpm && pnpm install && pnpm --filter api build && pnpm --filter worker build
     startCommand: pnpm --filter api start & pnpm --filter worker start
     envVars:
       - key: NODE_VERSION
