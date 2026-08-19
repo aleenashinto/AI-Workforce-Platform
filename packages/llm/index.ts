@@ -183,4 +183,4 @@ export const streamText = async (
   return stream;
 };
 
-export * from './guardrails.js';
+export * from './guardrails';
