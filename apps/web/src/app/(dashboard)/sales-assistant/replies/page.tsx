@@ -47,7 +47,7 @@ export default function RepliesPage() {
     setReplies(replies.map(r => r.id === id ? { ...r, status: 'processed' } : r));
     
     // In a real app, we'd hit the API here
-    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/replies/${id}/status`, {
+    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/replies/${id}/status`, { credentials: "include",
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json'

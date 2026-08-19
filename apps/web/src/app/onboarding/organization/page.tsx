@@ -14,7 +14,7 @@ export default function OrganizationPage() {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/onboarding/state`, {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/onboarding/state`, { credentials: "include",
       headers: { 'Content-Type': 'application/json' }
     })
     .then(r => r.json())
@@ -49,7 +49,7 @@ export default function OrganizationPage() {
 
     setLoading(true);
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/onboarding/organization`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/onboarding/organization`, { credentials: "include",
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form)

@@ -44,7 +44,7 @@ export default function TeamPage() {
       
       setLoading(true);
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/onboarding/team`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/onboarding/team`, { credentials: "include",
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ invites: validInvites })

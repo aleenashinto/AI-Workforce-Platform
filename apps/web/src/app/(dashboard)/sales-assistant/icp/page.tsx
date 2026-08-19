@@ -30,7 +30,7 @@ export default function ICPBuilder() {
     setGenerating(true);
     setResult(null);
     try {
-      const res = await fetch('/api/v1/icps/generate', {
+      const res = await fetch('/api/v1/icps/generate', { credentials: "include",
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -49,7 +49,7 @@ export default function ICPBuilder() {
   const saveICP = async () => {
     if (!result) return;
     try {
-      const res = await fetch('/api/v1/icps', {
+      const res = await fetch('/api/v1/icps', { credentials: "include",
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

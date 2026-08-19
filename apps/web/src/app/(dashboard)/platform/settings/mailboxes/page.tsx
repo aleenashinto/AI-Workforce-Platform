@@ -30,7 +30,7 @@ export default function MailboxesPage() {
   }, []);
 
   const togglePause = async (id: string, currentlyPaused: boolean) => {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/mailboxes/${id}/pause`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/mailboxes/${id}/pause`, { credentials: "include",
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json'

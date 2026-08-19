@@ -7,7 +7,7 @@ if (!BASE_URL) {
 }
 
 async function request(url: string, options: RequestInit = {}) {
-  const res = await fetch(`${BASE_URL}${url}`, {
+  const res = await fetch(`${BASE_URL}${url}`, { credentials: "include",
     ...options,
     headers: {
       'Content-Type': 'application/json',

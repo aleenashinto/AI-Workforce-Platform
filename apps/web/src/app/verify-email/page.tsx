@@ -57,7 +57,7 @@ function VerifyContent() {
     if (hasFetched) return;
     
     setHasFetched(true);
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/verify-email`, {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/verify-email`, { credentials: "include",
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ token })
@@ -84,7 +84,7 @@ function VerifyContent() {
     
     setIsResending(true);
     try {
-      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/resend-verification`, {
+      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/resend-verification`, { credentials: "include",
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: targetEmail })

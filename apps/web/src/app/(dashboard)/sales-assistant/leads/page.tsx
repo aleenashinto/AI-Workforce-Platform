@@ -28,7 +28,7 @@ export default function LeadsQueue() {
 
   const handleBulkAction = async (action: 'approve' | 'reject' | 'suppress') => {
     try {
-      await fetch('/api/v1/leads/bulk-action', {
+      await fetch('/api/v1/leads/bulk-action', { credentials: "include",
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ action, leadIds: Array.from(selectedLeads) })

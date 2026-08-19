@@ -13,7 +13,7 @@ export default function CompletePage() {
   const [modules, setModules] = useState({ support: true, sales: false });
 
   useEffect(() => {
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/onboarding/state`, {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/onboarding/state`, { credentials: "include",
       headers: { 'Content-Type': 'application/json' }
     })
     .then(r => r.json())
@@ -32,9 +32,8 @@ export default function CompletePage() {
   const handleFinish = async () => {
     setLoading(true);
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/onboarding/complete`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' }
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/onboarding/complete`, { credentials: "include",
+        method: 'POST'
       });
       const data = await res.json();
       

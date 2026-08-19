@@ -13,7 +13,7 @@ export default function ModulesPage() {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/onboarding/state`, {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/onboarding/state`, { credentials: "include",
       headers: { 'Content-Type': 'application/json' }
     })
     .then(r => r.json())
@@ -33,7 +33,7 @@ export default function ModulesPage() {
     setError("");
     setLoading(true);
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/onboarding/modules`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/onboarding/modules`, { credentials: "include",
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(enabled)
