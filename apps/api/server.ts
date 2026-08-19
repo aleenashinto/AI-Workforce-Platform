@@ -39,10 +39,18 @@ fastify.register(fastifyJwt, {
 });
 
 fastify.register(fastifyWebsocket);
+const allowedOriginsList = [
+  'http://localhost:5173',
+  'http://localhost:3000',
+  'https://ai-workforce-job-web-git-main-inspite1.vercel.app',
+  'https://ai-workforce-job-cslmzobfm-inspite1.vercel.app'
+];
+
 const allowedOrigins = (origin: string | undefined, cb: (err: Error | null, allow: boolean) => void) => {
   if (!origin) return cb(null, true);
-  if (origin === 'http://localhost:3000') return cb(null, true);
+  if (allowedOriginsList.includes(origin)) return cb(null, true);
   if (process.env.FRONTEND_URL && origin === process.env.FRONTEND_URL) return cb(null, true);
+  // Optional: keep allowing all vercel previews if needed, but explicit list is safer for production credentials
   if (origin.endsWith('.vercel.app')) return cb(null, true);
   cb(new Error("Not allowed by CORS"), false);
 };
@@ -50,6 +58,8 @@ const allowedOrigins = (origin: string | undefined, cb: (err: Error | null, allo
 fastify.register(cors, {
   origin: allowedOrigins,
   credentials: true,
+  allowedHeaders: ['Content-Type', 'Authorization', 'Accept', 'Origin', 'Cookie'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
 });
 
 import salesRoutes from './routes/sales';

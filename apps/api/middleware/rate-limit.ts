@@ -1,9 +1,13 @@
 import { FastifyRequest, FastifyReply } from 'fastify';
 import IORedis from 'ioredis';
-
-const redis = new IORedis(process.env.REDIS_URL || 'redis://127.0.0.1:6379');
-
-const RATE_LIMIT_WINDOW_SECS = 60;
+const redis = new IORedis(process.env.REDIS_URL || 'redis://127.0.0.1:6379', {
+  maxRetriesPerRequest: 1,
+  connectTimeout: 2000, // 2 seconds
+  retryStrategy(times) {
+    if (times > 2) return null; // stop retrying after 2 attempts
+    return 1000;
+  }
+});
 const MAX_REQUESTS_PER_WINDOW = 100;
 
 export async function rateLimitMiddleware(request: FastifyRequest, reply: FastifyReply) {
@@ -11,14 +15,19 @@ export async function rateLimitMiddleware(request: FastifyRequest, reply: Fastif
   const user = request.user as any;
   const identifier = user?.org_id ? `ratelimit:org:${user.org_id}` : `ratelimit:ip:${ip}`;
 
-  const currentRequests = await redis.incr(identifier);
-  
-  if (currentRequests === 1) {
-    await redis.expire(identifier, RATE_LIMIT_WINDOW_SECS);
-  }
+  try {
+    const currentRequests = await redis.incr(identifier);
+    
+    if (currentRequests === 1) {
+      await redis.expire(identifier, RATE_LIMIT_WINDOW_SECS);
+    }
 
-  if (currentRequests > MAX_REQUESTS_PER_WINDOW) {
-    reply.status(429).send({ error: 'Too Many Requests', message: 'Rate limit exceeded.' });
-    return reply; // Fastify hook stops execution if a reply is sent
+    if (currentRequests > MAX_REQUESTS_PER_WINDOW) {
+      reply.status(429).send({ error: 'Too Many Requests', message: 'Rate limit exceeded.' });
+      return reply; // Fastify hook stops execution if a reply is sent
+    }
+  } catch (err) {
+    // Fail open if Redis is down
+    console.error("Rate limit redis error:", err);
   }
 }
