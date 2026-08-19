@@ -15,8 +15,7 @@ export const withTenant = async <T>(
   callback: (tx: any) => Promise<T>
 ) => {
   return db.transaction(async (tx) => {
-    // Set the local variable for RLS
-    await tx.execute(sql`SET LOCAL app.current_org_id = ${orgId}`);
+    await tx.execute(sql`SELECT set_config('app.current_org_id', ${orgId}, true)`);
     return callback(tx);
   });
 };

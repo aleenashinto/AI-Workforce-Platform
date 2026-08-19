@@ -21,7 +21,7 @@ export default function ResearchBriefPage() {
   const fetchLead = async () => {
     try {
       const token = await getToken();
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001"}/v1/sales/leads/${leadId}`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/v1/sales/leads/${leadId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       const json = await res.json();
@@ -43,7 +43,7 @@ export default function ResearchBriefPage() {
     setResearching(true);
     try {
       const token = await getToken();
-      await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001"}/v1/sales/leads/${leadId}/research`, {
+      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/v1/sales/leads/${leadId}/research`, {
         method: 'POST',
         headers: { Authorization: `Bearer ${token}` }
       });

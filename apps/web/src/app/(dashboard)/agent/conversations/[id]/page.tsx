@@ -24,7 +24,7 @@ export default function ConversationDetailsPage({ params }: { params: { id: stri
   const fetchConversation = async () => {
     try {
       const token = await getToken();
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001"}/agent/conversations/${params.id}`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/agent/conversations/${params.id}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       const json = await res.json();
@@ -82,7 +82,7 @@ export default function ConversationDetailsPage({ params }: { params: { id: stri
     
     try {
       const token = await getToken();
-      await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001"}/agent/conversations/${params.id}/reply`, {
+      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/agent/conversations/${params.id}/reply`, {
         method: 'POST',
         headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: currentInput })
@@ -100,7 +100,7 @@ export default function ConversationDetailsPage({ params }: { params: { id: stri
   const handleResolve = async () => {
     try {
       const token = await getToken();
-      await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001"}/agent/conversations/${params.id}`, {
+      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/agent/conversations/${params.id}`, {
         method: 'PATCH',
         headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
         body: JSON.stringify({ status: 'resolved' })
@@ -116,7 +116,7 @@ export default function ConversationDetailsPage({ params }: { params: { id: stri
       setCopilotSuggestion("Generating suggestion...");
       setIsCopilotActive(true);
       const token = await getToken();
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001"}/agent/conversations/${params.id}/copilot`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/agent/conversations/${params.id}/copilot`, {
         method: 'POST',
         headers: { Authorization: `Bearer ${token}` }
       });

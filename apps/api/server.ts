@@ -39,8 +39,12 @@ fastify.register(fastifyJwt, {
 });
 
 fastify.register(fastifyWebsocket);
+const allowedOrigins = process.env.FRONTEND_URL 
+  ? [process.env.FRONTEND_URL, 'http://localhost:3000'] 
+  : ['http://localhost:3000'];
+
 fastify.register(cors, {
-  origin: true,
+  origin: allowedOrigins,
   credentials: true,
 });
 

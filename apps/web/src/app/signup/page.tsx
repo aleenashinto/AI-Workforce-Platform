@@ -145,7 +145,7 @@ function SignUpContent() {
     
     setLoading(true);
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001"}/auth/register`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include", // Send auth cookie if backend sets it
@@ -275,8 +275,8 @@ function SignUpContent() {
           <div style={{ flex: 1, height: 1, background: T.border }} />
         </div>
 
-        <SocialBtn provider="Google" icon={<GoogleIcon size={16} />} onClick={() => window.location.href = `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001"}/auth/google/login`} />
-        <SocialBtn provider="Microsoft" icon={<MicrosoftIcon size={16} />} onClick={() => window.location.href = `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001"}/auth/microsoft/login`} />
+        <SocialBtn provider="Google" icon={<GoogleIcon size={16} />} onClick={() => window.location.href = `${process.env.NEXT_PUBLIC_API_URL}/auth/google/login`} />
+        <SocialBtn provider="Microsoft" icon={<MicrosoftIcon size={16} />} onClick={() => window.location.href = `${process.env.NEXT_PUBLIC_API_URL}/auth/microsoft/login`} />
 
         <div style={{ fontFamily:T.mono, fontSize:"0.7rem", color:"rgba(200,255,232,0.35)", textAlign:"center", marginTop:"1.5rem" }}>
           Already have an account? {" "}

@@ -1,4 +1,7 @@
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
+if (!BASE_URL) {
+  throw new Error("NEXT_PUBLIC_API_URL is not configured in environment variables");
+}
 
 async function request(url: string, options: RequestInit = {}) {
   const res = await fetch(`${BASE_URL}${url}`, {

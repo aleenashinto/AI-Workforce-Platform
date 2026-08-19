@@ -1,4 +1,8 @@
-export const API_BASE = `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001"}/v1`;
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
+if (!API_URL) {
+  throw new Error("NEXT_PUBLIC_API_URL is not configured in environment variables");
+}
+export const API_BASE = `${API_URL}/v1`;
 
 export async function fetchApi(endpoint: string, options: RequestInit = {}) {
   const url = endpoint.startsWith("http") ? endpoint : `${API_BASE}${endpoint}`;

@@ -25,7 +25,7 @@ export default function SourcesPage() {
       const token = await getToken();
       // Added dummy org_id if not present for local dev
       const currentOrgId = orgId || 'org_123';
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001"}/v1/sources?org_id=${currentOrgId}`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/v1/sources?org_id=${currentOrgId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       const json = await res.json();
@@ -56,7 +56,7 @@ export default function SourcesPage() {
         config: sourceType === 'file' ? { filename: sourceName, contentType: 'application/pdf' } : { url: sourceUrl }
       };
 
-      await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001"}/v1/sources`, {
+      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/v1/sources`, {
         method: 'POST',
         headers: { 
           Authorization: `Bearer ${token}`,

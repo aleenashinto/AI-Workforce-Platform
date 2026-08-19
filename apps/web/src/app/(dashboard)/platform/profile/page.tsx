@@ -77,7 +77,7 @@ export default function ProfilePage() {
 
     setLoading(true);
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001"}/auth/profile/update`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/profile/update`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include", // Send auth cookie
