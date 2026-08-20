@@ -1,6 +1,6 @@
 import { Job } from 'bullmq';
-import { db, withTenant } from 'db/client';
-import { organizations, audit_logs, messages, conversations, leads } from 'db/schema';
+import { db, withTenant } from '@ai-workforce/db/client';
+import { organizations, audit_logs, messages, conversations, leads } from '@ai-workforce/db/schema';
 import { eq, lt, sql } from 'drizzle-orm';
 import { subDays } from 'date-fns';
 
