@@ -108,10 +108,12 @@ export default async function authRoutes(fastify: FastifyInstance) {
         maxAge: 60 * 60 * 24 * 7 // 7 days
       });
 
-      return reply.redirect(process.env.FRONTEND_URL || 'http://localhost:3000/dashboard');
+      const frontendBaseUrl = (process.env.FRONTEND_URL || 'http://localhost:3000').replace(/\/+$/, '').replace(/\/platform\/dashboard$/, '').replace(/\/dashboard$/, '');
+      return reply.redirect(`${frontendBaseUrl}/dashboard`);
     } catch (err) {
       fastify.log.error(err);
-      return reply.redirect(`${process.env.FRONTEND_URL || 'http://localhost:3000'}/login?error=auth_failed`);
+      const frontendBaseUrlError = (process.env.FRONTEND_URL || 'http://localhost:3000').replace(/\/+$/, '').replace(/\/platform\/dashboard$/, '').replace(/\/dashboard$/, '');
+      return reply.redirect(`${frontendBaseUrlError}/login?error=auth_failed`);
     }
   };
 
@@ -207,7 +209,8 @@ export default async function authRoutes(fastify: FastifyInstance) {
         }
       });
 
-      const resetLink = `${process.env.FRONTEND_URL || 'http://localhost:3000'}/reset-password?token=${token}`;
+      const frontendBaseUrl = (process.env.FRONTEND_URL || 'http://localhost:3000').replace(/\/+$/, '').replace(/\/platform\/dashboard$/, '').replace(/\/dashboard$/, '');
+      const resetLink = `${frontendBaseUrl}/reset-password?token=${token}`;
       
       try {
         await transporter.sendMail({
@@ -346,7 +349,8 @@ export default async function authRoutes(fastify: FastifyInstance) {
       }
     });
 
-    const verifyLink = `${process.env.FRONTEND_URL || 'http://localhost:3000'}/verify-email?token=${token}`;
+    const frontendBaseUrl = (process.env.FRONTEND_URL || 'http://localhost:3000').replace(/\/+$/, '').replace(/\/platform\/dashboard$/, '').replace(/\/dashboard$/, '');
+    const verifyLink = `${frontendBaseUrl}/verify-email?token=${token}`;
     
     try {
       await transporter.sendMail({
@@ -488,7 +492,8 @@ export default async function authRoutes(fastify: FastifyInstance) {
         }
       });
 
-      const verifyLink = `${process.env.FRONTEND_URL || 'http://localhost:3000'}/verify-email?token=${token}`;
+      const frontendBaseUrl = (process.env.FRONTEND_URL || 'http://localhost:3000').replace(/\/+$/, '').replace(/\/platform\/dashboard$/, '').replace(/\/dashboard$/, '');
+      const verifyLink = `${frontendBaseUrl}/verify-email?token=${token}`;
 
       try {
         await transporter.sendMail({
