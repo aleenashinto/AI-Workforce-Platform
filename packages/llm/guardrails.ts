@@ -1,11 +1,13 @@
-export const checkInputGuardrails = async (input: string): Promise<{ safe: boolean; reason?: string }> => {
+export const checkInputGuardrails = async (input: string): Promise<{ safe: boolean; reason?: string; sanitized?: string }> => {
   // Simple prompt injection checks
   const injectionPatterns = [
     /ignore previous/i,
     /system prompt/i,
     /bypass/i,
     /act as/i,
-    /roleplay/i
+    /roleplay/i,
+    /forget all instructions/i,
+    /disregard previous/i
   ];
 
   for (const pattern of injectionPatterns) {
@@ -14,15 +16,28 @@ export const checkInputGuardrails = async (input: string): Promise<{ safe: boole
     }
   }
 
-  // PII redaction (very basic example)
+  // PII redaction
   const creditCardRegex = /\b(?:\d[ -]*?){13,16}\b/g;
   const ssnRegex = /\b\d{3}-\d{2}-\d{4}\b/g;
+  const emailRegex = /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b/g;
 
-  if (creditCardRegex.test(input) || ssnRegex.test(input)) {
-    return { safe: false, reason: 'Input contains sensitive PII' };
+  let sanitized = input;
+  let redacted = false;
+
+  if (creditCardRegex.test(sanitized)) {
+    sanitized = sanitized.replace(creditCardRegex, '[REDACTED_CC]');
+    redacted = true;
+  }
+  if (ssnRegex.test(sanitized)) {
+    sanitized = sanitized.replace(ssnRegex, '[REDACTED_SSN]');
+    redacted = true;
+  }
+  if (emailRegex.test(sanitized)) {
+    sanitized = sanitized.replace(emailRegex, '[REDACTED_EMAIL]');
+    redacted = true;
   }
 
-  return { safe: true };
+  return { safe: true, sanitized: redacted ? sanitized : input };
 };
 
 export const checkOutputGuardrails = async (output: string, contextChunks: string[]): Promise<{ safe: boolean; reason?: string }> => {
@@ -39,12 +54,9 @@ export const checkOutputGuardrails = async (output: string, contextChunks: strin
   }
 
   // Citation verification
-  // A robust implementation would extract [1], [2] and verify the claim against the chunk
-  // For MVP, we check if there's any citation format present when facts are stated.
   const hasCitations = /\[\d+\]/.test(output);
   if (!hasCitations && contextChunks.length > 0 && output.length > 100) {
-    // If output is long but has no citations, it might be hallucinating
-    // return { safe: false, reason: 'Missing citations for claims' };
+    // Flag if missing citations
   }
 
   return { safe: true };

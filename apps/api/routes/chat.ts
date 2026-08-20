@@ -2,6 +2,7 @@ import { FastifyInstance } from 'fastify';
 import postgres from 'postgres';
 import { OpenAI } from 'openai';
 import { streamText, checkInputGuardrails, checkOutputGuardrails } from '@ai-workforce/llm';
+import { checkBillingQuota } from '../middleware/billing';
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY || 'dummy'
@@ -10,7 +11,7 @@ const openai = new OpenAI({
 export async function chatRoutes(fastify: FastifyInstance) {
   const sql = postgres(process.env.DATABASE_URL || 'postgres://postgres:postgres@127.0.0.1:5435/ai_workforce');
 
-  fastify.post('/v1/chat', async (request, reply) => {
+  fastify.post('/v1/chat', { preHandler: [checkBillingQuota] }, async (request, reply) => {
     const { org_id, visitor_id, query, conversation_id } = request.body as any;
 
     if (!query || !conversation_id) {
@@ -95,36 +96,56 @@ export async function chatRoutes(fastify: FastifyInstance) {
     const isUnanswerable = searchResults.length === 0;
     const confidence = isUnanswerable ? 0.3 : 0.85;
 
+    let fullAnswer = "";
+    let answer: string | undefined;
+
+    // Escalation Routing
+    if (confidence < 0.70) {
+      await sql`UPDATE conversations SET ai_paused = true WHERE id = ${conversation_id} AND org_id = ${org_id}`;
+      
+      const { ZendeskSupportProvider } = require('@ai-workforce/core/src/providers/support-provider');
+      const support = new ZendeskSupportProvider();
+      
+      const ticketId = await support.createTicket({
+        subject: 'AI Escalation: Low Confidence',
+        description: `Conversation ID: ${conversation_id}\n\nThe AI was unable to answer the user's query confidently.\n\nQuery: ${query}`,
+        priority: 'high'
+      });
+
+      fullAnswer = "I'm not completely sure about that. I have paused this conversation and escalated it to our human support team (Ticket: " + ticketId + "). They will be with you shortly.";
+      answer = fullAnswer;
+    }
+
     // Send SSE response
     reply.raw.setHeader('Content-Type', 'text/event-stream');
     reply.raw.setHeader('Cache-Control', 'no-cache');
     reply.raw.setHeader('Connection', 'keep-alive');
 
-    let fullAnswer = "";
-    let answer: string | undefined;
-    if (process.env.ANTHROPIC_API_KEY && process.env.ANTHROPIC_API_KEY !== 'dummy') {
-      try {
-        const stream = await streamText('fast', systemPrompt, query);
-        for await (const chunk of stream) {
-          if (chunk.type === 'content_block_delta' && chunk.delta.type === 'text_delta') {
-            reply.raw.write(`data: ${JSON.stringify({ token: chunk.delta.text })}\n\n`);
+    if (confidence >= 0.70) {
+      if (process.env.ANTHROPIC_API_KEY && process.env.ANTHROPIC_API_KEY !== 'dummy') {
+        try {
+          const stream = await streamText('fast', systemPrompt, query);
+          for await (const chunk of stream) {
+            if (chunk.type === 'content_block_delta' && chunk.delta.type === 'text_delta') {
+              reply.raw.write(`data: ${JSON.stringify({ token: chunk.delta.text })}\n\n`);
+            }
           }
+        } catch (err) {
+          console.error("LLM streaming failed", err);
+          reply.raw.write(`data: ${JSON.stringify({ error: "Failed to generate response" })}\n\n`);
         }
-      } catch (err) {
-        console.error("LLM streaming failed", err);
-        reply.raw.write(`data: ${JSON.stringify({ error: "Failed to generate response" })}\n\n`);
-      }
-    } else {
-      // Simulate streaming
-      answer = isUnanswerable 
-        ? "I cannot answer this based on the context." 
-        : `Based on the documentation [1], here is the answer to your question regarding "${query}".`;
+      } else {
+        // Simulate streaming
+        answer = isUnanswerable 
+          ? "I cannot answer this based on the context." 
+          : `Based on the documentation [1], here is the answer to your question regarding "${query}".`;
 
-      const chunks = answer.split(' ');
-      
-      for (let i = 0; i < chunks.length; i++) {
-        reply.raw.write(`data: ${JSON.stringify({ token: chunks[i] + ' ' })}\n\n`);
-        await new Promise(resolve => setTimeout(resolve, 50));
+        const chunks = answer.split(' ');
+        
+        for (let i = 0; i < chunks.length; i++) {
+          reply.raw.write(`data: ${JSON.stringify({ token: chunks[i] + ' ' })}\n\n`);
+          await new Promise(resolve => setTimeout(resolve, 50));
+        }
       }
     }
 

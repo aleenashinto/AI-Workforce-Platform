@@ -1,4 +1,4 @@
-import { pgTable, uuid, text, jsonb, timestamp, bigserial, numeric, index, boolean } from 'drizzle-orm/pg-core';
+import { pgTable, pgPolicy, uuid, text, jsonb, timestamp, bigserial, numeric, index, boolean } from 'drizzle-orm/pg-core';
 import { sql } from 'drizzle-orm';
 import { customType } from 'drizzle-orm/pg-core';
 
@@ -46,7 +46,9 @@ export const memberships = pgTable('memberships', {
   id: uuid('id').primaryKey().defaultRandom(),
   org_id: uuid('org_id').references(() => organizations.id).notNull(),
   user_id: uuid('user_id').references(() => users.id).notNull(),
-});
+}, (table) => ({
+  rls: pgPolicy('tenant_isolation', { as: 'permissive', to: 'public', for: 'all', using: sql`org_id = current_setting('app.current_org_id', true)::uuid` })
+}));
 
 export const membership_roles = pgTable('membership_roles', {
   id: uuid('id').primaryKey().defaultRandom(),
@@ -64,7 +66,9 @@ export const organization_invitations = pgTable('organization_invitations', {
   invited_by: uuid('invited_by').references(() => users.id),
   expires_at: timestamp('expires_at', { withTimezone: true }).notNull(),
   created_at: timestamp('created_at', { withTimezone: true }).defaultNow(),
-});
+}, (table) => ({
+  rls: pgPolicy('tenant_isolation', { as: 'permissive', to: 'public', for: 'all', using: sql`org_id = current_setting('app.current_org_id', true)::uuid` })
+}));
 
 export const api_keys = pgTable('api_keys', {
   id: uuid('id').primaryKey().defaultRandom(),
@@ -74,7 +78,9 @@ export const api_keys = pgTable('api_keys', {
   scopes: text('scopes').array(),
   last_used_at: timestamp('last_used_at', { withTimezone: true }),
   revoked_at: timestamp('revoked_at', { withTimezone: true }),
-});
+}, (table) => ({
+  rls: pgPolicy('tenant_isolation', { as: 'permissive', to: 'public', for: 'all', using: sql`org_id = current_setting('app.current_org_id', true)::uuid` })
+}));
 
 export const audit_logs = pgTable('audit_logs', {
   id: uuid('id').primaryKey().defaultRandom(),
@@ -86,7 +92,9 @@ export const audit_logs = pgTable('audit_logs', {
   metadata: jsonb('metadata'),
   ip_address: text('ip_address'),
   created_at: timestamp('created_at', { withTimezone: true }).defaultNow(),
-});
+}, (table) => ({
+  rls: pgPolicy('tenant_isolation', { as: 'permissive', to: 'public', for: 'all', using: sql`org_id = current_setting('app.current_org_id', true)::uuid` })
+}));
 
 export const usage_events = pgTable('usage_events', {
   id: bigserial('id', { mode: 'number' }).primaryKey(),
@@ -95,7 +103,9 @@ export const usage_events = pgTable('usage_events', {
   quantity: numeric('quantity').notNull(),
   metadata: jsonb('metadata'),
   occurred_at: timestamp('occurred_at', { withTimezone: true }).defaultNow(),
-});
+}, (table) => ({
+  rls: pgPolicy('tenant_isolation', { as: 'permissive', to: 'public', for: 'all', using: sql`org_id = current_setting('app.current_org_id', true)::uuid` })
+}));
 
 export const tools = pgTable('tools', {
   id: uuid('id').primaryKey().defaultRandom(),
@@ -109,7 +119,9 @@ export const tools = pgTable('tools', {
   is_active: boolean('is_active').notNull().default(true),
   created_at: timestamp('created_at', { withTimezone: true }).defaultNow(),
   updated_at: timestamp('updated_at', { withTimezone: true }).defaultNow(),
-});
+}, (table) => ({
+  rls: pgPolicy('tenant_isolation', { as: 'permissive', to: 'public', for: 'all', using: sql`org_id = current_setting('app.current_org_id', true)::uuid` })
+}));
 
 // Module A: Knowledge Management
 
@@ -141,7 +153,9 @@ export const knowledge_sources = pgTable('knowledge_sources', {
   config: jsonb('config'), // e.g. { url: '...', depth: 2 } or { file_path: '...' }
   created_at: timestamp('created_at', { withTimezone: true }).defaultNow(),
   updated_at: timestamp('updated_at', { withTimezone: true }).defaultNow(),
-});
+}, (table) => ({
+  rls: pgPolicy('tenant_isolation', { as: 'permissive', to: 'public', for: 'all', using: sql`org_id = current_setting('app.current_org_id', true)::uuid` })
+}));
 
 export const knowledge_documents = pgTable('knowledge_documents', {
   id: uuid('id').primaryKey().defaultRandom(),
@@ -182,7 +196,9 @@ export const conversations = pgTable('conversations', {
   ai_paused: boolean('ai_paused').default(false).notNull(),
   created_at: timestamp('created_at', { withTimezone: true }).defaultNow(),
   updated_at: timestamp('updated_at', { withTimezone: true }).defaultNow(),
-});
+}, (table) => ({
+  rls: pgPolicy('tenant_isolation', { as: 'permissive', to: 'public', for: 'all', using: sql`org_id = current_setting('app.current_org_id', true)::uuid` })
+}));
 
 export const messages = pgTable('messages', {
   id: uuid('id').primaryKey().defaultRandom(),
@@ -204,7 +220,9 @@ export const end_users = pgTable('end_users', {
   metadata: jsonb('metadata'),
   created_at: timestamp('created_at', { withTimezone: true }).defaultNow(),
   updated_at: timestamp('updated_at', { withTimezone: true }).defaultNow(),
-});
+}, (table) => ({
+  rls: pgPolicy('tenant_isolation', { as: 'permissive', to: 'public', for: 'all', using: sql`org_id = current_setting('app.current_org_id', true)::uuid` })
+}));
 
 export const knowledge_gaps = pgTable('knowledge_gaps', {
   id: uuid('id').primaryKey().defaultRandom(),
@@ -214,7 +232,9 @@ export const knowledge_gaps = pgTable('knowledge_gaps', {
   status: text('status').notNull().default('open'), // 'open', 'answered', 'dismissed'
   last_seen_at: timestamp('last_seen_at', { withTimezone: true }).defaultNow(),
   created_at: timestamp('created_at', { withTimezone: true }).defaultNow(),
-});
+}, (table) => ({
+  rls: pgPolicy('tenant_isolation', { as: 'permissive', to: 'public', for: 'all', using: sql`org_id = current_setting('app.current_org_id', true)::uuid` })
+}));
 
 // Module B: AI Sales Assistant
 
@@ -228,7 +248,9 @@ export const icps = pgTable('icps', {
   last_run_at: timestamp('last_run_at', { withTimezone: true }),
   created_at: timestamp('created_at', { withTimezone: true }).defaultNow(),
   updated_at: timestamp('updated_at', { withTimezone: true }).defaultNow(),
-});
+}, (table) => ({
+  rls: pgPolicy('tenant_isolation', { as: 'permissive', to: 'public', for: 'all', using: sql`org_id = current_setting('app.current_org_id', true)::uuid` })
+}));
 
 export const companies = pgTable('companies', {
   id: uuid('id').primaryKey().defaultRandom(),
@@ -251,7 +273,9 @@ export const suppression_list = pgTable('suppression_list', {
   entity_value: text('entity_value').notNull(),
   reason: text('reason'), // 'competitor', 'customer', 'opt_out'
   created_at: timestamp('created_at', { withTimezone: true }).defaultNow(),
-});
+}, (table) => ({
+  rls: pgPolicy('tenant_isolation', { as: 'permissive', to: 'public', for: 'all', using: sql`org_id = current_setting('app.current_org_id', true)::uuid` })
+}));
 
 export const leads = pgTable('leads', {
   id: uuid('id').primaryKey().defaultRandom(),
@@ -272,7 +296,9 @@ export const leads = pgTable('leads', {
   research_brief: jsonb('research_brief'), // e.g. { summary, hooks, sources, timeline }
   created_at: timestamp('created_at', { withTimezone: true }).defaultNow(),
   updated_at: timestamp('updated_at', { withTimezone: true }).defaultNow(),
-});
+}, (table) => ({
+  rls: pgPolicy('tenant_isolation', { as: 'permissive', to: 'public', for: 'all', using: sql`org_id = current_setting('app.current_org_id', true)::uuid` })
+}));
 
 export const campaigns = pgTable('campaigns', {
   id: uuid('id').primaryKey().defaultRandom(),
@@ -283,7 +309,9 @@ export const campaigns = pgTable('campaigns', {
   schedule: jsonb('schedule'),
   created_at: timestamp('created_at', { withTimezone: true }).defaultNow(),
   updated_at: timestamp('updated_at', { withTimezone: true }).defaultNow(),
-});
+}, (table) => ({
+  rls: pgPolicy('tenant_isolation', { as: 'permissive', to: 'public', for: 'all', using: sql`org_id = current_setting('app.current_org_id', true)::uuid` })
+}));
 
 export const outreach_events = pgTable('outreach_events', {
   id: uuid('id').primaryKey().defaultRandom(),
@@ -308,7 +336,9 @@ export const drafts = pgTable('drafts', {
   personalized_hooks: jsonb('personalized_hooks'), // Hooks applied
   created_at: timestamp('created_at', { withTimezone: true }).defaultNow(),
   updated_at: timestamp('updated_at', { withTimezone: true }).defaultNow(),
-});
+}, (table) => ({
+  rls: pgPolicy('tenant_isolation', { as: 'permissive', to: 'public', for: 'all', using: sql`org_id = current_setting('app.current_org_id', true)::uuid` })
+}));
 
 export const sequences = pgTable('sequences', {
   id: uuid('id').primaryKey().defaultRandom(),
@@ -318,7 +348,9 @@ export const sequences = pgTable('sequences', {
   metrics: jsonb('metrics'), // { open_rate, reply_rate, bounce_rate }
   created_at: timestamp('created_at', { withTimezone: true }).defaultNow(),
   updated_at: timestamp('updated_at', { withTimezone: true }).defaultNow(),
-});
+}, (table) => ({
+  rls: pgPolicy('tenant_isolation', { as: 'permissive', to: 'public', for: 'all', using: sql`org_id = current_setting('app.current_org_id', true)::uuid` })
+}));
 
 export const sequence_steps = pgTable('sequence_steps', {
   id: uuid('id').primaryKey().defaultRandom(),
@@ -345,7 +377,9 @@ export const mailboxes = pgTable('mailboxes', {
   metrics: jsonb('metrics'), // { bounces, complaints, opens }
   created_at: timestamp('created_at', { withTimezone: true }).defaultNow(),
   updated_at: timestamp('updated_at', { withTimezone: true }).defaultNow(),
-});
+}, (table) => ({
+  rls: pgPolicy('tenant_isolation', { as: 'permissive', to: 'public', for: 'all', using: sql`org_id = current_setting('app.current_org_id', true)::uuid` })
+}));
 
 export const replies = pgTable('replies', {
   id: uuid('id').primaryKey().defaultRandom(),
@@ -357,7 +391,9 @@ export const replies = pgTable('replies', {
   thread_id: text('thread_id'),
   content: text('content').notNull(),
   created_at: timestamp('created_at', { withTimezone: true }).defaultNow(),
-});
+}, (table) => ({
+  rls: pgPolicy('tenant_isolation', { as: 'permissive', to: 'public', for: 'all', using: sql`org_id = current_setting('app.current_org_id', true)::uuid` })
+}));
 
 export const integrations = pgTable('integrations', {
   id: uuid('id').primaryKey().defaultRandom(),
@@ -370,4 +406,6 @@ export const integrations = pgTable('integrations', {
   last_sync_at: timestamp('last_sync_at', { withTimezone: true }),
   created_at: timestamp('created_at', { withTimezone: true }).defaultNow(),
   updated_at: timestamp('updated_at', { withTimezone: true }).defaultNow(),
-});
+}, (table) => ({
+  rls: pgPolicy('tenant_isolation', { as: 'permissive', to: 'public', for: 'all', using: sql`org_id = current_setting('app.current_org_id', true)::uuid` })
+}));
