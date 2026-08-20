@@ -1,12 +1,5 @@
-let API_URL = (process.env.NEXT_PUBLIC_API_URL || "/api").replace(/\/+$/, "");
-if (API_URL.includes("ai-workforce-api-pi.vercel.app")) {
-  API_URL = "/api";
-}
-if (!API_URL) {
-  throw new Error("NEXT_PUBLIC_API_URL is not configured in environment variables");
-}
-export const API_BASE = `${API_URL}/v1`;
-
+const API_URL = (process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001").replace(/\/+$/, "");
+export const API_BASE = API_URL;
 export async function fetchApi(endpoint: string, options: RequestInit = {}) {
   const url = endpoint.startsWith("http") ? endpoint : `${API_BASE}${endpoint}`;
   

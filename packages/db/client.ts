@@ -35,5 +35,10 @@ export const withTenant = async <T>(
   });
 };
 
-const connectionString = process.env.DATABASE_URL || 'postgres://postgres:postgres@127.0.0.1:5435/ai_workforce';
+const connectionString = process.env.DATABASE_URL;
+
+if (!connectionString) {
+  throw new Error("DATABASE_URL is not configured");
+}
+
 export const db = getDb(connectionString);

@@ -318,23 +318,35 @@ export default async function authRoutes(fastify: FastifyInstance) {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Create new user
-    const [user] = await db.insert(users).values({
-      email: email,
-      name: fullName,
-      password_hash: hashedPassword
-    }).returning();
+    let user;
+    try {
+      [user] = await db.insert(users).values({
+        email: email,
+        name: fullName,
+        password_hash: hashedPassword
+      }).returning();
+    } catch (err: any) {
+      if (err.code === '23505') {
+        return reply.status(409).send({ error: "Email is already registered" });
+      }
+      fastify.log.error({ errCode: err.code, msg: err.message }, "Database error during user registration");
+      return reply.status(500).send({ error: "Internal Server Error" });
+    }
 
     // Generate email verification token and send email
     const token = crypto.randomBytes(32).toString('hex');
     const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24 hours
     
-    await db.insert(email_verification_tokens).values({
-      user_id: user.id,
-      token: token,
-      expires_at: expiresAt,
-      used: false
-    });
+    try {
+      await db.insert(email_verification_tokens).values({
+        user_id: user.id,
+        token: token,
+        expires_at: expiresAt,
+        used: false
+      });
+    } catch (err: any) {
+      fastify.log.error({ errCode: err.code, msg: err.message }, "Database error during token creation");
+    }
     
     const transporter = nodemailer.createTransport({
       service: 'gmail',
@@ -354,30 +366,35 @@ export default async function authRoutes(fastify: FastifyInstance) {
         subject: "Verify Your Email",
         text: `Welcome! Please verify your email by clicking the following link: ${verifyLink}`
       });
-    } catch (e) {
-      fastify.log.error(e as Error, "Failed to send verification email");
+    } catch (e: any) {
+      fastify.log.error({ errCode: e.code, msg: e.message }, "Failed to send verification email");
     }
 
     // Auto-provision an organization and membership
-    const [org] = await db.insert(organizations).values({
-      name: companyName || `${fullName || 'User'}'s Workspace`,
-      slug: `workspace-${user.id.slice(0,8)}`,
-    }).returning();
+    let org, membership;
+    try {
+      [org] = await db.insert(organizations).values({
+        name: companyName || `${fullName || 'User'}'s Workspace`,
+        slug: `workspace-${user.id.slice(0,8)}`,
+      }).returning();
 
-    const [membership] = await db.insert(memberships).values({
-      org_id: org.id,
-      user_id: user.id
-    }).returning();
-
-    // Assign owner role
-    await db.insert(membership_roles).values({
-      membership_id: membership.id,
-      role: 'owner'
-    });
+      [membership] = await db.insert(memberships).values({
+        org_id: org.id,
+        user_id: user.id
+      }).returning();
+      
+      // Assign owner role
+      await db.insert(membership_roles).values({
+        membership_id: membership.id,
+        role: 'owner'
+      });
+    } catch (err: any) {
+      fastify.log.error({ errCode: err.code, msg: err.message }, "Database error during org/membership creation");
+    }
 
     const payload = {
       user_id: user.id,
-      org_id: membership.org_id,
+      org_id: membership?.org_id || null,
       roles: ['owner']
     };
 

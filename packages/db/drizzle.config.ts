@@ -5,6 +5,6 @@ export default {
   out: './drizzle',
   dialect: 'postgresql',
   dbCredentials: {
-    url: process.env.DATABASE_URL || 'postgres://postgres:postgres@127.0.0.1:5435/ai_workforce',
+    url: process.env.DATABASE_URL as string,
   },
 } satisfies Config;

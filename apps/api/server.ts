@@ -41,20 +41,19 @@ fastify.register(fastifyJwt, {
 });
 
 fastify.register(fastifyWebsocket);
-const allowedOriginsList = [
-  'http://localhost:5173',
-  'http://localhost:3000',
-  'https://ai-workforce-job-web-git-main-inspite1.vercel.app',
-  'https://ai-workforce-job-cslmzobfm-inspite1.vercel.app',
-  'https://ai-workforce-platform-web-nine.vercel.app'
-];
-
 const allowedOrigins = (origin: string | undefined, cb: (err: Error | null, allow: boolean) => void) => {
   if (!origin) return cb(null, true);
-  if (allowedOriginsList.includes(origin)) return cb(null, true);
-  if (process.env.FRONTEND_URL && origin === process.env.FRONTEND_URL) return cb(null, true);
-  // Optional: keep allowing all vercel previews if needed, but explicit list is safer for production credentials
-  if (origin.endsWith('.vercel.app')) return cb(null, true);
+  
+  if (process.env.FRONTEND_URL && origin === process.env.FRONTEND_URL.replace(/\/+$/, '')) {
+    return cb(null, true);
+  }
+
+  // Allow local development if not in strict production mode
+  if (process.env.NODE_ENV !== 'production') {
+    const localOrigins = ['http://localhost:5173', 'http://localhost:3000', 'http://127.0.0.1:5173'];
+    if (localOrigins.includes(origin)) return cb(null, true);
+  }
+
   cb(new Error("Not allowed by CORS"), false);
 };
 
