@@ -4,7 +4,8 @@ import { users, organizations, memberships, membership_roles, organization_invit
 import { eq, and, gt } from 'drizzle-orm';
 import oauthPlugin from '@fastify/oauth2';
 import crypto from 'crypto';
-
+import bcrypt from 'bcryptjs';
+import nodemailer from 'nodemailer';
 export default async function authRoutes(fastify: FastifyInstance) {
   // Register Google OAuth2
   fastify.register(oauthPlugin, {
@@ -189,7 +190,6 @@ export default async function authRoutes(fastify: FastifyInstance) {
     const [user] = await db.select().from(users).where(eq(users.email, email)).limit(1);
     
     if (user) {
-      const crypto = require('crypto');
       const token = crypto.randomBytes(32).toString('hex');
       const expiresAt = new Date(Date.now() + 60 * 60 * 1000); // 1 hour
 
@@ -200,7 +200,6 @@ export default async function authRoutes(fastify: FastifyInstance) {
         used: false
       });
 
-      const nodemailer = require('nodemailer');
       const transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
@@ -242,7 +241,6 @@ export default async function authRoutes(fastify: FastifyInstance) {
       return reply.status(400).send({ error: "Invalid or expired token" });
     }
 
-    const bcrypt = require('bcryptjs');
     const hashedPassword = await bcrypt.hash(password, 10);
 
     await db.update(users).set({ password_hash: hashedPassword }).where(eq(users.id, resetToken.user_id));
@@ -260,7 +258,6 @@ export default async function authRoutes(fastify: FastifyInstance) {
 
     const { fullName, email, currentPassword, newPassword } = req.body;
     const userId = req.user.user_id;
-    const bcrypt = require('bcryptjs');
 
     const [user] = await db.select().from(users).where(eq(users.id, userId)).limit(1);
     if (!user) return reply.status(404).send({ error: "User not found" });
@@ -308,7 +305,6 @@ export default async function authRoutes(fastify: FastifyInstance) {
 
   fastify.post('/auth/register', async (req: any, reply) => {
     const { fullName, email, companyName, password } = req.body;
-    const bcrypt = require('bcryptjs');
 
     if (!fullName || !email || !password) {
       return reply.status(400).send({ error: "Missing required fields" });
@@ -340,7 +336,6 @@ export default async function authRoutes(fastify: FastifyInstance) {
       used: false
     });
     
-    const nodemailer = require('nodemailer');
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
@@ -474,7 +469,7 @@ export default async function authRoutes(fastify: FastifyInstance) {
     if (user && !user.email_verified) {
       const token = crypto.randomBytes(32).toString('hex');
       const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24 hours
-      const { email_verification_tokens } = require('@ai-workforce/db/schema');
+
 
       await db.insert(email_verification_tokens).values({
         user_id: user.id,
@@ -483,7 +478,6 @@ export default async function authRoutes(fastify: FastifyInstance) {
         used: false
       });
 
-      const nodemailer = require('nodemailer');
       const transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
