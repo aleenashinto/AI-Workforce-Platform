@@ -48,6 +48,14 @@ const allowedOrigins = (origin: string | undefined, cb: (err: Error | null, allo
   if (process.env.FRONTEND_URL && origin === process.env.FRONTEND_URL.replace(/\/+$/, '')) {
     return cb(null, true);
   }
+  
+  if (process.env.WEB_URL && origin === process.env.WEB_URL.replace(/\/+$/, '')) {
+    return cb(null, true);
+  }
+  
+  if (origin.endsWith('.vercel.app')) {
+    return cb(null, true);
+  }
 
   // Allow local development if not in strict production mode
   if (process.env.NODE_ENV !== 'production') {
@@ -55,7 +63,7 @@ const allowedOrigins = (origin: string | undefined, cb: (err: Error | null, allo
     if (localOrigins.includes(origin)) return cb(null, true);
   }
 
-  cb(new Error("Not allowed by CORS"), false);
+  cb(new Error(`Not allowed by CORS: ${origin}`), false);
 };
 
 fastify.register(cors, {

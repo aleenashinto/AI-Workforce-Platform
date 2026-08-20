@@ -195,7 +195,7 @@ export default async function authRoutes(fastify: FastifyInstance) {
           id: user.id,
           email: user.email,
           name: user.name,
-          avatarUrl: user.avatar_url || "",
+          avatarUrl: user.avatar_url ? `/auth/avatar/${user.id}` : "",
           phoneNumber: user.phone_number || "",
           jobTitle: user.job_title || "",
           roles: req.user.roles,
