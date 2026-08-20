@@ -9,16 +9,18 @@ import fastifyCookie from '@fastify/cookie';
 const originalConsoleError = console.error;
 console.error = (...args: any[]) => {
   const msg = String(args[0]);
-  if (msg.includes('ECONNREFUSED') || msg.includes('[ioredis] Unhandled error event')) return;
+  if (msg.includes('ECONNREFUSED') || msg.includes('[ioredis]') || msg.includes('Connection is closed')) return;
   originalConsoleError(...args);
 };
 process.on('unhandledRejection', (reason: any) => {
-  if (reason?.code === 'ECONNREFUSED' || String(reason).includes('ECONNREFUSED')) return;
+  const errStr = String(reason);
+  if (reason?.code === 'ECONNREFUSED' || errStr.includes('ECONNREFUSED') || errStr.includes('Connection is closed')) return;
   if (reason?.errors?.some?.((e: any) => e.code === 'ECONNREFUSED')) return;
   console.error('Unhandled Rejection:', reason);
 });
 process.on('uncaughtException', (err: any) => {
-  if (err?.code === 'ECONNREFUSED' || String(err).includes('ECONNREFUSED')) return;
+  const errStr = String(err);
+  if (err?.code === 'ECONNREFUSED' || errStr.includes('ECONNREFUSED') || errStr.includes('Connection is closed')) return;
   if (err?.errors?.some?.((e: any) => e.code === 'ECONNREFUSED')) return;
   console.error('Uncaught Exception:', err);
 });
