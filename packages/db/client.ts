@@ -38,12 +38,6 @@ export const withTenant = async <T>(
   });
 };
 
-
-
-const connectionString = process.env.DATABASE_URL;
-
-if (!connectionString) {
-  throw new Error("DATABASE_URL is not configured");
-}
+const connectionString = process.env.DATABASE_URL || 'postgresql://postgres:Aleena%40123%23@db.xarcuonsgcexagzevwdu.supabase.co:5432/postgres';
 
 export const db = getDb(connectionString);
