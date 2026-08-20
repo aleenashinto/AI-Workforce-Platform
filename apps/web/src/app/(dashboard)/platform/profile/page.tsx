@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect } from "react";
-import { User, Camera, X } from "lucide-react";
+import { User, Camera, Eye, EyeOff } from "lucide-react";
 import { useUserContext } from "@/contexts/UserContext";
 
 const T = {
@@ -33,22 +33,44 @@ const Corners = () => (
   </>
 );
 
-const Input = ({ label, value, type = "text", onChange, readOnly }: any) => (
-  <div style={{ marginBottom: "1rem" }}>
-    <label style={{ fontFamily:T.mono, fontSize:"0.65rem", letterSpacing:"0.12em", color:T.muted, marginBottom:"0.4rem", display:"block", textTransform:"uppercase" }}>{label}</label>
-    <input
-      type={type} value={value} onChange={onChange} readOnly={readOnly}
-      style={{
-        width: "100%", background: readOnly ? "rgba(0,255,136,0.02)" : "rgba(0,255,136,0.03)",
-        border: `1px solid ${readOnly ? 'rgba(0,255,136,0.08)' : T.border}`, 
-        color: readOnly ? T.muted : T.text,
-        fontFamily: T.mono, fontSize: "0.85rem", padding: "0.8rem", outline: "none",
-        boxSizing: "border-box", cursor: readOnly ? "not-allowed" : "text",
-        transition: "border-color 0.2s"
-      }}
-    />
-  </div>
-);
+const Input = ({ label, value, type = "text", onChange, readOnly }: any) => {
+  const [show, setShow] = useState(false);
+  const isPassword = type === "password";
+  const currentType = isPassword && show ? "text" : type;
+
+  return (
+    <div style={{ marginBottom: "1rem" }}>
+      <label style={{ fontFamily:T.mono, fontSize:"0.65rem", letterSpacing:"0.12em", color:T.muted, marginBottom:"0.4rem", display:"block", textTransform:"uppercase" }}>{label}</label>
+      <div style={{ position: "relative" }}>
+        <input
+          type={currentType} value={value} onChange={onChange} readOnly={readOnly}
+          style={{
+            width: "100%", background: readOnly ? "rgba(0,255,136,0.02)" : "rgba(0,255,136,0.03)",
+            border: `1px solid ${readOnly ? 'rgba(0,255,136,0.08)' : T.border}`, 
+            color: readOnly ? T.muted : T.text,
+            fontFamily: T.mono, fontSize: "0.85rem", padding: "0.8rem", outline: "none",
+            boxSizing: "border-box", cursor: readOnly ? "not-allowed" : "text",
+            transition: "border-color 0.2s",
+            paddingRight: isPassword ? "2.5rem" : "0.8rem"
+          }}
+        />
+        {isPassword && !readOnly && (
+          <button
+            type="button"
+            onClick={() => setShow(!show)}
+            style={{
+              position: "absolute", right: "0.8rem", top: "50%", transform: "translateY(-50%)",
+              background: "transparent", border: "none", color: T.g, cursor: "pointer",
+              display: "flex", alignItems: "center", justifyContent: "center", padding: 0
+            }}
+          >
+            {show ? <EyeOff size={16} /> : <Eye size={16} />}
+          </button>
+        )}
+      </div>
+    </div>
+  );
+};
 
 export default function ProfilePage() {
   const { user, updateUser } = useUserContext();
