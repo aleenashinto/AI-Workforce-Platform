@@ -108,7 +108,7 @@ export default async function authRoutes(fastify: FastifyInstance) {
         maxAge: 60 * 60 * 24 * 7 // 7 days
       });
 
-      return reply.redirect(process.env.FRONTEND_URL || 'http://localhost:3000/platform/dashboard');
+      return reply.redirect(process.env.FRONTEND_URL || 'http://localhost:3000/dashboard');
     } catch (err) {
       fastify.log.error(err);
       return reply.redirect(`${process.env.FRONTEND_URL || 'http://localhost:3000'}/login?error=auth_failed`);

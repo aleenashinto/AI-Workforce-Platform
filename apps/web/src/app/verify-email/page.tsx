@@ -165,7 +165,7 @@ function VerifyContent() {
             <div style={{ fontFamily: T.body, fontSize: "0.95rem", color: "rgba(200,255,232,0.6)", lineHeight: 1.6 }}>
               Your email has been successfully verified. Your account is now fully active.
             </div>
-            <Link href="/platform/dashboard" style={{
+            <Link href="/dashboard" style={{
               width:"100%", fontFamily:T.mono, fontSize:"0.82rem", letterSpacing:"0.1em", textTransform:"uppercase",
               color:T.bg, background:T.g, border:"none", padding:"0.85rem", cursor:"pointer",
               clipPath:"polygon(10px 0%,100% 0%,calc(100% - 10px) 100%,0% 100%)",

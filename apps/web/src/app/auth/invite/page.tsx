@@ -108,7 +108,7 @@ function InviteAcceptanceInner() {
       if (data.success) {
         setStatus("accepted");
         setTimeout(() => {
-          router.push("/platform/dashboard");
+          router.push("/dashboard");
         }, 2000);
       } else {
         setStatus("invalid");

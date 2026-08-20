@@ -135,7 +135,7 @@ export default function LoginPage() {
         throw new Error(data.error || "Failed to authenticate.");
       }
 
-      router.push("/platform/dashboard");
+      router.push("/dashboard");
     } catch (err: any) {
       setError(err.message);
       setLoading(false);
