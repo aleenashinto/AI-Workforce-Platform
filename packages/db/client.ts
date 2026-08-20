@@ -38,6 +38,11 @@ export const withTenant = async <T>(
   });
 };
 
+import dotenv from 'dotenv';
+import path from 'path';
+dotenv.config({ path: 'D:/Project/.env' }); 
+dotenv.config(); // fallback
+
 const connectionString = process.env.DATABASE_URL;
 
 if (!connectionString) {
