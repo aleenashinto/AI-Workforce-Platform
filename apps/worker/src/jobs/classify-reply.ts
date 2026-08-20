@@ -87,5 +87,5 @@ Respond ONLY with the category keyword.`;
 
     return { success: true, classification: finalClass };
   },
-  { connection: { url: REDIS_URL } }
+  { connection: new (require("ioredis").default || require("ioredis"))(process.env.REDIS_URL || "redis://localhost:6379", { maxRetriesPerRequest: null, lazyConnect: true, retryStrategy: () => null }) }
 );

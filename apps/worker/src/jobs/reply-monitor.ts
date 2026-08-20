@@ -95,10 +95,7 @@ export const replyMonitorWorker = new Worker(
     };
   },
   {
-    connection: {
-      host: "127.0.0.1",
-      port: 6379,
-    },
+    connection: new (require("ioredis").default || require("ioredis"))(process.env.REDIS_URL || "redis://localhost:6379", { maxRetriesPerRequest: null, lazyConnect: true, retryStrategy: () => null }),
     concurrency: 5,
   }
 );

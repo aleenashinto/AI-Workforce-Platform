@@ -120,7 +120,7 @@ export const sendSequenceWorker = new Worker(
     return { success: true };
   },
   {
-    connection: { url: REDIS_URL },
+    connection: new (require("ioredis").default || require("ioredis"))(process.env.REDIS_URL || "redis://localhost:6379", { maxRetriesPerRequest: null, lazyConnect: true, retryStrategy: () => null }),
     concurrency: 1 // Strict 1 concurrency per mailbox rule (enforced globally ideally)
   }
 );

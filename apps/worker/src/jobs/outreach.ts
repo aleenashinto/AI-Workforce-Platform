@@ -61,7 +61,7 @@ export const outreachWorker = new Worker('outreach-queue', async (job: Job) => {
 
   return { success: true, eventId, leadId: lead.id };
 }, {
-  connection: { url: process.env.REDIS_URL || 'redis://localhost:6379', retryStrategy: () => null, maxRetriesPerRequest: null }
+  connection: new (require("ioredis").default || require("ioredis"))(process.env.REDIS_URL || "redis://localhost:6379", { maxRetriesPerRequest: null, lazyConnect: true, retryStrategy: () => null })
 });
 
 outreachWorker.on('failed', (job, err) => {

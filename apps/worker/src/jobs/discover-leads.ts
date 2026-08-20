@@ -123,9 +123,7 @@ export const discoverLeadsWorker = new Worker(
     return { success: true, leadsCreated };
   },
   {
-    connection: {
-      url: REDIS_URL,
-    },
+    connection: new (require("ioredis").default || require("ioredis"))(process.env.REDIS_URL || "redis://localhost:6379", { maxRetriesPerRequest: null, lazyConnect: true, retryStrategy: () => null }),
     concurrency: 2
   }
 );

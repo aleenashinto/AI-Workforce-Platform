@@ -140,7 +140,7 @@ CRITICAL RULE: Every signal MUST have a valid source URL and an observed date. D
     return { success: true, toolCalls, timeElapsed: Date.now() - startTime, cost };
   },
   {
-    connection: { url: REDIS_URL },
+    connection: new (require("ioredis").default || require("ioredis"))(process.env.REDIS_URL || "redis://localhost:6379", { maxRetriesPerRequest: null, lazyConnect: true, retryStrategy: () => null }),
     concurrency: 3
   }
 );

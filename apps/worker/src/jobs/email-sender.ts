@@ -66,6 +66,6 @@ export const emailSenderWorker = new Worker('email-send-queue', async (job: Job)
 
   return { success: true };
 }, {
-  connection: { url: process.env.REDIS_URL || 'redis://localhost:6379', retryStrategy: () => null, maxRetriesPerRequest: null },
+  connection: new (require("ioredis").default || require("ioredis"))(process.env.REDIS_URL || "redis://localhost:6379", { maxRetriesPerRequest: null, lazyConnect: true, retryStrategy: () => null }),
   concurrency: 1, // Enforce 1 concurrent send per queue (simplification)
 });

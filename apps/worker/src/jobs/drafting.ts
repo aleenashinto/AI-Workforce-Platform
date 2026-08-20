@@ -216,7 +216,7 @@ Proof Points: ${icpData?.proofPoints || 'We save 20% on infra costs.'}`;
     return { success: true, finalStatus };
   },
   {
-    connection: { url: REDIS_URL },
+    connection: new (require("ioredis").default || require("ioredis"))(process.env.REDIS_URL || "redis://localhost:6379", { maxRetriesPerRequest: null, lazyConnect: true, retryStrategy: () => null }),
     concurrency: 5
   }
 );

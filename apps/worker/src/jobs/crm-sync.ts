@@ -67,5 +67,5 @@ export const crmSyncWorker = new Worker(
     
     return { success: true, suppressedCount, pushedCount };
   },
-  { connection: { url: REDIS_URL } }
+  { connection: new (require("ioredis").default || require("ioredis"))(process.env.REDIS_URL || "redis://localhost:6379", { maxRetriesPerRequest: null, lazyConnect: true, retryStrategy: () => null }) }
 );
