@@ -369,7 +369,7 @@ export default async function authRoutes(fastify: FastifyInstance) {
 
     const passwordComplexityRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
     if (!password || !passwordComplexityRegex.test(password)) {
-      return reply.status(400).send({ error: "Password must be at least 8 characters, include uppercase, lowercase, number, and special character." });
+      return reply.status(400).send({ error: "Password must be at least 8 characters long and include an uppercase letter, a lowercase letter, a number, and a special character." });
     }
 
     // Check for existing user
@@ -486,6 +486,11 @@ export default async function authRoutes(fastify: FastifyInstance) {
 
     if (!email || !password) {
       return reply.status(400).send({ error: "Missing email or password" });
+    }
+
+    const passwordComplexityRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    if (!passwordComplexityRegex.test(password)) {
+      return reply.status(400).send({ error: "Password must be at least 8 characters long and include an uppercase letter, a lowercase letter, a number, and a special character." });
     }
 
     const [user] = await db.select().from(users).where(eq(users.email, email)).limit(1);

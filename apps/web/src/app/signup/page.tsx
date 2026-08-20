@@ -212,7 +212,7 @@ function SignUpContent() {
     
     const passwordComplexityRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
     if (!formData.password || !passwordComplexityRegex.test(formData.password)) {
-      setError("Password must be at least 8 characters, include uppercase, lowercase, number, and special character.");
+      setError("Password must be at least 8 characters long and include an uppercase letter, a lowercase letter, a number, and a special character.");
       focusField("password");
       return;
     }
