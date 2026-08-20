@@ -5,6 +5,7 @@
   "packageManager": "pnpm@9.6.0",
   "scripts": {
     "dev": "turbo run dev",
+    "dev:mock": "turbo run dev --filter=web --filter=@ai-workforce/mock-api",
     "build": "turbo run build",
     "lint": "turbo run lint",
     "typecheck": "turbo run typecheck",

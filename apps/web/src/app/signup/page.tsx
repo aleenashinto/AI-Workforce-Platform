@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useState } from "react";
+import { Suspense, useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { GoogleIcon, MicrosoftIcon } from "@/components/icons/social";
@@ -49,27 +49,66 @@ const Corners = () => (
 /* ─────────────────────────────────────────────
    FIELD COMPONENT
 ───────────────────────────────────────────── */
-function ModalField({ label, type, placeholder, value, onChange }: { label: string, type: string, placeholder?: string, value: string, onChange: (e: React.ChangeEvent<HTMLInputElement>) => void }) {
+function ModalField({ id, name, label, type, placeholder, value, onChange }: { id?: string, name?: string, label: string, type: string, placeholder?: string, value: string, onChange: (e: React.ChangeEvent<HTMLInputElement>) => void }) {
   const [focused, setFocused] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const inputId = id || name || label.replace(/\s+/g, '-').toLowerCase();
+  
+  const isPassword = type === 'password';
+  const currentType = isPassword ? (showPassword ? 'text' : 'password') : type;
+
   return (
     <div style={{ marginBottom: "1.1rem" }}>
-      <label style={{ fontFamily:T.mono, fontSize:"0.65rem", letterSpacing:"0.12em", color:T.muted, marginBottom:"0.4rem", display:"block", textTransform:"uppercase" }}>{label}</label>
-      <input 
-        type={type} 
-        placeholder={placeholder} 
-        value={value}
-        onChange={onChange}
-        onFocus={()=>setFocused(true)} 
-        onBlur={()=>setFocused(false)} 
-        style={{
-          width:"100%", background:"rgba(0,255,136,0.03)",
-          border:`1px solid ${focused ? "rgba(0,255,136,0.5)" : T.border}`,
-          boxShadow: focused ? "0 0 0 3px rgba(0,255,136,0.08)" : "none",
-          color:T.text, fontFamily:T.mono, fontSize:"0.85rem",
-          padding:"0.7rem 1rem", outline:"none",
-          transition:"border-color 0.2s, box-shadow 0.2s",
-        }}
-      />
+      <label htmlFor={inputId} style={{ fontFamily:T.mono, fontSize:"0.65rem", letterSpacing:"0.12em", color:T.muted, marginBottom:"0.4rem", display:"block", textTransform:"uppercase" }}>
+        {label}
+      </label>
+      <div style={{ position: "relative" }}>
+        <input 
+          id={inputId}
+          name={name}
+          type={currentType} 
+          placeholder={placeholder} 
+          value={value}
+          onChange={onChange}
+          autoComplete={isPassword ? 'new-password' : 'off'}
+          onFocus={()=>setFocused(true)} 
+          onBlur={()=>setFocused(false)} 
+          style={{
+            width: "100%",
+            background: "rgba(0,255,136,0.03)",
+            border: `1px solid ${focused ? "rgba(0,255,136,0.5)" : T.border}`,
+            boxShadow: focused ? "0 0 0 3px rgba(0,255,136,0.08)" : "none",
+            padding: "0.8rem 1rem",
+            paddingRight: isPassword ? "2.5rem" : "1rem",
+            color: T.text,
+            fontFamily: currentType === 'password' ? 'sans-serif' : T.mono,
+            fontSize: "0.85rem",
+            outline: "none",
+            transition: "all 0.2s"
+          }}
+        />
+        {isPassword && (
+          <button 
+            type="button"
+            onClick={() => setShowPassword(!showPassword)}
+            style={{
+              position: "absolute",
+              right: "0.8rem",
+              top: "50%",
+              transform: "translateY(-50%)",
+              background: "none",
+              border: "none",
+              color: T.muted,
+              cursor: "pointer",
+              fontFamily: T.mono,
+              fontSize: "0.7rem",
+              outline: "none"
+            }}
+          >
+            {showPassword ? "HIDE" : "SHOW"}
+          </button>
+        )}
+      </div>
     </div>
   );
 }
@@ -108,7 +147,7 @@ function SignUpContent() {
   
   const [formData, setFormData] = useState({
     fullName: "",
-    workEmail: emailParam,
+    workEmail: "",
     companyName: "",
     password: "",
     confirmPassword: "",
@@ -117,6 +156,22 @@ function SignUpContent() {
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+
+  useEffect(() => {
+    // Force clear form on mount to defeat browser state restoration
+    setFormData({
+      fullName: "",
+      workEmail: "",
+      companyName: "",
+      password: "",
+      confirmPassword: "",
+      termsAccepted: false
+    });
+    
+    // Also explicitly reset the form element
+    const form = document.getElementById("signup-form") as HTMLFormElement;
+    if (form) form.reset();
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
@@ -130,16 +185,45 @@ function SignUpContent() {
     e.preventDefault();
     setError("");
 
-    if (!formData.fullName || !formData.workEmail || !formData.password) {
-      setError("Please fill in all required fields.");
+    const focusField = (name: string) => {
+      document.getElementById(name)?.focus();
+    };
+
+    if (!formData.fullName.trim()) {
+      setError("Please enter your full name.");
+      focusField("fullName");
       return;
     }
-    if (!formData.termsAccepted) {
-      setError("Please accept the Terms of Service.");
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.workEmail)) {
+      setError("Please enter a valid email address.");
+      focusField("workEmail");
+      return;
+    }
+    
+    // Block common free personal email domains to enforce "Work Email" rule
+    const freeDomains = ["gmail.com", "yahoo.com", "hotmail.com", "outlook.com", "aol.com", "icloud.com"];
+    const domain = formData.workEmail.split("@")[1]?.toLowerCase();
+    if (domain && freeDomains.includes(domain)) {
+      setError("Please use a company/work email address instead of a personal account.");
+      focusField("workEmail");
+      return;
+    }
+    
+    const passwordComplexityRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    if (!formData.password || !passwordComplexityRegex.test(formData.password)) {
+      setError("Password must be at least 8 characters, include uppercase, lowercase, number, and special character.");
+      focusField("password");
       return;
     }
     if (formData.password !== formData.confirmPassword) {
       setError("Passwords do not match.");
+      focusField("confirmPassword");
+      return;
+    }
+    if (!formData.termsAccepted) {
+      setError("Please accept the Terms of Service.");
+      focusField("termsAccepted");
       return;
     }
     
@@ -211,22 +295,23 @@ function SignUpContent() {
           Create Account
         </div>
 
-        <form onSubmit={handleRegister}>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
-            <ModalField label="Full Name" type="text" placeholder="John Doe" value={formData.fullName} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({...formData, fullName: e.target.value})} />
-            <ModalField label="Company Name" type="text" placeholder="Acme Corp" value={formData.companyName} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({...formData, companyName: e.target.value})} />
+        <form id="signup-form" onSubmit={handleRegister} autoComplete="off">
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "1rem" }}>
+            <ModalField name="fullName" label="Full Name" type="text" placeholder="John Doe" value={formData.fullName} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({...formData, fullName: e.target.value})} />
+            <ModalField name="companyName" label="Company Name" type="text" placeholder="Acme Corp" value={formData.companyName} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({...formData, companyName: e.target.value})} />
           </div>
           
-          <ModalField label="Work Email" type="email" placeholder="john@acme.com" value={formData.workEmail} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({...formData, workEmail: e.target.value})} />
+          <ModalField name="workEmail" label="Work Email" type="email" placeholder="john@acme.com" value={formData.workEmail} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({...formData, workEmail: e.target.value})} />
           
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
-            <ModalField label="Password" type="password" placeholder="••••••••••••" value={formData.password} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({...formData, password: e.target.value})} />
-            <ModalField label="Confirm Password" type="password" placeholder="••••••••••••" value={formData.confirmPassword} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({...formData, confirmPassword: e.target.value})} />
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "1rem" }}>
+            <ModalField name="password" label="Password" type="password" placeholder="••••••••••••" value={formData.password} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({...formData, password: e.target.value})} />
+            <ModalField name="confirmPassword" label="Confirm Password" type="password" placeholder="••••••••••••" value={formData.confirmPassword} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({...formData, confirmPassword: e.target.value})} />
           </div>
 
-          <label style={{ display: "flex", alignItems: "center", gap: "0.8rem", marginTop: "0.5rem", marginBottom: "1.5rem", cursor: "pointer" }}>
+          <label htmlFor="termsAccepted" style={{ display: "flex", alignItems: "center", gap: "0.8rem", marginTop: "0.5rem", marginBottom: "1.5rem", cursor: "pointer" }}>
             <div style={{ position: "relative", display: "flex", alignItems: "center" }}>
               <input 
+                id="termsAccepted"
                 type="checkbox" 
                 name="termsAccepted"
                 checked={formData.termsAccepted}
@@ -293,6 +378,16 @@ function SignUpContent() {
 export default function SignUpPage() {
   return (
     <Suspense fallback={<div>Loading...</div>}>
+      <style dangerouslySetInnerHTML={{__html: `
+        input:-webkit-autofill,
+        input:-webkit-autofill:hover, 
+        input:-webkit-autofill:focus, 
+        input:-webkit-autofill:active{
+            -webkit-box-shadow: 0 0 0 30px #0a1628 inset !important;
+            -webkit-text-fill-color: #c8ffe8 !important;
+            transition: background-color 5000s ease-in-out 0s;
+        }
+      `}} />
       <SignUpContent />
     </Suspense>
   );

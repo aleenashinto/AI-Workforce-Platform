@@ -1,7 +1,7 @@
 'use client';
 
-import { useState } from "react";
-import { User, Camera } from "lucide-react";
+import { useState, useRef, useEffect } from "react";
+import { User, Camera, X } from "lucide-react";
 import { useUserContext } from "@/contexts/UserContext";
 
 const T = {
@@ -25,7 +25,6 @@ const Corners = () => (
       ["br","0 1px 1px 0","auto","auto","0","0"]].map(([k, bw, t, l, b, r]) => (
       <span key={k} style={{
         position:"absolute", width:14, height:14,
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         borderColor: T.g, borderStyle:"solid", borderWidth: bw as any, opacity: 0.5,
         top:t==="auto"?undefined:8, left:l==="auto"?undefined:8,
         bottom:b==="auto"?undefined:8, right:r==="auto"?undefined:8,
@@ -34,7 +33,6 @@ const Corners = () => (
   </>
 );
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const Input = ({ label, value, type = "text", onChange, readOnly }: any) => (
   <div style={{ marginBottom: "1rem" }}>
     <label style={{ fontFamily:T.mono, fontSize:"0.65rem", letterSpacing:"0.12em", color:T.muted, marginBottom:"0.4rem", display:"block", textTransform:"uppercase" }}>{label}</label>
@@ -42,9 +40,11 @@ const Input = ({ label, value, type = "text", onChange, readOnly }: any) => (
       type={type} value={value} onChange={onChange} readOnly={readOnly}
       style={{
         width: "100%", background: readOnly ? "rgba(0,255,136,0.02)" : "rgba(0,255,136,0.03)",
-        border: `1px solid ${T.border}`, color: readOnly ? T.muted : T.text,
+        border: `1px solid ${readOnly ? 'rgba(0,255,136,0.08)' : T.border}`, 
+        color: readOnly ? T.muted : T.text,
         fontFamily: T.mono, fontSize: "0.85rem", padding: "0.8rem", outline: "none",
-        boxSizing: "border-box", cursor: readOnly ? "not-allowed" : "text"
+        boxSizing: "border-box", cursor: readOnly ? "not-allowed" : "text",
+        transition: "border-color 0.2s"
       }}
     />
   </div>
@@ -52,12 +52,17 @@ const Input = ({ label, value, type = "text", onChange, readOnly }: any) => (
 
 export default function ProfilePage() {
   const { user, updateUser } = useUserContext();
-  if (!user) return null;
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const initials = user.fullName.split(' ').map((n: string) => n[0]).join('');
+  // States
+  const [isEditing, setIsEditing] = useState(false);
+  
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [jobTitle, setJobTitle] = useState("");
+  const [avatarUrl, setAvatarUrl] = useState("");
 
-  const [fullName, setFullName] = useState(user.fullName);
-  const [email, setEmail] = useState(user.email);
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -66,13 +71,86 @@ export default function ProfilePage() {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
 
+  // Initialize from context on load
+  useEffect(() => {
+    if (user && !isEditing) {
+      setFullName(user.fullName || "");
+      setEmail(user.email || "");
+      setPhoneNumber(user.phoneNumber || "");
+      setJobTitle(user.jobTitle || "");
+      setAvatarUrl(user.avatarUrl || "");
+      setCurrentPassword("");
+      setNewPassword("");
+      setConfirmPassword("");
+    }
+  }, [user, isEditing]);
+
+  if (!user) return null;
+  const initials = fullName ? fullName.split(' ').map((n: string) => n[0]).join('').substring(0,2).toUpperCase() : '?';
+
+  const handleCancel = () => {
+    setIsEditing(false);
+    setError("");
+    setSuccess(false);
+    // Reset forms
+    setFullName(user.fullName || "");
+    setEmail(user.email || "");
+    setPhoneNumber(user.phoneNumber || "");
+    setJobTitle(user.jobTitle || "");
+    setAvatarUrl(user.avatarUrl || "");
+    setCurrentPassword("");
+    setNewPassword("");
+    setConfirmPassword("");
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (!['image/jpeg', 'image/png'].includes(file.type)) {
+      setError("Only JPEG and PNG files are allowed.");
+      return;
+    }
+    if (file.size > 2 * 1024 * 1024) {
+      setError("Image must be less than 2MB.");
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      if (ev.target?.result) {
+        setAvatarUrl(ev.target.result as string);
+        setError(""); // clear previous errors
+      }
+    };
+    reader.readAsDataURL(file);
+  };
+
   const handleSave = async () => {
     setError("");
     setSuccess(false);
 
-    if (newPassword && newPassword !== confirmPassword) {
-      setError("New passwords do not match.");
+    if (!fullName.trim()) {
+      setError("Full Name is required.");
       return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setError("Invalid email format.");
+      return;
+    }
+
+    if (newPassword) {
+      if (newPassword !== confirmPassword) {
+        setError("New passwords do not match.");
+        return;
+      }
+      const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+      if (!passwordRegex.test(newPassword)) {
+        setError("Password must be at least 8 characters long and include an uppercase letter, a lowercase letter, a number, and a special character.");
+        return;
+      }
     }
 
     setLoading(true);
@@ -80,10 +158,13 @@ export default function ProfilePage() {
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/profile/update`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        credentials: "include", // Send auth cookie
+        credentials: "include",
         body: JSON.stringify({
           fullName,
           email,
+          phoneNumber,
+          jobTitle,
+          avatarUrl,
           currentPassword,
           newPassword
         })
@@ -96,18 +177,20 @@ export default function ProfilePage() {
 
       setSuccess(true);
       
-      // Update global context so header/sidebar update immediately
+      // Update global context
       updateUser({
         fullName: data.user.name,
-        email: data.user.email
+        email: data.user.email,
+        phoneNumber: data.user.phoneNumber,
+        jobTitle: data.user.jobTitle,
+        avatarUrl: data.user.avatarUrl
       });
 
-      // Clear password fields on success
       setCurrentPassword("");
       setNewPassword("");
       setConfirmPassword("");
+      setIsEditing(false); // Drop out of edit mode on save
 
-      // Hide success message after 3 seconds
       setTimeout(() => setSuccess(false), 3000);
 
     } catch (err: any) {
@@ -119,15 +202,27 @@ export default function ProfilePage() {
 
   return (
     <div style={{ padding: "2rem", maxWidth: 800, margin: "0 auto" }}>
-
       {/* Header */}
-      <div style={{ marginBottom: "2.5rem" }}>
-        <h1 style={{ fontFamily: T.display, fontSize: "2.2rem", fontWeight: 700, color: "#fff", marginBottom: "0.5rem", display: "flex", alignItems: "center", gap: "1rem" }}>
-          <User color={T.g} size={32} /> Profile
-        </h1>
-        <p style={{ fontFamily: T.mono, fontSize: "0.9rem", color: T.g, letterSpacing: "0.05em" }}>
-          Manage your personal account details.
-        </p>
+      <div style={{ marginBottom: "2.5rem", display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+        <div>
+          <h1 style={{ fontFamily: T.display, fontSize: "2.2rem", fontWeight: 700, color: "#fff", marginBottom: "0.5rem", display: "flex", alignItems: "center", gap: "1rem" }}>
+            <User color={T.g} size={32} /> Profile
+          </h1>
+          <p style={{ fontFamily: T.mono, fontSize: "0.9rem", color: T.g, letterSpacing: "0.05em" }}>
+            Manage your personal account details.
+          </p>
+        </div>
+        {!isEditing && (
+          <button 
+            onClick={() => setIsEditing(true)}
+            style={{
+              background: "transparent", border: `1px solid ${T.g}`, padding: "0.6rem 1.5rem", color: T.g,
+              fontFamily: T.mono, fontSize: "0.8rem", textTransform: "uppercase",
+              cursor: "pointer", transition: "all 0.2s"
+            }}>
+            Edit Profile
+          </button>
+        )}
       </div>
 
       {/* Avatar */}
@@ -137,20 +232,34 @@ export default function ProfilePage() {
           <div style={{ position: "relative" }}>
             <div style={{
               width: 96, height: 96, borderRadius: "50%",
-              background: "rgba(0,255,136,0.08)", border: `2px solid ${T.g}`,
+              background: avatarUrl ? `url(${avatarUrl}) center/cover` : "rgba(0,255,136,0.08)", 
+              border: `2px solid ${T.g}`,
               display: "flex", alignItems: "center", justifyContent: "center",
-              boxShadow: T.glow
+              boxShadow: T.glow, overflow: "hidden"
             }}>
-              <span style={{ fontFamily: T.display, fontSize: "2rem", color: T.g }}>{initials}</span>
+              {!avatarUrl && <span style={{ fontFamily: T.display, fontSize: "2rem", color: T.g }}>{initials}</span>}
             </div>
-            <button style={{
-              position: "absolute", bottom: 0, right: 0,
-              width: 28, height: 28, borderRadius: "50%",
-              background: T.g, border: "none", cursor: "pointer",
-              display: "flex", alignItems: "center", justifyContent: "center"
-            }}>
-              <Camera size={14} color={T.bg} />
-            </button>
+            {isEditing && (
+              <>
+                <button 
+                  onClick={() => fileInputRef.current?.click()}
+                  style={{
+                    position: "absolute", bottom: 0, right: 0,
+                    width: 28, height: 28, borderRadius: "50%",
+                    background: T.g, border: "none", cursor: "pointer",
+                    display: "flex", alignItems: "center", justifyContent: "center"
+                  }}>
+                  <Camera size={14} color={T.bg} />
+                </button>
+                <input 
+                  type="file" 
+                  accept="image/jpeg, image/png"
+                  ref={fileInputRef} 
+                  style={{ display: "none" }} 
+                  onChange={handleFileChange}
+                />
+              </>
+            )}
           </div>
           <div>
             <div style={{ fontFamily: T.display, fontSize: "1.3rem", color: "#fff", fontWeight: 700 }}>{user.fullName}</div>
@@ -169,25 +278,27 @@ export default function ProfilePage() {
           Personal Information
         </div>
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
-          {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-          <Input label="Full Name" value={fullName} onChange={(e: any) => setFullName(e.target.value)} />
-          {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-          <Input label="Email Address" type="email" value={email} onChange={(e: any) => setEmail(e.target.value)} />
+          <Input label="Full Name" value={fullName} onChange={(e: any) => setFullName(e.target.value)} readOnly={!isEditing} />
+          <Input label="Email Address" type="email" value={email} onChange={(e: any) => setEmail(e.target.value)} readOnly={!isEditing} />
+          <Input label="Job Title" value={jobTitle} onChange={(e: any) => setJobTitle(e.target.value)} readOnly={!isEditing} />
+          <Input label="Phone Number" value={phoneNumber} onChange={(e: any) => setPhoneNumber(e.target.value)} readOnly={!isEditing} />
         </div>
       </div>
 
-      {/* Password */}
-      <div style={{ background: T.panel, border: `1px solid ${T.border}`, padding: "2rem", position: "relative", marginBottom: "2rem" }}>
-        <Corners />
-        <div style={{ fontFamily: T.mono, fontSize: "0.7rem", color: T.muted, letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: "1.5rem" }}>
-          Change Password
+      {/* Password - Only shown if editing */}
+      {isEditing && (
+        <div style={{ background: T.panel, border: `1px solid ${T.border}`, padding: "2rem", position: "relative", marginBottom: "2rem" }}>
+          <Corners />
+          <div style={{ fontFamily: T.mono, fontSize: "0.7rem", color: T.muted, letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: "1.5rem" }}>
+            Change Password
+          </div>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
+            <Input label="Current Password" type="password" value={currentPassword} onChange={(e: any) => setCurrentPassword(e.target.value)} />
+            <Input label="New Password" type="password" value={newPassword} onChange={(e: any) => setNewPassword(e.target.value)} />
+            <Input label="Confirm New Password" type="password" value={confirmPassword} onChange={(e: any) => setConfirmPassword(e.target.value)} />
+          </div>
         </div>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
-          <Input label="Current Password" type="password" value={currentPassword} onChange={(e: any) => setCurrentPassword(e.target.value)} />
-          <Input label="New Password" type="password" value={newPassword} onChange={(e: any) => setNewPassword(e.target.value)} />
-          <Input label="Confirm New Password" type="password" value={confirmPassword} onChange={(e: any) => setConfirmPassword(e.target.value)} />
-        </div>
-      </div>
+      )}
 
       {/* Messages */}
       {error && (
@@ -201,21 +312,33 @@ export default function ProfilePage() {
         </div>
       )}
 
-      {/* Save */}
-      <div style={{ display: "flex", justifyContent: "flex-end" }}>
-        <button 
-          onClick={handleSave}
-          disabled={loading}
-          style={{
-            background: loading ? "#00ff8880" : T.g, border: "none", padding: "0.8rem 2rem", color: T.bg,
-            fontFamily: T.mono, fontSize: "0.8rem", fontWeight: "bold", textTransform: "uppercase",
-            cursor: loading ? "not-allowed" : "pointer", boxShadow: loading ? "none" : T.glow,
-            clipPath: "polygon(10px 0%,100% 0%,calc(100% - 10px) 100%,0% 100%)",
-            transition: "all 0.2s"
-          }}>
-          {loading ? "SAVING..." : "Save Profile"}
-        </button>
-      </div>
+      {/* Actions */}
+      {isEditing && (
+        <div style={{ display: "flex", justifyContent: "flex-end", gap: "1rem" }}>
+          <button 
+            onClick={handleCancel}
+            disabled={loading}
+            style={{
+              background: "transparent", border: `1px solid ${T.muted}`, padding: "0.8rem 2rem", color: T.muted,
+              fontFamily: T.mono, fontSize: "0.8rem", textTransform: "uppercase",
+              cursor: loading ? "not-allowed" : "pointer",
+            }}>
+            Cancel
+          </button>
+          <button 
+            onClick={handleSave}
+            disabled={loading}
+            style={{
+              background: loading ? "#00ff8880" : T.g, border: "none", padding: "0.8rem 2rem", color: T.bg,
+              fontFamily: T.mono, fontSize: "0.8rem", fontWeight: "bold", textTransform: "uppercase",
+              cursor: loading ? "not-allowed" : "pointer", boxShadow: loading ? "none" : T.glow,
+              clipPath: "polygon(10px 0%,100% 0%,calc(100% - 10px) 100%,0% 100%)",
+              transition: "all 0.2s"
+            }}>
+            {loading ? "SAVING..." : "Save Profile"}
+          </button>
+        </div>
+      )}
     </div>
   );
 }

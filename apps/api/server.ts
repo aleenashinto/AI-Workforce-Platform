@@ -5,6 +5,7 @@ import postgres from 'postgres';
 import IORedis from 'ioredis';
 import cors from '@fastify/cors';
 import fastifyCookie from '@fastify/cookie';
+import fastifyRateLimit from '@fastify/rate-limit';
 
 const originalConsoleError = console.error;
 console.error = (...args: any[]) => {
@@ -25,7 +26,7 @@ process.on('uncaughtException', (err: any) => {
   console.error('Uncaught Exception:', err);
 });
 
-const fastify = Fastify({ logger: true });
+const fastify = Fastify({ logger: true, bodyLimit: 10485760 });
 
 fastify.register(fastifyCookie, {
   secret: process.env.COOKIE_SECRET || "supersecretcookie", // for signed cookies
@@ -62,6 +63,12 @@ fastify.register(cors, {
   credentials: true,
   allowedHeaders: ['Content-Type', 'Authorization', 'Accept', 'Origin', 'Cookie'],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
+});
+
+fastify.register(fastifyRateLimit, {
+  max: 100, // default limit
+  timeWindow: '1 minute',
+  // You can set route-specific limits in the route definitions
 });
 
 import salesRoutes from './routes/sales';

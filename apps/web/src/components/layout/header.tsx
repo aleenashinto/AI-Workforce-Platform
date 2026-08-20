@@ -1,6 +1,6 @@
 'use client';
 
-import { Search, Bell, Terminal, User, Settings, LogOut, HelpCircle } from "lucide-react";
+import { Search, Bell, Terminal, User, Settings, LogOut, HelpCircle, Menu } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { useUserContext } from '@/contexts/UserContext';
@@ -28,7 +28,7 @@ const T = {
   red:     "#ff3355",
 };
 
-export function Header() {
+export function Header({ setMobileMenuOpen }: { setMobileMenuOpen?: (open: boolean) => void }) {
   const pathname = usePathname();
   
   const getPageTitle = () => {
@@ -69,21 +69,28 @@ export function Header() {
   const { user } = useUserContext();
   
   return (
-    <header style={{
-      height: 80, flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0 2rem",
-      background: "rgba(10, 22, 40, 0.6)", backdropFilter: "blur(12px)", borderBottom: `1px solid ${T.border}`, zIndex: 10
-    }}>
+    <header className="flex h-20 shrink-0 items-center justify-between px-4 md:px-8 bg-[rgba(10,22,40,0.6)] backdrop-blur-md z-10" style={{ borderBottom: `1px solid ${T.border}` }}>
       
-      <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-        <Terminal size={20} color={T.g} />
-        <h1 style={{ fontFamily: T.mono, fontSize: "1rem", letterSpacing: "0.1em", color: "#fff", textTransform: "uppercase" }}>
-          <span style={{ color: T.muted }}>~/</span>{getPageTitle()}<span style={{ display: "inline-block", width: 8, height: 16, background: T.g, marginLeft: 8, animation: "blink 1s step-end infinite" }} />
+      <div className="flex items-center gap-2 md:gap-4">
+        {setMobileMenuOpen && (
+          <button 
+            onClick={() => setMobileMenuOpen(true)}
+            className="md:hidden text-[#00ff88] hover:bg-[rgba(0,255,136,0.1)] p-2 rounded transition-colors"
+          >
+            <Menu size={24} />
+          </button>
+        )}
+        <div className="hidden sm:flex">
+          <Terminal size={20} color={T.g} />
+        </div>
+        <h1 style={{ fontFamily: T.mono, fontSize: "1rem", letterSpacing: "0.1em", color: "#fff", textTransform: "uppercase" }} className="truncate max-w-[150px] sm:max-w-none">
+          <span style={{ color: T.muted }} className="hidden sm:inline">~/</span>{getPageTitle()}<span style={{ display: "inline-block", width: 8, height: 16, background: T.g, marginLeft: 8, animation: "blink 1s step-end infinite" }} />
         </h1>
       </div>
 
-      <div style={{ display: "flex", alignItems: "center", gap: "2rem" }}>
+      <div className="flex items-center gap-4 md:gap-8">
         {/* Search Bar */}
-        <div style={{ position: "relative", display: "flex", alignItems: "center" }}>
+        <div className="hidden md:flex relative items-center">
           <Search size={16} color={searchFocused ? T.g : T.muted} style={{ position: "absolute", left: 12, transition: "color 0.2s" }} />
           <input 
             type="text" 
@@ -100,7 +107,7 @@ export function Header() {
         </div>
 
         {/* Global actions */}
-        <div style={{ display: "flex", alignItems: "center", gap: "1.2rem", color: T.muted }}>
+        <div className="flex items-center gap-3 md:gap-5" style={{ color: T.muted }}>
           <div style={{ position: "relative", cursor: "pointer", transition: "color 0.2s" }} onMouseEnter={e=>e.currentTarget.style.color=T.g} onMouseLeave={e=>e.currentTarget.style.color=T.muted}>
             <Bell size={20} />
             <div style={{ position: "absolute", top: -2, right: -2, width: 8, height: 8, background: T.red, borderRadius: "50%", boxShadow: `0 0 10px ${T.red}` }} />

@@ -54,22 +54,22 @@ const Card = ({ title, value, sub, icon: Icon }: { title: string, value: string 
 
 export default function SalesOverviewPage() {
   return (
-    <div style={{ padding: "2rem", maxWidth: 1400, margin: "0 auto" }}>
+    <div className="p-4 md:p-8 max-w-[1400px] mx-auto w-full">
       
-      <div style={{ marginBottom: "2rem" }}>
-        <h1 style={{ fontFamily: T.display, fontSize: "2.2rem", fontWeight: 700, color: "#fff", marginBottom: "0.5rem", display: "flex", alignItems: "center", gap: "1rem" }}>
-          <Target color={T.g2} size={32} /> Sales Overview
+      <div className="mb-8">
+        <h1 className="font-display text-2xl md:text-4xl font-bold text-white mb-2 flex items-center gap-4">
+          <Target color={T.g2} className="w-6 h-6 md:w-8 md:h-8" /> Sales Overview
         </h1>
-        <p style={{ fontFamily: T.mono, fontSize: "0.9rem", color: T.g2, letterSpacing: "0.05em" }}>
+        <p className="font-mono text-sm md:text-base text-[#00cfff] tracking-wide">
           AI Sales Assistant performance and pipeline.
         </p>
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(12, 1fr)", gap: "1.5rem" }}>
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         
         {/* KPI Cards */}
-        <div style={{ gridColumn: "span 12" }}>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "1rem" }}>
+        <div className="col-span-1 lg:col-span-12">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             <Card title="Total Leads" value="5,420" sub="+840 this week" icon={Users} />
             <Card title="Qualified Leads" value="1,240" sub="+120 this week" icon={CheckCircle} />
             <Card title="Average Score" value="84" sub="+4 this week" icon={Star} />
@@ -83,45 +83,47 @@ export default function SalesOverviewPage() {
         </div>
 
         {/* Main Pipeline Funnel */}
-        <div style={{ gridColumn: "span 12", background: T.panel, border: `1px solid ${T.border2}`, padding: "2rem", position: "relative" }}>
+        <div className="col-span-1 lg:col-span-12 bg-[#0a1628] border border-[rgba(0,207,255,0.18)] p-4 md:p-8 relative w-full overflow-hidden">
           <Corners />
-          <div style={{ fontFamily: T.mono, fontSize: "0.8rem", color: "rgba(0,207,255,0.5)", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: "2.5rem" }}>Pipeline Funnel</div>
+          <div className="font-mono text-xs md:text-sm text-[rgba(0,207,255,0.5)] tracking-widest uppercase mb-10">Pipeline Funnel</div>
           
-          <div style={{ display: "flex", alignItems: "stretch", height: 200, gap: "0.5rem", padding: "0 2rem" }}>
-            {[
-              { stage: "Discovered", val: 5420, pct: 100 },
-              { stage: "Qualified", val: 1240, pct: 60 },
-              { stage: "Researched", val: 1150, pct: 50 },
-              { stage: "Contacted", val: 980, pct: 40 },
-              { stage: "Replied", val: 342, pct: 20 },
-              { stage: "Booked", val: 48, pct: 10 },
-            ].map((s, i, arr) => (
-              <div key={i} style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center" }}>
-                <div style={{ fontFamily: T.body, fontSize: "1rem", color: "#fff", marginBottom: "0.5rem" }}>{s.stage}</div>
-                <div style={{ fontFamily: T.mono, fontSize: "0.8rem", color: T.g2, marginBottom: "1rem" }}>{s.val}</div>
-                
-                {/* Funnel Block */}
-                <div style={{ 
-                  width: "100%", height: "100%", 
-                  background: `rgba(0,207,255,${0.1 + (i*0.05)})`,
-                  borderTop: `2px solid ${T.g2}`,
-                  borderBottom: `2px solid rgba(0,207,255,0.2)`,
-                  position: "relative",
-                  clipPath: `polygon(
-                    ${(100 - s.pct) / 2}% 0%,
-                    ${100 - (100 - s.pct) / 2}% 0%,
-                    ${100 - (100 - (arr[i+1]?.pct || 5)) / 2}% 100%,
-                    ${(100 - (arr[i+1]?.pct || 5)) / 2}% 100%
-                  )`
-                }}>
-                  {i < arr.length - 1 && (
-                    <div style={{ position: "absolute", right: -8, top: "50%", transform: "translateY(-50%)", color: "rgba(0,207,255,0.3)", zIndex: 10 }}>
-                      →
-                    </div>
-                  )}
+          <div className="overflow-x-auto pb-4 w-full">
+            <div className="flex items-stretch h-[200px] gap-2 md:gap-4 px-2 md:px-8 min-w-[600px]">
+              {[
+                { stage: "Discovered", val: 5420, pct: 100 },
+                { stage: "Qualified", val: 1240, pct: 60 },
+                { stage: "Researched", val: 1150, pct: 50 },
+                { stage: "Contacted", val: 980, pct: 40 },
+                { stage: "Replied", val: 342, pct: 20 },
+                { stage: "Booked", val: 48, pct: 10 },
+              ].map((s, i, arr) => (
+                <div key={i} className="flex-1 flex flex-col items-center">
+                  <div className="font-body text-sm md:text-base text-white mb-2">{s.stage}</div>
+                  <div className="font-mono text-xs md:text-sm text-[#00cfff] mb-4">{s.val}</div>
+                  
+                  {/* Funnel Block */}
+                  <div style={{ 
+                    width: "100%", height: "100%", 
+                    background: `rgba(0,207,255,${0.1 + (i*0.05)})`,
+                    borderTop: `2px solid ${T.g2}`,
+                    borderBottom: `2px solid rgba(0,207,255,0.2)`,
+                    position: "relative",
+                    clipPath: `polygon(
+                      ${(100 - s.pct) / 2}% 0%,
+                      ${100 - (100 - s.pct) / 2}% 0%,
+                      ${100 - (100 - (arr[i+1]?.pct || 5)) / 2}% 100%,
+                      ${(100 - (arr[i+1]?.pct || 5)) / 2}% 100%
+                    )`
+                  }}>
+                    {i < arr.length - 1 && (
+                      <div className="absolute -right-2 top-1/2 -translate-y-1/2 text-[rgba(0,207,255,0.3)] z-10 hidden md:block">
+                        →
+                      </div>
+                    )}
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
 

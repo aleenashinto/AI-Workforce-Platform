@@ -7,43 +7,59 @@ import crypto from 'crypto';
 import bcrypt from 'bcryptjs';
 import nodemailer from 'nodemailer';
 export default async function authRoutes(fastify: FastifyInstance) {
-  // Register Google OAuth2
-  fastify.register(oauthPlugin, {
-    name: 'googleOAuth2',
-    credentials: {
-      client: {
-        id: process.env.GOOGLE_CLIENT_ID || 'dummy-google-client-id',
-        secret: process.env.GOOGLE_CLIENT_SECRET || 'dummy-google-client-secret'
-      },
-      auth: oauthPlugin.GOOGLE_CONFIGURATION
-    },
-    startRedirectPath: '/auth/google/login',
-    callbackUri: 'http://localhost:3001/auth/google/callback',
-    scope: ['profile', 'email']
-  });
+  const isMockOAuth = process.env.USE_MOCK_OAUTH === 'true';
 
-  // Register Microsoft OAuth2
-  fastify.register(oauthPlugin, {
-    name: 'microsoftOAuth2',
-    credentials: {
-      client: {
-        id: process.env.MICROSOFT_CLIENT_ID || 'dummy-microsoft-client-id',
-        secret: process.env.MICROSOFT_CLIENT_SECRET || 'dummy-microsoft-client-secret'
+  if (isMockOAuth) {
+    fastify.get('/auth/google/login', async (req, reply) => {
+      return reply.redirect(`${process.env.API_URL || 'http://localhost:3001'}/auth/google/callback?code=mock_code`);
+    });
+    
+    fastify.get('/auth/microsoft/login', async (req, reply) => {
+      return reply.redirect(`${process.env.API_URL || 'http://localhost:3001'}/auth/microsoft/callback?code=mock_code`);
+    });
+  } else {
+    // Register Google OAuth2
+    fastify.register(oauthPlugin, {
+      name: 'googleOAuth2',
+      credentials: {
+        client: {
+          id: process.env.GOOGLE_CLIENT_ID || 'dummy-google-client-id',
+          secret: process.env.GOOGLE_CLIENT_SECRET || 'dummy-google-client-secret'
+        },
+        auth: oauthPlugin.GOOGLE_CONFIGURATION
       },
-      auth: oauthPlugin.MICROSOFT_CONFIGURATION
-    },
-    startRedirectPath: '/auth/microsoft/login',
-    callbackUri: 'http://localhost:3001/auth/microsoft/callback',
-    scope: ['User.Read']
-  });
+      startRedirectPath: '/auth/google/login',
+      callbackUri: `${process.env.API_URL || 'http://localhost:3001'}/auth/google/callback`,
+      scope: ['profile', 'email']
+    });
+
+    // Register Microsoft OAuth2
+    fastify.register(oauthPlugin, {
+      name: 'microsoftOAuth2',
+      credentials: {
+        client: {
+          id: process.env.MICROSOFT_CLIENT_ID || 'dummy-microsoft-client-id',
+          secret: process.env.MICROSOFT_CLIENT_SECRET || 'dummy-microsoft-client-secret'
+        },
+        auth: oauthPlugin.MICROSOFT_CONFIGURATION
+      },
+      startRedirectPath: '/auth/microsoft/login',
+      callbackUri: `${process.env.API_URL || 'http://localhost:3001'}/auth/microsoft/callback`,
+      scope: ['User.Read']
+    });
+  }
 
   const handleOAuthCallback = async (req: any, reply: any, token: any, provider: string, fetchProfileUrl: string, profileMapper: (data: any) => { id: string, email: string, name: string }) => {
     try {
-      const response = await fetch(fetchProfileUrl, {
-        headers: { Authorization: `Bearer ${token.access_token}` }
-      });
-      const data = await response.json();
+      let data = {};
       
+      if (fetchProfileUrl && !isMockOAuth) {
+        const response = await fetch(fetchProfileUrl, {
+          headers: { Authorization: `Bearer ${token.access_token}` }
+        });
+        data = await response.json();
+      }
+
       const profile = profileMapper(data);
       const authProviderId = `${provider}:${profile.id}`;
 
@@ -119,21 +135,31 @@ export default async function authRoutes(fastify: FastifyInstance) {
   };
 
   fastify.get('/auth/google/callback', async (req, reply) => {
-    const { token } = await (fastify as any).googleOAuth2.getAccessTokenFromAuthorizationCodeFlow(req);
-    return handleOAuthCallback(req, reply, token, 'google', 'https://www.googleapis.com/oauth2/v2/userinfo', (data) => ({
-      id: data.id,
-      email: data.email,
-      name: data.name
-    }));
+    let token = { access_token: 'mock_token' };
+    if (!isMockOAuth) {
+      token = await (fastify as any).googleOAuth2.getAccessTokenFromAuthorizationCodeFlow(req).token;
+    }
+    
+    return handleOAuthCallback(req, reply, token, 'google', 'https://www.googleapis.com/oauth2/v2/userinfo', (data) => {
+      if (isMockOAuth) {
+        return { id: 'mock-google-123', email: 'mockuser@example.com', name: 'Mock Google User' };
+      }
+      return { id: data.id, email: data.email, name: data.name };
+    });
   });
 
   fastify.get('/auth/microsoft/callback', async (req, reply) => {
-    const { token } = await (fastify as any).microsoftOAuth2.getAccessTokenFromAuthorizationCodeFlow(req);
-    return handleOAuthCallback(req, reply, token, 'microsoft', 'https://graph.microsoft.com/v1.0/me', (data) => ({
-      id: data.id,
-      email: data.userPrincipalName, // Microsoft usually puts email here
-      name: data.displayName
-    }));
+    let token = { access_token: 'mock_token' };
+    if (!isMockOAuth) {
+      token = await (fastify as any).microsoftOAuth2.getAccessTokenFromAuthorizationCodeFlow(req).token;
+    }
+    
+    return handleOAuthCallback(req, reply, token, 'microsoft', 'https://graph.microsoft.com/v1.0/me', (data) => {
+      if (isMockOAuth) {
+        return { id: 'mock-ms-123', email: 'mockuser-ms@example.com', name: 'Mock MS User' };
+      }
+      return { id: data.id, email: data.userPrincipalName, name: data.displayName };
+    });
   });
 
   fastify.post('/auth/logout', async (req, reply) => {
@@ -169,7 +195,9 @@ export default async function authRoutes(fastify: FastifyInstance) {
           id: user.id,
           email: user.email,
           name: user.name,
-          avatarUrl: "",
+          avatarUrl: user.avatar_url || "",
+          phoneNumber: user.phone_number || "",
+          jobTitle: user.job_title || "",
           roles: req.user.roles,
           organization: orgData ? {
             name: orgData.name,
@@ -256,7 +284,7 @@ export default async function authRoutes(fastify: FastifyInstance) {
       return reply.status(401).send({ error: "Unauthorized" });
     }
 
-    const { fullName, email, currentPassword, newPassword } = req.body;
+    const { fullName, email, currentPassword, newPassword, avatarUrl, phoneNumber, jobTitle } = req.body;
     const userId = req.user.user_id;
 
     const [user] = await db.select().from(users).where(eq(users.id, userId)).limit(1);
@@ -264,6 +292,9 @@ export default async function authRoutes(fastify: FastifyInstance) {
 
     const updates: any = {};
     if (fullName) updates.name = fullName;
+    if (avatarUrl !== undefined) updates.avatar_url = avatarUrl;
+    if (phoneNumber !== undefined) updates.phone_number = phoneNumber;
+    if (jobTitle !== undefined) updates.job_title = jobTitle;
 
     if (email && email !== user.email) {
       // Check if email already in use
@@ -273,6 +304,11 @@ export default async function authRoutes(fastify: FastifyInstance) {
     }
 
     if (newPassword) {
+      const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+      if (!passwordRegex.test(newPassword)) {
+        return reply.status(400).send({ error: "Password must be at least 8 characters long and include an uppercase letter, a lowercase letter, a number, and a special character." });
+      }
+
       // If user has an existing password hash, require current password
       if (user.password_hash) {
         if (!currentPassword) {
@@ -298,22 +334,48 @@ export default async function authRoutes(fastify: FastifyInstance) {
       user: {
         id: updatedUser.id,
         email: updatedUser.email,
-        name: updatedUser.name
+        name: updatedUser.name,
+        avatarUrl: updatedUser.avatar_url || "",
+        phoneNumber: updatedUser.phone_number || "",
+        jobTitle: updatedUser.job_title || ""
       }
     };
   });
 
-  fastify.post('/auth/register', async (req: any, reply) => {
+  fastify.post('/auth/register', {
+    config: {
+      rateLimit: {
+        max: 5,
+        timeWindow: '1 minute'
+      }
+    }
+  }, async (req: any, reply) => {
     const { fullName, email, companyName, password } = req.body;
 
-    if (!fullName || !email || !password) {
-      return reply.status(400).send({ error: "Missing required fields" });
+    if (!fullName || !fullName.trim()) {
+      return reply.status(400).send({ error: "Full name is required" });
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email || !emailRegex.test(email)) {
+      return reply.status(400).send({ error: "Invalid email format" });
+    }
+    
+    // Block common free personal email domains
+    const freeDomains = ["gmail.com", "yahoo.com", "hotmail.com", "outlook.com", "aol.com", "icloud.com"];
+    const domain = email.split("@")[1]?.toLowerCase();
+    if (domain && freeDomains.includes(domain)) {
+      return reply.status(400).send({ error: "Please use a company/work email address instead of a personal account." });
+    }
+
+    const passwordComplexityRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    if (!password || !passwordComplexityRegex.test(password)) {
+      return reply.status(400).send({ error: "Password must be at least 8 characters, include uppercase, lowercase, number, and special character." });
     }
 
     // Check for existing user
     const [existingUser] = await db.select().from(users).where(eq(users.email, email)).limit(1);
     if (existingUser) {
-      return reply.status(400).send({ error: "Email is already registered" });
+      return reply.status(409).send({ error: "Email is already registered" });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -411,7 +473,14 @@ export default async function authRoutes(fastify: FastifyInstance) {
     return { success: true };
   });
 
-  fastify.post('/auth/login', async (req: any, reply) => {
+  fastify.post('/auth/login', {
+    config: {
+      rateLimit: {
+        max: 5,
+        timeWindow: '1 minute'
+      }
+    }
+  }, async (req: any, reply) => {
     const { email, password, rememberMe } = req.body;
     const bcrypt = require('bcryptjs');
 

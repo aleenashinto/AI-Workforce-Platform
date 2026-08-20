@@ -79,7 +79,13 @@ function TargetIcon({ size }: { size: number }) {
   );
 }
 
-export function Sidebar() {
+export function Sidebar({ 
+  mobileMenuOpen, 
+  setMobileMenuOpen 
+}: { 
+  mobileMenuOpen?: boolean; 
+  setMobileMenuOpen?: (open: boolean) => void;
+}) {
   const pathname = usePathname();
   const [expandedGroups, setExpandedGroups] = useState<Record<string, boolean>>({});
   const { user, hasRole } = useUserContext();
@@ -113,10 +119,15 @@ export function Sidebar() {
   };
 
   return (
-    <aside style={{
-      width: 260, flexShrink: 0, display: "flex", flexDirection: "column", height: "100%",
-      background: T.panel, borderRight: `1px solid ${T.border}`, zIndex: 20
-    }}>
+    <aside 
+      className={`
+        fixed inset-y-0 left-0 z-50 w-[260px] flex-shrink-0 flex flex-col h-full 
+        transform transition-transform duration-300 ease-in-out
+        md:relative md:translate-x-0
+        ${mobileMenuOpen ? 'translate-x-0' : '-translate-x-full'}
+      `}
+      style={{ background: T.panel, borderRight: `1px solid ${T.border}` }}
+    >
       
       {/* Logo */}
       <div style={{ height: 80, display: "flex", flexDirection: "column", justifyContent: "center", padding: "0 1.5rem", borderBottom: `1px solid ${T.border}` }}>

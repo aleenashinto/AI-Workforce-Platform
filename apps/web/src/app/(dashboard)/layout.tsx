@@ -1,16 +1,10 @@
-import { Sidebar } from "@/components/layout/sidebar";
-import { Header } from "@/components/layout/header";
+import { DashboardShell } from "@/components/layout/dashboard-shell";
 
 /* ─────────────────────────────────────────────
    DESIGN TOKENS
 ───────────────────────────────────────────── */
 const T = {
-  g:       "#00ff88",
-  g2:      "#00cfff",
   bg:      "#040810",
-  bg2:     "#070e1a",
-  panel:   "#0a1628",
-  border:  "rgba(0,255,136,0.18)",
   text:    "#c8ffe8",
 };
 
@@ -20,7 +14,7 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div style={{ minHeight: "100vh", background: T.bg, color: T.text, display: "flex", overflow: "hidden", position: "relative" }}>
+    <div style={{ minHeight: "100vh", background: T.bg, color: T.text }} className="flex overflow-hidden relative">
       
       {/* Background Grid */}
       <div style={{
@@ -30,20 +24,9 @@ export default function DashboardLayout({
       }} />
 
       {/* Main App Window wrapper */}
-      <div style={{ display: "flex", width: "100%", height: "100vh", position: "relative", zIndex: 10 }}>
-        
-        {/* Sidebar */}
-        <Sidebar />
-
-        {/* Main Content Area */}
-        <div style={{ display: "flex", flexDirection: "column", flex: 1, overflow: "hidden", background: "rgba(0,0,0,0.3)" }}>
-          <Header />
-          <main style={{ flex: 1, overflowY: "auto", padding: "2rem", position: "relative" }}>
-            {children}
-          </main>
-        </div>
-
-      </div>
+      <DashboardShell>
+        {children}
+      </DashboardShell>
     </div>
   );
 }

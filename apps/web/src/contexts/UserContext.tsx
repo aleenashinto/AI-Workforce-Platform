@@ -17,6 +17,8 @@ type UserProfile = {
   role: string;
   roles: MemberRole[];
   avatarUrl: string;
+  phoneNumber?: string;
+  jobTitle?: string;
   organization: {
     name: string;
     website: string;
@@ -60,6 +62,8 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
             role: data.user.roles?.[0] || "User",
             roles: data.user.roles || [],
             avatarUrl: data.user.avatarUrl || "",
+            phoneNumber: data.user.phoneNumber || "",
+            jobTitle: data.user.jobTitle || "",
             organization: data.user.organization || {
               name: "Your Workspace",
               website: "",

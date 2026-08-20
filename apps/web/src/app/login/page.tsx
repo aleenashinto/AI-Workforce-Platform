@@ -43,27 +43,66 @@ const Corners = () => (
   </>
 );
 
-function ModalField({ label, type, placeholder, value, onChange }: { label: string, type: string, placeholder?: string, value: string, onChange: (e: React.ChangeEvent<HTMLInputElement>) => void }) {
+function ModalField({ id, name, label, type, placeholder, value, onChange }: { id?: string, name?: string, label: string, type: string, placeholder?: string, value: string, onChange: (e: React.ChangeEvent<HTMLInputElement>) => void }) {
   const [focused, setFocused] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const inputId = id || name || label.replace(/\s+/g, '-').toLowerCase();
+  
+  const isPassword = type === 'password';
+  const currentType = isPassword ? (showPassword ? 'text' : 'password') : type;
+
   return (
     <div style={{ marginBottom: "1.1rem" }}>
-      <label style={{ fontFamily:T.mono, fontSize:"0.65rem", letterSpacing:"0.12em", color:T.muted, marginBottom:"0.4rem", display:"block", textTransform:"uppercase" }}>{label}</label>
-      <input 
-        type={type} 
-        placeholder={placeholder} 
-        value={value}
-        onChange={onChange}
-        onFocus={()=>setFocused(true)} 
-        onBlur={()=>setFocused(false)} 
-        style={{
-          width:"100%", background:"rgba(0,255,136,0.03)",
-          border:`1px solid ${focused ? "rgba(0,255,136,0.5)" : T.border}`,
-          boxShadow: focused ? "0 0 0 3px rgba(0,255,136,0.08)" : "none",
-          color:T.text, fontFamily:T.mono, fontSize:"0.85rem",
-          padding:"0.7rem 1rem", outline:"none",
-          transition:"border-color 0.2s, box-shadow 0.2s",
-        }}
-      />
+      <label htmlFor={inputId} style={{ fontFamily:T.mono, fontSize:"0.65rem", letterSpacing:"0.12em", color:T.muted, marginBottom:"0.4rem", display:"block", textTransform:"uppercase" }}>
+        {label}
+      </label>
+      <div style={{ position: "relative" }}>
+        <input 
+          id={inputId}
+          name={name}
+          type={currentType} 
+          placeholder={placeholder} 
+          value={value}
+          onChange={onChange}
+          autoComplete={isPassword ? 'current-password' : 'off'}
+          onFocus={()=>setFocused(true)} 
+          onBlur={()=>setFocused(false)} 
+          style={{
+            width: "100%",
+            background: "rgba(0,255,136,0.03)",
+            border: `1px solid ${focused ? "rgba(0,255,136,0.5)" : T.border}`,
+            boxShadow: focused ? "0 0 0 3px rgba(0,255,136,0.08)" : "none",
+            padding: "0.8rem 1rem",
+            paddingRight: isPassword ? "2.5rem" : "1rem",
+            color: T.text,
+            fontFamily: currentType === 'password' ? 'sans-serif' : T.mono,
+            fontSize: "0.85rem",
+            outline: "none",
+            transition: "all 0.2s"
+          }}
+        />
+        {isPassword && (
+          <button 
+            type="button"
+            onClick={() => setShowPassword(!showPassword)}
+            style={{
+              position: "absolute",
+              right: "0.8rem",
+              top: "50%",
+              transform: "translateY(-50%)",
+              background: "none",
+              border: "none",
+              color: T.muted,
+              cursor: "pointer",
+              fontFamily: T.mono,
+              fontSize: "0.7rem",
+              outline: "none"
+            }}
+          >
+            {showPassword ? "HIDE" : "SHOW"}
+          </button>
+        )}
+      </div>
     </div>
   );
 }
@@ -112,8 +151,18 @@ export default function LoginPage() {
     e.preventDefault();
     setError("");
 
-    if (!formData.email || !formData.password) {
-      setError("Please enter your email and password.");
+    const focusField = (name: string) => {
+      document.getElementById(name)?.focus();
+    };
+
+    if (!formData.email) {
+      setError("Please enter your email.");
+      focusField("email");
+      return;
+    }
+    if (!formData.password) {
+      setError("Please enter your password.");
+      focusField("password");
       return;
     }
 
@@ -147,6 +196,16 @@ export default function LoginPage() {
       minHeight: "100vh", background: T.bg, color: T.text,
       display: "flex", alignItems: "center", justifyContent: "center", padding: "2rem", position: "relative"
     }}>
+      <style dangerouslySetInnerHTML={{__html: `
+        input:-webkit-autofill,
+        input:-webkit-autofill:hover, 
+        input:-webkit-autofill:focus, 
+        input:-webkit-autofill:active{
+            -webkit-box-shadow: 0 0 0 30px #0a1628 inset !important;
+            -webkit-text-fill-color: #c8ffe8 !important;
+            transition: background-color 5000s ease-in-out 0s;
+        }
+      `}} />
       <div style={{
         position: "fixed", inset: 0, zIndex: 0, pointerEvents: "none",
         backgroundImage: `linear-gradient(rgba(0,255,136,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(0,255,136,0.04) 1px, transparent 1px)`,
@@ -169,9 +228,9 @@ export default function LoginPage() {
           Access Terminal
         </div>
 
-        <form onSubmit={handleLogin}>
-          <ModalField label="Email" type="email" placeholder="agent@yourteam.io" value={formData.email} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({...formData, email: e.target.value})} />
-          <ModalField label="Password" type="password" placeholder="••••••••••••" value={formData.password} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({...formData, password: e.target.value})} />
+        <form onSubmit={handleLogin} id="login-form">
+          <ModalField id="email" name="email" label="Email" type="email" placeholder="agent@yourteam.io" value={formData.email} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({...formData, email: e.target.value})} />
+          <ModalField id="password" name="password" label="Password" type="password" placeholder="••••••••••••" value={formData.password} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({...formData, password: e.target.value})} />
 
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: "0.5rem", marginBottom: "1.5rem" }}>
             <label style={{ display: "flex", alignItems: "center", gap: "0.6rem", cursor: "pointer" }}>
@@ -198,8 +257,8 @@ export default function LoginPage() {
           </div>
 
           {error && (
-            <div style={{ fontFamily: T.mono, fontSize: "0.85rem", color: T.red, marginBottom: "1.5rem", textAlign: "center" }}>
-              [ERROR] {error}
+            <div style={{ padding:"0.75rem", background:"rgba(255,51,85,0.1)", border:`1px solid ${T.red}`, color:T.red, fontSize:"0.8rem", fontFamily:T.mono, marginBottom:"1.2rem", textAlign:"center" }}>
+              {error}
             </div>
           )}
 

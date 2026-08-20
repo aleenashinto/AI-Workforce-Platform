@@ -24,6 +24,9 @@ export const users = pgTable('users', {
   auth_provider_id: text('auth_provider_id'),
   password_hash: text('password_hash'),
   email_verified: boolean('email_verified').notNull().default(false),
+  avatar_url: text('avatar_url'),
+  phone_number: text('phone_number'),
+  job_title: text('job_title'),
 });
 
 export const password_reset_tokens = pgTable('password_reset_tokens', {
