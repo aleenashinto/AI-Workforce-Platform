@@ -6,7 +6,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { Queue } from 'bullmq';
 import { requireAction } from '../middleware/authz';
 
-const draftingQueue = new Queue('drafting-queue', { connection: { url: process.env.REDIS_URL || 'redis://localhost:6379', retryStrategy: () => null, maxRetriesPerRequest: null } });
+const draftingQueue = new Queue('drafting-queue', { connection: { url: process.env.REDIS_URL || 'redis://localhost:6379', lazyConnect: true, retryStrategy: () => null, maxRetriesPerRequest: null as any } });
 
 export default async function sequencesRoutes(fastify: FastifyInstance) {
   

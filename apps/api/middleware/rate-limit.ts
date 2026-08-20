@@ -2,11 +2,8 @@ import { FastifyRequest, FastifyReply } from 'fastify';
 import IORedis from 'ioredis';
 const redis = new IORedis(process.env.REDIS_URL || 'redis://127.0.0.1:6379', {
   maxRetriesPerRequest: 1,
-  connectTimeout: 2000, // 2 seconds
-  retryStrategy(times) {
-    if (times > 2) return null; // stop retrying after 2 attempts
-    return 1000;
-  }
+  lazyConnect: true,
+  retryStrategy: () => null
 });
 const RATE_LIMIT_WINDOW_SECS = 60;
 const MAX_REQUESTS_PER_WINDOW = 100;

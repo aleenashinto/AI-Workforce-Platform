@@ -7,7 +7,17 @@ import { drizzle } from 'drizzle-orm/postgres-js';
 import { knowledge_sources } from '@ai-workforce/db/schema';
 import { Queue } from 'bullmq';
 
-const ingestionQueue = new Queue('ingestion', { connection: { host: process.env.REDIS_HOST || '127.0.0.1', port: 6379 } });
+// Use an options object that prevents crashing when Redis isn't available
+const queueOpts = {
+  connection: { 
+    host: process.env.REDIS_HOST || '127.0.0.1', 
+    port: 6379,
+    maxRetriesPerRequest: null as any,
+    retryStrategy: () => null,
+    lazyConnect: true
+  }
+};
+const ingestionQueue = new Queue('ingestion', queueOpts);
 
 export async function knowledgeRoutes(fastify: FastifyInstance) {
   const s3 = new S3Client({
