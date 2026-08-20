@@ -7,7 +7,10 @@ import * as schema from './schema';
 export const tenantContext = new AsyncLocalStorage<any>();
 
 export const getDb = (connectionString: string) => {
-  const client = postgres(connectionString);
+  const client = postgres(connectionString, { 
+    prepare: false, 
+    ssl: process.env.NODE_ENV === 'production' ? 'require' : false 
+  });
   const baseDb = drizzle(client, { schema });
 
   // Proxy to use the AsyncLocalStorage transaction if one exists

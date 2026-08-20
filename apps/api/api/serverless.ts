@@ -3,10 +3,13 @@ import fastify from '../server';
 export default async function (req: any, res: any) {
   try {
     await fastify.ready();
+    const headers = { ...req.headers };
+    delete headers['content-length'];
+
     const response = await fastify.inject({
       method: req.method,
       url: req.url,
-      headers: req.headers,
+      headers: headers,
       payload: req.body,
       query: req.query
     });
