@@ -14,7 +14,7 @@ const nextConfig: NextConfig = {
     return [
       {
         source: "/api/:path*",
-        destination: "https://ai-workforce-api.vercel.app/:path*", // Proxy to Backend
+        destination: "https://ai-workforce-api-pi.vercel.app/:path*", // Proxy to Backend
       },
     ];
   },

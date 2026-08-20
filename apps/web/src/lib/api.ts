@@ -1,5 +1,5 @@
 let API_URL = (process.env.NEXT_PUBLIC_API_URL || "/api").replace(/\/+$/, "");
-if (API_URL.includes("ai-workforce-api.vercel.app")) {
+if (API_URL.includes("ai-workforce-api-pi.vercel.app")) {
   API_URL = "/api";
 }
 if (!API_URL) {

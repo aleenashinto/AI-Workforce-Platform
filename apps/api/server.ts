@@ -43,7 +43,8 @@ const allowedOriginsList = [
   'http://localhost:5173',
   'http://localhost:3000',
   'https://ai-workforce-job-web-git-main-inspite1.vercel.app',
-  'https://ai-workforce-job-cslmzobfm-inspite1.vercel.app'
+  'https://ai-workforce-job-cslmzobfm-inspite1.vercel.app',
+  'https://ai-workforce-platform-web-nine.vercel.app'
 ];
 
 const allowedOrigins = (origin: string | undefined, cb: (err: Error | null, allow: boolean) => void) => {
