@@ -3,11 +3,11 @@
 import { 
   FileText, Globe, Database, Type, UploadCloud
 } from "lucide-react";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect, Suspense } from "react";
 import Link from "next/link";
 import { useUserContext } from "@/contexts/UserContext";
 import { API_BASE } from "@/lib/api";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 /* ─────────────────────────────────────────────
    DESIGN TOKENS
@@ -43,10 +43,11 @@ const Corners = () => (
   </>
 );
 
-export default function AddKnowledgePage() {
+function AddKnowledgeContent() {
   const [activeType, setActiveType] = useState('file');
   const currentOrgId = "00000000-0000-0000-0000-000000000001";
   const router = useRouter();
+  const searchParams = useSearchParams();
 
   // Common State
   const [isImporting, setIsImporting] = useState(false);
@@ -69,6 +70,14 @@ export default function AddKnowledgePage() {
   // Text State
   const [textTitle, setTextTitle] = useState("");
   const [textContent, setTextContent] = useState("");
+
+  useEffect(() => {
+    const title = searchParams.get('title');
+    if (title) {
+      setActiveType('text');
+      setTextTitle(title);
+    }
+  }, [searchParams]);
 
   const sources = [
     { id: 'file', label: 'Upload File', icon: FileText },
@@ -320,5 +329,13 @@ export default function AddKnowledgePage() {
       </div>
 
     </div>
+  );
+}
+
+export default function AddKnowledgePage() {
+  return (
+    <Suspense fallback={<div style={{ padding: '2rem', color: '#00ff88', fontFamily: '"Share Tech Mono", monospace' }}>Loading...</div>}>
+      <AddKnowledgeContent />
+    </Suspense>
   );
 }
