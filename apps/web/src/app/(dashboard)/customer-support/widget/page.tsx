@@ -4,7 +4,7 @@ import {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   Monitor, MessageSquare, Plus, Save
 } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 /* ─────────────────────────────────────────────
    DESIGN TOKENS
@@ -51,6 +51,52 @@ export default function WidgetConfigPage() {
   const [suggestedQuestions, setSuggestedQuestions] = useState('Where is my order?\nHow do I get a refund?');
   const [primaryLanguage, setPrimaryLanguage] = useState('English');
   const [escalationBehavior, setEscalationBehavior] = useState('Transfer to Human Agent (Live)');
+  const [testMessages, setTestMessages] = useState<{role: 'user' | 'assistant', content: string}[]>([
+    { role: 'assistant', content: greeting }
+  ]);
+  const [inputValue, setInputValue] = useState('');
+  const [isTyping, setIsTyping] = useState(false);
+
+  // Sync greeting changes to the first message if it hasn't been modified heavily
+  useEffect(() => {
+    if (testMessages.length === 1 && testMessages[0].role === 'assistant') {
+      setTestMessages([{ role: 'assistant', content: greeting }]);
+    }
+  }, [greeting]);
+
+  const handleSendMessage = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!inputValue.trim() || isTyping) return;
+
+    const newMsg = inputValue;
+    setInputValue('');
+    setTestMessages(prev => [...prev, { role: 'user', content: newMsg }]);
+    setIsTyping(true);
+
+    // Mock AI response
+    setTimeout(() => {
+      const mockResponse = "This is a test response from your AI Agent. In a real environment, this would search your Knowledge Base and provide a cited answer.";
+      const words = mockResponse.split(' ');
+      let currentIdx = 0;
+      
+      setTestMessages(prev => [...prev, { role: 'assistant', content: '' }]);
+
+      const streamInterval = setInterval(() => {
+        if (currentIdx < words.length) {
+          setTestMessages(prev => {
+            const newArr = [...prev];
+            const lastMsg = newArr[newArr.length - 1];
+            lastMsg.content = lastMsg.content + (currentIdx === 0 ? '' : ' ') + words[currentIdx];
+            return newArr;
+          });
+          currentIdx++;
+        } else {
+          clearInterval(streamInterval);
+          setIsTyping(false);
+        }
+      }, 50); // 50ms per word
+    }, 500);
+  };
 
   return (
     <div style={{ padding: "2rem", maxWidth: 1400, margin: "0 auto", display: "flex", gap: "2rem" }}>
@@ -102,8 +148,8 @@ export default function WidgetConfigPage() {
                   <label style={{ fontFamily:T.mono, fontSize:"0.65rem", letterSpacing:"0.12em", color:T.muted, marginBottom:"0.4rem", display:"block", textTransform:"uppercase" }}>Launcher Icon</label>
                   <select value={launcherIcon} onChange={e => setLauncherIcon(e.target.value)} style={{ width: "100%", background: "rgba(0,255,136,0.03)", border: `1px solid ${T.border}`, color: T.text, fontFamily: T.mono, fontSize: "0.82rem", padding: "0.7rem 1rem", outline: "none", appearance: "none" }}>
                     <option>Chat Bubble</option>
-                    <option>Robot</option>
-                    <option>Custom Logo</option>
+                    <option>Support Robot</option>
+                    <option>Question Mark</option>
                   </select>
                 </div>
               </div>
@@ -113,12 +159,20 @@ export default function WidgetConfigPage() {
           {activeTab === 'greeting' && (
             <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
               <div>
-                <label style={{ fontFamily:T.mono, fontSize:"0.65rem", letterSpacing:"0.12em", color:T.muted, marginBottom:"0.4rem", display:"block", textTransform:"uppercase" }}>Welcome Message</label>
-                <textarea value={greeting} onChange={e => setGreeting(e.target.value)} style={{ width: "100%", height: 80, background: "rgba(0,255,136,0.03)", border: `1px solid ${T.border}`, color: T.text, fontFamily: T.mono, fontSize: "0.82rem", padding: "0.7rem 1rem", outline: "none", resize: "none" }} />
+                <label style={{ fontFamily:T.mono, fontSize:"0.65rem", letterSpacing:"0.12em", color:T.muted, marginBottom:"0.4rem", display:"block", textTransform:"uppercase" }}>Initial Greeting</label>
+                <textarea 
+                  value={greeting} 
+                  onChange={e => setGreeting(e.target.value)}
+                  style={{ width: "100%", height: 80, background: "rgba(0,255,136,0.03)", border: `1px solid ${T.border}`, color: T.text, fontFamily: T.mono, fontSize: "0.82rem", padding: "0.7rem 1rem", outline: "none", resize: "none" }}
+                />
               </div>
               <div>
                 <label style={{ fontFamily:T.mono, fontSize:"0.65rem", letterSpacing:"0.12em", color:T.muted, marginBottom:"0.4rem", display:"block", textTransform:"uppercase" }}>Suggested Questions (One per line)</label>
-                <textarea value={suggestedQuestions} onChange={e => setSuggestedQuestions(e.target.value)} style={{ width: "100%", height: 100, background: "rgba(0,255,136,0.03)", border: `1px solid ${T.border}`, color: T.text, fontFamily: T.mono, fontSize: "0.82rem", padding: "0.7rem 1rem", outline: "none", resize: "none", whiteSpace: "pre-wrap" }} />
+                <textarea 
+                  value={suggestedQuestions} 
+                  onChange={e => setSuggestedQuestions(e.target.value)}
+                  style={{ width: "100%", height: 120, background: "rgba(0,255,136,0.03)", border: `1px solid ${T.border}`, color: T.text, fontFamily: T.mono, fontSize: "0.82rem", padding: "0.7rem 1rem", outline: "none", resize: "none" }}
+                />
               </div>
             </div>
           )}
@@ -131,22 +185,25 @@ export default function WidgetConfigPage() {
                   <option>English</option>
                   <option>Spanish</option>
                   <option>French</option>
+                  <option>German</option>
+                  <option>Auto-detect</option>
                 </select>
               </div>
               <div>
                 <label style={{ fontFamily:T.mono, fontSize:"0.65rem", letterSpacing:"0.12em", color:T.muted, marginBottom:"0.4rem", display:"block", textTransform:"uppercase" }}>Escalation Behavior</label>
                 <select value={escalationBehavior} onChange={e => setEscalationBehavior(e.target.value)} style={{ width: "100%", background: "rgba(0,255,136,0.03)", border: `1px solid ${T.border}`, color: T.text, fontFamily: T.mono, fontSize: "0.82rem", padding: "0.7rem 1rem", outline: "none", appearance: "none" }}>
                   <option>Transfer to Human Agent (Live)</option>
-                  <option>Create Email Ticket</option>
+                  <option>Create Support Ticket (Email)</option>
+                  <option>Apologize and End Chat</option>
                 </select>
               </div>
             </div>
           )}
 
           <div style={{ marginTop: "2.5rem", display: "flex", justifyContent: "flex-end" }}>
-            <button style={{ 
-              background: T.g, border: "none", padding: "0.8rem 2rem", color: T.bg, 
-              fontFamily: T.mono, fontSize: "0.8rem", fontWeight: "bold", textTransform: "uppercase",
+            <button style={{
+              background: T.g, border: "none", color: T.bg, fontFamily: T.mono, fontSize: "0.8rem", 
+              fontWeight: 700, textTransform: "uppercase", padding: "0.8rem 1.5rem", 
               display: "flex", alignItems: "center", gap: "0.5rem", cursor: "pointer", boxShadow: T.glow,
               clipPath: "polygon(10px 0%,100% 0%,calc(100% - 10px) 100%,0% 100%)"
             }}>
@@ -177,24 +234,53 @@ export default function WidgetConfigPage() {
             </div>
             
             {/* Chat area */}
-            <div style={{ flex: 1, background: T.bg2, padding: "1rem", display: "flex", flexDirection: "column", gap: "1rem" }}>
-              <div style={{ background: T.panel, border: `1px solid ${T.border}`, padding: "0.8rem", borderRadius: "0 12px 12px 12px", fontFamily: T.body, fontSize: "0.9rem", color: "#fff", alignSelf: "flex-start", maxWidth: "85%" }}>
-                {greeting}
-              </div>
+            <div style={{ flex: 1, background: T.bg2, padding: "1rem", display: "flex", flexDirection: "column", gap: "1rem", overflowY: "auto" }}>
+              {testMessages.map((msg, i) => (
+                <div key={i} style={{ 
+                  background: msg.role === 'assistant' ? T.panel : brandColor, 
+                  border: msg.role === 'assistant' ? `1px solid ${T.border}` : 'none', 
+                  padding: "0.8rem", 
+                  borderRadius: msg.role === 'assistant' ? "0 12px 12px 12px" : "12px 0 12px 12px", 
+                  fontFamily: T.body, 
+                  fontSize: "0.9rem", 
+                  color: msg.role === 'assistant' ? "#fff" : T.bg, 
+                  alignSelf: msg.role === 'assistant' ? "flex-start" : "flex-end", 
+                  maxWidth: "85%" 
+                }}>
+                  {msg.content}
+                </div>
+              ))}
+              {isTyping && (
+                <div style={{ background: T.panel, border: `1px solid ${T.border}`, padding: "0.8rem", borderRadius: "0 12px 12px 12px", alignSelf: "flex-start" }}>
+                  <span style={{ color: T.g, fontFamily: T.mono, fontSize: "1rem", animation: "pulse 1.5s infinite" }}>...</span>
+                </div>
+              )}
               
-              <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem", marginTop: "auto" }}>
-                {suggestedQuestions.split('\n').filter(q => q.trim()).map((q, i) => (
-                  <button key={i} style={{ background: "transparent", border: `1px solid ${T.border}`, padding: "0.6rem", borderRadius: 20, color: T.g, fontFamily: T.mono, fontSize: "0.7rem", textAlign: "left", cursor: "pointer" }}>{q}</button>
-                ))}
-              </div>
+              {testMessages.length === 1 && !isTyping && (
+                <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem", marginTop: "auto" }}>
+                  {suggestedQuestions.split('\n').filter(q => q.trim()).map((q, i) => (
+                    <button 
+                      key={i} 
+                      onClick={() => setInputValue(q)}
+                      style={{ background: "transparent", border: `1px solid ${T.border}`, padding: "0.6rem", borderRadius: 20, color: T.g, fontFamily: T.mono, fontSize: "0.7rem", textAlign: "left", cursor: "pointer" }}
+                    >
+                      {q}
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
 
             {/* Input area */}
-            <div style={{ background: T.panel, borderTop: `1px solid ${T.border}`, padding: "0.8rem" }}>
-              <div style={{ background: T.bg2, border: `1px solid ${T.border}`, borderRadius: 20, padding: "0.6rem 1rem", fontFamily: T.mono, fontSize: "0.8rem", color: T.muted }}>
-                Type a message...
-              </div>
-            </div>
+            <form onSubmit={handleSendMessage} style={{ background: T.panel, borderTop: `1px solid ${T.border}`, padding: "0.8rem" }}>
+              <input 
+                type="text"
+                value={inputValue}
+                onChange={e => setInputValue(e.target.value)}
+                placeholder="Type a message..."
+                style={{ width: "100%", background: T.bg2, border: `1px solid ${T.border}`, borderRadius: 20, padding: "0.6rem 1rem", fontFamily: T.mono, fontSize: "0.8rem", color: T.text, outline: "none" }}
+              />
+            </form>
           </div>
 
           {/* Launcher */}
