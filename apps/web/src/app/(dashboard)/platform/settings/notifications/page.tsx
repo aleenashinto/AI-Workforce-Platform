@@ -5,6 +5,7 @@ import { useState } from "react";
 
 const T = {
   g:       "#00ff88",
+  g2:      "#00cfff",
   bg:      "#040810",
   bg2:     "#070e1a",
   panel:   "#0a1628",
