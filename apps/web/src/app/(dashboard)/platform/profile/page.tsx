@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import { User, Camera, Eye, EyeOff } from "lucide-react";
 import { useUserContext } from "@/contexts/UserContext";
+import { PhoneField } from "@/components/ui/PhoneField";
 
 const T = {
   g:       "#00ff88",
@@ -303,7 +304,7 @@ export default function ProfilePage() {
           <Input label="Full Name" value={fullName} onChange={(e: any) => setFullName(e.target.value)} readOnly={!isEditing} />
           <Input label="Email Address" type="email" value={email} onChange={(e: any) => setEmail(e.target.value)} readOnly={true} />
           <Input label="Job Title" value={jobTitle} onChange={(e: any) => setJobTitle(e.target.value)} readOnly={!isEditing} />
-          <Input label="Phone Number" value={phoneNumber} onChange={(e: any) => setPhoneNumber(e.target.value)} readOnly={!isEditing} />
+          <PhoneField label="Phone Number" value={phoneNumber} onChange={(val: string) => setPhoneNumber(val)} readOnly={!isEditing} />
         </div>
       </div>
 

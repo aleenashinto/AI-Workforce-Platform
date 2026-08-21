@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { T, Corners, ActionBtn, ModalField } from "../shared";
+import { PhoneField } from "../../../components/ui/PhoneField";
 
 export default function ProfileSetupPage() {
   const router = useRouter();
@@ -62,11 +63,10 @@ export default function ProfileSetupPage() {
           onChange={(e: any) => setFormData({...formData, jobTitle: e.target.value})} 
         />
         
-        <ModalField 
+        <PhoneField 
           label="Contact Information (Phone)" 
-          placeholder="+1 (555) 000-0000" 
           value={formData.phone} 
-          onChange={(e: any) => setFormData({...formData, phone: e.target.value})} 
+          onChange={(val: string) => setFormData({...formData, phone: val})} 
         />
 
         <ModalField 
