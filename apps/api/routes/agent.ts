@@ -1,7 +1,7 @@
 import { FastifyInstance } from 'fastify';
 import { db } from '@ai-workforce/db';
 import { conversations, messages, organizations, end_users } from '@ai-workforce/db/schema';
-import { eq, desc, and, ilike, or } from 'drizzle-orm';
+import { eq, desc, and, ilike, or, sql } from 'drizzle-orm';
 import { v4 as uuidv4 } from 'uuid';
 
 export default async function agentRoutes(fastify: FastifyInstance) {
@@ -39,7 +39,7 @@ export default async function agentRoutes(fastify: FastifyInstance) {
         end_user: end_users
       })
       .from(conversations)
-      .leftJoin(end_users, eq(conversations.visitor_id, end_users.id))
+      .leftJoin(end_users, sql`${conversations.visitor_id} = ${end_users.id}::text`)
       .where(eq(conversations.org_id, org_id))
       .orderBy(desc(conversations.updated_at));
 
@@ -71,7 +71,7 @@ export default async function agentRoutes(fastify: FastifyInstance) {
         end_user: end_users
       })
       .from(conversations)
-      .leftJoin(end_users, eq(conversations.visitor_id, end_users.id))
+      .leftJoin(end_users, sql`${conversations.visitor_id} = ${end_users.id}::text`)
       .where(and(eq(conversations.id, id), eq(conversations.org_id, org_id)))
       .limit(1);
 
