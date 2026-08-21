@@ -42,21 +42,44 @@ export default function AuditLogsPage() {
   const [exporting, setExporting] = useState(false);
   const [exported, setExported] = useState(false);
 
-  const handleExport = () => {
-    setExporting(true);
-    setTimeout(() => {
-      setExporting(false);
-      setExported(true);
-      setTimeout(() => setExported(false), 2000);
-    }, 1000);
-  };
-
   const logs = [
     { date: "Aug 12 14:20", user: "Aleena", action: "Added knowledge source", resource: "Refund Policy.pdf", ip: "192.168.1.1", status: "Success" },
     { date: "Aug 12 13:45", user: "John", action: "Invited team member", resource: "sarah@acme.inc", ip: "10.0.0.5", status: "Success" },
     { date: "Aug 12 12:10", user: "Aleena", action: "Connected Gmail mailbox", resource: "sales@acme.inc", ip: "192.168.1.1", status: "Success" },
     { date: "Aug 12 11:40", user: "Sarah", action: "Activated sequence", resource: "Q3 Outbound", ip: "172.16.0.4", status: "Success" },
   ];
+
+  const handleExport = () => {
+    setExporting(true);
+    
+    // Generate CSV content
+    const headers = ["Date", "User", "Action", "Resource", "IP Address", "Status"];
+    const csvRows = [
+      headers.join(","),
+      ...logs.map(log => 
+        [log.date, log.user, log.action, log.resource, log.ip, log.status]
+          .map(val => `"${val}"`) // Wrap in quotes to handle commas
+          .join(",")
+      )
+    ];
+    const csvString = csvRows.join("\n");
+    
+    // Trigger download
+    const blob = new Blob([csvString], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute("download", "audit_logs.csv");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    
+    setTimeout(() => {
+      setExporting(false);
+      setExported(true);
+      setTimeout(() => setExported(false), 2000);
+    }, 500);
+  };
 
   return (
     <div>
