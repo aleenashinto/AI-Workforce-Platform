@@ -53,7 +53,7 @@ export async function knowledgeRoutes(fastify: FastifyInstance) {
         type,
         name,
         status: 'pending',
-        config: { fileKey, filename, contentType }
+        config: { file_key: fileKey, filename, contentType }
       }).returning();
 
       return { source, uploadUrl: presignedUrl };
