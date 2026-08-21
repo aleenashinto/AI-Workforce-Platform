@@ -1,7 +1,7 @@
 import { FastifyInstance, FastifyRequest } from 'fastify';
 import { db } from '@ai-workforce/db';
-import { organizations, organization_invitations } from '@ai-workforce/db/schema';
-import { eq } from 'drizzle-orm';
+import { organizations, organization_invitations, memberships } from '@ai-workforce/db/schema';
+import { eq, and } from 'drizzle-orm';
 import crypto from 'crypto';
 
 interface JwtUser {
@@ -142,6 +142,21 @@ export default async function onboardingRoutes(fastify: FastifyInstance) {
     }
 
     return reply.send({ success: true, message: 'Invitations sent' });
+  });
+
+  fastify.post('/preferences', async (req: FastifyRequest, reply) => {
+    const user = req.user as JwtUser;
+    if (!user || !user.org_id) return reply.status(401).send({ error: 'Unauthorized' });
+
+    const { role } = req.body as any;
+    
+    if (role) {
+      await db.update(memberships)
+        .set({ role })
+        .where(and(eq(memberships.user_id, user.user_id), eq(memberships.org_id, user.org_id)));
+    }
+
+    return reply.send({ success: true, message: 'Preferences updated' });
   });
 
   fastify.post('/complete', async (req: FastifyRequest, reply) => {

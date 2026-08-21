@@ -144,7 +144,12 @@ export function Sidebar({
 
       {/* Nav Menu */}
       <nav style={{ flex: 1, padding: "1rem 0", display: "flex", flexDirection: "column", overflowY: "auto" }}>
-        {navigation.map((group) => {
+        {navigation.filter(group => {
+          if (group.key === "customer-support" && !hasRole('owner', 'admin', 'support_lead', 'support_agent')) return false;
+          if (group.key === "sales-assistant" && !hasRole('owner', 'admin', 'sales_lead', 'sales_rep')) return false;
+          if (group.key === "platform" && !hasRole('owner', 'admin')) return false;
+          return true;
+        }).map((group) => {
           const isExpanded = expandedGroups[group.key] || false;
           return (
             <div key={group.key} style={{ marginBottom: "0.8rem" }}>

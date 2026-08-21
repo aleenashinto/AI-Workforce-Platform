@@ -7,7 +7,7 @@ import { T, Corners, ActionBtn, ModalField } from "../shared";
 export default function PreferencesSetupPage() {
   const router = useRouter();
   const [formData, setFormData] = useState({
-    userRole: "Admin",
+    userRole: "owner",
     workforcePreferences: {
       sales: true,
       support: false,
@@ -23,8 +23,18 @@ export default function PreferencesSetupPage() {
 
   const handleNext = async () => {
     setLoading(true);
-    // Call API if necessary, then push
-    // We proceed regardless of response for now to allow seamless onboarding
+    try {
+      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/onboarding/preferences`, {
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ 
+          role: formData.userRole
+        })
+      });
+    } catch (e) {
+      console.error(e);
+    }
     router.push("/onboarding/complete");
   };
 
@@ -67,9 +77,12 @@ export default function PreferencesSetupPage() {
           value={formData.userRole} 
           onChange={(e: any) => setFormData({...formData, userRole: e.target.value})} 
           selectOptions={[
-            { label: "Admin", value: "Admin" },
-            { label: "Manager", value: "Manager" },
-            { label: "Member", value: "Member" }
+            { label: "Owner (Full Access)", value: "owner" },
+            { label: "Customer Support Manager", value: "support_lead" },
+            { label: "Customer Support Agent", value: "support_agent" },
+            { label: "Sales Manager", value: "sales_lead" },
+            { label: "Sales Representative", value: "sales_rep" },
+            { label: "Viewer", value: "viewer" }
           ]}
         />
 
