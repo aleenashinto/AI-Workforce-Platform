@@ -4,7 +4,7 @@ import { knowledge_gaps, conversations, users } from '@ai-workforce/db/schema';
 import { eq, sql, and, gte, lte, desc } from 'drizzle-orm';
 
 export async function analyticsRoutes(fastify: FastifyInstance) {
-  fastify.get('/v1/analytics/support-overview', async (request, reply) => {
+  fastify.get('/analytics/support-overview', async (request, reply) => {
     try {
       await request.jwtVerify();
     } catch (err) {
@@ -112,7 +112,7 @@ export async function analyticsRoutes(fastify: FastifyInstance) {
     }
   });
 
-  fastify.get('/v1/analytics/knowledge-gaps', async (request, reply) => {
+  fastify.get('/analytics/knowledge-gaps', async (request, reply) => {
     try {
       await request.jwtVerify();
     } catch (err) {
