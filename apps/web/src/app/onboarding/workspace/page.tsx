@@ -8,26 +8,30 @@ export default function WorkspaceSetupPage() {
   const router = useRouter();
   const [formData, setFormData] = useState({
     companyName: "",
-    companyInfo: "",
-    workspaceInfo: "",
-    industry: "Technology",
-    teamInfo: ""
+    companyUrl: "",
+    teamSize: "1-10",
+    industry: "Technology"
   });
   const [loading, setLoading] = useState(false);
 
   const handleNext = async () => {
     setLoading(true);
-    // Call API if necessary, then push
-    // We proceed regardless of response for now to allow seamless onboarding
+    try {
+      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/onboarding/organization`, {
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ 
+          name: formData.companyName,
+          website: formData.companyUrl,
+          size: formData.teamSize,
+          industry: formData.industry
+        })
+      });
+    } catch (e) {
+      console.error(e);
+    }
     router.push("/onboarding/preferences");
-  };
-
-  const textareaStyle = {
-    width:"100%", background:"rgba(0,255,136,0.03)",
-    border:`1px solid ${T.border}`,
-    color:T.text, fontFamily:T.mono, fontSize:"0.82rem",
-    padding:"0.7rem 1rem", outline:"none",
-    minHeight: "60px", resize: "vertical" as any
   };
 
   return (
@@ -48,25 +52,24 @@ export default function WorkspaceSetupPage() {
           onChange={(e: any) => setFormData({...formData, companyName: e.target.value})} 
         />
         
-        <div style={{ marginBottom: "1.1rem" }}>
-          <label style={{ fontFamily:T.mono, fontSize:"0.65rem", letterSpacing:"0.12em", color:T.muted, marginBottom:"0.4rem", display:"block", textTransform:"uppercase" }}>Company Information</label>
-          <textarea 
-            placeholder="Brief description of what your company does" 
-            style={textareaStyle}
-            value={formData.companyInfo} 
-            onChange={(e: any) => setFormData({...formData, companyInfo: e.target.value})} 
-          />
-        </div>
+        <ModalField 
+          label="Company URL" 
+          placeholder="https://example.com" 
+          value={formData.companyUrl} 
+          onChange={(e: any) => setFormData({...formData, companyUrl: e.target.value})} 
+        />
 
-        <div style={{ marginBottom: "1.1rem" }}>
-          <label style={{ fontFamily:T.mono, fontSize:"0.65rem", letterSpacing:"0.12em", color:T.muted, marginBottom:"0.4rem", display:"block", textTransform:"uppercase" }}>Workspace Information</label>
-          <textarea 
-            placeholder="What is the primary purpose of this workspace?" 
-            style={textareaStyle}
-            value={formData.workspaceInfo} 
-            onChange={(e: any) => setFormData({...formData, workspaceInfo: e.target.value})} 
-          />
-        </div>
+        <ModalField 
+          label="Team Member Number" 
+          value={formData.teamSize} 
+          onChange={(e: any) => setFormData({...formData, teamSize: e.target.value})} 
+          selectOptions={[
+            { label: "1 - 10", value: "1-10" },
+            { label: "11 - 50", value: "11-50" },
+            { label: "51 - 250", value: "51-250" },
+            { label: "251+", value: "251+" }
+          ]}
+        />
 
         <ModalField 
           label="Industry" 
@@ -80,16 +83,6 @@ export default function WorkspaceSetupPage() {
             { label: "Other", value: "Other" }
           ]}
         />
-
-        <div style={{ marginBottom: "1.1rem" }}>
-          <label style={{ fontFamily:T.mono, fontSize:"0.65rem", letterSpacing:"0.12em", color:T.muted, marginBottom:"0.4rem", display:"block", textTransform:"uppercase" }}>Team Information</label>
-          <textarea 
-            placeholder="Who will be using this workspace?" 
-            style={textareaStyle}
-            value={formData.teamInfo} 
-            onChange={(e: any) => setFormData({...formData, teamInfo: e.target.value})} 
-          />
-        </div>
 
       </div>
 
