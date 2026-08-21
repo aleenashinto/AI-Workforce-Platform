@@ -1,7 +1,7 @@
 'use client';
 
 import { 
-  Settings, User, Building, Bot, Palette, Bell, Shield, Key, FileText
+  Settings, User, Building, Bell, Shield, FileText
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -35,19 +35,11 @@ export default function SettingsLayout({ children }: { children: React.ReactNode
       title: "ORGANIZATION",
       items: [
         { label: "Organization", path: "/platform/settings/organization", icon: Building },
-        { label: "Brand", path: "/platform/settings/brand", icon: Palette },
-      ]
-    },
-    {
-      title: "AI",
-      items: [
-        { label: "AI Settings", path: "/platform/settings/ai", icon: Bot },
       ]
     },
     {
       title: "DEVELOPER",
       items: [
-        { label: "API Keys", path: "/platform/settings/api-keys", icon: Key },
         { label: "Audit Logs", path: "/platform/settings/audit-logs", icon: FileText },
       ]
     }
