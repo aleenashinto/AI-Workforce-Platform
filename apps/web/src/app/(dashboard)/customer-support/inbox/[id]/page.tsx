@@ -110,147 +110,189 @@ export default function ConversationView() {
   const isAssigned = !!conversation.assigned_to;
   const isClosed = conversation.status === 'resolved' || conversation.status === 'escalated';
 
-  return (
-    <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
-      {/* 1. Header */}
-      <div style={{ padding: "1.5rem", borderBottom: `1px solid ${T.border}`, display: "flex", justifyContent: "space-between", alignItems: "center", background: T.bg2 }}>
-        <div>
-          <h3 style={{ fontFamily: T.body, fontSize: "1.2rem", fontWeight: 600, color: "#fff", display: "flex", alignItems: "center", gap: "0.5rem" }}>
-            {conversation.external_id || 'Unknown Visitor'} 
-            {conversation.ai_paused && <span style={{ fontFamily: T.mono, fontSize: "0.6rem", padding: "0.2rem 0.4rem", background: "rgba(255,51,85,0.1)", color: T.red, border: `1px solid ${T.red}` }}>AI PAUSED</span>}
-          </h3>
-          <div style={{ fontFamily: T.mono, fontSize: "0.75rem", color: T.muted, marginTop: "0.4rem", display: "flex", gap: "1rem" }}>
-            <span>ID: {conversation.id.substring(0, 8)}</span>
-            <span>CHANNEL: {conversation.channel}</span>
-            <span>STATUS: {conversation.status.toUpperCase()}</span>
+    return (
+    <div style={{ display: 'flex', height: '100%' }}>
+      {/* Center Panel - Conversation */}
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', borderRight: `1px solid ${T.border}` }}>
+        {/* Header */}
+        <div style={{ padding: '1.5rem', borderBottom: `1px solid ${T.border}`, background: T.bg2 }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+            <div>
+              <h3 style={{ fontFamily: T.body, fontSize: '1.2rem', fontWeight: 600, color: '#fff', margin: '0 0 0.5rem 0' }}>
+                {conversation.end_user?.name || conversation.end_user?.email || 'Anonymous User'}
+              </h3>
+              <div style={{ display: 'flex', gap: '0.8rem', alignItems: 'center' }}>
+                <span style={{ fontFamily: T.mono, fontSize: '0.7rem', padding: '0.2rem 0.5rem', background: conversation.status === 'active' ? 'rgba(0,255,136,0.1)' : 'rgba(255,255,255,0.05)', color: conversation.status === 'active' ? T.g : T.text, borderRadius: '4px', border: `1px solid ${conversation.status === 'active' ? T.border : 'transparent'}` }}>
+                  ● {conversation.status.toUpperCase()}
+                </span>
+                <span style={{ fontFamily: T.mono, fontSize: '0.75rem', color: T.muted }}>
+                  {conversation.channel.toUpperCase()}
+                </span>
+                {conversation.ai_paused ? (
+                  <span style={{ fontFamily: T.mono, fontSize: '0.75rem', color: T.red }}>Assigned: Human</span>
+                ) : (
+                  <span style={{ fontFamily: T.mono, fontSize: '0.75rem', color: T.muted }}>Assigned: AI Support Agent</span>
+                )}
+              </div>
+            </div>
+            <div style={{ display: 'flex', gap: '0.5rem' }}>
+              {!isClosed && (
+                <>
+                  {!isAssigned ? (
+                    <button onClick={handleTakeOver} style={{ padding: '0.5rem 1rem', background: 'transparent', border: `1px solid ${T.border}`, color: T.text, cursor: 'pointer', fontFamily: T.mono, fontSize: '0.75rem' }}>
+                      Assign to me
+                    </button>
+                  ) : (
+                    <button onClick={() => handleUpdateStatus('escalated')} style={{ padding: '0.5rem 1rem', background: 'transparent', border: `1px solid ${T.border}`, color: '#ffa500', cursor: 'pointer', fontFamily: T.mono, fontSize: '0.75rem' }}>
+                      Escalate
+                    </button>
+                  )}
+                  <button onClick={() => handleUpdateStatus('resolved')} style={{ padding: '0.5rem 1rem', background: T.g, border: 'none', color: '#000', cursor: 'pointer', fontFamily: T.mono, fontSize: '0.75rem', fontWeight: 'bold' }}>
+                    Resolve
+                  </button>
+                </>
+              )}
+            </div>
           </div>
         </div>
-        <div style={{ display: "flex", gap: "0.8rem" }}>
-          {!isAssigned && !isClosed && (
-            <button onClick={handleTakeOver} style={{
-              background: "rgba(0,255,136,0.1)", border: `1px solid ${T.g}`, color: T.g,
-              padding: "0.5rem 1rem", fontFamily: T.mono, fontSize: "0.75rem", cursor: "pointer", display: "flex", alignItems: "center", gap: "0.4rem"
-            }}><UserPlus size={14}/> TAKE OVER</button>
-          )}
-          {conversation.status !== 'resolved' && (
-            <button onClick={() => handleUpdateStatus('resolved')} style={{
-              background: "transparent", border: `1px solid ${T.muted}`, color: T.text,
-              padding: "0.5rem 1rem", fontFamily: T.mono, fontSize: "0.75rem", cursor: "pointer", display: "flex", alignItems: "center", gap: "0.4rem"
-            }}><CheckCircle size={14}/> RESOLVE</button>
-          )}
-          {conversation.status !== 'escalated' && (
-            <button onClick={() => handleUpdateStatus('escalated')} style={{
-              background: "rgba(255,170,0,0.1)", border: `1px solid ${T.warn}`, color: T.warn,
-              padding: "0.5rem 1rem", fontFamily: T.mono, fontSize: "0.75rem", cursor: "pointer", display: "flex", alignItems: "center", gap: "0.4rem"
-            }}><ShieldAlert size={14}/> ESCALATE</button>
-          )}
-        </div>
-      </div>
 
-      {/* 2. Messages Area */}
-      <div style={{ flex: 1, padding: "2rem", overflowY: "auto", display: "flex", flexDirection: "column", gap: "1.5rem" }}>
-        {messages.map((msg: any) => {
-          const isCustomer = msg.role === 'user';
-          const isNote = msg.role === 'note';
-          const isAgent = msg.role === 'agent';
-          
-          return (
-            <div key={msg.id} style={{ display: "flex", flexDirection: "column", alignItems: isCustomer ? "flex-start" : "flex-end" }}>
-              <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.4rem", flexDirection: isCustomer ? "row" : "row-reverse" }}>
-                {isCustomer ? <User size={14} color={T.muted} /> : (isNote || isAgent) ? <User size={14} color={T.g2} /> : <Bot size={14} color={T.g} />}
-                <span style={{ fontFamily: T.mono, fontSize: "0.7rem", color: T.muted }}>
-                  {isCustomer ? 'Customer' : isNote ? 'Internal Note' : isAgent ? 'Agent' : 'AI'} • {new Date(msg.created_at).toLocaleTimeString()}
-                </span>
-              </div>
-              <div style={{
-                maxWidth: "70%",
-                padding: "1rem",
-                background: isNote ? "rgba(255,200,0,0.1)" : isCustomer ? T.panel : "rgba(0,255,136,0.05)",
-                border: `1px solid ${isNote ? T.warn : isCustomer ? T.border : T.g}`,
-                color: isNote ? T.warn : "#fff",
-                fontFamily: T.body,
-                fontSize: "0.95rem",
-                lineHeight: "1.5",
-                borderRadius: 4
-              }}>
-                {msg.content}
-                
-                {/* Citations block for AI */}
-                {msg.role === 'assistant' && msg.metadata?.citations?.length > 0 && (
-                  <div style={{ marginTop: "1rem", paddingTop: "0.8rem", borderTop: `1px dashed rgba(0,255,136,0.2)` }}>
-                    <div style={{ fontFamily: T.mono, fontSize: "0.65rem", color: T.g, marginBottom: "0.4rem" }}>CITATIONS:</div>
-                    {msg.metadata.citations.map((cit: any, i: number) => (
-                      <div key={i} style={{ display: "inline-flex", alignItems: "center", gap: "0.2rem", background: "rgba(0,0,0,0.3)", border: `1px solid ${T.border}`, padding: "0.2rem 0.5rem", fontSize: "0.65rem", fontFamily: T.mono, color: T.muted, marginRight: "0.5rem", borderRadius: 2 }}>
-                        <FileText size={10} /> {cit.title || 'Doc ' + (i+1)}
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-            </div>
-          );
-        })}
-        <div ref={messagesEndRef} />
-      </div>
-
-      {/* 3. Input Area */}
-      {!isClosed && (
-        <div style={{ padding: "1.5rem", borderTop: `1px solid ${T.border}`, background: T.bg2 }}>
-          {isAssigned ? (
-            <div>
-              <div style={{ display: "flex", gap: "1rem", marginBottom: "0.5rem" }}>
-                <button onClick={() => setIsNotesMode(false)} style={{ fontFamily: T.mono, fontSize: "0.75rem", color: !isNotesMode ? T.g2 : T.muted, background: "none", border: "none", cursor: "pointer", borderBottom: !isNotesMode ? `1px solid ${T.g2}` : "1px solid transparent" }}>REPLY TO CUSTOMER</button>
-                <button onClick={() => setIsNotesMode(true)} style={{ fontFamily: T.mono, fontSize: "0.75rem", color: isNotesMode ? T.warn : T.muted, background: "none", border: "none", cursor: "pointer", borderBottom: isNotesMode ? `1px solid ${T.warn}` : "1px solid transparent" }}>INTERNAL NOTE</button>
-              </div>
-              <div style={{ position: "relative" }}>
-                <textarea 
-                  value={replyText}
-                  onChange={e => setReplyText(e.target.value)}
-                  placeholder={isNotesMode ? "Type a private note..." : "Type your reply..."}
-                  style={{
-                    width: "100%", height: 80, padding: "1rem", background: T.bg, border: `1px solid ${isNotesMode ? T.warn : T.border}`,
-                    color: isNotesMode ? T.warn : T.text, fontFamily: T.body, fontSize: "0.95rem", outline: "none", resize: "none"
-                  }}
-                  onKeyDown={e => {
-                    if (e.key === 'Enter' && !e.shiftKey) {
-                      e.preventDefault();
-                      handleSend();
-                    }
-                  }}
-                />
-                {!isNotesMode && (
-                  <button onClick={handleCopilot} disabled={isGenerating} style={{
-                    position: "absolute", bottom: 10, right: 60,
-                    background: "rgba(0,207,255,0.1)", border: `1px solid ${T.g2}`, color: T.g2,
-                    padding: "0.4rem 0.8rem", fontFamily: T.mono, fontSize: "0.7rem", cursor: isGenerating ? "not-allowed" : "pointer", display: "flex", alignItems: "center", gap: "0.3rem", opacity: isGenerating ? 0.5 : 1
-                  }}>
-                    {isGenerating ? <RefreshCw size={12} className="animate-spin" /> : <Sparkles size={12}/>} COPILOT
-                  </button>
-                )}
-                <button onClick={handleSend} disabled={!replyText.trim()} style={{
-                  position: "absolute", bottom: 10, right: 10,
-                  background: !replyText.trim() ? "rgba(255,255,255,0.1)" : isNotesMode ? T.warn : T.g,
-                  border: "none", color: !replyText.trim() ? T.muted : T.bg,
-                  padding: "0.4rem 0.8rem", fontFamily: T.mono, fontSize: "0.7rem", cursor: !replyText.trim() ? "not-allowed" : "pointer", display: "flex", alignItems: "center", gap: "0.3rem"
+        {/* Timeline */}
+        <div style={{ flex: 1, overflowY: 'auto', padding: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+          {messages.map((m: any, i: number) => {
+            const isAI = m.role === 'agent' || m.role === 'assistant';
+            const isSystem = m.role === 'system';
+            const isUser = m.role === 'user';
+            
+            return (
+              <div key={i} style={{ display: 'flex', flexDirection: 'column', alignItems: isUser ? 'flex-start' : 'flex-end' }}>
+                <div style={{ fontFamily: T.mono, fontSize: '0.65rem', color: T.muted, marginBottom: '0.3rem', textTransform: 'uppercase' }}>
+                  {isUser ? (conversation.end_user?.name || 'CUSTOMER') : (isAI ? 'AI SUPPORT AGENT' : m.role)} • {new Date(m.created_at).toLocaleTimeString()}
+                </div>
+                <div style={{
+                  background: isUser ? T.panel : (isAI ? 'rgba(0,255,136,0.1)' : 'rgba(0,207,255,0.1)'),
+                  border: `1px solid ${isUser ? T.border : (isAI ? 'rgba(0,255,136,0.3)' : 'rgba(0,207,255,0.3)')}`,
+                  padding: '1rem',
+                  maxWidth: '80%',
+                  color: T.text,
+                  fontFamily: T.body,
+                  fontSize: '0.9rem',
+                  lineHeight: 1.5,
+                  borderRadius: isUser ? '0 8px 8px 8px' : '8px 0 8px 8px'
                 }}>
-                  <Send size={12}/> SEND
+                  {m.content}
+                </div>
+              </div>
+            );
+          })}
+          <div ref={messagesEndRef} />
+        </div>
+
+        {/* Reply Box */}
+        {!isClosed && (
+          <div style={{ padding: '1.5rem', borderTop: `1px solid ${T.border}`, background: T.bg }}>
+            {isGenerating && (
+              <div style={{ padding: '1rem', background: 'rgba(0,255,136,0.05)', border: `1px solid ${T.border}`, marginBottom: '1rem', fontFamily: T.mono, fontSize: '0.8rem', color: T.g }}>
+                ✨ AI is generating a response...
+              </div>
+            )}
+            
+            <textarea
+              placeholder="Type your response..."
+              value={replyText}
+              onChange={e => setReplyText(e.target.value)}
+              style={{
+                width: '100%',
+                minHeight: '100px',
+                background: T.panel,
+                border: `1px solid ${T.border}`,
+                color: T.text,
+                fontFamily: T.body,
+                fontSize: '0.9rem',
+                padding: '1rem',
+                outline: 'none',
+                resize: 'vertical',
+                marginBottom: '1rem'
+              }}
+            />
+            
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <div>
+                <button onClick={handleCopilot} disabled={isGenerating} style={{
+                  background: 'transparent',
+                  border: 'none',
+                  color: T.g,
+                  cursor: isGenerating ? 'wait' : 'pointer',
+                  fontFamily: T.mono,
+                  fontSize: '0.75rem',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.4rem',
+                  opacity: isGenerating ? 0.5 : 1
+                }}>
+                  ✨ Generate AI Response
                 </button>
               </div>
+              
+              <button onClick={handleSend} disabled={!replyText.trim()} style={{
+                background: T.text,
+                color: T.bg,
+                border: 'none',
+                padding: '0.6rem 1.5rem',
+                fontFamily: T.mono,
+                fontSize: '0.8rem',
+                fontWeight: 'bold',
+                cursor: replyText.trim() ? 'pointer' : 'not-allowed',
+                opacity: replyText.trim() ? 1 : 0.5
+              }}>
+                Send Response
+              </button>
             </div>
-          ) : (
-            <div style={{ textAlign: "center", padding: "1rem", color: T.muted, fontFamily: T.mono, fontSize: "0.8rem", display: "flex", alignItems: "center", justifyContent: "center", gap: "0.5rem" }}>
-              <StopCircle size={16} /> AI IS HANDLING THIS CONVERSATION. TAKE OVER TO REPLY.
+          </div>
+        )}
+      </div>
+
+      {/* Right Panel - Customer Info */}
+      <div style={{ width: 300, background: T.bg2, display: 'flex', flexDirection: 'column' }}>
+        <div style={{ padding: '1.5rem', borderBottom: `1px solid ${T.border}` }}>
+          <div style={{ fontFamily: T.mono, fontSize: '0.7rem', color: T.muted, marginBottom: '0.5rem', textTransform: 'uppercase' }}>Customer</div>
+          <div style={{ fontFamily: T.body, fontSize: '1.1rem', color: '#fff', fontWeight: 600, marginBottom: '0.3rem' }}>
+            {conversation.end_user?.name || 'Anonymous User'}
+          </div>
+          <div style={{ fontFamily: T.mono, fontSize: '0.8rem', color: T.muted }}>
+            {conversation.end_user?.email || 'No email provided'}
+          </div>
+          {conversation.end_user?.external_id && (
+            <div style={{ fontFamily: T.mono, fontSize: '0.8rem', color: T.muted, marginTop: '0.3rem' }}>
+              {conversation.end_user.external_id}
             </div>
           )}
         </div>
-      )}
-      
-      {isClosed && (
-        <div style={{ padding: "1.5rem", borderTop: `1px solid ${T.border}`, background: "rgba(0,0,0,0.5)", textAlign: "center", color: T.muted, fontFamily: T.mono, fontSize: "0.8rem" }}>
-          <XCircle size={16} style={{ margin: "0 auto 0.5rem" }} />
-          THIS CONVERSATION IS {conversation.status.toUpperCase()}
+
+        <div style={{ padding: '1.5rem', borderBottom: `1px solid ${T.border}` }}>
+          <div style={{ fontFamily: T.mono, fontSize: '0.7rem', color: T.muted, marginBottom: '0.8rem', textTransform: 'uppercase' }}>Customer Information</div>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '1rem' }}>
+            <div>
+              <div style={{ fontFamily: T.mono, fontSize: '0.65rem', color: T.muted }}>Customer since</div>
+              <div style={{ fontFamily: T.body, fontSize: '0.85rem', color: T.text }}>
+                {conversation.end_user?.created_at ? new Date(conversation.end_user.created_at).toLocaleDateString() : 'N/A'}
+              </div>
+            </div>
+          </div>
         </div>
-      )}
+
+        <div style={{ padding: '1.5rem', borderBottom: `1px solid ${T.border}` }}>
+          <div style={{ fontFamily: T.mono, fontSize: '0.7rem', color: T.muted, marginBottom: '0.8rem', textTransform: 'uppercase' }}>Tags</div>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+            {conversation.tags && conversation.tags.length > 0 ? conversation.tags.map((tag: string, i: number) => (
+              <span key={i} style={{ fontFamily: T.mono, fontSize: '0.7rem', padding: '0.2rem 0.6rem', background: T.panel, border: `1px solid ${T.border}`, color: T.text, borderRadius: '4px' }}>
+                {tag}
+              </span>
+            )) : (
+              <span style={{ fontFamily: T.mono, fontSize: '0.75rem', color: T.muted }}>No tags</span>
+            )}
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
