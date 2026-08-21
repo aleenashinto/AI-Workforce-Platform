@@ -125,15 +125,26 @@ export default function ConversationsHistory() {
           </div>
           <button style={{
             fontFamily: T.mono, fontSize: "0.75rem", letterSpacing: "0.1em",
-            color: T.g, background: "rgba(0,255,136,0.1)", border: `1px solid ${T.g}`, padding: "0.6rem 1.2rem", cursor: "pointer", display: "flex", alignItems: "center", gap: "0.5rem"
-          }}>
+            color: T.g, background: "rgba(0,255,136,0.1)", border: `1px solid ${T.g}`, padding: "0.6rem 1.2rem", cursor: "pointer", display: "flex", alignItems: "center", gap: "0.5rem", position: "relative"
+          }} onClick={() => setShowFilters(!showFilters)}>
+            {showFilters && (
+              <div style={{ position: 'absolute', top: '100%', right: 0, marginTop: '0.5rem', background: T.panel, border: `1px solid ${T.border}`, padding: '1rem', zIndex: 10, borderRadius: 4, display: 'flex', flexDirection: 'column', gap: '0.5rem', minWidth: 150 }}>
+                <div style={{ color: T.text, fontSize: '0.75rem', textAlign: 'left' }}>Status Filter:</div>
+                <select value={filterStatus} onChange={e => setFilterStatus(e.target.value)} onClick={e => e.stopPropagation()} style={{ background: T.bg, color: T.text, border: `1px solid ${T.border}`, padding: '0.4rem', outline: 'none', fontFamily: T.mono }}>
+                  <option value="all">All</option>
+                  <option value="active">Active / Open</option>
+                  <option value="resolved">Resolved</option>
+                  <option value="escalated">Escalated</option>
+                </select>
+              </div>
+            )}
             <Filter size={14} /> FILTER
           </button>
           <button style={{
             fontFamily: T.mono, fontSize: "0.75rem", letterSpacing: "0.1em",
             color: T.bg, background: T.g, border: "none", padding: "0.6rem 1.2rem", cursor: "pointer", display: "flex", alignItems: "center", gap: "0.5rem",
             clipPath: "polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%)", boxShadow: T.glow,
-          }}>
+          }} onClick={handleExportCSV}>
             <Download size={14} /> EXPORT CSV
           </button>
         </div>
@@ -157,7 +168,7 @@ export default function ConversationsHistory() {
           <tbody>
             {loading ? (
               <tr><td colSpan={8} style={{ padding: "2rem", textAlign: "center", color: T.muted, fontFamily: T.mono }}>LOADING...</td></tr>
-            ) : data.map(d => (
+            ) : filteredData.map(d => (
               <tr key={d.id} style={{ borderBottom: `1px solid rgba(0,255,136,0.05)`, cursor: "pointer", transition: "background 0.2s" }} onMouseEnter={e=>e.currentTarget.style.background="rgba(0,255,136,0.05)"} onMouseLeave={e=>e.currentTarget.style.background="transparent"}>
                 <td style={{ padding: "1rem", fontFamily: T.mono, fontSize: "0.85rem", color: "#fff" }}>{d.id.substring(0,8)}</td>
                 <td style={{ padding: "1rem", fontFamily: T.body, fontSize: "0.95rem", color: "#fff", fontWeight: 600 }}>{d.end_user?.name || d.end_user?.email || d.end_user?.external_id || 'Unknown'}</td>
