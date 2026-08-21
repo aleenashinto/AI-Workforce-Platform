@@ -121,7 +121,7 @@ export default function ConversationsHistory() {
             ) : data.map(d => (
               <tr key={d.id} style={{ borderBottom: `1px solid rgba(0,255,136,0.05)`, cursor: "pointer", transition: "background 0.2s" }} onMouseEnter={e=>e.currentTarget.style.background="rgba(0,255,136,0.05)"} onMouseLeave={e=>e.currentTarget.style.background="transparent"}>
                 <td style={{ padding: "1rem", fontFamily: T.mono, fontSize: "0.85rem", color: "#fff" }}>{d.id.substring(0,8)}</td>
-                <td style={{ padding: "1rem", fontFamily: T.body, fontSize: "0.95rem", color: "#fff", fontWeight: 600 }}>{d.external_id || 'Unknown'}</td>
+                <td style={{ padding: "1rem", fontFamily: T.body, fontSize: "0.95rem", color: "#fff", fontWeight: 600 }}>{d.end_user?.name || d.end_user?.email || d.end_user?.external_id || 'Unknown'}</td>
                 <td style={{ padding: "1rem", fontFamily: T.mono, fontSize: "0.75rem", color: T.muted }}>{d.channel}</td>
                 <td style={{ padding: "1rem", fontFamily: T.mono, fontSize: "0.85rem", color: "#fff" }}>
                   <div style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>

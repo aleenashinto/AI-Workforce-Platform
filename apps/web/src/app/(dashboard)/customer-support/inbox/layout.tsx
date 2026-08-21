@@ -120,7 +120,7 @@ export default function InboxLayout({ children }: { children: React.ReactNode })
             <Link key={c.id} href={`/customer-support/inbox/${c.id}`} style={{ textDecoration: "none" }}>
               <div style={{ padding: "1.2rem", borderBottom: `1px solid ${T.border}`, cursor: "pointer", transition: "background 0.2s", background: "transparent" }} onMouseEnter={e => e.currentTarget.style.background = "rgba(0,255,136,0.05)"} onMouseLeave={e => e.currentTarget.style.background = "transparent"}>
                 <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.5rem" }}>
-                  <span style={{ fontFamily: T.body, fontSize: "0.95rem", fontWeight: 600, color: "#fff" }}>{c.end_user?.name || c.end_user?.email || c.external_id || 'Anonymous User'}</span>
+                  <span style={{ fontFamily: T.body, fontSize: "0.95rem", fontWeight: 600, color: "#fff" }}>{c.end_user?.name || c.end_user?.email || c.end_user?.external_id || 'Anonymous User'}</span>
                   <span style={{ fontFamily: T.mono, fontSize: "0.7rem", color: T.muted }}>{new Date(c.updated_at).toLocaleTimeString()}</span>
                 </div>
                 <div style={{ fontFamily: T.body, fontSize: "0.85rem", color: T.muted, marginBottom: "0.8rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
