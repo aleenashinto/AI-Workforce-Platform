@@ -128,7 +128,7 @@ export default function AddKnowledgePage() {
       }
 
       // 1. Create source
-      const res = await fetch(`${API_BASE}/v1/sources`, {
+      const res = await fetch(`${API_BASE}/knowledge/v1/sources`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload)
@@ -149,7 +149,7 @@ export default function AddKnowledgePage() {
         
         if (!uploadRes.ok) throw new Error("Failed to upload file to storage.");
 
-        const confirmRes = await fetch(`${API_BASE}/v1/sources/confirm-upload`, {
+        const confirmRes = await fetch(`${API_BASE}/knowledge/v1/sources/confirm-upload`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ source_id: data.source.id })
