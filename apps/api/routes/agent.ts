@@ -39,7 +39,7 @@ export default async function agentRoutes(fastify: FastifyInstance) {
         end_user: end_users
       })
       .from(conversations)
-      .leftJoin(end_users, sql`${conversations.visitor_id} = ${end_users.id}::text`)
+      .leftJoin(end_users, eq(conversations.visitor_id, sql<string>`${end_users.id}::text`))
       .where(eq(conversations.org_id, org_id))
       .orderBy(desc(conversations.updated_at));
 
@@ -71,7 +71,7 @@ export default async function agentRoutes(fastify: FastifyInstance) {
         end_user: end_users
       })
       .from(conversations)
-      .leftJoin(end_users, sql`${conversations.visitor_id} = ${end_users.id}::text`)
+      .leftJoin(end_users, eq(conversations.visitor_id, sql<string>`${end_users.id}::text`))
       .where(and(eq(conversations.id, id), eq(conversations.org_id, org_id)))
       .limit(1);
 
