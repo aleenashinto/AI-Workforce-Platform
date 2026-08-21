@@ -1,8 +1,8 @@
 'use client';
 
-import { Search, Bell, Terminal, User, Settings, LogOut, HelpCircle, Menu } from "lucide-react";
-import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { Search, Bell, Terminal, User, Settings, LogOut, HelpCircle, Menu, Loader2 } from "lucide-react";
+import { usePathname, useRouter } from "next/navigation";
+import { useState, useEffect, useRef } from "react";
 import { useUserContext } from '@/contexts/UserContext';
 import Link from "next/link";
 
@@ -30,6 +30,7 @@ const T = {
 
 export function Header({ setMobileMenuOpen }: { setMobileMenuOpen?: (open: boolean) => void }) {
   const pathname = usePathname();
+  const router = useRouter();
   
   const getPageTitle = () => {
     if (pathname === '/dashboard') return 'DASHBOARD';
@@ -65,9 +66,71 @@ export function Header({ setMobileMenuOpen }: { setMobileMenuOpen?: (open: boole
   };
 
   const [searchFocused, setSearchFocused] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchResults, setSearchResults] = useState<any[]>([]);
+  const [isSearching, setIsSearching] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const { user } = useUserContext();
   
+  const searchContainerRef = useRef<HTMLDivElement>(null);
+  
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (searchContainerRef.current && !searchContainerRef.current.contains(event.target as Node)) {
+        setSearchFocused(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  useEffect(() => {
+    if (!searchQuery.trim()) {
+      setSearchResults([]);
+      setIsSearching(false);
+      return;
+    }
+
+    const delayDebounceFn = setTimeout(() => {
+      setIsSearching(true);
+      const getApiUrl = () => {
+        const url = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
+        return url.replace(/\/+$/, "");
+      };
+      
+      fetch(`${getApiUrl()}/search?q=${encodeURIComponent(searchQuery)}`, { credentials: "include" })
+        .then(res => res.json())
+        .then(data => {
+          setSearchResults(data.results || []);
+        })
+        .catch(err => {
+          console.error("Search error:", err);
+          setSearchResults([]);
+        })
+        .finally(() => {
+          setIsSearching(false);
+        });
+    }, 400);
+
+    return () => clearTimeout(delayDebounceFn);
+  }, [searchQuery]);
+
+  // Use fullName as defined in UserContext
+  const fullName = user?.fullName || "";
+  const initials = fullName ? fullName.split(' ').map((n: string) => n[0]).join('').substring(0,2).toUpperCase() : 'U';
+  
+  // Format avatar URL properly
+  const getAvatarUrl = () => {
+    if (!user?.avatarUrl) return null;
+    if (user.avatarUrl.startsWith('data:') || user.avatarUrl.startsWith('http')) {
+      return user.avatarUrl;
+    }
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
+    return `${apiUrl.replace(/\/+$/, "")}${user.avatarUrl}`;
+  };
+  
+  const avatarUrl = getAvatarUrl();
+
   return (
     <header className="flex h-20 shrink-0 items-center justify-between px-4 md:px-8 bg-[rgba(10,22,40,0.6)] backdrop-blur-md z-10" style={{ borderBottom: `1px solid ${T.border}` }}>
       
@@ -90,13 +153,14 @@ export function Header({ setMobileMenuOpen }: { setMobileMenuOpen?: (open: boole
 
       <div className="flex items-center gap-4 md:gap-8">
         {/* Search Bar */}
-        <div className="hidden md:flex relative items-center">
+        <div className="hidden md:flex relative items-center" ref={searchContainerRef}>
           <Search size={16} color={searchFocused ? T.g : T.muted} style={{ position: "absolute", left: 12, transition: "color 0.2s" }} />
           <input 
             type="text" 
             placeholder="Search anything..." 
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
             onFocus={() => setSearchFocused(true)}
-            onBlur={() => setSearchFocused(false)}
             style={{
               padding: "0.6rem 1rem 0.6rem 2.5rem", width: 300,
               background: "rgba(0,255,136,0.03)", border: `1px solid ${searchFocused ? T.g : T.border}`,
@@ -104,6 +168,44 @@ export function Header({ setMobileMenuOpen }: { setMobileMenuOpen?: (open: boole
               boxShadow: searchFocused ? T.glow : "none", transition: "all 0.2s"
             }}
           />
+          
+          {/* Search Dropdown */}
+          {searchFocused && searchQuery.trim().length > 0 && (
+            <div style={{
+              position: "absolute", top: "100%", left: 0, right: 0, marginTop: "0.5rem",
+              background: T.panel, border: `1px solid ${T.border}`, boxShadow: T.glow,
+              zIndex: 100, maxHeight: "400px", overflowY: "auto"
+            }}>
+              {isSearching ? (
+                <div style={{ padding: "1rem", display: "flex", justifyContent: "center", color: T.g }}>
+                  <Loader2 size={16} className="animate-spin" />
+                </div>
+              ) : searchResults.length > 0 ? (
+                <div style={{ padding: "0.5rem" }}>
+                  <div style={{ fontFamily: T.mono, fontSize: "0.6rem", color: T.muted, textTransform: "uppercase", marginBottom: "0.5rem", padding: "0 0.5rem" }}>
+                    Results
+                  </div>
+                  {searchResults.map((result: any, i: number) => (
+                    <Link href={result.url} key={`${result.type}-${result.id}-${i}`} style={{ textDecoration: 'none' }} onClick={() => setSearchFocused(false)}>
+                      <div style={{ 
+                        padding: "0.6rem 0.5rem", cursor: "pointer", borderBottom: `1px solid ${T.border}`,
+                        transition: "background 0.2s" 
+                      }} onMouseEnter={e => e.currentTarget.style.background = "rgba(0,255,136,0.1)"} onMouseLeave={e => e.currentTarget.style.background = "transparent"}>
+                        <div style={{ fontFamily: T.body, fontSize: "0.9rem", color: "#fff" }}>{result.title}</div>
+                        <div style={{ fontFamily: T.mono, fontSize: "0.7rem", color: T.muted }}>
+                          <span style={{ color: T.g }}>[{result.type}]</span> {result.subtitle}
+                        </div>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              ) : (
+                <div style={{ padding: "1rem", fontFamily: T.mono, fontSize: "0.8rem", color: T.muted, textAlign: "center" }}>
+                  No results found for "{searchQuery}"
+                </div>
+              )}
+            </div>
+          )}
         </div>
 
         {/* Global actions */}
@@ -118,24 +220,39 @@ export function Header({ setMobileMenuOpen }: { setMobileMenuOpen?: (open: boole
 
           <div style={{ position: "relative" }}>
             <div onClick={() => setMenuOpen(!menuOpen)} style={{ cursor: "pointer", display: "flex", alignItems: "center", gap: "0.5rem", padding: "0.4rem", transition: "all 0.2s", color: menuOpen ? T.g : T.text }} onMouseEnter={e=>e.currentTarget.style.color=T.g} onMouseLeave={e=>{if(!menuOpen) e.currentTarget.style.color=T.text}}>
-              <span style={{ fontFamily: T.mono, fontSize: "0.85rem" }}>
-                {(user as any)?.name ? (user as any).name.split(' ').map((n: string)=>n[0]).join('').substring(0,2).toUpperCase() : 'U'} ▼
-              </span>
+              {avatarUrl ? (
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  <img 
+                    src={avatarUrl} 
+                    alt="Profile" 
+                    style={{ width: 28, height: 28, borderRadius: '50%', objectFit: 'cover', border: `1px solid ${T.border}` }} 
+                    onError={(e) => { e.currentTarget.style.display = 'none'; (e.currentTarget.nextElementSibling as HTMLElement).style.display = 'inline'; }}
+                  />
+                  <span style={{ display: 'none', fontFamily: T.mono, fontSize: "0.85rem" }}>
+                    {initials}
+                  </span>
+                  <span style={{ fontFamily: T.mono, fontSize: "0.6rem" }}>▼</span>
+                </div>
+              ) : (
+                <span style={{ fontFamily: T.mono, fontSize: "0.85rem" }}>
+                  {initials} ▼
+                </span>
+              )}
             </div>
             
             {menuOpen && (
               <div style={{ position: "absolute", top: "100%", right: 0, marginTop: "0.5rem", background: T.panel, border: `1px solid ${T.border}`, width: 200, boxShadow: T.glow, zIndex: 100 }}>
                 <div style={{ padding: "0.8rem", borderBottom: `1px solid ${T.border}` }}>
-                  <div style={{ fontFamily: T.body, fontSize: "0.9rem", color: "#fff" }}>{(user as any)?.name || "Loading..."}</div>
-                  <div style={{ fontFamily: T.mono, fontSize: "0.7rem", color: T.muted }}>{(user as any)?.email || ""}</div>
+                  <div style={{ fontFamily: T.body, fontSize: "0.9rem", color: "#fff" }}>{fullName || user?.email || "Unknown User"}</div>
+                  <div style={{ fontFamily: T.mono, fontSize: "0.7rem", color: T.muted }}>{user?.email || ""}</div>
                 </div>
                 <div style={{ padding: "0.5rem" }}>
-                  <Link href="/platform/profile" style={{ textDecoration: 'none' }}>
+                  <Link href="/platform/profile" style={{ textDecoration: 'none' }} onClick={() => setMenuOpen(false)}>
                     <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", padding: "0.6rem", cursor: "pointer", fontFamily: T.mono, fontSize: "0.75rem", color: T.text, transition: "background 0.2s" }} onMouseEnter={e=>e.currentTarget.style.background="rgba(0,255,136,0.1)"} onMouseLeave={e=>e.currentTarget.style.background="transparent"}>
                       <User size={14} /> Profile
                     </div>
                   </Link>
-                  <Link href="/platform/settings" style={{ textDecoration: 'none' }}>
+                  <Link href="/platform/settings" style={{ textDecoration: 'none' }} onClick={() => setMenuOpen(false)}>
                     <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", padding: "0.6rem", cursor: "pointer", fontFamily: T.mono, fontSize: "0.75rem", color: T.text, transition: "background 0.2s" }} onMouseEnter={e=>e.currentTarget.style.background="rgba(0,255,136,0.1)"} onMouseLeave={e=>e.currentTarget.style.background="transparent"}>
                       <Settings size={14} /> Settings
                     </div>

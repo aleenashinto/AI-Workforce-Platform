@@ -82,6 +82,7 @@ fastify.register(fastifyRateLimit, {
 import salesRoutes from './routes/sales';
 import authRoutes from './routes/auth';
 import agentRoutes from './routes/agent';
+import searchRoutes from './routes/search';
 import { knowledgeRoutes } from './routes/knowledge';
 import sequencesRoutes from './routes/sequences';
 import draftsRoutes from './routes/drafts';
@@ -109,6 +110,7 @@ fastify.register(analyticsRoutes);
 fastify.register(crmRoutes, { prefix: '/crm' });
 fastify.register(salesRoutes, { prefix: '/v1/crm/sales' });
 fastify.register(authRoutes);
+fastify.register(searchRoutes);
 fastify.register(webhookRoutes);
 fastify.register(onboardingRoutes, { prefix: '/onboarding' });
 

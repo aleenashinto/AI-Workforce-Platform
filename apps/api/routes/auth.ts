@@ -669,4 +669,26 @@ export default async function authRoutes(fastify: FastifyInstance) {
 
     return { success: true };
   });
+
+  fastify.get('/auth/avatar/:id', async (req: any, reply) => {
+    const { id } = req.params;
+    const [user] = await db.select().from(users).where(eq(users.id, id)).limit(1);
+    
+    if (!user || !user.avatar_url) {
+      return reply.status(404).send({ error: "Avatar not found" });
+    }
+
+    const matches = user.avatar_url.match(/^data:(.+);base64,(.+)$/);
+    if (!matches || matches.length !== 3) {
+      return reply.status(400).send({ error: "Invalid avatar format" });
+    }
+
+    const mimeType = matches[1];
+    const base64Data = matches[2];
+    const buffer = Buffer.from(base64Data, 'base64');
+
+    reply.header('Content-Type', mimeType);
+    reply.header('Cache-Control', 'public, max-age=86400');
+    return reply.send(buffer);
+  });
 }
