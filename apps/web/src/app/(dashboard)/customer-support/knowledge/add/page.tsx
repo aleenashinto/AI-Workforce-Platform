@@ -45,7 +45,7 @@ const Corners = () => (
 
 export default function AddKnowledgePage() {
   const [activeType, setActiveType] = useState('file');
-  const { currentOrgId } = useUserContext();
+  const currentOrgId = "00000000-0000-0000-0000-000000000001";
   const router = useRouter();
 
   // Common State
