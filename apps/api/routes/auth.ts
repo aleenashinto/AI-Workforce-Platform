@@ -14,9 +14,6 @@ export default async function authRoutes(fastify: FastifyInstance) {
       return reply.redirect(`${process.env.API_URL || 'http://localhost:3001'}/auth/google/callback?code=mock_code`);
     });
     
-    fastify.get('/auth/microsoft/login', async (req, reply) => {
-      return reply.redirect(`${process.env.API_URL || 'http://localhost:3001'}/auth/microsoft/callback?code=mock_code`);
-    });
   } else {
     // Register Google OAuth2
     fastify.register(oauthPlugin, {
@@ -33,20 +30,7 @@ export default async function authRoutes(fastify: FastifyInstance) {
       scope: ['profile', 'email']
     });
 
-    // Register Microsoft OAuth2
-    fastify.register(oauthPlugin, {
-      name: 'microsoftOAuth2',
-      credentials: {
-        client: {
-          id: process.env.MICROSOFT_CLIENT_ID || 'dummy-microsoft-client-id',
-          secret: process.env.MICROSOFT_CLIENT_SECRET || 'dummy-microsoft-client-secret'
-        },
-        auth: oauthPlugin.MICROSOFT_CONFIGURATION
-      },
-      startRedirectPath: '/auth/microsoft/login',
-      callbackUri: `${process.env.API_URL || 'http://localhost:3001'}/auth/microsoft/callback`,
-      scope: ['User.Read']
-    });
+
   }
 
   const handleOAuthCallback = async (req: any, reply: any, token: any, provider: string, fetchProfileUrl: string, profileMapper: (data: any) => { id: string, email: string, name: string }) => {
@@ -148,19 +132,7 @@ export default async function authRoutes(fastify: FastifyInstance) {
     });
   });
 
-  fastify.get('/auth/microsoft/callback', async (req, reply) => {
-    let token = { access_token: 'mock_token' };
-    if (!isMockOAuth) {
-      token = await (fastify as any).microsoftOAuth2.getAccessTokenFromAuthorizationCodeFlow(req).token;
-    }
-    
-    return handleOAuthCallback(req, reply, token, 'microsoft', 'https://graph.microsoft.com/v1.0/me', (data) => {
-      if (isMockOAuth) {
-        return { id: 'mock-ms-123', email: 'mockuser-ms@example.com', name: 'Mock MS User' };
-      }
-      return { id: data.id, email: data.userPrincipalName, name: data.displayName };
-    });
-  });
+
 
   fastify.post('/auth/logout', async (req, reply) => {
     reply.clearCookie('auth_token', { path: '/' });

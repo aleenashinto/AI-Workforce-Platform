@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { GoogleIcon, MicrosoftIcon } from "@/components/icons/social";
+import { GoogleIcon } from "@/components/icons/social";
 
 /* ─────────────────────────────────────────────
    DESIGN TOKENS
@@ -291,7 +291,6 @@ export default function LoginPage() {
         </div>
 
         <SocialBtn provider="Google" icon={<GoogleIcon size={16} />} onClick={() => window.location.href = `${process.env.NEXT_PUBLIC_API_URL}/auth/google/login`} />
-        <SocialBtn provider="Microsoft" icon={<MicrosoftIcon size={16} />} onClick={() => window.location.href = `${process.env.NEXT_PUBLIC_API_URL}/auth/microsoft/login`} />
 
         <div style={{ fontFamily:T.mono, fontSize:"0.7rem", color:"rgba(200,255,232,0.35)", textAlign:"center", marginTop:"1.5rem" }}>
           No account? {" "}
