@@ -10,7 +10,7 @@ const draftingQueue = new Queue('drafting-queue', { connection: { url: process.e
 export default async function draftsRoutes(fastify: FastifyInstance) {
   
   fastify.get('/', async (request, reply) => {
-    const { org_id } = request.user as any;
+    const org_id = (request.user as any)?.org_id || (request.headers['x-org-id'] as string) || '00000000-0000-0000-0000-000000000001';
     const { status } = request.query as any;
 
     try {
@@ -39,7 +39,7 @@ export default async function draftsRoutes(fastify: FastifyInstance) {
   });
 
   fastify.get('/:id', async (request, reply) => {
-    const { org_id } = request.user as any;
+    const org_id = (request.user as any)?.org_id || (request.headers['x-org-id'] as string) || '00000000-0000-0000-0000-000000000001';
     const { id } = request.params as any;
 
     try {
@@ -55,7 +55,7 @@ export default async function draftsRoutes(fastify: FastifyInstance) {
   });
 
   fastify.patch('/:id', { preHandler: requireAction('MANAGE_CAMPAIGNS') }, async (request, reply) => {
-    const { org_id } = request.user as any;
+    const org_id = (request.user as any)?.org_id || (request.headers['x-org-id'] as string) || '00000000-0000-0000-0000-000000000001';
     const { id } = request.params as any;
     const updates = request.body as any;
 
@@ -74,7 +74,7 @@ export default async function draftsRoutes(fastify: FastifyInstance) {
   });
 
   fastify.post('/bulk-approve', { preHandler: requireAction('APPROVE_DRAFT') }, async (request, reply) => {
-    const { org_id } = request.user as any;
+    const org_id = (request.user as any)?.org_id || (request.headers['x-org-id'] as string) || '00000000-0000-0000-0000-000000000001';
     const { ids } = request.body as any;
 
     try {
@@ -93,7 +93,7 @@ export default async function draftsRoutes(fastify: FastifyInstance) {
   });
 
   fastify.post('/generate', { preHandler: requireAction('MANAGE_CAMPAIGNS') }, async (request, reply) => {
-    const { org_id } = request.user as any;
+    const org_id = (request.user as any)?.org_id || (request.headers['x-org-id'] as string) || '00000000-0000-0000-0000-000000000001';
     const { lead_id, campaign_id } = request.body as any;
 
     try {

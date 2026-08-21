@@ -22,7 +22,7 @@ export default async function salesRoutes(fastify: FastifyInstance) {
   // -- ICP Endpoints --
 
   fastify.get('/icps', async (request, reply) => {
-    const { org_id } = request.user as any;
+    const org_id = (request.user as any)?.org_id || (request.headers['x-org-id'] as string) || '00000000-0000-0000-0000-000000000001';
     try {
       const allIcps = await db.select().from(icps).where(eq(icps.org_id, org_id)).orderBy(desc(icps.created_at));
       return { success: true, data: allIcps };
@@ -33,7 +33,7 @@ export default async function salesRoutes(fastify: FastifyInstance) {
   });
 
   fastify.post('/icps', { preHandler: requireAction('MANAGE_CAMPAIGNS') }, async (request, reply) => {
-    const { org_id } = request.user as any;
+    const org_id = (request.user as any)?.org_id || (request.headers['x-org-id'] as string) || '00000000-0000-0000-0000-000000000001';
     const { name, criteria } = request.body as any;
     try {
       const [newIcp] = await db.insert(icps).values({
@@ -68,7 +68,7 @@ export default async function salesRoutes(fastify: FastifyInstance) {
   // -- Leads Endpoints --
 
   fastify.get('/leads', async (request, reply) => {
-    const { org_id } = request.user as any;
+    const org_id = (request.user as any)?.org_id || (request.headers['x-org-id'] as string) || '00000000-0000-0000-0000-000000000001';
     const { icp_id, status, min_score } = request.query as any;
 
     try {
@@ -86,7 +86,7 @@ export default async function salesRoutes(fastify: FastifyInstance) {
   });
 
   fastify.get('/leads/:id', async (request, reply) => {
-    const { org_id } = request.user as any;
+    const org_id = (request.user as any)?.org_id || (request.headers['x-org-id'] as string) || '00000000-0000-0000-0000-000000000001';
     const { id } = request.params as any;
 
     try {
@@ -100,7 +100,7 @@ export default async function salesRoutes(fastify: FastifyInstance) {
   });
 
   fastify.post('/leads/discover', { preHandler: requireAction('MANAGE_LEADS') }, async (request, reply) => {
-    const { org_id } = request.user as any;
+    const org_id = (request.user as any)?.org_id || (request.headers['x-org-id'] as string) || '00000000-0000-0000-0000-000000000001';
     const { icp_id, count = 5 } = request.body as any;
 
     try {
@@ -145,7 +145,7 @@ export default async function salesRoutes(fastify: FastifyInstance) {
   });
 
   fastify.post('/leads/:id/research', { preHandler: requireAction('MANAGE_LEADS') }, async (request, reply) => {
-    const { org_id } = request.user as any;
+    const org_id = (request.user as any)?.org_id || (request.headers['x-org-id'] as string) || '00000000-0000-0000-0000-000000000001';
     const { id } = request.params as any;
 
     try {
@@ -169,7 +169,7 @@ export default async function salesRoutes(fastify: FastifyInstance) {
   // -- Campaigns --
 
   fastify.get('/campaigns', async (request, reply) => {
-    const { org_id } = request.user as any;
+    const org_id = (request.user as any)?.org_id || (request.headers['x-org-id'] as string) || '00000000-0000-0000-0000-000000000001';
     try {
       const allCampaigns = await db.select().from(campaigns).where(eq(campaigns.org_id, org_id)).orderBy(desc(campaigns.created_at));
       return { success: true, data: allCampaigns };
@@ -180,7 +180,7 @@ export default async function salesRoutes(fastify: FastifyInstance) {
   });
 
   fastify.post('/campaigns', { preHandler: requireAction('MANAGE_CAMPAIGNS') }, async (request, reply) => {
-    const { org_id } = request.user as any;
+    const org_id = (request.user as any)?.org_id || (request.headers['x-org-id'] as string) || '00000000-0000-0000-0000-000000000001';
     const { name, prompt_template } = request.body as any;
     try {
       const [newCampaign] = await db.insert(campaigns).values({

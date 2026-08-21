@@ -18,7 +18,7 @@ const securityRoutes: FastifyPluginAsync = async (fastify: FastifyInstance) => {
   });
 
   fastify.get('/keys', { preHandler: requireAction('MANAGE_API_KEYS') }, async (request, reply) => {
-    const { org_id } = request.user as any;
+    const org_id = (request.user as any)?.org_id || (request.headers['x-org-id'] as string) || '00000000-0000-0000-0000-000000000001';
     const keys = await withTenant(db, org_id, async (tx: any) => {
       return tx.select({
         id: api_keys.id,

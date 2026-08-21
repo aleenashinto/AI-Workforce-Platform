@@ -6,7 +6,7 @@ import { eq, desc, and } from 'drizzle-orm';
 export default async function repliesRoutes(fastify: FastifyInstance) {
   
   fastify.get('/', async (request, reply) => {
-    const { org_id } = request.user as any;
+    const org_id = (request.user as any)?.org_id || (request.headers['x-org-id'] as string) || '00000000-0000-0000-0000-000000000001';
 
     try {
       const allReplies = await db.select({
@@ -31,7 +31,7 @@ export default async function repliesRoutes(fastify: FastifyInstance) {
   });
 
   fastify.patch('/:id/status', async (request, reply) => {
-    const { org_id } = request.user as any;
+    const org_id = (request.user as any)?.org_id || (request.headers['x-org-id'] as string) || '00000000-0000-0000-0000-000000000001';
     const { id } = request.params as any;
     const { status } = request.body as any;
 

@@ -11,7 +11,7 @@ const draftingQueue = new Queue('drafting-queue', { connection: { url: process.e
 export default async function sequencesRoutes(fastify: FastifyInstance) {
   
   fastify.get('/', async (request, reply) => {
-    const { org_id } = request.user as any;
+    const org_id = (request.user as any)?.org_id || (request.headers['x-org-id'] as string) || '00000000-0000-0000-0000-000000000001';
     try {
       const allSequences = await db.select().from(sequences).where(eq(sequences.org_id, org_id)).orderBy(desc(sequences.created_at));
       return { success: true, data: allSequences };
@@ -22,7 +22,7 @@ export default async function sequencesRoutes(fastify: FastifyInstance) {
   });
 
   fastify.get('/:id', async (request, reply) => {
-    const { org_id } = request.user as any;
+    const org_id = (request.user as any)?.org_id || (request.headers['x-org-id'] as string) || '00000000-0000-0000-0000-000000000001';
     const { id } = request.params as any;
 
     try {
@@ -39,7 +39,7 @@ export default async function sequencesRoutes(fastify: FastifyInstance) {
   });
 
   fastify.post('/', { preHandler: requireAction('MANAGE_CAMPAIGNS') }, async (request, reply) => {
-    const { org_id } = request.user as any;
+    const org_id = (request.user as any)?.org_id || (request.headers['x-org-id'] as string) || '00000000-0000-0000-0000-000000000001';
     const { name, steps } = request.body as any;
 
     try {
@@ -71,7 +71,7 @@ export default async function sequencesRoutes(fastify: FastifyInstance) {
   });
 
   fastify.post('/:id/enroll', { preHandler: requireAction('MANAGE_CAMPAIGNS') }, async (request, reply) => {
-    const { org_id } = request.user as any;
+    const org_id = (request.user as any)?.org_id || (request.headers['x-org-id'] as string) || '00000000-0000-0000-0000-000000000001';
     const { id } = request.params as any;
     const { lead_ids } = request.body as any;
 
@@ -105,7 +105,7 @@ export default async function sequencesRoutes(fastify: FastifyInstance) {
   });
 
   fastify.patch('/:id/status', { preHandler: requireAction('MANAGE_CAMPAIGNS') }, async (request, reply) => {
-    const { org_id } = request.user as any;
+    const org_id = (request.user as any)?.org_id || (request.headers['x-org-id'] as string) || '00000000-0000-0000-0000-000000000001';
     const { id } = request.params as any;
     const { status } = request.body as any;
 

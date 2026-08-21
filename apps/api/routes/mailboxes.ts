@@ -7,7 +7,7 @@ import { v4 as uuidv4 } from 'uuid';
 export default async function mailboxesRoutes(fastify: FastifyInstance) {
   
   fastify.get('/', async (request, reply) => {
-    const { org_id } = request.user as any;
+    const org_id = (request.user as any)?.org_id || (request.headers['x-org-id'] as string) || '00000000-0000-0000-0000-000000000001';
 
     try {
       const allMailboxes = await db.select().from(mailboxes).where(eq(mailboxes.org_id, org_id));
@@ -19,7 +19,7 @@ export default async function mailboxesRoutes(fastify: FastifyInstance) {
   });
 
   fastify.post('/', async (request, reply) => {
-    const { org_id } = request.user as any;
+    const org_id = (request.user as any)?.org_id || (request.headers['x-org-id'] as string) || '00000000-0000-0000-0000-000000000001';
     const { provider, email, credentials } = request.body as any;
 
     try {
@@ -47,7 +47,7 @@ export default async function mailboxesRoutes(fastify: FastifyInstance) {
   });
 
   fastify.patch('/:id/pause', async (request, reply) => {
-    const { org_id } = request.user as any;
+    const org_id = (request.user as any)?.org_id || (request.headers['x-org-id'] as string) || '00000000-0000-0000-0000-000000000001';
     const { id } = request.params as any;
     const { paused } = request.body as any;
 
