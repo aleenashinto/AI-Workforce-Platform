@@ -1,7 +1,7 @@
 import { FastifyInstance } from 'fastify';
 import { db } from '@ai-workforce/db';
-import { conversations, messages, organizations } from '@ai-workforce/db/schema';
-import { eq, desc, and } from 'drizzle-orm';
+import { conversations, messages, organizations, end_users } from '@ai-workforce/db/schema';
+import { eq, desc, and, ilike, or } from 'drizzle-orm';
 import { v4 as uuidv4 } from 'uuid';
 
 export default async function agentRoutes(fastify: FastifyInstance) {
@@ -31,17 +31,33 @@ export default async function agentRoutes(fastify: FastifyInstance) {
   // GET /agent/conversations — list all org conversations, partitioned by assignment
   fastify.get('/conversations', async (req, reply) => {
     const org_id = (req as any).user?.org_id || (req.headers['x-org-id'] as string) || '00000000-0000-0000-0000-000000000001';
+    const { search } = req.query as { search?: string };
 
-    const orgConversations = await db
-      .select()
+    let orgConversations = await db
+      .select({
+        conversation: conversations,
+        end_user: end_users
+      })
       .from(conversations)
+      .leftJoin(end_users, eq(conversations.visitor_id, end_users.id))
       .where(eq(conversations.org_id, org_id))
       .orderBy(desc(conversations.updated_at));
 
-    const unassigned = orgConversations.filter(c => !c.assigned_to);
-    const assigned = orgConversations.filter(c => !!c.assigned_to);
+    if (search && search.trim() !== '') {
+      const q = search.toLowerCase();
+      orgConversations = orgConversations.filter(row => {
+        return (row.end_user?.name?.toLowerCase().includes(q)) ||
+               (row.end_user?.email?.toLowerCase().includes(q)) ||
+               (row.end_user?.external_id?.toLowerCase().includes(q)) ||
+               (row.conversation.id.toLowerCase().includes(q));
+      });
+    }
 
-    return { unassigned, assigned };
+    const unassigned = orgConversations.filter(r => !r.conversation.assigned_to).map(r => ({ ...r.conversation, end_user: r.end_user }));
+    const assigned = orgConversations.filter(r => !!r.conversation.assigned_to).map(r => ({ ...r.conversation, end_user: r.end_user }));
+    const all = orgConversations.map(r => ({ ...r.conversation, end_user: r.end_user }));
+
+    return { all, unassigned, assigned };
   });
 
   // GET /agent/conversations/:id — fetch conversation + messages
@@ -49,13 +65,17 @@ export default async function agentRoutes(fastify: FastifyInstance) {
     const org_id = (req as any).user?.org_id || (req.headers['x-org-id'] as string) || '00000000-0000-0000-0000-000000000001';
     const { id } = req.params as { id: string };
 
-    const [conversation] = await db
-      .select()
+    const [row] = await db
+      .select({
+        conversation: conversations,
+        end_user: end_users
+      })
       .from(conversations)
+      .leftJoin(end_users, eq(conversations.visitor_id, end_users.id))
       .where(and(eq(conversations.id, id), eq(conversations.org_id, org_id)))
       .limit(1);
 
-    if (!conversation) {
+    if (!row) {
       return reply.status(404).send({ error: 'Conversation not found' });
     }
 
@@ -65,7 +85,7 @@ export default async function agentRoutes(fastify: FastifyInstance) {
       .where(eq(messages.conversation_id, id))
       .orderBy(messages.created_at);
 
-    return { ...conversation, messages: convMessages };
+    return { ...row.conversation, end_user: row.end_user, messages: convMessages };
   });
 
   // PATCH /agent/conversations/:id — update status, ai_paused, assigned_to

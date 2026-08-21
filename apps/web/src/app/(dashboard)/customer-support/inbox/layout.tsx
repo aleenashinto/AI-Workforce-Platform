@@ -47,25 +47,35 @@ const Corners = () => (
 );
 
 export default function InboxLayout({ children }: { children: React.ReactNode }) {
-  const [activeTab, setActiveTab] = useState("open");
-  const [conversations, setConversations] = useState<{ unassigned: any[], assigned: any[] }>({ unassigned: [], assigned: [] });
+    const [activeTab, setActiveTab] = useState("open");
+  const [conversations, setConversations] = useState<{ all: any[], unassigned: any[], assigned: any[] }>({ all: [], unassigned: [], assigned: [] });
   const [loading, setLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState("");
 
-  useEffect(() => {
-    fetchApi('/agent/conversations')
+  const loadConvs = () => {
+    fetchApi('/agent/conversations?search=' + encodeURIComponent(searchQuery))
       .then(data => {
-        setConversations(data || { unassigned: [], assigned: [] });
+        setConversations(data || { all: [], unassigned: [], assigned: [] });
         setLoading(false);
       })
       .catch(err => {
         console.error("Failed to fetch conversations", err);
         setLoading(false);
       });
-  }, []);
+  };
+
+  useEffect(() => {
+    loadConvs();
+    const interval = setInterval(loadConvs, 5000); // Poll every 5 seconds for real-time emulation
+    return () => clearInterval(interval);
+  }, [searchQuery]); // Re-run effect when search query changes
 
   const getFilteredList = () => {
-    const list = activeTab === "open" ? conversations.unassigned : conversations.assigned;
-    return list.filter(c => c.status === activeTab || (activeTab === 'open' && c.status !== 'resolved' && c.status !== 'escalated'));
+    const list = conversations.all || [];
+    return list.filter(c => {
+      if (activeTab === 'open') return c.status === 'active';
+      return c.status === activeTab;
+    });
   };
 
   const list = getFilteredList();
@@ -92,7 +102,7 @@ export default function InboxLayout({ children }: { children: React.ReactNode })
           
           <div style={{ position: "relative" }}>
             <Search size={14} color={T.muted} style={{ position: "absolute", left: 10, top: 10 }} />
-            <input type="text" placeholder="Search by name, tag, ID..." style={{
+            <input type="text" placeholder="Search by name, tag, ID..." value={searchQuery} onChange={e => setSearchQuery(e.target.value)} style={{
               width: "100%", background: T.panel, border: `1px solid ${T.border}`,
               color: T.text, fontFamily: T.mono, fontSize: "0.75rem", padding: "0.5rem 1rem 0.5rem 2rem",
               outline: "none"
@@ -110,7 +120,7 @@ export default function InboxLayout({ children }: { children: React.ReactNode })
             <Link key={c.id} href={`/customer-support/inbox/${c.id}`} style={{ textDecoration: "none" }}>
               <div style={{ padding: "1.2rem", borderBottom: `1px solid ${T.border}`, cursor: "pointer", transition: "background 0.2s", background: "transparent" }} onMouseEnter={e => e.currentTarget.style.background = "rgba(0,255,136,0.05)"} onMouseLeave={e => e.currentTarget.style.background = "transparent"}>
                 <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.5rem" }}>
-                  <span style={{ fontFamily: T.body, fontSize: "0.95rem", fontWeight: 600, color: "#fff" }}>{c.external_id || 'User'}</span>
+                  <span style={{ fontFamily: T.body, fontSize: "0.95rem", fontWeight: 600, color: "#fff" }}>{c.end_user?.name || c.end_user?.email || c.external_id || 'Anonymous User'}</span>
                   <span style={{ fontFamily: T.mono, fontSize: "0.7rem", color: T.muted }}>{new Date(c.updated_at).toLocaleTimeString()}</span>
                 </div>
                 <div style={{ fontFamily: T.body, fontSize: "0.85rem", color: T.muted, marginBottom: "0.8rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
