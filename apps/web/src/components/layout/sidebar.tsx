@@ -39,7 +39,7 @@ const navigation = [
       { label: "Knowledge", path: "/customer-support/knowledge", icon: Database },
       { label: "Knowledge Gaps", path: "/customer-support/knowledge-gaps", icon: AlertTriangle },
       { label: "Analytics", path: "/customer-support/analytics", icon: LineChart },
-      { label: "Widget", path: "/customer-support/widget", icon: Bot }
+      { label: "AI Agent", path: "/customer-support/widget", icon: Bot }
     ]
   },
   {

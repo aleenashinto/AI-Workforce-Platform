@@ -171,4 +171,120 @@ export async function chatRoutes(fastify: FastifyInstance) {
     
     reply.raw.end();
   });
+
+  fastify.post('/v1/chat/test', { preHandler: [checkBillingQuota] }, async (request, reply) => {
+    const { org_id, query } = request.body as any;
+
+    if (!query || !org_id) {
+      return reply.status(400).send({ error: 'Query and org_id are required' });
+    }
+
+    // Input Guardrails
+    const inputCheck = await checkInputGuardrails(query);
+    if (!inputCheck.safe) {
+      return reply.status(400).send({ error: inputCheck.reason });
+    }
+
+    // Generate dummy embedding since we don't have a real key necessarily
+    let queryEmbedding = new Array(3072).fill(0.01);
+    
+    if (process.env.OPENAI_API_KEY && process.env.OPENAI_API_KEY !== 'dummy') {
+      try {
+        const response = await openai.embeddings.create({
+          model: 'text-embedding-3-small',
+          input: query,
+          dimensions: 1536
+        });
+        queryEmbedding = response.data[0].embedding;
+      } catch (err) {
+        console.error("OpenAI Embedding failed, using dummy", err);
+      }
+    }
+
+    const searchResults = await sql`
+      WITH vector_search AS (
+        SELECT id, document_id, content,
+               1 - (embedding <=> ${JSON.stringify(queryEmbedding)}::vector) as similarity,
+               ROW_NUMBER() OVER (ORDER BY embedding <=> ${JSON.stringify(queryEmbedding)}::vector) as rank
+        FROM knowledge_chunks
+        ORDER BY embedding <=> ${JSON.stringify(queryEmbedding)}::vector
+        LIMIT 30
+      ),
+      keyword_search AS (
+        SELECT id, document_id, content,
+               ts_rank_cd(fts, plainto_tsquery('english', ${query})) as rank_score,
+               ROW_NUMBER() OVER (ORDER BY ts_rank_cd(fts, plainto_tsquery('english', ${query})) DESC) as rank
+        FROM knowledge_chunks
+        WHERE fts @@ plainto_tsquery('english', ${query})
+        LIMIT 30
+      ),
+      fused_results AS (
+        SELECT
+          COALESCE(v.id, k.id) as id,
+          COALESCE(v.content, k.content) as content,
+          COALESCE(1.0 / (60 + v.rank), 0.0) + COALESCE(1.0 / (60 + k.rank), 0.0) as rrf_score
+        FROM vector_search v
+        FULL OUTER JOIN keyword_search k ON v.id = k.id
+        ORDER BY rrf_score DESC
+        LIMIT 6
+      )
+      SELECT * FROM fused_results;
+    `;
+
+    const context = searchResults.length > 0 
+      ? searchResults.map((r, i) => `[${i + 1}] ${r.content}`).join('\n\n')
+      : "[1] Dummy context for testing since DB might be empty.";
+
+    const systemPrompt = `You are a helpful support agent. Answer ONLY from the provided context. Cite everything using [1], [2] etc. If you cannot answer, say "I cannot answer this based on the context."\nContext:\n${context}`;
+
+    const isUnanswerable = searchResults.length === 0;
+    const confidence = isUnanswerable ? 0.3 : 0.85;
+
+    reply.raw.setHeader('Content-Type', 'text/event-stream');
+    reply.raw.setHeader('Cache-Control', 'no-cache');
+    reply.raw.setHeader('Connection', 'keep-alive');
+
+    if (confidence < 0.70) {
+      const fullAnswer = "I'm not completely sure about that. In a real conversation, I would escalate this to our human support team.";
+      const chunks = fullAnswer.split(' ');
+      for (let i = 0; i < chunks.length; i++) {
+        reply.raw.write(`data: ${JSON.stringify({ token: chunks[i] + ' ' })}\n\n`);
+        await new Promise(resolve => setTimeout(resolve, 50));
+      }
+    } else {
+      if (process.env.ANTHROPIC_API_KEY && process.env.ANTHROPIC_API_KEY !== 'dummy') {
+        try {
+          const stream = await streamText('fast', systemPrompt, query);
+          for await (const chunk of stream) {
+            if (chunk.type === 'content_block_delta' && chunk.delta.type === 'text_delta') {
+              reply.raw.write(`data: ${JSON.stringify({ token: chunk.delta.text })}\n\n`);
+            }
+          }
+        } catch (err) {
+          console.error("LLM streaming failed", err);
+          reply.raw.write(`data: ${JSON.stringify({ error: "Failed to generate response" })}\n\n`);
+        }
+      } else {
+        const answer = isUnanswerable 
+          ? "I cannot answer this based on the context." 
+          : `Based on the documentation [1], here is the answer to your question regarding "${query}".`;
+
+        const chunks = answer.split(' ');
+        for (let i = 0; i < chunks.length; i++) {
+          reply.raw.write(`data: ${JSON.stringify({ token: chunks[i] + ' ' })}\n\n`);
+          await new Promise(resolve => setTimeout(resolve, 50));
+        }
+      }
+    }
+
+    const metadata = { citations: searchResults.map((r: any) => ({ chunk_id: r.id })) };
+
+    reply.raw.write(`data: ${JSON.stringify({ 
+      done: true, 
+      confidence, 
+      metadata 
+    })}\n\n`);
+    
+    reply.raw.end();
+  });
 }
