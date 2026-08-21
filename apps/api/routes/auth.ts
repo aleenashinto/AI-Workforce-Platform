@@ -332,12 +332,7 @@ export default async function authRoutes(fastify: FastifyInstance) {
       return reply.status(400).send({ error: "Invalid email format" });
     }
     
-    // Block common free personal email domains
-    const freeDomains = ["gmail.com", "yahoo.com", "hotmail.com", "outlook.com", "aol.com", "icloud.com"];
-    const domain = email.split("@")[1]?.toLowerCase();
-    if (domain && freeDomains.includes(domain)) {
-      return reply.status(400).send({ error: "Please use a company/work email address instead of a personal account." });
-    }
+
 
     const passwordComplexityRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
     if (!password || !passwordComplexityRegex.test(password)) {

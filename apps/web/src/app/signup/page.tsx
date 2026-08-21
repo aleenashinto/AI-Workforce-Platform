@@ -201,14 +201,7 @@ function SignUpContent() {
       return;
     }
     
-    // Block common free personal email domains to enforce "Work Email" rule
-    const freeDomains = ["gmail.com", "yahoo.com", "hotmail.com", "outlook.com", "aol.com", "icloud.com"];
-    const domain = formData.workEmail.split("@")[1]?.toLowerCase();
-    if (domain && freeDomains.includes(domain)) {
-      setError("Please use a company/work email address instead of a personal account.");
-      focusField("workEmail");
-      return;
-    }
+
     
     const passwordComplexityRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
     if (!formData.password || !passwordComplexityRegex.test(formData.password)) {
@@ -301,7 +294,7 @@ function SignUpContent() {
             <ModalField name="companyName" label="Company Name" type="text" placeholder="Acme Corp" value={formData.companyName} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({...formData, companyName: e.target.value})} />
           </div>
           
-          <ModalField name="workEmail" label="Work Email" type="email" placeholder="john@acme.com" value={formData.workEmail} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({...formData, workEmail: e.target.value})} />
+          <ModalField name="workEmail" label="Email Address" type="email" placeholder="john@example.com" value={formData.workEmail} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({...formData, workEmail: e.target.value})} />
           
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "1rem" }}>
             <ModalField name="password" label="Password" type="password" placeholder="••••••••••••" value={formData.password} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({...formData, password: e.target.value})} />
