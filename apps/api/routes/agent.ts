@@ -1,10 +1,16 @@
 import { FastifyInstance } from 'fastify';
 import { db } from '@ai-workforce/db';
-import { conversations, messages, organizations, end_users } from '@ai-workforce/db/schema';
+import { conversations, messages, organizations, end_users, users } from '@ai-workforce/db/schema';
 import { eq, desc, and, ilike, or, sql } from 'drizzle-orm';
 import { v4 as uuidv4 } from 'uuid';
 
 export default async function agentRoutes(fastify: FastifyInstance) {
+
+  fastify.get('/agents', async (req, reply) => {
+    // Return all system users that can be assigned conversations
+    const allUsers = await db.select().from(users).limit(50);
+    return { success: true, agents: allUsers };
+  });
 
   fastify.get('/widget-config', async (req, reply) => {
     const org_id = (req as any).user?.org_id || req.headers["x-org-id"];
