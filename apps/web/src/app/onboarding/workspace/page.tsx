@@ -10,7 +10,8 @@ export default function WorkspaceSetupPage() {
     companyName: "",
     companyUrl: "",
     teamSize: "1-10",
-    industry: "Technology"
+    industry: "Technology",
+    userRole: "owner"
   });
   const [loading, setLoading] = useState(false);
 
@@ -28,10 +29,19 @@ export default function WorkspaceSetupPage() {
           industry: formData.industry
         })
       });
+
+      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/onboarding/preferences`, {
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ 
+          role: formData.userRole
+        })
+      });
     } catch (e) {
       console.error(e);
     }
-    router.push("/onboarding/preferences");
+    router.push("/onboarding/complete");
   };
 
   return (
@@ -40,7 +50,7 @@ export default function WorkspaceSetupPage() {
       <Corners/>
       
       <h1 style={{ fontFamily:T.display, fontSize:"1.6rem", fontWeight:700, color:"#fff", marginBottom:"2rem" }}>
-        Company / Workspace Setup
+        Company & Role Setup
       </h1>
 
       <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem", marginBottom: "2rem" }}>
@@ -81,6 +91,20 @@ export default function WorkspaceSetupPage() {
             { label: "Finance", value: "Finance" },
             { label: "Retail", value: "Retail" },
             { label: "Other", value: "Other" }
+          ]}
+        />
+
+        <ModalField 
+          label="User Role" 
+          value={formData.userRole} 
+          onChange={(e: any) => setFormData({...formData, userRole: e.target.value})} 
+          selectOptions={[
+            { label: "Owner (Full Access)", value: "owner" },
+            { label: "Customer Support Manager", value: "support_lead" },
+            { label: "Customer Support Agent", value: "support_agent" },
+            { label: "Sales Manager", value: "sales_lead" },
+            { label: "Sales Representative", value: "sales_rep" },
+            { label: "Viewer", value: "viewer" }
           ]}
         />
 

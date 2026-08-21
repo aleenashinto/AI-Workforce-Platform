@@ -105,10 +105,9 @@ export function ProgressBar() {
   let step = 1;
   if (path === "/onboarding/profile") step = 1;
   if (path === "/onboarding/workspace") step = 2;
-  if (path === "/onboarding/preferences") step = 3;
-  if (path === "/onboarding/complete") step = 4;
+  if (path === "/onboarding/complete") step = 3;
   
-  const pct = (step / 4) * 100;
+  const pct = (step / 3) * 100;
   
   return (
     <div style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 100, background: T.bg2, borderBottom: `1px solid ${T.border}`, padding: "1rem" }}>
@@ -120,7 +119,7 @@ export function ProgressBar() {
           <div style={{ position: "absolute", top: 0, left: 0, bottom: 0, width: `${pct}%`, background: `linear-gradient(90deg,${T.g2},${T.g})`, transition: "width 0.4s ease", boxShadow: T.glow }} />
         </div>
         <div style={{ fontFamily: T.mono, fontSize: "0.7rem", color: T.g, letterSpacing: "0.15em" }}>
-          STEP {step}/4
+          STEP {step}/3
         </div>
       </div>
     </div>
