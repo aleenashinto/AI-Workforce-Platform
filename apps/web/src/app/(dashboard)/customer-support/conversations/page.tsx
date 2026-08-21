@@ -46,6 +46,9 @@ const Corners = () => (
 export default function ConversationsHistory() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [data, setData] = useState<any[]>([]);
+  const [search, setSearch] = useState('');
+  const [filterStatus, setFilterStatus] = useState<string>('all');
+  const [showFilters, setShowFilters] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -61,6 +64,40 @@ export default function ConversationsHistory() {
       });
   }, []);
 
+  const filteredData = data.filter(d => {
+    const q = search.toLowerCase();
+    const customerStr = (d.end_user?.name || d.end_user?.email || d.end_user?.external_id || '').toLowerCase();
+    const matchesSearch = d.id.toLowerCase().includes(q) || customerStr.includes(q) || d.channel?.toLowerCase().includes(q);
+    const matchesStatus = filterStatus === 'all' || d.status === filterStatus || (!d.status && filterStatus === 'active');
+    return matchesSearch && matchesStatus;
+  });
+
+  const handleExportCSV = () => {
+    const headers = ['TICKET_ID', 'CUSTOMER', 'CHANNEL', 'MSGS', 'CONFIDENCE', 'RESOLUTION', 'DATE'];
+    const rows = filteredData.map(d => {
+      const customer = (d.end_user?.name || d.end_user?.email || d.end_user?.external_id || 'Unknown').replace(/,/g, '');
+      return [
+        d.id,
+        customer,
+        d.channel || '',
+        d.messages?.length || 0,
+        d.metadata?.confidence || '',
+        d.status?.toUpperCase() || 'OPEN',
+        new Date(d.created_at).toISOString()
+      ].join(',');
+    });
+    const csvContent = [headers.join(','), ...rows].join('\n');
+    
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', 'conversation_logs.csv');
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   return (
     <div style={{ maxWidth: 1400, margin: "0 auto", paddingBottom: "4rem" }}>
       
@@ -68,7 +105,7 @@ export default function ConversationsHistory() {
         <div>
           <h2 style={{ fontFamily: T.display, fontSize: "1.8rem", color: "#fff", textShadow: T.glow }}>Global Conversation Logs</h2>
           <p style={{ fontFamily: T.mono, fontSize: "0.75rem", color: T.muted, letterSpacing: "0.1em", marginTop: "0.4rem" }}>
-            INDEXED_RECORDS: <span style={{ color: T.g }}>{data.length}</span> {"// RETENTION: 365 DAYS"}
+            INDEXED_RECORDS: <span style={{ color: T.g }}>{filteredData.length}</span> {"// RETENTION: 365 DAYS"}
           </p>
         </div>
         <div style={{ display: "flex", gap: "1rem" }}>
@@ -77,6 +114,8 @@ export default function ConversationsHistory() {
             <input 
               type="text" 
               placeholder="Query logs..." 
+              value={search}
+              onChange={e => setSearch(e.target.value)}
               style={{
                 padding: "0.6rem 1rem 0.6rem 2.5rem", width: 250,
                 background: "rgba(0,0,0,0.3)", border: `1px solid ${T.border}`,
