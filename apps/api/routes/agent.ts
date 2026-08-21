@@ -1,10 +1,33 @@
 import { FastifyInstance } from 'fastify';
 import { db } from '@ai-workforce/db';
-import { conversations, messages } from '@ai-workforce/db/schema';
+import { conversations, messages, organizations } from '@ai-workforce/db/schema';
 import { eq, desc, and } from 'drizzle-orm';
 import { v4 as uuidv4 } from 'uuid';
 
 export default async function agentRoutes(fastify: FastifyInstance) {
+
+  fastify.get('/widget-config', async (req, reply) => {
+    const org_id = (req as any).user?.org_id || req.headers["x-org-id"];
+    const [org] = await db.select().from(organizations).where(eq(organizations.id, org_id)).limit(1);
+    if (!org) return reply.status(404).send({ error: 'Org not found' });
+    const settings: any = org.settings || {};
+    return { success: true, config: settings.widgetConfig || {} };
+  });
+
+  fastify.post('/widget-config', async (req, reply) => {
+    const org_id = (req as any).user?.org_id || req.headers["x-org-id"];
+    const body = req.body as any;
+    
+    const [org] = await db.select().from(organizations).where(eq(organizations.id, org_id)).limit(1);
+    if (!org) return reply.status(404).send({ error: 'Org not found' });
+
+    const settings: any = org.settings || {};
+    settings.widgetConfig = { ...settings.widgetConfig, ...body };
+
+    await db.update(organizations).set({ settings }).where(eq(organizations.id, org_id));
+    return { success: true, config: settings.widgetConfig };
+  });
+
   // GET /agent/conversations — list all org conversations, partitioned by assignment
   fastify.get('/conversations', async (req, reply) => {
     const { org_id } = (req as any).user;

@@ -4,6 +4,7 @@ import {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   Monitor, MessageSquare, Plus, Save
 } from "lucide-react";
+import { API_BASE } from "@/lib/api";
 import { useState, useEffect } from "react";
 
 /* ─────────────────────────────────────────────
@@ -41,6 +42,53 @@ const Corners = () => (
 );
 
 export default function WidgetConfigPage() {
+  const [isSaving, setIsSaving] = useState(false);
+  const [saveStatus, setSaveStatus] = useState('');
+
+  // Hardcode orgId for local testing matching the rest of the dashboard
+  const currentOrgId = "00000000-0000-0000-0000-000000000001";
+
+  useEffect(() => {
+    fetch(`${API_BASE}/agent/widget-config`, { headers: { 'x-org-id': currentOrgId } })
+      .then(res => res.json())
+      .then(data => {
+        if (data.config) {
+          if (data.config.brandColor) setBrandColor(data.config.brandColor);
+          if (data.config.position) setPosition(data.config.position);
+          if (data.config.launcherIcon) setLauncherIcon(data.config.launcherIcon);
+          if (data.config.greeting) setGreeting(data.config.greeting);
+          if (data.config.suggestedQuestions) setSuggestedQuestions(data.config.suggestedQuestions);
+          if (data.config.primaryLanguage) setPrimaryLanguage(data.config.primaryLanguage);
+          if (data.config.escalationBehavior) setEscalationBehavior(data.config.escalationBehavior);
+        }
+      })
+      .catch(() => {});
+  }, []);
+
+  const handleSave = async () => {
+    setIsSaving(true);
+    setSaveStatus('Saving...');
+    try {
+      const res = await fetch(`${API_BASE}/agent/widget-config`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'x-org-id': currentOrgId },
+        body: JSON.stringify({
+          brandColor, position, launcherIcon, greeting, suggestedQuestions, primaryLanguage, escalationBehavior
+        })
+      });
+      if (res.ok) {
+        setSaveStatus('Saved!');
+        setTimeout(() => setSaveStatus(''), 3000);
+      } else {
+        setSaveStatus('Error saving');
+      }
+    } catch(e) {
+      setSaveStatus('Error saving');
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
   const [activeTab, setActiveTab] = useState('appearance');
   
   // Widget Configuration State
@@ -201,13 +249,13 @@ export default function WidgetConfigPage() {
           )}
 
           <div style={{ marginTop: "2.5rem", display: "flex", justifyContent: "flex-end" }}>
-            <button style={{
+            <button onClick={handleSave} disabled={isSaving} style={{
               background: T.g, border: "none", color: T.bg, fontFamily: T.mono, fontSize: "0.8rem", 
               fontWeight: 700, textTransform: "uppercase", padding: "0.8rem 1.5rem", 
               display: "flex", alignItems: "center", gap: "0.5rem", cursor: "pointer", boxShadow: T.glow,
               clipPath: "polygon(10px 0%,100% 0%,calc(100% - 10px) 100%,0% 100%)"
             }}>
-              <Save size={16} /> Save Changes
+              <Save size={16} /> {isSaving ? "Saving..." : "Save Changes"} {saveStatus === "Saved!" && "✓"}
             </button>
           </div>
 
