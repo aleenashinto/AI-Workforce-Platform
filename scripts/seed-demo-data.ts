@@ -12,22 +12,17 @@ async function seed() {
   console.log("========================================");
 
   // 1. Get or create an organization
-  let org_id = process.env.DEMO_ORG_ID;
+  let org_id = process.env.DEMO_ORG_ID || '00000000-0000-0000-0000-000000000001';
   let org;
 
-  if (org_id) {
-    [org] = await db.select().from(organizations).where(eq(organizations.id, org_id)).limit(1);
-  } else {
-    [org] = await db.select().from(organizations).limit(1);
-  }
+  [org] = await db.select().from(organizations).where(eq(organizations.id, org_id)).limit(1);
 
   if (!org) {
     console.log("No organization found. Creating a development organization...");
-    org_id = '00000000-0000-0000-0000-000000000001';
     [org] = await db.insert(organizations).values({
       id: org_id,
       name: 'Development Organization',
-      slug: 'dev-org'
+      slug: 'dev-org-' + Date.now()
     }).returning();
   } else {
     org_id = org.id;
@@ -86,21 +81,21 @@ async function seed() {
   for (let i = 0; i < 50; i++) {
     const fn = random(firstNames);
     const ln = random(lastNames);
-    const email = \`\${fn.toLowerCase()}.\${ln.toLowerCase()}.demo\${i}@example.com\`;
+    const email = `${fn.toLowerCase()}.${ln.toLowerCase()}.demo${i}@example.com`;
     const createdAt = new Date(Date.now() - randomInt(1, 30) * 24 * 60 * 60 * 1000);
     
     const [u] = await db.insert(end_users).values({
       org_id,
-      name: \`\${fn} \${ln}\`,
+      name: `${fn} ${ln}`,
       email,
-      external_id: \`CUST-\${randomInt(1000, 9999)}\`,
-      metadata: { is_demo: true, phone: \`+1555\${randomInt(1000000, 9999999)}\` },
+      external_id: `CUST-${randomInt(1000, 9999)}`,
+      metadata: { is_demo: true, phone: `+1555${randomInt(1000000, 9999999)}` },
       created_at: createdAt,
       updated_at: createdAt
     }).returning();
     usersCreated.push(u);
   }
-  console.log(\`[####################] 50/50\`);
+  console.log(`[####################] 50/50`);
 
   // Target Status Distribution: Open(active): 20, Escalated: 8, Resolved: 15, Pending(active): 7 => Total active: 27
   let statusPool = [
@@ -212,15 +207,15 @@ async function seed() {
     }
   }
 
-  console.log(\`[####################] \${convCount}/\${convCount}\`);
-  console.log(\`[####################] \${msgCount}/\${msgCount} messages\`);
+  console.log(`[####################] ${convCount}/${convCount}`);
+  console.log(`[####################] ${msgCount}/${msgCount} messages`);
 
   console.log("========================================");
   console.log("SEED COMPLETE");
   console.log("========================================");
-  console.log(\`Customers: \${usersCreated.length}\`);
-  console.log(\`Conversations: \${convCount}\`);
-  console.log(\`Messages: \${msgCount}\`);
+  console.log(`Customers: ${usersCreated.length}`);
+  console.log(`Conversations: ${convCount}`);
+  console.log(`Messages: ${msgCount}`);
   console.log("========================================");
 
   process.exit(0);
