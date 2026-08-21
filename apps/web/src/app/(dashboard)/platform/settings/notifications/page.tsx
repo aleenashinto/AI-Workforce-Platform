@@ -1,6 +1,7 @@
 'use client';
 
 import { Bell } from "lucide-react";
+import { useState } from "react";
 
 const T = {
   g:       "#00ff88",
@@ -73,6 +74,19 @@ const Toggle = ({ label, description, defaultChecked }: any) => (
 );
 
 export default function NotificationsSettingsPage() {
+  const [saving, setSaving] = useState(false);
+  const [saved, setSaved] = useState(false);
+
+  const handleSave = () => {
+    setSaving(true);
+    setSaved(false);
+    setTimeout(() => {
+      setSaving(false);
+      setSaved(true);
+      setTimeout(() => setSaved(false), 2000);
+    }, 800);
+  };
+
   return (
     <div>
       <SettingSection title="Notifications" icon={Bell}>
@@ -101,12 +115,17 @@ export default function NotificationsSettingsPage() {
       </SettingSection>
 
       <div style={{ display: "flex", justifyContent: "flex-end", marginTop: "1rem" }}>
-        <button style={{ 
-          background: T.g, border: "none", padding: "0.8rem 2rem", color: T.bg, 
-          fontFamily: T.mono, fontSize: "0.8rem", fontWeight: "bold", textTransform: "uppercase",
-          cursor: "pointer", boxShadow: T.glow, clipPath: "polygon(10px 0%,100% 0%,calc(100% - 10px) 100%,0% 100%)"
-        }}>
-          Save Preferences
+        <button 
+          onClick={handleSave}
+          style={{ 
+            background: saved ? T.g2 : T.g, 
+            border: "none", padding: "0.8rem 2rem", color: T.bg, 
+            fontFamily: T.mono, fontSize: "0.8rem", fontWeight: "bold", textTransform: "uppercase",
+            cursor: "pointer", boxShadow: T.glow, clipPath: "polygon(10px 0%,100% 0%,calc(100% - 10px) 100%,0% 100%)",
+            transition: "background 0.3s"
+          }}
+        >
+          {saving ? "Saving..." : saved ? "Saved!" : "Save Preferences"}
         </button>
       </div>
     </div>
