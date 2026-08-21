@@ -6,6 +6,7 @@ import { useUserContext } from "@/contexts/UserContext";
 
 const T = {
   g:       "#00ff88",
+  g2:      "#00cfff",
   bg:      "#040810",
   bg2:     "#070e1a",
   panel:   "#0a1628",
@@ -88,7 +89,17 @@ const TIMEZONES = [
 
 export default function OrganizationSettingsPage() {
   const { user, updateOrganization } = useUserContext();
-  const [loading, setLoading] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [saved, setSaved] = useState(false);
+  
+  const handleSave = () => {
+    setSaving(true);
+    setTimeout(() => {
+      setSaving(false);
+      setSaved(true);
+      setTimeout(() => setSaved(false), 2000);
+    }, 800);
+  };
   
   if (!user) return null;
 
@@ -125,12 +136,16 @@ export default function OrganizationSettingsPage() {
       </SettingSection>
 
       <div style={{ display: "flex", justifyContent: "flex-end", marginTop: "1rem" }}>
-        <button style={{ 
-          background: T.g, border: "none", padding: "0.8rem 2rem", color: T.bg, 
-          fontFamily: T.mono, fontSize: "0.8rem", fontWeight: "bold", textTransform: "uppercase",
-          cursor: "pointer", boxShadow: T.glow, clipPath: "polygon(10px 0%,100% 0%,calc(100% - 10px) 100%,0% 100%)"
-        }}>
-          Save Organization
+        <button 
+          onClick={handleSave}
+          style={{ 
+            background: saved ? T.g2 : T.g, border: "none", padding: "0.8rem 2rem", color: T.bg, 
+            fontFamily: T.mono, fontSize: "0.8rem", fontWeight: "bold", textTransform: "uppercase",
+            cursor: "pointer", boxShadow: T.glow, clipPath: "polygon(10px 0%,100% 0%,calc(100% - 10px) 100%,0% 100%)",
+            transition: "background 0.3s"
+          }}
+        >
+          {saving ? "SAVING..." : saved ? "SAVED!" : "SAVE ORGANIZATION"}
         </button>
       </div>
     </div>
