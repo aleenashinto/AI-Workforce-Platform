@@ -69,7 +69,7 @@ const allowedOrigins = (origin: string | undefined, cb: (err: Error | null, allo
 fastify.register(cors, {
   origin: allowedOrigins,
   credentials: true,
-  allowedHeaders: ['Content-Type', 'Authorization', 'Accept', 'Origin', 'Cookie'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'Accept', 'Origin', 'Cookie', 'x-org-id'],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
 });
 

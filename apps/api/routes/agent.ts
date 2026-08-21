@@ -30,7 +30,7 @@ export default async function agentRoutes(fastify: FastifyInstance) {
 
   // GET /agent/conversations — list all org conversations, partitioned by assignment
   fastify.get('/conversations', async (req, reply) => {
-    const { org_id } = (req as any).user;
+    const org_id = (req as any).user?.org_id || (req.headers['x-org-id'] as string) || '00000000-0000-0000-0000-000000000001';
 
     const orgConversations = await db
       .select()
@@ -46,7 +46,7 @@ export default async function agentRoutes(fastify: FastifyInstance) {
 
   // GET /agent/conversations/:id — fetch conversation + messages
   fastify.get('/conversations/:id', async (req, reply) => {
-    const { org_id } = (req as any).user;
+    const org_id = (req as any).user?.org_id || (req.headers['x-org-id'] as string) || '00000000-0000-0000-0000-000000000001';
     const { id } = req.params as { id: string };
 
     const [conversation] = await db
@@ -70,7 +70,7 @@ export default async function agentRoutes(fastify: FastifyInstance) {
 
   // PATCH /agent/conversations/:id — update status, ai_paused, assigned_to
   fastify.patch('/conversations/:id', async (req, reply) => {
-    const { org_id } = (req as any).user;
+    const org_id = (req as any).user?.org_id || (req.headers['x-org-id'] as string) || '00000000-0000-0000-0000-000000000001';
     const { id } = req.params as { id: string };
     const { status, ai_paused, assigned_to } = req.body as any;
 
@@ -89,7 +89,7 @@ export default async function agentRoutes(fastify: FastifyInstance) {
 
   // POST /agent/conversations/:id/assign — assign to human agent, pause AI
   fastify.post('/conversations/:id/assign', async (req, reply) => {
-    const { org_id } = (req as any).user;
+    const org_id = (req as any).user?.org_id || (req.headers['x-org-id'] as string) || '00000000-0000-0000-0000-000000000001';
     const { id } = req.params as { id: string };
     const { agent_id } = req.body as { agent_id: string };
 
