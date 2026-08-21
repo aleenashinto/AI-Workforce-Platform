@@ -68,7 +68,11 @@ export async function knowledgeRoutes(fastify: FastifyInstance) {
       
       // TODO: queue ingest job here
       if (type !== 'file') {
-        await ingestionQueue.add('process-source', { sourceId: source.id });
+        try {
+          await ingestionQueue.add('process-source', { sourceId: source.id });
+        } catch (err: any) {
+          console.warn("Failed to enqueue ingestion job (Redis likely unavailable):", err?.message);
+        }
       }
 
       return { source };
@@ -82,7 +86,11 @@ export async function knowledgeRoutes(fastify: FastifyInstance) {
       return reply.status(400).send({ error: 'source_id is required' });
     }
 
-    await ingestionQueue.add('process-source', { sourceId: source_id });
+    try {
+      await ingestionQueue.add('process-source', { sourceId: source_id });
+    } catch (err: any) {
+      console.warn("Failed to enqueue ingestion job (Redis likely unavailable):", err?.message);
+    }
 
     return { success: true };
   });
