@@ -69,12 +69,7 @@ export default function ProfileSetupPage() {
           onChange={(val: string) => setFormData({...formData, phone: val})} 
         />
 
-        <ModalField 
-          label="Profile Picture URL" 
-          placeholder="https://example.com/avatar.png" 
-          value={formData.profilePicUrl} 
-          onChange={(e: any) => setFormData({...formData, profilePicUrl: e.target.value})} 
-        />
+
 
       </div>
 
