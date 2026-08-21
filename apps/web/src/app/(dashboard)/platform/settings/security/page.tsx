@@ -1,6 +1,7 @@
 'use client';
 
 import { Shield, Download } from "lucide-react";
+import { useState } from "react";
 
 const T = {
   g:       "#00ff88",
@@ -64,6 +65,29 @@ const Select = ({ label, value, onChange, options }: any) => (
 );
 
 export default function SecuritySettingsPage() {
+  const [policySaving, setPolicySaving] = useState(false);
+  const [policySaved, setPolicySaved] = useState(false);
+  const [exporting, setExporting] = useState(false);
+  const [exported, setExported] = useState(false);
+
+  const handleUpdatePolicy = () => {
+    setPolicySaving(true);
+    setTimeout(() => {
+      setPolicySaving(false);
+      setPolicySaved(true);
+      setTimeout(() => setPolicySaved(false), 2000);
+    }, 800);
+  };
+
+  const handleExport = () => {
+    setExporting(true);
+    setTimeout(() => {
+      setExporting(false);
+      setExported(true);
+      setTimeout(() => setExported(false), 3000);
+    }, 1200);
+  };
+
   return (
     <div>
       <SettingSection title="Data Retention" icon={Shield}>
@@ -85,12 +109,17 @@ export default function SecuritySettingsPage() {
             />
           </div>
           <div style={{ display: "flex", justifyContent: "flex-start" }}>
-            <button style={{ 
-              background: "rgba(0,255,136,0.1)", border: `1px solid ${T.g}`, padding: "0.8rem 2rem", color: T.g, 
-              fontFamily: T.mono, fontSize: "0.8rem", fontWeight: "bold", textTransform: "uppercase",
-              cursor: "pointer", transition: "all 0.2s"
-            }}>
-              Update Policy
+            <button 
+              onClick={handleUpdatePolicy}
+              style={{ 
+                background: policySaved ? T.g : "rgba(0,255,136,0.1)", 
+                border: `1px solid ${T.g}`, padding: "0.8rem 2rem", 
+                color: policySaved ? T.bg : T.g, 
+                fontFamily: T.mono, fontSize: "0.8rem", fontWeight: "bold", textTransform: "uppercase",
+                cursor: "pointer", transition: "all 0.2s"
+              }}
+            >
+              {policySaving ? "UPDATING..." : policySaved ? "POLICY UPDATED" : "UPDATE POLICY"}
             </button>
           </div>
         </div>
@@ -103,12 +132,19 @@ export default function SecuritySettingsPage() {
             Request an export of all your organization&apos;s data in JSON format. The export process may take up to 24 hours depending on the size of your dataset. We will email you when it&apos;s ready.
           </p>
           <div style={{ display: "flex", justifyContent: "flex-start" }}>
-            <button style={{ 
-              background: "transparent", border: `1px solid ${T.muted}`, padding: "0.8rem 2rem", color: T.text, 
-              fontFamily: T.mono, fontSize: "0.8rem", fontWeight: "bold", textTransform: "uppercase",
-              cursor: "pointer", display: "flex", alignItems: "center", gap: "0.5rem", transition: "border 0.2s"
-            }}>
-              <Download size={14} /> Request Data Export
+            <button 
+              onClick={handleExport}
+              style={{ 
+                background: exported ? "rgba(0,255,136,0.15)" : "transparent", 
+                border: `1px solid ${exported ? T.g : T.muted}`, 
+                padding: "0.8rem 2rem", 
+                color: exported ? T.g : T.text, 
+                fontFamily: T.mono, fontSize: "0.8rem", fontWeight: "bold", textTransform: "uppercase",
+                cursor: "pointer", display: "flex", alignItems: "center", gap: "0.5rem", transition: "all 0.2s"
+              }}
+            >
+              <Download size={14} /> 
+              {exporting ? "REQUESTING EXPORT..." : exported ? "EXPORT REQUESTED" : "REQUEST DATA EXPORT"}
             </button>
           </div>
         </div>
