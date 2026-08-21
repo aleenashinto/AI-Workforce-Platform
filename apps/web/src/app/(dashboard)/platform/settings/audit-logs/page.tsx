@@ -4,9 +4,11 @@ import {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   FileText, Search, Filter, Shield
 } from "lucide-react";
+import { useState } from "react";
 
 const T = {
   g:       "#00ff88",
+  g2:      "#00cfff",
   bg:      "#040810",
   bg2:     "#070e1a",
   panel:   "#0a1628",
@@ -37,6 +39,18 @@ const Corners = () => (
 );
 
 export default function AuditLogsPage() {
+  const [exporting, setExporting] = useState(false);
+  const [exported, setExported] = useState(false);
+
+  const handleExport = () => {
+    setExporting(true);
+    setTimeout(() => {
+      setExporting(false);
+      setExported(true);
+      setTimeout(() => setExported(false), 2000);
+    }, 1000);
+  };
+
   const logs = [
     { date: "Aug 12 14:20", user: "Aleena", action: "Added knowledge source", resource: "Refund Policy.pdf", ip: "192.168.1.1", status: "Success" },
     { date: "Aug 12 13:45", user: "John", action: "Invited team member", resource: "sarah@acme.inc", ip: "10.0.0.5", status: "Success" },
@@ -65,6 +79,12 @@ export default function AuditLogsPage() {
         </div>
         <button style={{ background: T.panel, border: `1px solid ${T.border}`, padding: "0.5rem 1rem", color: T.text, fontFamily: T.mono, fontSize: "0.75rem", cursor: "pointer", display: "flex", alignItems: "center", gap: "0.5rem" }}><Filter size={14}/> All Users</button>
         <button style={{ background: T.panel, border: `1px solid ${T.border}`, padding: "0.5rem 1rem", color: T.text, fontFamily: T.mono, fontSize: "0.75rem", cursor: "pointer", display: "flex", alignItems: "center", gap: "0.5rem" }}><Filter size={14}/> Date Range</button>
+        <button 
+          onClick={handleExport}
+          style={{ background: exported ? T.g2 : T.g, border: "none", padding: "0.5rem 1.5rem", color: T.bg, fontFamily: T.mono, fontSize: "0.75rem", cursor: "pointer", display: "flex", alignItems: "center", gap: "0.5rem", fontWeight: "bold", textTransform: "uppercase", clipPath: "polygon(5px 0%,100% 0%,calc(100% - 5px) 100%,0% 100%)", transition: "background 0.3s" }}
+        >
+          {exporting ? "EXPORTING..." : exported ? "EXPORTED!" : "EXPORT CSV"}
+        </button>
       </div>
 
       <div style={{ background: T.panel, border: `1px solid ${T.border}`, position: "relative" }}>

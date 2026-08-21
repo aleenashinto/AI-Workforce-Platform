@@ -7,6 +7,7 @@ import { useState } from "react";
 
 const T = {
   g:       "#00ff88",
+  g2:      "#00cfff",
   bg:      "#040810",
   bg2:     "#070e1a",
   panel:   "#0a1628",
@@ -38,6 +39,18 @@ const Corners = () => (
 );
 
 export default function ApiKeysPage() {
+  const [creating, setCreating] = useState(false);
+  const [created, setCreated] = useState(false);
+
+  const handleCreate = () => {
+    setCreating(true);
+    setTimeout(() => {
+      setCreating(false);
+      setCreated(true);
+      setTimeout(() => setCreated(false), 2000);
+    }, 800);
+  };
+
   const [keys] = useState([
     { id: 1, name: "Production", prefix: "aw_prod_****", created: "Aug 12", lastUsed: "Today", scopes: ["Read", "Write"] },
     { id: 2, name: "Development", prefix: "aw_dev_****", created: "Aug 01", lastUsed: "Never", scopes: ["Read"] },
@@ -114,13 +127,16 @@ export default function ApiKeysPage() {
               </div>
             </div>
 
-            <button style={{ 
-              width: "100%", background: T.g, border: "none", padding: "0.8rem", color: T.bg, 
-              fontFamily: T.mono, fontSize: "0.8rem", fontWeight: "bold", textTransform: "uppercase",
-              display: "flex", alignItems: "center", justifyContent: "center", gap: "0.5rem", cursor: "pointer", boxShadow: T.glow,
-              clipPath: "polygon(10px 0%,100% 0%,calc(100% - 10px) 100%,0% 100%)"
-            }}>
-              <Plus size={16} /> Create Key
+            <button 
+              onClick={handleCreate}
+              style={{ 
+                width: "100%", background: created ? T.g2 : T.g, border: "none", padding: "0.8rem", color: T.bg, 
+                fontFamily: T.mono, fontSize: "0.8rem", fontWeight: "bold", textTransform: "uppercase",
+                display: "flex", alignItems: "center", justifyContent: "center", gap: "0.5rem", cursor: "pointer", boxShadow: T.glow,
+                clipPath: "polygon(10px 0%,100% 0%,calc(100% - 10px) 100%,0% 100%)", transition: "background 0.3s"
+              }}
+            >
+              <Plus size={16} /> {creating ? "CREATING..." : created ? "CREATED!" : "CREATE KEY"}
             </button>
           </div>
         </div>
