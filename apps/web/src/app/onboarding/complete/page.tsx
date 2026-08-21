@@ -41,7 +41,8 @@ export default function CompletePage() {
         setError(data.error || "Failed to complete onboarding");
         setLoading(false);
       } else {
-        router.push('/dashboard');
+        // Force a full page reload so UserContext refetches the updated user.roles from backend
+        window.location.href = '/dashboard';
       }
     } catch (err) {
       setError("Network error. Please try again.");
