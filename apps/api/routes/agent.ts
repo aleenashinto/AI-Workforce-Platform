@@ -145,59 +145,6 @@ export default async function agentRoutes(fastify: FastifyInstance) {
     await db.update(conversations)
   });
 
-  // PATCH /agent/conversations/:id — update status, ai_paused, assigned_to
-  fastify.patch('/conversations/:id', async (req, reply) => {
-    const org_id = (req as any).user?.org_id || (req.headers['x-org-id'] as string) || '00000000-0000-0000-0000-000000000001';
-    const { id } = req.params as { id: string };
-    const { status, ai_paused, assigned_to } = req.body as any;
-
-    const updateData: any = { updated_at: new Date() };
-    if (status !== undefined) updateData.status = status;
-    if (ai_paused !== undefined) updateData.ai_paused = ai_paused;
-    if (assigned_to !== undefined) updateData.assigned_to = assigned_to;
-
-    const [updated] = await db.update(conversations)
-      .set(updateData)
-      .where(and(eq(conversations.id, id), eq(conversations.org_id, org_id)))
-      .returning();
-
-    return { success: true, conversation: updated };
-  });
-
-  // POST /agent/conversations/:id/assign — assign to human agent, pause AI
-  fastify.post('/conversations/:id/assign', async (req, reply) => {
-    const org_id = (req as any).user?.org_id || (req.headers['x-org-id'] as string) || '00000000-0000-0000-0000-000000000001';
-    const { id } = req.params as { id: string };
-    const { agent_id } = req.body as { agent_id: string };
-
-    const [updated] = await db.update(conversations)
-      .set({ assigned_to: agent_id, ai_paused: true, updated_at: new Date() })
-      .where(and(eq(conversations.id, id), eq(conversations.org_id, org_id)))
-      .returning();
-
-    return { success: true, conversation: updated };
-  });
-
-  // POST /agent/conversations/:id/reply — agent sends a message
-  fastify.post('/conversations/:id/reply', async (req, reply) => {
-    const { id } = req.params as { id: string };
-    const { content } = req.body as { content: string };
-
-    const [newMessage] = await db.insert(messages)
-      .values({
-        id: uuidv4(),
-        conversation_id: id,
-        role: 'agent',
-        content,
-      })
-      .returning();
-
-    await db.update(conversations)
-      .set({ updated_at: new Date() })
-      .where(eq(conversations.id, id));
-
-    return { success: true, message: newMessage };
-  });
 
   // POST /agent/conversations/:id/copilot — AI-generated reply suggestion (RAG)
   fastify.post('/conversations/:id/copilot', async (req, reply) => {
