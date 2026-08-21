@@ -187,14 +187,14 @@ export function Sidebar({
         <div style={{ padding: "1.5rem" }}>
           <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", padding: "0.75rem", background: "rgba(0,255,136,0.05)", border: `1px solid ${T.border}`, borderRadius: "4px" }}>
             <div style={{ width: 32, height: 32, borderRadius: 2, background: T.g, color: T.bg, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: T.mono, fontWeight: "bold", fontSize: "0.8rem" }}>
-              {(user as any)?.name ? (user as any).name.split(' ').map((n: string)=>n[0]).join('').substring(0,2).toUpperCase() : 'U'}
+              {user?.fullName ? user.fullName.split(' ').map((n: string)=>n[0]).join('').substring(0,2).toUpperCase() : 'U'}
             </div>
             <div style={{ flex: 1, overflow: "hidden" }}>
               <div style={{ fontFamily: T.body, fontSize: "0.9rem", color: "#fff", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
-                {(user as any)?.name || "Loading..."}
+                {user?.fullName || "Unknown User"}
               </div>
               <div style={{ fontFamily: T.mono, fontSize: "0.7rem", color: T.muted, textTransform: "uppercase" }}>
-                {user ? (hasRole('owner') ? 'OWNER' : hasRole('admin') ? 'ADMIN' : (user.roles && user.roles.length > 0) ? user.roles[0].replace('_', ' ').toUpperCase() : 'VIEWER') : 'LOADING'} ACCESS
+                {user ? ((user.roles && user.roles.length > 0) ? user.roles[0].replace('_', ' ').toUpperCase() : 'VIEWER') : 'LOADING...'}
               </div>
             </div>
           </div>
