@@ -25,7 +25,7 @@ export default function WelcomePage() {
         <span style={{ fontSize: "0.95rem", color: T.muted }}>This will only take a few minutes.</span>
       </p>
 
-      <ActionBtn asLink href="/onboarding/organization" filled style={{ width: "100%" }}>
+      <ActionBtn asLink href="/onboarding/profile" filled style={{ width: "100%" }}>
         ▶ GET STARTED
       </ActionBtn>
     </div>

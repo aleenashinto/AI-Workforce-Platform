@@ -58,9 +58,9 @@ export default function CompletePage() {
   if (modules.sales) configuredModules.push("Sales Assistant");
   
   const checklist = [
-    "Organization created", 
-    configuredModules.length > 0 ? `Modules configured: ${configuredModules.join(', ')}` : "No AI modules enabled", 
-    "Team invited"
+    "Profile setup completed", 
+    "Workspace configured", 
+    "Role & Preferences saved"
   ];
 
   return (
