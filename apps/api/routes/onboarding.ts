@@ -1,6 +1,6 @@
 import { FastifyInstance, FastifyRequest } from 'fastify';
 import { db } from '@ai-workforce/db';
-import { organizations, organization_invitations, memberships } from '@ai-workforce/db/schema';
+import { organizations, organization_invitations, memberships, membership_roles } from '@ai-workforce/db/schema';
 import { eq, and } from 'drizzle-orm';
 import crypto from 'crypto';
 
@@ -151,9 +151,25 @@ export default async function onboardingRoutes(fastify: FastifyInstance) {
     const { role } = req.body as any;
     
     if (role) {
-      await db.update(memberships)
-        .set({ role })
-        .where(and(eq(memberships.user_id, user.user_id), eq(memberships.org_id, user.org_id)));
+      const [membership] = await db.select().from(memberships).where(and(eq(memberships.user_id, user.user_id), eq(memberships.org_id, user.org_id))).limit(1);
+      
+      if (membership) {
+        // Check if a role already exists for this membership
+        const existingRoles = await db.select().from(membership_roles).where(eq(membership_roles.membership_id, membership.id));
+        
+        if (existingRoles.length > 0) {
+          // Update the first role (assuming one primary role per user during onboarding)
+          await db.update(membership_roles)
+            .set({ role })
+            .where(eq(membership_roles.id, existingRoles[0].id));
+        } else {
+          // Insert new role
+          await db.insert(membership_roles).values({
+            membership_id: membership.id,
+            role
+          });
+        }
+      }
     }
 
     return reply.send({ success: true, message: 'Preferences updated' });

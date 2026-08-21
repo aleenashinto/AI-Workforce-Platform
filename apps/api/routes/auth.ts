@@ -1,6 +1,6 @@
 import { FastifyInstance } from 'fastify';
 import { db } from '@ai-workforce/db';
-import { users, organizations, memberships, membership_roles, organization_invitations, password_reset_tokens, email_verification_tokens } from '@ai-workforce/db/schema';
+import { users, email_verification_tokens, password_reset_tokens, organizations, memberships, organization_invitations, membership_roles } from '@ai-workforce/db/schema';
 import { eq, and, gt } from 'drizzle-orm';
 import oauthPlugin from '@fastify/oauth2';
 import crypto from 'crypto';
@@ -149,9 +149,11 @@ export default async function authRoutes(fastify: FastifyInstance) {
         return reply.status(401).send({ error: "User not found" });
       }
 
-      // Find the org for context
+      // Find the org for context and latest roles
       const [membership] = await db.select().from(memberships).where(eq(memberships.user_id, user.id)).limit(1);
       let orgData = null;
+      let latestRoles = req.user.roles;
+      
       if (membership) {
         const [org] = await db.select().from(organizations).where(eq(organizations.id, membership.org_id)).limit(1);
         if (org) {
@@ -159,6 +161,14 @@ export default async function authRoutes(fastify: FastifyInstance) {
             id: org.id,
             name: org.name,
           };
+        }
+        
+        const dbRoles = await db.select({ role: membership_roles.role })
+          .from(membership_roles)
+          .where(eq(membership_roles.membership_id, membership.id));
+          
+        if (dbRoles.length > 0) {
+          latestRoles = dbRoles.map(r => r.role);
         }
       }
 
@@ -170,7 +180,7 @@ export default async function authRoutes(fastify: FastifyInstance) {
           avatarUrl: user.avatar_url ? `/auth/avatar/${user.id}` : "",
           phoneNumber: user.phone_number || "",
           jobTitle: user.job_title || "",
-          roles: req.user.roles,
+          roles: latestRoles,
           organization: orgData ? {
             name: orgData.name,
             website: "",
