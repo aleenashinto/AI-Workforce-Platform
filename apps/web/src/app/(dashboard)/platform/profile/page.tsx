@@ -163,7 +163,17 @@ export default function ProfilePage() {
       return;
     }
 
-
+    if (newPassword) {
+      if (newPassword !== confirmPassword) {
+        setError("New passwords do not match.");
+        return;
+      }
+      const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+      if (!passwordRegex.test(newPassword)) {
+        setError("Password must be at least 8 characters long and include an uppercase letter, a lowercase letter, a number, and a special character.");
+        return;
+      }
+    }
 
     setLoading(true);
     try {
@@ -296,6 +306,21 @@ export default function ProfilePage() {
           <Input label="Phone Number" value={phoneNumber} onChange={(e: any) => setPhoneNumber(e.target.value)} readOnly={!isEditing} />
         </div>
       </div>
+
+      {/* Password - Only shown if editing */}
+      {isEditing && (
+        <div style={{ background: T.panel, border: `1px solid ${T.border}`, padding: "2rem", position: "relative", marginBottom: "2rem" }}>
+          <Corners />
+          <div style={{ fontFamily: T.mono, fontSize: "0.7rem", color: T.muted, letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: "1.5rem" }}>
+            Change Password
+          </div>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
+            <Input label="Current Password" type="password" value={currentPassword} onChange={(e: any) => setCurrentPassword(e.target.value)} />
+            <Input label="New Password" type="password" value={newPassword} onChange={(e: any) => setNewPassword(e.target.value)} />
+            <Input label="Confirm New Password" type="password" value={confirmPassword} onChange={(e: any) => setConfirmPassword(e.target.value)} />
+          </div>
+        </div>
+      )}
 
       {/* Messages */}
       {error && (
