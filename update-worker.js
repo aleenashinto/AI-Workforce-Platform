@@ -1,6 +1,6 @@
-const fs = require('fs');
-const p = 'apps/worker/src/jobs/ingestion.ts';
-let c = fs.readFileSync(p, 'utf8');
+const fs = require("fs");
+const p = "apps/worker/src/jobs/ingestion.ts";
+let c = fs.readFileSync(p, "utf8");
 const searchStr = '} else if (source.type === "text") {';
 const replacement = `} else if (source.type === "sitemap") {
       const response = await fetch(config.url);

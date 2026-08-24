@@ -1,9 +1,13 @@
-import { db } from '@ai-workforce/db';
-import { organizations, users, organization_invitations } from '@ai-workforce/db/schema';
-import crypto from 'crypto';
+import { db } from "@ai-workforce/db";
+import {
+  organizations,
+  users,
+  organization_invitations,
+} from "@ai-workforce/db/schema";
+import crypto from "crypto";
 
 async function createInvite() {
-  const token = crypto.randomBytes(32).toString('hex');
+  const token = crypto.randomBytes(32).toString("hex");
   const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000); // 7 days
 
   // Assuming an org and user exists, let's just grab the first one
@@ -22,7 +26,7 @@ async function createInvite() {
     token: token,
     status: "pending",
     invited_by: user?.id,
-    expires_at: expiresAt
+    expires_at: expiresAt,
   });
 
   console.log(`Invitation created successfully!`);
@@ -31,7 +35,7 @@ async function createInvite() {
   process.exit(0);
 }
 
-createInvite().catch(err => {
+createInvite().catch((err) => {
   console.error(err);
   process.exit(1);
 });

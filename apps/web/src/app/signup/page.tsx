@@ -9,22 +9,22 @@ import { GoogleIcon } from "@/components/icons/social";
    DESIGN TOKENS (Copied from landing page)
 ───────────────────────────────────────────── */
 const T = {
-  g:       "#00ff88",
-  g2:      "#00cfff",
-  warn:    "#ffaa00",
-  red:     "#ff3355",
-  bg:      "#040810",
-  bg2:     "#070e1a",
-  panel:   "#0a1628",
-  border:  "rgba(0,255,136,0.18)",
+  g: "#00ff88",
+  g2: "#00cfff",
+  warn: "#ffaa00",
+  red: "#ff3355",
+  bg: "#040810",
+  bg2: "#070e1a",
+  panel: "#0a1628",
+  border: "rgba(0,255,136,0.18)",
   border2: "rgba(0,207,255,0.18)",
-  muted:   "rgba(0,255,136,0.45)",
-  text:    "#c8ffe8",
-  glow:    "0 0 20px rgba(0,255,136,0.35),0 0 60px rgba(0,255,136,0.12)",
-  glow2:   "0 0 20px rgba(0,207,255,0.35),0 0 60px rgba(0,207,255,0.12)",
-  mono:    "'Share Tech Mono', monospace",
+  muted: "rgba(0,255,136,0.45)",
+  text: "#c8ffe8",
+  glow: "0 0 20px rgba(0,255,136,0.35),0 0 60px rgba(0,255,136,0.12)",
+  glow2: "0 0 20px rgba(0,207,255,0.35),0 0 60px rgba(0,207,255,0.12)",
+  mono: "'Share Tech Mono', monospace",
   display: "'Orbitron', sans-serif",
-  body:    "'Rajdhani', sans-serif",
+  body: "'Rajdhani', sans-serif",
 };
 
 /* ─────────────────────────────────────────────
@@ -32,16 +32,28 @@ const T = {
 ───────────────────────────────────────────── */
 const Corners = () => (
   <>
-    {[["tl","1px 0 0 1px","0","0","auto","auto"],
-      ["tr","1px 1px 0 0","0","auto","0","auto"],
-      ["bl","0 0 1px 1px","auto","0","auto","0"],
-      ["br","0 1px 1px 0","auto","auto","0","0"]].map(([k, bw, t, l, b, r]) => (
-      <span key={k} style={{
-        position:"absolute", width:14, height:14,
-        borderColor: T.g, borderStyle:"solid", borderWidth: bw as string | number, opacity: 0.5,
-        top:t==="auto"?undefined:8, left:l==="auto"?undefined:8,
-        bottom:b==="auto"?undefined:8, right:r==="auto"?undefined:8,
-      }}/>
+    {[
+      ["tl", "1px 0 0 1px", "0", "0", "auto", "auto"],
+      ["tr", "1px 1px 0 0", "0", "auto", "0", "auto"],
+      ["bl", "0 0 1px 1px", "auto", "0", "auto", "0"],
+      ["br", "0 1px 1px 0", "auto", "auto", "0", "0"],
+    ].map(([k, bw, t, l, b, r]) => (
+      <span
+        key={k}
+        style={{
+          position: "absolute",
+          width: 14,
+          height: 14,
+          borderColor: T.g,
+          borderStyle: "solid",
+          borderWidth: bw as string | number,
+          opacity: 0.5,
+          top: t === "auto" ? undefined : 8,
+          left: l === "auto" ? undefined : 8,
+          bottom: b === "auto" ? undefined : 8,
+          right: r === "auto" ? undefined : 8,
+        }}
+      />
     ))}
   </>
 );
@@ -49,30 +61,57 @@ const Corners = () => (
 /* ─────────────────────────────────────────────
    FIELD COMPONENT
 ───────────────────────────────────────────── */
-function ModalField({ id, name, label, type, placeholder, value, onChange }: { id?: string, name?: string, label: string, type: string, placeholder?: string, value: string, onChange: (e: React.ChangeEvent<HTMLInputElement>) => void }) {
+function ModalField({
+  id,
+  name,
+  label,
+  type,
+  placeholder,
+  value,
+  onChange,
+}: {
+  id?: string;
+  name?: string;
+  label: string;
+  type: string;
+  placeholder?: string;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}) {
   const [focused, setFocused] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const inputId = id || name || label.replace(/\s+/g, '-').toLowerCase();
-  
-  const isPassword = type === 'password';
-  const currentType = isPassword ? (showPassword ? 'text' : 'password') : type;
+  const inputId = id || name || label.replace(/\s+/g, "-").toLowerCase();
+
+  const isPassword = type === "password";
+  const currentType = isPassword ? (showPassword ? "text" : "password") : type;
 
   return (
     <div style={{ marginBottom: "1.1rem" }}>
-      <label htmlFor={inputId} style={{ fontFamily:T.mono, fontSize:"0.65rem", letterSpacing:"0.12em", color:T.muted, marginBottom:"0.4rem", display:"block", textTransform:"uppercase" }}>
+      <label
+        htmlFor={inputId}
+        style={{
+          fontFamily: T.mono,
+          fontSize: "0.65rem",
+          letterSpacing: "0.12em",
+          color: T.muted,
+          marginBottom: "0.4rem",
+          display: "block",
+          textTransform: "uppercase",
+        }}
+      >
         {label}
       </label>
       <div style={{ position: "relative" }}>
-        <input 
+        <input
           id={inputId}
           name={name}
-          type={currentType} 
-          placeholder={placeholder} 
+          type={currentType}
+          placeholder={placeholder}
           value={value}
           onChange={onChange}
-          autoComplete={isPassword ? 'new-password' : 'off'}
-          onFocus={()=>setFocused(true)} 
-          onBlur={()=>setFocused(false)} 
+          autoComplete={isPassword ? "new-password" : "off"}
+          onFocus={() => setFocused(true)}
+          onBlur={() => setFocused(false)}
           style={{
             width: "100%",
             background: "rgba(0,255,136,0.03)",
@@ -81,14 +120,14 @@ function ModalField({ id, name, label, type, placeholder, value, onChange }: { i
             padding: "0.8rem 1rem",
             paddingRight: isPassword ? "2.5rem" : "1rem",
             color: T.text,
-            fontFamily: currentType === 'password' ? 'sans-serif' : T.mono,
+            fontFamily: currentType === "password" ? "sans-serif" : T.mono,
             fontSize: "0.85rem",
             outline: "none",
-            transition: "all 0.2s"
+            transition: "all 0.2s",
           }}
         />
         {isPassword && (
-          <button 
+          <button
             type="button"
             onClick={() => setShowPassword(!showPassword)}
             style={{
@@ -102,7 +141,7 @@ function ModalField({ id, name, label, type, placeholder, value, onChange }: { i
               cursor: "pointer",
               fontFamily: T.mono,
               fontSize: "0.7rem",
-              outline: "none"
+              outline: "none",
             }}
           >
             {showPassword ? "HIDE" : "SHOW"}
@@ -116,21 +155,41 @@ function ModalField({ id, name, label, type, placeholder, value, onChange }: { i
 /* ─────────────────────────────────────────────
    SOCIAL BUTTON COMPONENT
 ───────────────────────────────────────────── */
-function SocialBtn({ provider, icon, onClick }: { provider: string, icon: React.ReactNode, onClick: () => void }) {
+function SocialBtn({
+  provider,
+  icon,
+  onClick,
+}: {
+  provider: string;
+  icon: React.ReactNode;
+  onClick: () => void;
+}) {
   const [hov, setHov] = useState(false);
   return (
-    <button onClick={onClick} onMouseEnter={()=>setHov(true)} onMouseLeave={()=>setHov(false)}
+    <button
+      onClick={onClick}
+      onMouseEnter={() => setHov(true)}
+      onMouseLeave={() => setHov(false)}
       style={{
-        width:"100%", display:"flex", alignItems:"center", justifyContent:"center", gap:"0.6rem",
-        fontFamily:T.mono, fontSize:"0.75rem", letterSpacing:"0.05em",
-        padding:"0.75rem", cursor:"pointer", transition:"all 0.2s",
-        color:hov ? "#fff" : T.text, 
-        background:hov ? "rgba(0,255,136,0.05)" : "rgba(0,0,0,0.2)", 
-        border:`1px solid ${hov ? T.g : T.border}`, 
-        boxShadow:hov ? T.glow : "none",
-        marginBottom: "0.8rem"
-      }}>
-      <span style={{ fontSize:"1rem" }}>{icon}</span>
+        width: "100%",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        gap: "0.6rem",
+        fontFamily: T.mono,
+        fontSize: "0.75rem",
+        letterSpacing: "0.05em",
+        padding: "0.75rem",
+        cursor: "pointer",
+        transition: "all 0.2s",
+        color: hov ? "#fff" : T.text,
+        background: hov ? "rgba(0,255,136,0.05)" : "rgba(0,0,0,0.2)",
+        border: `1px solid ${hov ? T.g : T.border}`,
+        boxShadow: hov ? T.glow : "none",
+        marginBottom: "0.8rem",
+      }}
+    >
+      <span style={{ fontSize: "1rem" }}>{icon}</span>
       Continue with {provider}
     </button>
   );
@@ -144,14 +203,14 @@ function SignUpContent() {
   const searchParams = useSearchParams();
   const emailParam = searchParams.get("email") || "";
   const inviteToken = searchParams.get("invite_token");
-  
+
   const [formData, setFormData] = useState({
     fullName: "",
     workEmail: "",
     companyName: "",
     password: "",
     confirmPassword: "",
-    termsAccepted: false
+    termsAccepted: false,
   });
 
   const [loading, setLoading] = useState(false);
@@ -165,9 +224,9 @@ function SignUpContent() {
       companyName: "",
       password: "",
       confirmPassword: "",
-      termsAccepted: false
+      termsAccepted: false,
     });
-    
+
     // Also explicitly reset the form element
     const form = document.getElementById("signup-form") as HTMLFormElement;
     if (form) form.reset();
@@ -175,9 +234,9 @@ function SignUpContent() {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: type === "checkbox" ? checked : value
+      [name]: type === "checkbox" ? checked : value,
     }));
   };
 
@@ -200,12 +259,16 @@ function SignUpContent() {
       focusField("workEmail");
       return;
     }
-    
 
-    
-    const passwordComplexityRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-    if (!formData.password || !passwordComplexityRegex.test(formData.password)) {
-      setError("Password must be at least 8 characters long and include an uppercase letter, a lowercase letter, a number, and a special character.");
+    const passwordComplexityRegex =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    if (
+      !formData.password ||
+      !passwordComplexityRegex.test(formData.password)
+    ) {
+      setError(
+        "Password must be at least 8 characters long and include an uppercase letter, a lowercase letter, a number, and a special character.",
+      );
       focusField("password");
       return;
     }
@@ -219,20 +282,23 @@ function SignUpContent() {
       focusField("termsAccepted");
       return;
     }
-    
+
     setLoading(true);
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/register`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include", // Send auth cookie if backend sets it
-        body: JSON.stringify({
-          fullName: formData.fullName,
-          email: formData.workEmail,
-          companyName: formData.companyName,
-          password: formData.password
-        })
-      });
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/auth/register`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include", // Send auth cookie if backend sets it
+          body: JSON.stringify({
+            fullName: formData.fullName,
+            email: formData.workEmail,
+            companyName: formData.companyName,
+            password: formData.password,
+          }),
+        },
+      );
 
       const data = await res.json();
       if (!res.ok) {
@@ -251,114 +317,319 @@ function SignUpContent() {
   };
 
   return (
-    <div style={{
-      minHeight: "100vh",
-      background: T.bg,
-      color: T.text,
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      padding: "2rem",
-      position: "relative"
-    }}>
+    <div
+      style={{
+        minHeight: "100vh",
+        background: T.bg,
+        color: T.text,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: "2rem",
+        position: "relative",
+      }}
+    >
       {/* Background elements */}
-      <div style={{
-        position: "fixed", inset: 0, zIndex: 0, pointerEvents: "none",
-        backgroundImage: `linear-gradient(rgba(0,255,136,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(0,255,136,0.04) 1px, transparent 1px)`,
-        backgroundSize: "60px 60px",
-      }} />
+      <div
+        style={{
+          position: "fixed",
+          inset: 0,
+          zIndex: 0,
+          pointerEvents: "none",
+          backgroundImage: `linear-gradient(rgba(0,255,136,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(0,255,136,0.04) 1px, transparent 1px)`,
+          backgroundSize: "60px 60px",
+        }}
+      />
 
       {/* Auth Card */}
-      <div style={{
-        background: T.panel,
-        border: `1px solid ${T.border}`,
-        width: "100%", maxWidth: 520,
-        padding: "2.5rem 3rem",
-        position: "relative", zIndex: 10,
-        boxShadow: `0 0 80px rgba(0,255,136,0.08), 0 0 0 1px rgba(0,255,136,0.06)`,
-      }}>
+      <div
+        style={{
+          background: T.panel,
+          border: `1px solid ${T.border}`,
+          width: "100%",
+          maxWidth: 520,
+          padding: "2.5rem 3rem",
+          position: "relative",
+          zIndex: 10,
+          boxShadow: `0 0 80px rgba(0,255,136,0.08), 0 0 0 1px rgba(0,255,136,0.06)`,
+        }}
+      >
         {/* top gradient bar */}
-        <div style={{ position:"absolute", top:0, left:0, right:0, height:2, background:`linear-gradient(90deg,${T.g},${T.g2})` }}/>
-        <Corners/>
+        <div
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            right: 0,
+            height: 2,
+            background: `linear-gradient(90deg,${T.g},${T.g2})`,
+          }}
+        />
+        <Corners />
 
-        <div style={{ fontFamily:T.mono, fontSize:"0.65rem", letterSpacing:"0.15em", color:T.g, marginBottom:"0.5rem" }}>
+        <div
+          style={{
+            fontFamily: T.mono,
+            fontSize: "0.65rem",
+            letterSpacing: "0.15em",
+            color: T.g,
+            marginBottom: "0.5rem",
+          }}
+        >
           {/* INITIALIZE AGENT */}
         </div>
-        <div style={{ fontFamily:T.display, fontSize:"1.6rem", fontWeight:700, color:"#fff", marginBottom:"1.8rem" }}>
+        <div
+          style={{
+            fontFamily: T.display,
+            fontSize: "1.6rem",
+            fontWeight: 700,
+            color: "#fff",
+            marginBottom: "1.8rem",
+          }}
+        >
           Create Account
         </div>
 
         <form id="signup-form" onSubmit={handleRegister} autoComplete="off">
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "1rem" }}>
-            <ModalField name="fullName" label="Full Name" type="text" placeholder="John Doe" value={formData.fullName} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({...formData, fullName: e.target.value})} />
-            <ModalField name="companyName" label="Company Name" type="text" placeholder="Acme Corp" value={formData.companyName} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({...formData, companyName: e.target.value})} />
-          </div>
-          
-          <ModalField name="workEmail" label="Email Address" type="email" placeholder="john@example.com" value={formData.workEmail} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({...formData, workEmail: e.target.value})} />
-          
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "1rem" }}>
-            <ModalField name="password" label="Password" type="password" placeholder="••••••••••••" value={formData.password} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({...formData, password: e.target.value})} />
-            <ModalField name="confirmPassword" label="Confirm Password" type="password" placeholder="••••••••••••" value={formData.confirmPassword} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({...formData, confirmPassword: e.target.value})} />
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
+              gap: "1rem",
+            }}
+          >
+            <ModalField
+              name="fullName"
+              label="Full Name"
+              type="text"
+              placeholder="John Doe"
+              value={formData.fullName}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setFormData({ ...formData, fullName: e.target.value })
+              }
+            />
+            <ModalField
+              name="companyName"
+              label="Company Name"
+              type="text"
+              placeholder="Acme Corp"
+              value={formData.companyName}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setFormData({ ...formData, companyName: e.target.value })
+              }
+            />
           </div>
 
-          <label htmlFor="termsAccepted" style={{ display: "flex", alignItems: "center", gap: "0.8rem", marginTop: "0.5rem", marginBottom: "1.5rem", cursor: "pointer" }}>
-            <div style={{ position: "relative", display: "flex", alignItems: "center" }}>
-              <input 
+          <ModalField
+            name="workEmail"
+            label="Email Address"
+            type="email"
+            placeholder="john@example.com"
+            value={formData.workEmail}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setFormData({ ...formData, workEmail: e.target.value })
+            }
+          />
+
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
+              gap: "1rem",
+            }}
+          >
+            <ModalField
+              name="password"
+              label="Password"
+              type="password"
+              placeholder="••••••••••••"
+              value={formData.password}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setFormData({ ...formData, password: e.target.value })
+              }
+            />
+            <ModalField
+              name="confirmPassword"
+              label="Confirm Password"
+              type="password"
+              placeholder="••••••••••••"
+              value={formData.confirmPassword}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setFormData({ ...formData, confirmPassword: e.target.value })
+              }
+            />
+          </div>
+
+          <label
+            htmlFor="termsAccepted"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "0.8rem",
+              marginTop: "0.5rem",
+              marginBottom: "1.5rem",
+              cursor: "pointer",
+            }}
+          >
+            <div
+              style={{
+                position: "relative",
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <input
                 id="termsAccepted"
-                type="checkbox" 
+                type="checkbox"
                 name="termsAccepted"
                 checked={formData.termsAccepted}
                 onChange={handleChange}
-                style={{ opacity: 0, position: "absolute", width: "100%", height: "100%", cursor: "pointer", zIndex: 2 }} 
+                style={{
+                  opacity: 0,
+                  position: "absolute",
+                  width: "100%",
+                  height: "100%",
+                  cursor: "pointer",
+                  zIndex: 2,
+                }}
               />
-              <div style={{ 
-                width: 18, height: 18, 
-                border: `1px solid ${formData.termsAccepted ? T.g : T.border}`, 
-                background: formData.termsAccepted ? "rgba(0,255,136,0.2)" : "rgba(0,255,136,0.03)",
-                display: "flex", alignItems: "center", justifyContent: "center",
-                transition: "all 0.2s"
-              }}>
-                {formData.termsAccepted && <span style={{ color: T.g, fontSize: "0.8rem" }}>✓</span>}
+              <div
+                style={{
+                  width: 18,
+                  height: 18,
+                  border: `1px solid ${formData.termsAccepted ? T.g : T.border}`,
+                  background: formData.termsAccepted
+                    ? "rgba(0,255,136,0.2)"
+                    : "rgba(0,255,136,0.03)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  transition: "all 0.2s",
+                }}
+              >
+                {formData.termsAccepted && (
+                  <span style={{ color: T.g, fontSize: "0.8rem" }}>✓</span>
+                )}
               </div>
             </div>
-            <span style={{ fontFamily: T.body, fontSize: "0.85rem", color: T.muted }}>
-              I agree to the <a href="#" style={{ color: T.g, textDecoration: "none" }}>Terms of Service</a> and <a href="#" style={{ color: T.g, textDecoration: "none" }}>Privacy Policy</a>
+            <span
+              style={{
+                fontFamily: T.body,
+                fontSize: "0.85rem",
+                color: T.muted,
+              }}
+            >
+              I agree to the{" "}
+              <a href="#" style={{ color: T.g, textDecoration: "none" }}>
+                Terms of Service
+              </a>{" "}
+              and{" "}
+              <a href="#" style={{ color: T.g, textDecoration: "none" }}>
+                Privacy Policy
+              </a>
             </span>
           </label>
 
           {error && (
-            <div style={{ fontFamily: T.mono, fontSize: "0.85rem", color: T.red, marginBottom: "1.5rem", textAlign: "center" }}>
+            <div
+              style={{
+                fontFamily: T.mono,
+                fontSize: "0.85rem",
+                color: T.red,
+                marginBottom: "1.5rem",
+                textAlign: "center",
+              }}
+            >
               [ERROR] {error}
             </div>
           )}
 
-          <button type="submit" 
+          <button
+            type="submit"
             disabled={loading}
             style={{
-              width:"100%", fontFamily:T.mono, fontSize:"0.85rem", letterSpacing:"0.1em", textTransform:"uppercase",
-              color:T.bg, background:loading ? "rgba(0,255,136,0.5)" : T.g, border:"none", padding:"1rem", cursor:loading ? "not-allowed" : "pointer", marginBottom:"1.5rem",
-              clipPath:"polygon(12px 0%,100% 0%,calc(100% - 12px) 100%,0% 100%)",
-              transition:"box-shadow 0.2s, background 0.2s",
+              width: "100%",
+              fontFamily: T.mono,
+              fontSize: "0.85rem",
+              letterSpacing: "0.1em",
+              textTransform: "uppercase",
+              color: T.bg,
+              background: loading ? "rgba(0,255,136,0.5)" : T.g,
+              border: "none",
+              padding: "1rem",
+              cursor: loading ? "not-allowed" : "pointer",
+              marginBottom: "1.5rem",
+              clipPath:
+                "polygon(12px 0%,100% 0%,calc(100% - 12px) 100%,0% 100%)",
+              transition: "box-shadow 0.2s, background 0.2s",
             }}
-            onMouseEnter={e=>{if(!loading){e.currentTarget.style.boxShadow=T.glow;e.currentTarget.style.background="#fff";}}}
-            onMouseLeave={e=>{if(!loading){e.currentTarget.style.boxShadow="";e.currentTarget.style.background=T.g;}}}
+            onMouseEnter={(e) => {
+              if (!loading) {
+                e.currentTarget.style.boxShadow = T.glow;
+                e.currentTarget.style.background = "#fff";
+              }
+            }}
+            onMouseLeave={(e) => {
+              if (!loading) {
+                e.currentTarget.style.boxShadow = "";
+                e.currentTarget.style.background = T.g;
+              }
+            }}
           >
             {loading ? "INITIALIZING..." : "▶ INITIALIZE WORKSPACE"}
           </button>
         </form>
 
-        <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "1.5rem" }}>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "1rem",
+            marginBottom: "1.5rem",
+          }}
+        >
           <div style={{ flex: 1, height: 1, background: T.border }} />
-          <div style={{ fontFamily: T.mono, fontSize: "0.65rem", letterSpacing: "0.1em", color: T.muted }}>OR</div>
+          <div
+            style={{
+              fontFamily: T.mono,
+              fontSize: "0.65rem",
+              letterSpacing: "0.1em",
+              color: T.muted,
+            }}
+          >
+            OR
+          </div>
           <div style={{ flex: 1, height: 1, background: T.border }} />
         </div>
 
-        <SocialBtn provider="Google" icon={<GoogleIcon size={16} />} onClick={() => window.location.href = `${process.env.NEXT_PUBLIC_API_URL}/auth/google/login`} />
+        <SocialBtn
+          provider="Google"
+          icon={<GoogleIcon size={16} />}
+          onClick={() =>
+            (window.location.href = `${process.env.NEXT_PUBLIC_API_URL}/auth/google/login`)
+          }
+        />
 
-        <div style={{ fontFamily:T.mono, fontSize:"0.7rem", color:"rgba(200,255,232,0.35)", textAlign:"center", marginTop:"1.5rem" }}>
-          Already have an account? {" "}
-          <Link href="/login" style={{ color:T.g2, textDecoration:"none", transition:"text-shadow 0.2s" }}
-            onMouseEnter={e=>e.currentTarget.style.textShadow=T.glow2} onMouseLeave={e=>e.currentTarget.style.textShadow=""}>
+        <div
+          style={{
+            fontFamily: T.mono,
+            fontSize: "0.7rem",
+            color: "rgba(200,255,232,0.35)",
+            textAlign: "center",
+            marginTop: "1.5rem",
+          }}
+        >
+          Already have an account?{" "}
+          <Link
+            href="/login"
+            style={{
+              color: T.g2,
+              textDecoration: "none",
+              transition: "text-shadow 0.2s",
+            }}
+            onMouseEnter={(e) => (e.currentTarget.style.textShadow = T.glow2)}
+            onMouseLeave={(e) => (e.currentTarget.style.textShadow = "")}
+          >
             Authenticate here
           </Link>
         </div>
@@ -370,7 +641,9 @@ function SignUpContent() {
 export default function SignUpPage() {
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <style dangerouslySetInnerHTML={{__html: `
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `
         input:-webkit-autofill,
         input:-webkit-autofill:hover, 
         input:-webkit-autofill:focus, 
@@ -379,7 +652,9 @@ export default function SignUpPage() {
             -webkit-text-fill-color: #c8ffe8 !important;
             transition: background-color 5000s ease-in-out 0s;
         }
-      `}} />
+      `,
+        }}
+      />
       <SignUpContent />
     </Suspense>
   );

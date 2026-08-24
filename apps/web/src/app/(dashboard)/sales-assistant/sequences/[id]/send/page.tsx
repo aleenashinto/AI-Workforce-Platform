@@ -1,20 +1,37 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { useParams, useRouter } from 'next/navigation';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Progress } from '@/components/ui/progress';
-import { ArrowLeft, Send, PauseCircle, PlayCircle, BarChart, Inbox, Users } from 'lucide-react';
+import { useState, useEffect } from "react";
+import { useParams, useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Progress } from "@/components/ui/progress";
+import {
+  ArrowLeft,
+  Send,
+  PauseCircle,
+  PlayCircle,
+  BarChart,
+  Inbox,
+  Users,
+} from "lucide-react";
 
 export default function SendDashboardPage() {
   const params = useParams();
   const router = useRouter();
   const id = params.id as string;
-  
-  const [stats, setStats] = useState({ sent: 0, total: 0, opens: 0, clicks: 0, replies: 0, bounces: 0 });
-  const [status, setStatus] = useState<'sending' | 'paused' | 'completed'>('paused');
-  
+
+  const [stats, setStats] = useState({
+    sent: 0,
+    total: 0,
+    opens: 0,
+    clicks: 0,
+    replies: 0,
+    bounces: 0,
+  });
+  const [status, setStatus] = useState<"sending" | "paused" | "completed">(
+    "paused",
+  );
+
   // Mock data for demo since we don't have a real send API yet
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -24,37 +41,53 @@ export default function SendDashboardPage() {
       opens: 12,
       clicks: 3,
       replies: 1,
-      bounces: 0
+      bounces: 0,
     });
-    setStatus('sending');
+    setStatus("sending");
   }, [id]);
 
   const toggleStatus = () => {
-    setStatus(status === 'sending' ? 'paused' : 'sending');
+    setStatus(status === "sending" ? "paused" : "sending");
   };
 
-  const progressPercent = stats.total > 0 ? (stats.sent / stats.total) * 100 : 0;
+  const progressPercent =
+    stats.total > 0 ? (stats.sent / stats.total) * 100 : 0;
 
   return (
     <div className="p-8 space-y-6 max-w-5xl mx-auto">
-      <div className="flex items-center text-sm text-gray-400 mb-4 cursor-pointer hover:text-white" onClick={() => router.back()}>
+      <div
+        className="flex items-center text-sm text-gray-400 mb-4 cursor-pointer hover:text-white"
+        onClick={() => router.back()}
+      >
         <ArrowLeft className="h-4 w-4 mr-1" /> Back to Sequence
       </div>
-      
+
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight text-white">Send Dashboard</h1>
-          <p className="text-gray-400 mt-2">Monitor delivery and performance in real-time.</p>
+          <h1 className="text-3xl font-bold tracking-tight text-white">
+            Send Dashboard
+          </h1>
+          <p className="text-gray-400 mt-2">
+            Monitor delivery and performance in real-time.
+          </p>
         </div>
-        <Button 
-          variant={status === 'sending' ? "destructive" : "default"}
+        <Button
+          variant={status === "sending" ? "destructive" : "default"}
           onClick={toggleStatus}
-          className={status === 'sending' ? 'bg-red-600 hover:bg-red-700 text-white' : 'bg-emerald-600 hover:bg-emerald-700 text-white'}
+          className={
+            status === "sending"
+              ? "bg-red-600 hover:bg-red-700 text-white"
+              : "bg-emerald-600 hover:bg-emerald-700 text-white"
+          }
         >
-          {status === 'sending' ? (
-            <><PauseCircle className="h-4 w-4 mr-2" /> Pause Sending</>
+          {status === "sending" ? (
+            <>
+              <PauseCircle className="h-4 w-4 mr-2" /> Pause Sending
+            </>
           ) : (
-            <><PlayCircle className="h-4 w-4 mr-2" /> Resume Sending</>
+            <>
+              <PlayCircle className="h-4 w-4 mr-2" /> Resume Sending
+            </>
           )}
         </Button>
       </div>
@@ -63,10 +96,17 @@ export default function SendDashboardPage() {
         <CardContent className="p-8">
           <div className="flex justify-between mb-2">
             <span className="text-sm font-medium text-gray-400">Progress</span>
-            <span className="text-sm font-medium text-white">{stats.sent} / {stats.total} Emails Sent</span>
+            <span className="text-sm font-medium text-white">
+              {stats.sent} / {stats.total} Emails Sent
+            </span>
           </div>
-          <Progress value={progressPercent} className="h-3 mb-2 bg-[#2A2A3C] [&>div]:bg-gradient-to-r [&>div]:from-[#D122E3] [&>div]:to-[#00F2FE]" />
-          <p className="text-xs text-gray-500 text-right">{Math.round(progressPercent)}% completed</p>
+          <Progress
+            value={progressPercent}
+            className="h-3 mb-2 bg-[#2A2A3C] [&>div]:bg-gradient-to-r [&>div]:from-[#D122E3] [&>div]:to-[#00F2FE]"
+          />
+          <p className="text-xs text-gray-500 text-right">
+            {Math.round(progressPercent)}% completed
+          </p>
         </CardContent>
       </Card>
 
@@ -87,7 +127,10 @@ export default function SendDashboardPage() {
               <h3 className="font-medium">Opens</h3>
             </div>
             <p className="text-3xl font-bold text-white">{stats.opens}</p>
-            <p className="text-xs text-gray-400 mt-1">{stats.sent ? Math.round((stats.opens / stats.sent) * 100) : 0}% open rate</p>
+            <p className="text-xs text-gray-400 mt-1">
+              {stats.sent ? Math.round((stats.opens / stats.sent) * 100) : 0}%
+              open rate
+            </p>
           </CardContent>
         </Card>
         <Card className="shadow-sm bg-[#1E1E2E] border-[#3F3F5A]">
@@ -97,7 +140,10 @@ export default function SendDashboardPage() {
               <h3 className="font-medium">Clicks</h3>
             </div>
             <p className="text-3xl font-bold text-white">{stats.clicks}</p>
-            <p className="text-xs text-gray-400 mt-1">{stats.opens ? Math.round((stats.clicks / stats.opens) * 100) : 0}% click-to-open</p>
+            <p className="text-xs text-gray-400 mt-1">
+              {stats.opens ? Math.round((stats.clicks / stats.opens) * 100) : 0}
+              % click-to-open
+            </p>
           </CardContent>
         </Card>
         <Card className="shadow-sm bg-[#1E1E2E] border-[#3F3F5A]">
@@ -107,7 +153,10 @@ export default function SendDashboardPage() {
               <h3 className="font-medium">Replies</h3>
             </div>
             <p className="text-3xl font-bold text-white">{stats.replies}</p>
-            <p className="text-xs text-gray-400 mt-1">{stats.sent ? Math.round((stats.replies / stats.sent) * 100) : 0}% reply rate</p>
+            <p className="text-xs text-gray-400 mt-1">
+              {stats.sent ? Math.round((stats.replies / stats.sent) * 100) : 0}%
+              reply rate
+            </p>
           </CardContent>
         </Card>
       </div>
@@ -120,8 +169,9 @@ export default function SendDashboardPage() {
         </CardHeader>
         <CardContent>
           <p className="text-amber-400">
-            Currently pacing at 10 emails per hour to maintain deliverability across 2 active mailboxes. 
-            Estimated time to completion: {Math.ceil((stats.total - stats.sent) / 10)} hours.
+            Currently pacing at 10 emails per hour to maintain deliverability
+            across 2 active mailboxes. Estimated time to completion:{" "}
+            {Math.ceil((stats.total - stats.sent) / 10)} hours.
           </p>
         </CardContent>
       </Card>

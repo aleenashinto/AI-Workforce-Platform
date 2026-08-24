@@ -1,11 +1,13 @@
-const fs = require('fs');
-const path = require('path');
-const p = path.resolve('apps/web/src/app/(dashboard)/customer-support/widget/page.tsx');
-let c = fs.readFileSync(p, 'utf8');
+const fs = require("fs");
+const path = require("path");
+const p = path.resolve(
+  "apps/web/src/app/(dashboard)/customer-support/widget/page.tsx",
+);
+let c = fs.readFileSync(p, "utf8");
 
-const oldFn = 'const handleSendMessage = (e: React.FormEvent) => {';
+const oldFn = "const handleSendMessage = (e: React.FormEvent) => {";
 const splitStart = c.indexOf(oldFn);
-const splitEnd = c.indexOf('  return (', splitStart);
+const splitEnd = c.indexOf("  return (", splitStart);
 
 const newFn = `const handleSendMessage = async (e?: React.FormEvent, presetMsg?: string) => {
     if (e) e.preventDefault();

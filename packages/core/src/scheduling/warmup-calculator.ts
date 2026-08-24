@@ -4,13 +4,15 @@
  */
 export class WarmupCalculator {
   static getWarmupCap(createdAt: Date): number {
-    const daysActive = Math.floor((Date.now() - createdAt.getTime()) / (1000 * 60 * 60 * 24));
-    
+    const daysActive = Math.floor(
+      (Date.now() - createdAt.getTime()) / (1000 * 60 * 60 * 24),
+    );
+
     if (daysActive < 7) return 5;
     if (daysActive < 14) return 10;
     if (daysActive < 21) return 20;
     if (daysActive < 28) return 40;
-    
+
     return 1000; // Post-warmup, effectively unbound by warmup logic (daily_cap wins)
   }
 

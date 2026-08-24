@@ -10,7 +10,7 @@ To generate the seed data, run:
 pnpm seed:demo
 ```
 
-This will safely generate 50 fictional end users and 50 conversations. 
+This will safely generate 50 fictional end users and 50 conversations.
 
 ### Resetting
 

@@ -1,238 +1,285 @@
-'use client';
+"use client";
 
-import { 
-  GitMerge, Plus, Calendar, Mail, StopCircle, ArrowRight
+import React, { useState, useEffect } from "react";
+import {
+  Send,
+  Plus,
+  Search,
+  Play,
+  Pause,
+  CheckCircle,
+  Archive,
+  MoreHorizontal,
+  FileText,
+  BarChart3,
+  Edit3,
 } from "lucide-react";
-import { useState, useEffect } from "react";
-import { fetchApi } from "@/lib/api";
-
-const T = {
-  g:       "#00ff88",
-  g2:      "#00cfff",
-  bg:      "#040810",
-  bg2:     "#070e1a",
-  panel:   "#0a1628",
-  border:  "rgba(0,255,136,0.18)",
-  border2: "rgba(0,207,255,0.18)",
-  muted:   "rgba(0,255,136,0.45)",
-  muted2:  "rgba(0,207,255,0.45)",
-  text:    "#c8ffe8",
-  glow2:   "0 0 20px rgba(0,207,255,0.35),0 0 60px rgba(0,207,255,0.12)",
-  mono:    "'Share Tech Mono', monospace",
-  display: "'Orbitron', sans-serif",
-  body:    "'Rajdhani', sans-serif",
-};
-
-const Corners = () => (
-  <>
-    {[["tl","1px 0 0 1px","0","0","auto","auto"],
-      ["tr","1px 1px 0 0","0","auto","0","auto"],
-      ["bl","0 0 1px 1px","auto","0","auto","0"],
-      ["br","0 1px 1px 0","auto","auto","0","0"]].map(([k, bw, t, l, b, r]) => (
-      <span key={k} style={{
-        position:"absolute", width:14, height:14,
-        borderColor: T.g2, borderStyle:"solid", borderWidth: bw as number | string, opacity: 0.5,
-        top:t==="auto"?undefined:8, left:l==="auto"?undefined:8,
-        bottom:b==="auto"?undefined:8, right:r==="auto"?undefined:8,
-      }}/>
-    ))}
-  </>
-);
+import { apiClient } from "@/lib/api/client";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function SequencesPage() {
-  const [view, setView] = useState('list'); // 'list' | 'create'
-  const [sequences, setSequences] = useState<{id: string, name: string, steps?: unknown[], status: string}[]>([]);
+  const router = useRouter();
+  const [sequences, setSequences] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-
-  // New sequence form
-  const [name, setName] = useState("");
-
-  const loadSequences = () => {
-    setLoading(true);
-    fetchApi('/sequences')
-      .then(data => {
-        setSequences(data?.data || []);
-        setLoading(false);
-      })
-      .catch(err => {
-        console.error("Failed to fetch sequences", err);
-        setLoading(false);
-      });
-  };
+  const [searchTerm, setSearchTerm] = useState("");
+  const [stats, setStats] = useState({
+    total: 0,
+    active: 0,
+    paused: 0,
+    completed: 0,
+    enrolled: 0,
+  });
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    loadSequences();
+    fetchSequences();
   }, []);
 
-  const handleCreateSequence = async () => {
-    if (!name) return;
+  const fetchSequences = async () => {
+    setLoading(true);
     try {
-      const steps = [
-        { day_offset: 0, label: "Initial Email", template: "AI Generated Email Template", stop_conditions: {} },
-        { day_offset: 3, label: "Follow-up Email", template: "AI Generated Email Template", stop_conditions: {} },
-        { day_offset: 7, label: "Value Add Email", template: "AI Generated Email Template", stop_conditions: {} },
-        { day_offset: 14, label: "Breakup Email", template: "AI Generated Email Template", stop_conditions: {} }
-      ];
-      await fetchApi('/sequences', {
-        method: "POST",
-        body: JSON.stringify({ name, steps })
-      });
-      setView('list');
-      loadSequences();
-    } catch (error) {
-      console.error("Failed to create sequence", error);
+      const response = (await apiClient.get("/sequences")) as {
+        success: boolean;
+        data: any[];
+      };
+      if (response?.success) {
+        setSequences(response.data);
+
+        let t = 0,
+          a = 0,
+          p = 0,
+          c = 0,
+          e = 0;
+        response.data.forEach((s) => {
+          t++;
+          if (s.status === "active") a++;
+          if (s.status === "paused") p++;
+          if (s.status === "completed") c++;
+          e += s.stats?.enrolled || 0;
+        });
+        setStats({ total: t, active: a, paused: p, completed: c, enrolled: e });
+      }
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setLoading(false);
     }
   };
 
-  const handleToggleStatus = async (id: string, currentStatus: string, e: React.MouseEvent) => {
-    e.stopPropagation();
+  const handleCreate = async () => {
     try {
-      const newStatus = currentStatus === 'active' ? 'paused' : 'active';
-      await fetchApi(`/sequences/${id}/status`, {
-        method: "PATCH",
-        body: JSON.stringify({ status: newStatus })
-      });
-      loadSequences();
-    } catch (error) {
-      console.error("Failed to update status", error);
+      const res = (await apiClient.post("/sequences", {
+        name: "New Sequence",
+        steps: [{ name: "Initial Email", type: "email", day_offset: 0 }],
+      })) as { success: boolean; data: any };
+      if (res?.success) {
+        router.push(`/sales-assistant/sequences/${res.data.id}`);
+      }
+    } catch (e) {
+      console.error(e);
     }
   };
+
+  const getStatusIcon = (status: string) => {
+    switch (status) {
+      case "active":
+        return <Play size={14} className="text-[#00ff88]" />;
+      case "paused":
+        return <Pause size={14} className="text-yellow-400" />;
+      case "completed":
+        return <CheckCircle size={14} className="text-blue-400" />;
+      case "draft":
+        return <Edit3 size={14} className="text-gray-400" />;
+      default:
+        return <Archive size={14} className="text-gray-500" />;
+    }
+  };
+
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case "active":
+        return "text-[#00ff88]";
+      case "paused":
+        return "text-yellow-400";
+      case "completed":
+        return "text-blue-400";
+      default:
+        return "text-gray-400";
+    }
+  };
+
+  const filteredSequences = sequences.filter((s) =>
+    s.name.toLowerCase().includes(searchTerm.toLowerCase()),
+  );
 
   return (
-    <div style={{ padding: "2rem", maxWidth: 1000, margin: "0 auto" }}>
-      
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "2.5rem" }}>
+    <div className="p-8 h-full overflow-y-auto bg-[#040810]">
+      <div className="flex justify-between items-center mb-8">
         <div>
-          <h1 style={{ fontFamily: T.display, fontSize: "2.2rem", fontWeight: 700, color: "#fff", marginBottom: "0.5rem", display: "flex", alignItems: "center", gap: "1rem" }}>
-            <GitMerge color={T.g2} size={32} /> Outreach Sequences
+          <h1 className="text-2xl font-bold tracking-wider font-display mb-1 flex items-center gap-3">
+            <Send className="text-[#00ff88]" />
+            SEQUENCES
           </h1>
-          <p style={{ fontFamily: T.mono, fontSize: "0.9rem", color: T.g2, letterSpacing: "0.05em" }}>
-            Automated multi-step engagement cadences.
+          <p className="text-sm text-[#00ff88]/60 font-mono">
+            Automate personalized sales outreach and follow-ups.
           </p>
         </div>
-        {view === 'list' ? (
-          <button onClick={() => setView('create')} style={{ 
-            background: T.g2, border: "none", padding: "0.8rem 1.5rem", color: T.bg, 
-            fontFamily: T.mono, fontSize: "0.8rem", fontWeight: "bold", textTransform: "uppercase",
-            display: "flex", alignItems: "center", gap: "0.5rem", cursor: "pointer", boxShadow: T.glow2,
-            clipPath: "polygon(10px 0%,100% 0%,calc(100% - 10px) 100%,0% 100%)"
-          }}>
-            <Plus size={16} /> Create Sequence
+        <div className="flex gap-3">
+          <button className="bg-[#0a1628] text-gray-300 border border-gray-700 px-4 py-2 rounded font-mono text-sm hover:bg-gray-800 transition-colors flex items-center gap-2">
+            <FileText size={16} /> Templates
           </button>
-        ) : (
-          <button onClick={() => setView('list')} style={{ background: "transparent", border: `1px solid ${T.border2}`, color: T.text, padding: "0.6rem 1rem", fontFamily: T.mono, fontSize: "0.8rem", cursor: "pointer" }}>
-            Cancel
+          <button
+            onClick={handleCreate}
+            className="bg-[#00ff88] text-[#040810] px-4 py-2 rounded font-bold font-mono text-sm hover:bg-[#00cfff] transition-colors flex items-center gap-2 shadow-[0_0_15px_rgba(0,255,136,0.4)]"
+          >
+            <Plus size={16} /> CREATE SEQUENCE
           </button>
-        )}
+        </div>
       </div>
 
-      {view === 'list' && (
-        <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-          {loading ? (
-             <div style={{ padding: "3rem", textAlign: "center", color: T.muted2, fontFamily: T.mono }}>LOADING_SEQUENCES...</div>
-          ) : sequences.length === 0 ? (
-             <div style={{ padding: "3rem", textAlign: "center", color: T.muted2, fontFamily: T.mono }}>NO_SEQUENCES_FOUND</div>
-          ) : sequences.map((seq) => (
-            <div key={seq.id} style={{ background: T.panel, border: `1px solid ${T.border2}`, padding: "1.5rem 2rem", position: "relative", display: "flex", justifyContent: "space-between", alignItems: "center", transition: "all 0.2s", cursor: "pointer" }} onMouseEnter={e=>e.currentTarget.style.boxShadow=T.glow2} onMouseLeave={e=>e.currentTarget.style.boxShadow="none"}>
-              <Corners />
-              <div>
-                <div style={{ fontFamily: T.display, fontSize: "1.2rem", color: "#fff", marginBottom: "0.5rem" }}>{seq.name}</div>
-                <div style={{ display: "flex", gap: "1.5rem", fontFamily: T.mono, fontSize: "0.75rem", color: T.muted2 }}>
-                  <span style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}><Calendar size={12}/> {seq.steps?.length || 4} Steps</span>
-                </div>
-              </div>
-              <div 
-                onClick={(e) => handleToggleStatus(seq.id, seq.status, e)}
-                style={{ fontFamily: T.mono, fontSize: "0.75rem", color: seq.status === 'active' ? T.g : (seq.status === 'paused' ? '#ffaa00' : T.g2), background: seq.status === 'active' ? "rgba(0,255,136,0.1)" : (seq.status === 'paused' ? "rgba(255,170,0,0.1)" : "rgba(0,207,255,0.1)"), padding: "0.3rem 0.6rem", border: `1px solid ${seq.status === 'active' ? 'rgba(0,255,136,0.3)' : (seq.status === 'paused' ? 'rgba(255,170,0,0.3)' : 'rgba(0,207,255,0.3)')}`, textTransform: "uppercase" }}
-              >
-                {seq.status}
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
-
-      {view === 'create' && (
-        <div style={{ display: "flex", flexDirection: "column", gap: "2rem" }}>
-          
-          <div style={{ background: T.panel, border: `1px solid ${T.border2}`, padding: "2rem", position: "relative" }}>
-            <Corners />
-            <div style={{ marginBottom: "1rem" }}>
-              <label style={{ fontFamily:T.mono, fontSize:"0.75rem", color:T.muted2, marginBottom:"0.5rem", display:"block", textTransform:"uppercase" }}>Sequence Name</label>
-              <input type="text" value={name} onChange={e => setName(e.target.value)} placeholder="e.g. Q4 Inbound Follow-up" style={{ width: "100%", background: "rgba(0,207,255,0.02)", border: `1px solid ${T.border2}`, color: "#fff", fontFamily: T.body, fontSize: "1.1rem", padding: "1rem", outline: "none" }} />
-            </div>
+      <div className="grid grid-cols-5 gap-4 mb-8 font-mono">
+        <div className="bg-[#0a1628] border border-[#00ff88]/20 p-4 rounded-lg text-center">
+          <div className="text-3xl font-bold text-white mb-1">
+            {stats.total}
           </div>
-
-          <div style={{ display: "flex", gap: "2rem" }}>
-            
-            {/* Steps Builder */}
-            <div style={{ flex: 2, display: "flex", flexDirection: "column", gap: "1rem" }}>
-              <div style={{ fontFamily: T.mono, fontSize: "0.8rem", color: T.g2, letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: "0.5rem" }}>Steps</div>
-              
-              {[
-                { day: 0, label: "Initial Email" },
-                { day: 3, label: "Follow-up Email" },
-                { day: 7, label: "Value Add Email" },
-                { day: 14, label: "Breakup Email" },
-              ].map((step, i) => (
-                <div key={i} style={{ display: "flex", gap: "1.5rem" }}>
-                  <div style={{ width: 60, flexShrink: 0, display: "flex", flexDirection: "column", alignItems: "center" }}>
-                    <div style={{ width: 40, height: 40, borderRadius: "50%", background: "rgba(0,207,255,0.1)", border: `1px solid ${T.border2}`, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: T.mono, fontSize: "0.8rem", color: T.g2, zIndex: 2 }}>{i+1}</div>
-                    {i !== 3 && <div style={{ width: 2, height: "100%", background: T.border2, marginTop: -5, marginBottom: -5 }} />}
-                  </div>
-                  <div style={{ flex: 1, background: T.panel, border: `1px solid ${T.border2}`, padding: "1.5rem", position: "relative", marginBottom: i !== 3 ? "1rem" : 0 }}>
-                    <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "1rem" }}>
-                      <div style={{ fontFamily: T.body, fontSize: "1.1rem", color: "#fff", fontWeight: 600 }}>{step.label}</div>
-                      <div style={{ fontFamily: T.mono, fontSize: "0.75rem", color: T.text, background: "rgba(0,207,255,0.05)", padding: "0.3rem 0.6rem", border: `1px solid ${T.border2}` }}>Day {step.day}</div>
-                    </div>
-                    <div style={{ background: "rgba(0,207,255,0.02)", border: `1px solid ${T.border2}`, padding: "1rem", fontFamily: T.body, fontSize: "0.9rem", color: T.muted2, display: "flex", alignItems: "center", gap: "0.5rem" }}>
-                      <Mail size={14} /> AI Generated Email Template
-                    </div>
-                  </div>
-                </div>
-              ))}
-
-              <button style={{ alignSelf: "flex-start", marginLeft: 75, background: "transparent", border: `1px dashed ${T.g2}`, color: T.g2, fontFamily: T.mono, fontSize: "0.8rem", padding: "0.8rem 1.5rem", cursor: "pointer", display: "flex", alignItems: "center", gap: "0.5rem", marginTop: "1rem" }}>
-                <Plus size={14} /> Add Step
-              </button>
-            </div>
-
-            {/* Stop Conditions */}
-            <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "1rem" }}>
-              <div style={{ fontFamily: T.mono, fontSize: "0.8rem", color: T.g2, letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: "0.5rem" }}>Stop Conditions</div>
-              <div style={{ background: T.panel, border: `1px solid ${T.border2}`, padding: "1.5rem", position: "relative" }}>
-                <Corners />
-                <p style={{ fontFamily: T.body, fontSize: "0.9rem", color: T.text, marginBottom: "1.5rem" }}>Sequence will automatically pause for a prospect if:</p>
-                <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-                  {[
-                    "They reply to an email",
-                    "A meeting is booked",
-                    "They unsubscribe",
-                    "Email bounces"
-                  ].map((cond, i) => (
-                    <div key={i} style={{ display: "flex", alignItems: "center", gap: "0.8rem", fontFamily: T.mono, fontSize: "0.85rem", color: T.muted2 }}>
-                      <StopCircle size={16} color={T.g2} /> {cond}
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <button onClick={handleCreateSequence} style={{ 
-                background: T.g2, border: "none", padding: "1rem", color: T.bg, 
-                fontFamily: T.mono, fontSize: "0.9rem", fontWeight: "bold", textTransform: "uppercase",
-                display: "flex", alignItems: "center", justifyContent: "center", gap: "0.5rem", cursor: "pointer", boxShadow: T.glow2,
-                marginTop: "2rem"
-              }}>
-                Save Sequence <ArrowRight size={16} />
-              </button>
-            </div>
-
-          </div>
-
+          <div className="text-xs text-[#00ff88]/60 uppercase">Total</div>
         </div>
-      )}
+        <div className="bg-[#0a1628] border border-[#00ff88]/20 p-4 rounded-lg text-center">
+          <div className="text-3xl font-bold text-[#00ff88] mb-1">
+            {stats.active}
+          </div>
+          <div className="text-xs text-[#00ff88]/60 uppercase">Active</div>
+        </div>
+        <div className="bg-[#0a1628] border border-[#00ff88]/20 p-4 rounded-lg text-center">
+          <div className="text-3xl font-bold text-yellow-400 mb-1">
+            {stats.paused}
+          </div>
+          <div className="text-xs text-yellow-400/60 uppercase">Paused</div>
+        </div>
+        <div className="bg-[#0a1628] border border-[#00ff88]/20 p-4 rounded-lg text-center">
+          <div className="text-3xl font-bold text-blue-400 mb-1">
+            {stats.completed}
+          </div>
+          <div className="text-xs text-blue-400/60 uppercase">Completed</div>
+        </div>
+        <div className="bg-[#0a1628] border border-[#00ff88]/20 p-4 rounded-lg text-center">
+          <div className="text-3xl font-bold text-white mb-1">
+            {stats.enrolled}
+          </div>
+          <div className="text-xs text-[#00ff88]/60 uppercase">
+            Enrolled Leads
+          </div>
+        </div>
+      </div>
 
+      <div className="bg-[#0a1628] border border-[#00ff88]/20 rounded-lg overflow-hidden flex flex-col min-h-[500px]">
+        <div className="p-4 border-b border-[#00ff88]/10 flex gap-4 items-center bg-[#070e1a]">
+          <div className="relative flex-1 max-w-md">
+            <Search
+              className="absolute left-3 top-1/2 -translate-y-1/2 text-[#00ff88]/40"
+              size={16}
+            />
+            <input
+              type="text"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              placeholder="Search sequences..."
+              className="w-full bg-[#040810] border border-[#00ff88]/20 rounded-md py-1.5 pl-9 pr-3 text-sm text-white focus:outline-none focus:border-[#00ff88]/50 font-mono"
+            />
+          </div>
+          <select className="bg-[#040810] border border-[#00ff88]/20 rounded-md py-1.5 px-3 text-sm text-white focus:outline-none focus:border-[#00ff88]/50 font-mono">
+            <option>Status: All</option>
+            <option>Active</option>
+            <option>Paused</option>
+            <option>Draft</option>
+          </select>
+        </div>
+
+        <div className="overflow-x-auto flex-1">
+          <table className="w-full text-left border-collapse">
+            <thead>
+              <tr className="bg-[#070e1a] border-b border-[#00ff88]/10 font-mono text-xs text-[#00ff88]/60 uppercase tracking-wider">
+                <th className="p-4 font-normal">Sequence Name</th>
+                <th className="p-4 font-normal">Status</th>
+                <th className="p-4 font-normal text-right">Enrolled</th>
+                <th className="p-4 font-normal text-right">Active</th>
+                <th className="p-4 font-normal text-right">Completed</th>
+                <th className="p-4 font-normal text-right">Reply Rate</th>
+                <th className="p-4 font-normal text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {loading ? (
+                <tr>
+                  <td
+                    colSpan={7}
+                    className="p-8 text-center text-[#00ff88]/50 font-mono"
+                  >
+                    Loading sequences...
+                  </td>
+                </tr>
+              ) : filteredSequences.length === 0 ? (
+                <tr>
+                  <td
+                    colSpan={7}
+                    className="p-8 text-center text-[#00ff88]/50 font-mono"
+                  >
+                    No sequences found.
+                  </td>
+                </tr>
+              ) : (
+                filteredSequences.map((seq) => (
+                  <tr
+                    key={seq.id}
+                    className="border-b border-[#00ff88]/5 hover:bg-[#00ff88]/5 transition-colors font-mono text-sm"
+                  >
+                    <td className="p-4">
+                      <Link
+                        href={`/sales-assistant/sequences/${seq.id}`}
+                        className="text-white hover:text-[#00ff88] font-semibold flex items-center gap-2"
+                      >
+                        {seq.name}
+                      </Link>
+                      <div className="text-xs text-gray-500 mt-1">
+                        Updated {new Date(seq.updated_at).toLocaleDateString()}
+                      </div>
+                    </td>
+                    <td className="p-4">
+                      <div
+                        className={`flex items-center gap-1.5 uppercase text-xs font-bold ${getStatusColor(seq.status)}`}
+                      >
+                        {getStatusIcon(seq.status)} {seq.status}
+                      </div>
+                    </td>
+                    <td className="p-4 text-right text-gray-300">
+                      {seq.stats?.enrolled || 0}
+                    </td>
+                    <td className="p-4 text-right text-[#00ff88]">
+                      {seq.stats?.active || 0}
+                    </td>
+                    <td className="p-4 text-right text-gray-400">
+                      {seq.stats?.completed || 0}
+                    </td>
+                    <td className="p-4 text-right text-[#00cfff] font-bold">
+                      {seq.stats?.reply_rate || "0.0"}%
+                    </td>
+                    <td className="p-4 text-right">
+                      <div className="flex items-center justify-end gap-2">
+                        <Link
+                          href={`/sales-assistant/sequences/${seq.id}`}
+                          className="p-1.5 bg-[#00ff88]/10 text-[#00ff88] rounded hover:bg-[#00ff88]/20 transition-colors text-xs font-bold uppercase px-3"
+                        >
+                          Open
+                        </Link>
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   );
 }

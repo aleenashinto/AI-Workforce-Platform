@@ -1,4 +1,6 @@
-export const checkInputGuardrails = async (input: string): Promise<{ safe: boolean; reason?: string; sanitized?: string }> => {
+export const checkInputGuardrails = async (
+  input: string,
+): Promise<{ safe: boolean; reason?: string; sanitized?: string }> => {
   // Simple prompt injection checks
   const injectionPatterns = [
     /ignore previous/i,
@@ -7,12 +9,12 @@ export const checkInputGuardrails = async (input: string): Promise<{ safe: boole
     /act as/i,
     /roleplay/i,
     /forget all instructions/i,
-    /disregard previous/i
+    /disregard previous/i,
   ];
 
   for (const pattern of injectionPatterns) {
     if (pattern.test(input)) {
-      return { safe: false, reason: 'Detected potential prompt injection' };
+      return { safe: false, reason: "Detected potential prompt injection" };
     }
   }
 
@@ -25,22 +27,25 @@ export const checkInputGuardrails = async (input: string): Promise<{ safe: boole
   let redacted = false;
 
   if (creditCardRegex.test(sanitized)) {
-    sanitized = sanitized.replace(creditCardRegex, '[REDACTED_CC]');
+    sanitized = sanitized.replace(creditCardRegex, "[REDACTED_CC]");
     redacted = true;
   }
   if (ssnRegex.test(sanitized)) {
-    sanitized = sanitized.replace(ssnRegex, '[REDACTED_SSN]');
+    sanitized = sanitized.replace(ssnRegex, "[REDACTED_SSN]");
     redacted = true;
   }
   if (emailRegex.test(sanitized)) {
-    sanitized = sanitized.replace(emailRegex, '[REDACTED_EMAIL]');
+    sanitized = sanitized.replace(emailRegex, "[REDACTED_EMAIL]");
     redacted = true;
   }
 
   return { safe: true, sanitized: redacted ? sanitized : input };
 };
 
-export const checkOutputGuardrails = async (output: string, contextChunks: string[]): Promise<{ safe: boolean; reason?: string }> => {
+export const checkOutputGuardrails = async (
+  output: string,
+  contextChunks: string[],
+): Promise<{ safe: boolean; reason?: string }> => {
   // Blocked topics
   const blockedTopics = [
     /competitor_x/i,
@@ -49,7 +54,7 @@ export const checkOutputGuardrails = async (output: string, contextChunks: strin
 
   for (const topic of blockedTopics) {
     if (topic.test(output)) {
-      return { safe: false, reason: 'Output contains blocked topics' };
+      return { safe: false, reason: "Output contains blocked topics" };
     }
   }
 

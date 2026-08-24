@@ -1,11 +1,10 @@
-
 import { z } from "zod";
 import { zodToJsonSchema } from "zod-to-json-schema";
 import Anthropic from "@anthropic-ai/sdk";
 import OpenAI from "openai";
 import IORedis from "ioredis";
 import crypto from "crypto";
-import { checkInputGuardrails, checkOutputGuardrails } from './guardrails';
+import { checkInputGuardrails, checkOutputGuardrails } from "./guardrails";
 
 export type TaskClass = "fast" | "balanced" | "deep";
 
@@ -15,12 +14,9 @@ const models: Record<TaskClass, string> = {
   deep: "claude-3-opus-20240229",
 };
 
-const redis = new IORedis(
-  process.env.REDIS_URL || "redis://127.0.0.1:6379",
-  {
-    maxRetriesPerRequest: null,
-  }
-);
+const redis = new IORedis(process.env.REDIS_URL || "redis://127.0.0.1:6379", {
+  maxRetriesPerRequest: null,
+});
 
 function getAnthropicClient(): Anthropic {
   const apiKey = process.env.ANTHROPIC_API_KEY;
@@ -41,7 +37,7 @@ function getOpenAIClient(): OpenAI {
 export const generateText = async (
   taskClass: TaskClass,
   systemPrompt: string,
-  userPrompt: string
+  userPrompt: string,
 ) => {
   const guard = await checkInputGuardrails(userPrompt);
   if (!guard.safe) {
@@ -50,7 +46,10 @@ export const generateText = async (
   const safeUserPrompt = guard.sanitized || userPrompt;
 
   const model = models[taskClass];
-  const cacheKey = `llm_cache:${crypto.createHash("sha256").update(model + systemPrompt + safeUserPrompt).digest("hex")}`;
+  const cacheKey = `llm_cache:${crypto
+    .createHash("sha256")
+    .update(model + systemPrompt + safeUserPrompt)
+    .digest("hex")}`;
   const cachedResult = await redis.get(cacheKey);
 
   if (cachedResult) {
@@ -65,8 +64,9 @@ export const generateText = async (
     messages: [{ role: "user", content: safeUserPrompt }],
   });
 
-  const content = response.content[0]?.type === "text" ? response.content[0].text : "";
-  
+  const content =
+    response.content[0]?.type === "text" ? response.content[0].text : "";
+
   const outGuard = await checkOutputGuardrails(content, []);
   if (!outGuard.safe) {
     throw new Error(`Output guardrail violation: ${outGuard.reason}`);
@@ -86,7 +86,7 @@ export const generateStructured = async <T extends z.ZodTypeAny>(
   taskClass: TaskClass,
   systemPrompt: string,
   userPrompt: string,
-  schema: T
+  schema: T,
 ): Promise<z.infer<T>> => {
   const guard = await checkInputGuardrails(userPrompt);
   if (!guard.safe) {
@@ -118,7 +118,9 @@ export const generateStructured = async <T extends z.ZodTypeAny>(
   return parsed as z.infer<T>;
 };
 
-export const generateEmbeddings = async (texts: string[]): Promise<number[][]> => {
+export const generateEmbeddings = async (
+  texts: string[],
+): Promise<number[][]> => {
   const openai = getOpenAIClient();
   const response = await openai.embeddings.create({
     model: "text-embedding-3-small",
@@ -131,7 +133,7 @@ export const generateEmbeddings = async (texts: string[]): Promise<number[][]> =
 export const streamText = async (
   taskClass: TaskClass,
   systemPrompt: string,
-  userPrompt: string
+  userPrompt: string,
 ) => {
   const guard = await checkInputGuardrails(userPrompt);
   if (!guard.safe) {
@@ -154,35 +156,51 @@ export const streamText = async (
 export const rerankDocuments = async (query: string, documents: string[]) => {
   const apiKey = process.env.COHERE_API_KEY;
   if (!apiKey) {
-    return documents.map((doc, i) => ({ document: doc, index: i, relevance_score: 1 - (i * 0.01) }));
+    return documents.map((doc, i) => ({
+      document: doc,
+      index: i,
+      relevance_score: 1 - i * 0.01,
+    }));
   }
 
   try {
     const res = await fetch("https://api.cohere.ai/v1/rerank", {
       method: "POST",
       headers: {
-        "Authorization": `Bearer ${apiKey}`,
-        "Content-Type": "application/json"
+        Authorization: `Bearer ${apiKey}`,
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         model: "rerank-english-v3.0",
         query,
         documents,
-        top_n: documents.length
-      })
+        top_n: documents.length,
+      }),
     });
 
     if (!res.ok) {
       console.error("Cohere reranking failed:", await res.text());
-      return documents.map((doc, i) => ({ document: doc, index: i, relevance_score: 1 - (i * 0.01) }));
+      return documents.map((doc, i) => ({
+        document: doc,
+        index: i,
+        relevance_score: 1 - i * 0.01,
+      }));
     }
 
     const data = (await res.json()) as any;
-    return data.results as Array<{ document: { text: string }; index: number; relevance_score: number }>;
+    return data.results as Array<{
+      document: { text: string };
+      index: number;
+      relevance_score: number;
+    }>;
   } catch (err) {
     console.error("Error calling Cohere:", err);
-    return documents.map((doc, i) => ({ document: doc, index: i, relevance_score: 1 - (i * 0.01) }));
+    return documents.map((doc, i) => ({
+      document: doc,
+      index: i,
+      relevance_score: 1 - i * 0.01,
+    }));
   }
 };
 
-export * from './guardrails';
+export * from "./guardrails";

@@ -1,9 +1,6 @@
 import { Worker, Job } from "bullmq";
 import { db } from "@ai-workforce/db";
-import {
-  replies,
-  leads,
-} from "@ai-workforce/db/schema";
+import { replies, leads } from "@ai-workforce/db/schema";
 import { eq } from "drizzle-orm";
 import { generateStructured } from "@ai-workforce/llm";
 import { z } from "zod";
@@ -26,34 +23,24 @@ const replyClassificationSchema = z.object({
 export const replyMonitorWorker = new Worker(
   "reply-monitor-queue",
   async (job: Job) => {
-    const {
-      leadId,
-      rawContent,
-      orgId,
-    } = job.data;
+    const { leadId, rawContent, orgId } = job.data;
 
     if (!leadId || !rawContent || !orgId) {
       throw new Error(
-        "reply-monitor job requires leadId, rawContent, and orgId"
+        "reply-monitor job requires leadId, rawContent, and orgId",
       );
     }
 
-    console.log(
-      `Classifying reply for lead ${leadId}...`
-    );
+    console.log(`Classifying reply for lead ${leadId}...`);
 
     const classification = await generateStructured(
       "fast",
       "You are an AI assistant.",
       `Classify the following email reply.\n\nEmail reply:\n"${rawContent}"\n\nReturn the appropriate category, a short summary, and the referred person if the sender indicates that another person should be contacted.`,
-      replyClassificationSchema
+      replyClassificationSchema,
     );
 
-    const {
-      category,
-      summary,
-      referredTo,
-    } = classification;
+    const { category, summary, referredTo } = classification;
 
     await db.insert(replies).values({
       org_id: orgId,
@@ -63,27 +50,18 @@ export const replyMonitorWorker = new Worker(
       status: "new",
     });
 
-    console.log(
-      `Reply classified as "${category}" for lead ${leadId}.`
-    );
+    console.log(`Reply classified as "${category}" for lead ${leadId}.`);
 
-    if (
-      ["interested", "unsubscribe", "bounce"].includes(
-        category
-      )
-    ) {
+    if (["interested", "unsubscribe", "bounce"].includes(category)) {
       await db
         .update(leads)
         .set({
-          status:
-            category === "interested"
-              ? "contacted"
-              : "suppressed",
+          status: category === "interested" ? "contacted" : "suppressed",
         })
         .where(eq(leads.id, leadId));
 
       console.log(
-        `Lead ${leadId} status updated because of reply classification.`
+        `Lead ${leadId} status updated because of reply classification.`,
       );
     }
 
@@ -95,28 +73,27 @@ export const replyMonitorWorker = new Worker(
     };
   },
   {
-    connection: new (require("ioredis").default || require("ioredis"))(process.env.REDIS_URL || "redis://localhost:6379", { maxRetriesPerRequest: null, lazyConnect: true, retryStrategy: () => null }),
+    connection: new (require("ioredis").default || require("ioredis"))(
+      process.env.REDIS_URL || "redis://localhost:6379",
+      {
+        maxRetriesPerRequest: null,
+        lazyConnect: true,
+        retryStrategy: () => null,
+      },
+    ),
     concurrency: 5,
-  }
+  },
 );
 
 replyMonitorWorker.on("completed", (job) => {
-  console.log(
-    `Reply monitor job ${job.id} completed.`
-  );
+  console.log(`Reply monitor job ${job.id} completed.`);
 });
 
 replyMonitorWorker.on("failed", (job, error) => {
-  console.error(
-    `Reply monitor job ${job?.id ?? "unknown"} failed:`,
-    error
-  );
+  console.error(`Reply monitor job ${job?.id ?? "unknown"} failed:`, error);
 });
 
 replyMonitorWorker.on("error", (error) => {
-  if (String(error).includes('ECONNREFUSED')) return;
-  console.error(
-    "Reply monitor worker error:",
-    error
-  );
+  if (String(error).includes("ECONNREFUSED")) return;
+  console.error("Reply monitor worker error:", error);
 });

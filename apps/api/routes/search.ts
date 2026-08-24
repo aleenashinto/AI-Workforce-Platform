@@ -1,10 +1,10 @@
-import { FastifyInstance } from 'fastify';
-import { db } from '@ai-workforce/db';
-import { leads, campaigns } from '@ai-workforce/db/schema';
-import { ilike, or, eq } from 'drizzle-orm';
+import { FastifyInstance } from "fastify";
+import { db } from "@ai-workforce/db";
+import { leads, campaigns } from "@ai-workforce/db/schema";
+import { ilike, or, eq } from "drizzle-orm";
 
 export default async function searchRoutes(fastify: FastifyInstance) {
-  fastify.get('/search', async (req: any, reply) => {
+  fastify.get("/search", async (req: any, reply) => {
     try {
       await req.jwtVerify(); // Requires auth
     } catch (err) {
@@ -25,31 +25,33 @@ export default async function searchRoutes(fastify: FastifyInstance) {
     const results = [];
 
     // Search Leads
-    const foundLeads = await db.select()
+    const foundLeads = await db
+      .select()
       .from(leads)
       .where(
         or(
           ilike(leads.name, queryStr),
           ilike(leads.email, queryStr),
-          ilike(leads.company, queryStr)
-        )
+          ilike(leads.company, queryStr),
+        ),
       )
       .limit(5);
 
     for (const lead of foundLeads) {
       if (lead.org_id === orgId) {
         results.push({
-          type: 'lead',
+          type: "lead",
           id: lead.id,
           title: lead.name,
-          subtitle: lead.email || lead.company || 'Lead',
-          url: `/sales-assistant/leads` // Simplified routing for now
+          subtitle: lead.email || lead.company || "Lead",
+          url: `/sales-assistant/leads`, // Simplified routing for now
         });
       }
     }
 
     // Search Campaigns
-    const foundCampaigns = await db.select()
+    const foundCampaigns = await db
+      .select()
       .from(campaigns)
       .where(ilike(campaigns.name, queryStr))
       .limit(5);
@@ -57,11 +59,11 @@ export default async function searchRoutes(fastify: FastifyInstance) {
     for (const campaign of foundCampaigns) {
       if (campaign.org_id === orgId) {
         results.push({
-          type: 'campaign',
+          type: "campaign",
           id: campaign.id,
           title: campaign.name,
           subtitle: `Status: ${campaign.status}`,
-          url: `/sales-assistant/campaigns`
+          url: `/sales-assistant/campaigns`,
         });
       }
     }

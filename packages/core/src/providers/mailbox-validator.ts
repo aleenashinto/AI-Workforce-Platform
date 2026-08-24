@@ -13,13 +13,16 @@ export class MailboxValidator {
    */
   static async checkDomainSecurity(domain: string): Promise<DnsCheckResult> {
     // For test simulation, let's say 'example.com' fails, but everything else passes
-    if (domain.toLowerCase() === 'example.com' || domain.toLowerCase() === 'fail.com') {
+    if (
+      domain.toLowerCase() === "example.com" ||
+      domain.toLowerCase() === "fail.com"
+    ) {
       return {
         passed: false,
         spf: true,
         dkim: false,
         dmarc: false,
-        details: 'Missing DKIM and DMARC records'
+        details: "Missing DKIM and DMARC records",
       };
     }
 
@@ -28,7 +31,7 @@ export class MailboxValidator {
       spf: true,
       dkim: true,
       dmarc: true,
-      details: 'All security records verified'
+      details: "All security records verified",
     };
   }
 }

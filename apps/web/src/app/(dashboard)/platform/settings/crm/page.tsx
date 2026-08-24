@@ -2,7 +2,13 @@
 
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -20,7 +26,7 @@ export default function CRMSettingsPage() {
 
   const fetchSettings = async () => {
     try {
-      const res = await fetchApi('/crm/settings');
+      const res = await fetchApi("/crm/settings");
       setSettings(res?.data);
     } catch (err) {
       console.error(err);
@@ -34,15 +40,17 @@ export default function CRMSettingsPage() {
     fetchSettings();
   }, []);
 
-
-
   const handleConnect = async (provider: string) => {
     try {
-      await fetchApi('/crm/settings', {
+      await fetchApi("/crm/settings", {
         method: "POST",
-        body: JSON.stringify({ provider, credentials: { apiKey }, field_mappings: {} })
+        body: JSON.stringify({
+          provider,
+          credentials: { apiKey },
+          field_mappings: {},
+        }),
       });
-    // eslint-disable-next-line react-hooks/exhaustive-deps, react-hooks/set-state-in-effect
+      // eslint-disable-next-line react-hooks/exhaustive-deps, react-hooks/set-state-in-effect
       fetchSettings();
     } catch (err) {
       console.error(err);
@@ -52,7 +60,7 @@ export default function CRMSettingsPage() {
   const handleSync = async () => {
     setSyncing(true);
     try {
-    // eslint-disable-next-line react-hooks/exhaustive-deps, react-hooks/set-state-in-effect
+      // eslint-disable-next-line react-hooks/exhaustive-deps, react-hooks/set-state-in-effect
       fetchSettings();
     } catch (err) {
       console.error(err);
@@ -68,7 +76,9 @@ export default function CRMSettingsPage() {
           <Link2 className="w-8 h-8 text-indigo-400" />
           Connect CRM
         </h1>
-        <p className="text-muted-foreground mt-1">Sync your leads and customer data directly with your CRM.</p>
+        <p className="text-muted-foreground mt-1">
+          Sync your leads and customer data directly with your CRM.
+        </p>
       </div>
 
       <div className="grid gap-6 md:grid-cols-2">
@@ -80,20 +90,38 @@ export default function CRMSettingsPage() {
             </div>
             <div className="flex-1">
               <CardTitle className="text-xl">HubSpot</CardTitle>
-              {settings?.provider === 'hubspot' && settings?.status === 'active' ? (
-                <Badge className="bg-emerald-500/10 text-emerald-400 border-emerald-500/20 mt-1">Connected</Badge>
+              {settings?.provider === "hubspot" &&
+              settings?.status === "active" ? (
+                <Badge className="bg-emerald-500/10 text-emerald-400 border-emerald-500/20 mt-1">
+                  Connected
+                </Badge>
               ) : (
-                <Badge variant="outline" className="border-gray-500/30 text-gray-400 mt-1">Not Connected</Badge>
+                <Badge
+                  variant="outline"
+                  className="border-gray-500/30 text-gray-400 mt-1"
+                >
+                  Not Connected
+                </Badge>
               )}
             </div>
           </CardHeader>
           <CardContent>
-            {settings?.provider === 'hubspot' && settings?.status === 'active' ? (
+            {settings?.provider === "hubspot" &&
+            settings?.status === "active" ? (
               <div className="space-y-4">
-                <p className="text-sm text-gray-400">Last sync: {settings?.last_sync_at ? new Date(settings.last_sync_at).toLocaleString() : 'Never'}</p>
+                <p className="text-sm text-gray-400">
+                  Last sync:{" "}
+                  {settings?.last_sync_at
+                    ? new Date(settings.last_sync_at).toLocaleString()
+                    : "Never"}
+                </p>
                 <div className="flex gap-3">
-                  <Button onClick={handleSync} disabled={syncing} className="bg-indigo-600 hover:bg-indigo-700">
-                    {syncing ? 'Syncing...' : 'Sync Now'}
+                  <Button
+                    onClick={handleSync}
+                    disabled={syncing}
+                    className="bg-indigo-600 hover:bg-indigo-700"
+                  >
+                    {syncing ? "Syncing..." : "Sync Now"}
                   </Button>
                 </div>
               </div>
@@ -101,19 +129,35 @@ export default function CRMSettingsPage() {
               <div className="space-y-4">
                 {showHubspotForm ? (
                   <div className="space-y-3">
-                    <Input 
-                      placeholder="HubSpot API Key" 
+                    <Input
+                      placeholder="HubSpot API Key"
                       value={apiKey}
                       onChange={(e) => setApiKey(e.target.value)}
-                      className="bg-[#2A2A3C] border-[#3F3F5A] text-white" 
+                      className="bg-[#2A2A3C] border-[#3F3F5A] text-white"
                     />
                     <div className="flex gap-2">
-                      <Button onClick={() => handleConnect('hubspot')} className="bg-orange-500 hover:bg-orange-600 flex-1">Connect</Button>
-                      <Button variant="outline" onClick={() => setShowHubspotForm(false)} className="border-[#3F3F5A] text-gray-300 hover:text-white">Cancel</Button>
+                      <Button
+                        onClick={() => handleConnect("hubspot")}
+                        className="bg-orange-500 hover:bg-orange-600 flex-1"
+                      >
+                        Connect
+                      </Button>
+                      <Button
+                        variant="outline"
+                        onClick={() => setShowHubspotForm(false)}
+                        className="border-[#3F3F5A] text-gray-300 hover:text-white"
+                      >
+                        Cancel
+                      </Button>
                     </div>
                   </div>
                 ) : (
-                  <Button onClick={() => setShowHubspotForm(true)} className="w-full bg-orange-500 hover:bg-orange-600">Connect HubSpot</Button>
+                  <Button
+                    onClick={() => setShowHubspotForm(true)}
+                    className="w-full bg-orange-500 hover:bg-orange-600"
+                  >
+                    Connect HubSpot
+                  </Button>
                 )}
               </div>
             )}
@@ -128,25 +172,47 @@ export default function CRMSettingsPage() {
             </div>
             <div className="flex-1">
               <CardTitle className="text-xl">Salesforce</CardTitle>
-              {settings?.provider === 'salesforce' && settings?.status === 'active' ? (
-                <Badge className="bg-emerald-500/10 text-emerald-400 border-emerald-500/20 mt-1">Connected</Badge>
+              {settings?.provider === "salesforce" &&
+              settings?.status === "active" ? (
+                <Badge className="bg-emerald-500/10 text-emerald-400 border-emerald-500/20 mt-1">
+                  Connected
+                </Badge>
               ) : (
-                <Badge variant="outline" className="border-gray-500/30 text-gray-400 mt-1">Not Connected</Badge>
+                <Badge
+                  variant="outline"
+                  className="border-gray-500/30 text-gray-400 mt-1"
+                >
+                  Not Connected
+                </Badge>
               )}
             </div>
           </CardHeader>
           <CardContent>
-            {settings?.provider === 'salesforce' && settings?.status === 'active' ? (
+            {settings?.provider === "salesforce" &&
+            settings?.status === "active" ? (
               <div className="space-y-4">
-                <p className="text-sm text-gray-400">Last sync: {settings?.last_sync_at ? new Date(settings.last_sync_at).toLocaleString() : 'Never'}</p>
+                <p className="text-sm text-gray-400">
+                  Last sync:{" "}
+                  {settings?.last_sync_at
+                    ? new Date(settings.last_sync_at).toLocaleString()
+                    : "Never"}
+                </p>
                 <div className="flex gap-3">
-                  <Button onClick={handleSync} disabled={syncing} className="bg-blue-600 hover:bg-blue-700">
-                    {syncing ? 'Syncing...' : 'Sync Now'}
+                  <Button
+                    onClick={handleSync}
+                    disabled={syncing}
+                    className="bg-blue-600 hover:bg-blue-700"
+                  >
+                    {syncing ? "Syncing..." : "Sync Now"}
                   </Button>
                 </div>
               </div>
             ) : (
-              <Button variant="outline" className="w-full border-[#3F3F5A] text-gray-300 hover:text-white" onClick={() => alert("Salesforce coming soon!")}>
+              <Button
+                variant="outline"
+                className="w-full border-[#3F3F5A] text-gray-300 hover:text-white"
+                onClick={() => alert("Salesforce coming soon!")}
+              >
                 Connect Salesforce
               </Button>
             )}
@@ -157,24 +223,32 @@ export default function CRMSettingsPage() {
       <Card className="bg-[#1E1E2E] border-[#3F3F5A] text-white">
         <CardHeader>
           <CardTitle>Field Mapping</CardTitle>
-          <CardDescription className="text-gray-400">How your AI data maps to CRM fields</CardDescription>
+          <CardDescription className="text-gray-400">
+            How your AI data maps to CRM fields
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
             <div className="flex items-center gap-4 p-3 bg-[#2A2A3C] rounded-lg border border-[#3F3F5A]">
               <div className="flex-1 font-medium text-gray-300">Lead Name</div>
               <ArrowRight className="w-4 h-4 text-gray-500" />
-              <div className="flex-1 font-medium text-indigo-300 text-right">Contact Name</div>
+              <div className="flex-1 font-medium text-indigo-300 text-right">
+                Contact Name
+              </div>
             </div>
             <div className="flex items-center gap-4 p-3 bg-[#2A2A3C] rounded-lg border border-[#3F3F5A]">
               <div className="flex-1 font-medium text-gray-300">Email</div>
               <ArrowRight className="w-4 h-4 text-gray-500" />
-              <div className="flex-1 font-medium text-indigo-300 text-right">Email</div>
+              <div className="flex-1 font-medium text-indigo-300 text-right">
+                Email
+              </div>
             </div>
             <div className="flex items-center gap-4 p-3 bg-[#2A2A3C] rounded-lg border border-[#3F3F5A]">
               <div className="flex-1 font-medium text-gray-300">Company</div>
               <ArrowRight className="w-4 h-4 text-gray-500" />
-              <div className="flex-1 font-medium text-indigo-300 text-right">Account</div>
+              <div className="flex-1 font-medium text-indigo-300 text-right">
+                Account
+              </div>
             </div>
           </div>
         </CardContent>

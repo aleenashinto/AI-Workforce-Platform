@@ -1,16 +1,30 @@
-const fs = require('fs');
-const path = require('path');
-const p = path.resolve('apps/web/src/app/(dashboard)/customer-support/widget/page.tsx');
-let c = fs.readFileSync(p, 'utf8');
+const fs = require("fs");
+const path = require("path");
+const p = path.resolve(
+  "apps/web/src/app/(dashboard)/customer-support/widget/page.tsx",
+);
+let c = fs.readFileSync(p, "utf8");
 
-c = c.replace('import { useState, useEffect } from "react";', 'import { useState, useEffect } from "react";\nimport { useUserContext } from "@/contexts/UserContext";\nimport { API_BASE } from "@/lib/api";');
-c = c.replace('export default function WidgetConfigPage() {\n  const [activeTab, setActiveTab] = useState(\'appearance\');', 'export default function WidgetConfigPage() {\n  const [activeTab, setActiveTab] = useState(\'appearance\');\n  const { currentOrgId } = useUserContext();');
-c = c.replace('<Monitor color={T.g} size={32} /> Widget Config', '<Monitor color={T.g} size={32} /> AI Support Agent');
-c = c.replace('Customize the chat widget appearance and behavior.', 'Chat Widget Configuration');
+c = c.replace(
+  'import { useState, useEffect } from "react";',
+  'import { useState, useEffect } from "react";\nimport { useUserContext } from "@/contexts/UserContext";\nimport { API_BASE } from "@/lib/api";',
+);
+c = c.replace(
+  "export default function WidgetConfigPage() {\n  const [activeTab, setActiveTab] = useState('appearance');",
+  "export default function WidgetConfigPage() {\n  const [activeTab, setActiveTab] = useState('appearance');\n  const { currentOrgId } = useUserContext();",
+);
+c = c.replace(
+  "<Monitor color={T.g} size={32} /> Widget Config",
+  "<Monitor color={T.g} size={32} /> AI Support Agent",
+);
+c = c.replace(
+  "Customize the chat widget appearance and behavior.",
+  "Chat Widget Configuration",
+);
 
-const oldFn = 'const handleSendMessage = (e: React.FormEvent) => {';
+const oldFn = "const handleSendMessage = (e: React.FormEvent) => {";
 const splitStart = c.indexOf(oldFn);
-const splitEnd = c.indexOf('  return (', splitStart);
+const splitEnd = c.indexOf("  return (", splitStart);
 
 const newFn = `const handleSendMessage = async (e?: React.FormEvent, presetMsg?: string) => {
     if (e) e.preventDefault();
@@ -77,6 +91,9 @@ const newFn = `const handleSendMessage = async (e?: React.FormEvent, presetMsg?:
 `;
 
 c = c.substring(0, splitStart) + newFn + c.substring(splitEnd);
-c = c.replace('onClick={() => setInputValue(q)}', 'onClick={() => handleSendMessage(undefined, q)}');
+c = c.replace(
+  "onClick={() => setInputValue(q)}",
+  "onClick={() => handleSendMessage(undefined, q)}",
+);
 
 fs.writeFileSync(p, c);

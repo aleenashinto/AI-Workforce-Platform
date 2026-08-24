@@ -1,15 +1,15 @@
-'use client';
+"use client";
 
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect } from "react";
 
 export type MemberRole =
-  | 'owner'
-  | 'admin'
-  | 'support_lead'
-  | 'support_agent'
-  | 'sales_lead'
-  | 'sales_rep'
-  | 'viewer';
+  | "owner"
+  | "admin"
+  | "support_lead"
+  | "support_agent"
+  | "sales_lead"
+  | "sales_rep"
+  | "viewer";
 
 type UserProfile = {
   fullName: string;
@@ -32,7 +32,7 @@ type UserContextType = {
   user: UserProfile | null;
   loading: boolean;
   updateUser: (updates: Partial<UserProfile>) => void;
-  updateOrganization: (updates: Partial<UserProfile['organization']>) => void;
+  updateOrganization: (updates: Partial<UserProfile["organization"]>) => void;
   hasRole: (...roles: MemberRole[]) => boolean;
   logout: () => Promise<void>;
 };
@@ -50,11 +50,11 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
     };
 
     fetch(`${getApiUrl()}/auth/me`, { credentials: "include" })
-      .then(res => {
+      .then((res) => {
         if (!res.ok) throw new Error("Not authenticated");
         return res.json();
       })
-      .then(data => {
+      .then((data) => {
         if (data.user) {
           setUser({
             fullName: data.user.name || "",
@@ -69,8 +69,8 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
               website: "",
               industry: "",
               timezone: "UTC",
-              language: "English"
-            }
+              language: "English",
+            },
           });
         }
       })
@@ -86,13 +86,16 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
     if (user) setUser({ ...user, ...updates });
   };
 
-  const updateOrganization = (updates: Partial<UserProfile['organization']>) => {
-    if (user) setUser({ ...user, organization: { ...user.organization, ...updates } });
+  const updateOrganization = (
+    updates: Partial<UserProfile["organization"]>,
+  ) => {
+    if (user)
+      setUser({ ...user, organization: { ...user.organization, ...updates } });
   };
 
   const hasRole = (...roles: MemberRole[]) => {
     if (!user) return false;
-    return roles.some(r => user.roles.includes(r));
+    return roles.some((r) => user.roles.includes(r));
   };
 
   const logout = async () => {
@@ -101,7 +104,10 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
         const url = process.env.NEXT_PUBLIC_API_URL || "";
         return url.replace(/\/+$/, "");
       };
-      await fetch(`${getApiUrl()}/auth/logout`, { method: "POST", credentials: "include" });
+      await fetch(`${getApiUrl()}/auth/logout`, {
+        method: "POST",
+        credentials: "include",
+      });
     } catch (e) {
       // ignore
     }
@@ -110,7 +116,9 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <UserContext.Provider value={{ user, loading, updateUser, updateOrganization, hasRole, logout }}>
+    <UserContext.Provider
+      value={{ user, loading, updateUser, updateOrganization, hasRole, logout }}
+    >
       {children}
     </UserContext.Provider>
   );
@@ -119,7 +127,7 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
 export function useUserContext() {
   const context = useContext(UserContext);
   if (!context) {
-    throw new Error('useUserContext must be used within a UserProvider');
+    throw new Error("useUserContext must be used within a UserProvider");
   }
   return context;
 }

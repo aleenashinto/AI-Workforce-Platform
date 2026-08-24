@@ -1,15 +1,15 @@
-import { drizzle } from 'drizzle-orm/postgres-js';
-import postgres from 'postgres';
-import { sql } from 'drizzle-orm';
-import { AsyncLocalStorage } from 'async_hooks';
-import * as schema from './schema';
+import { drizzle } from "drizzle-orm/postgres-js";
+import postgres from "postgres";
+import { sql } from "drizzle-orm";
+import { AsyncLocalStorage } from "async_hooks";
+import * as schema from "./schema";
 
 export const tenantContext = new AsyncLocalStorage<any>();
 
 export const getDb = (connectionString: string) => {
-  const client = postgres(connectionString, { 
-    prepare: false, 
-    ssl: process.env.NODE_ENV === 'production' ? 'require' : false 
+  const client = postgres(connectionString, {
+    prepare: false,
+    ssl: process.env.NODE_ENV === "production" ? "require" : false,
   });
   const baseDb = drizzle(client, { schema });
 
@@ -17,11 +17,11 @@ export const getDb = (connectionString: string) => {
   return new Proxy(baseDb, {
     get(target, prop, receiver) {
       const tx = tenantContext.getStore();
-      if (tx && typeof (tx as any)[prop] !== 'undefined') {
+      if (tx && typeof (tx as any)[prop] !== "undefined") {
         return Reflect.get(tx, prop, tx);
       }
       return Reflect.get(target, prop, receiver);
-    }
+    },
   });
 };
 
@@ -29,15 +29,19 @@ export const getDb = (connectionString: string) => {
 export const withTenant = async <T>(
   db: ReturnType<typeof getDb>,
   orgId: string,
-  callback: (tx?: any) => Promise<T>
+  callback: (tx?: any) => Promise<T>,
 ) => {
   return db.transaction(async (tx) => {
-    await tx.execute(sql`SELECT set_config('app.current_org_id', ${orgId}, true)`);
+    await tx.execute(
+      sql`SELECT set_config('app.current_org_id', ${orgId}, true)`,
+    );
     // Pass tx so inner queries use the transaction
     return tenantContext.run(tx, () => callback(tx));
   });
 };
 
-const connectionString = process.env.DATABASE_URL || 'postgresql://postgres:Aleena%40123%23@db.xarcuonsgcexagzevwdu.supabase.co:5432/postgres';
+const connectionString =
+  process.env.DATABASE_URL ||
+  "postgresql://postgres:Aleena%40123%23@db.xarcuonsgcexagzevwdu.supabase.co:5432/postgres";
 
 export const db = getDb(connectionString);

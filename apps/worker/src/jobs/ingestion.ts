@@ -28,7 +28,7 @@ function chunkText(text: string, maxTokens: number = 500): string[] {
   }
   if (currentChunk) chunks.push(currentChunk.trim());
 
-  return chunks.filter(c => c.length > 0);
+  return chunks.filter((c) => c.length > 0);
 }
 
 export async function processIngestion(job: Job) {
@@ -63,70 +63,81 @@ export async function processIngestion(job: Job) {
       textContent = $("body").text().replace(/\s+/g, " ").trim();
     } else if (source.type === "sitemap") {
       const response = await fetch(config.url);
-      if (!response.ok) throw new Error(`Failed to fetch sitemap: ${response.statusText}`);
+      if (!response.ok)
+        throw new Error(`Failed to fetch sitemap: ${response.statusText}`);
       const xml = await response.text();
       const $ = cheerio.load(xml, { xmlMode: true });
       const urls = [];
-      $('url loc').each((i, el) => {
+      $("url loc").each((i, el) => {
         urls.push($(el).text());
       });
       // limit to first 10 for safety
       const limitedUrls = urls.slice(0, 10);
-      let combinedText = '';
+      let combinedText = "";
       for (const u of limitedUrls) {
         try {
           const pageRes = await fetch(u);
           if (pageRes.ok) {
             const html = await pageRes.text();
             const page$ = cheerio.load(html);
-            page$('script, style').remove();
-            combinedText += page$('body').text().replace(/\s+/g, ' ').trim() + '\n\n';
+            page$("script, style").remove();
+            combinedText +=
+              page$("body").text().replace(/\s+/g, " ").trim() + "\n\n";
           }
-        } catch(e) { console.warn('Failed to crawl', u); }
+        } catch (e) {
+          console.warn("Failed to crawl", u);
+        }
       }
       textContent = combinedText;
     } else if (source.type === "text") {
       textContent = config.text || "";
     } else if (source.type === "file") {
-       const s3 = new S3Client({
-         region: process.env.AWS_REGION || "us-east-1",
-         credentials: {
-           accessKeyId: process.env.AWS_ACCESS_KEY_ID || "mock",
-           secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || "mock"
-         },
-         endpoint: process.env.S3_ENDPOINT || undefined, // for localstack or minio
-         forcePathStyle: true
-       });
+      const s3 = new S3Client({
+        region: process.env.AWS_REGION || "us-east-1",
+        credentials: {
+          accessKeyId: process.env.AWS_ACCESS_KEY_ID || "mock",
+          secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || "mock",
+        },
+        endpoint: process.env.S3_ENDPOINT || undefined, // for localstack or minio
+        forcePathStyle: true,
+      });
 
-       const bucket = process.env.S3_BUCKET || "ai-workforce-uploads";
-       const key = config.file_key;
+      const bucket = process.env.S3_BUCKET || "ai-workforce-uploads";
+      const key = config.file_key;
 
-       const command = new GetObjectCommand({
-         Bucket: bucket,
-         Key: key,
-       });
+      const command = new GetObjectCommand({
+        Bucket: bucket,
+        Key: key,
+      });
 
-       const s3Response = await s3.send(command);
-       if (!s3Response.Body) {
-         throw new Error("File body empty");
-       }
-       const buffer = Buffer.from(await s3Response.Body.transformToByteArray());
+      const s3Response = await s3.send(command);
+      if (!s3Response.Body) {
+        throw new Error("File body empty");
+      }
+      const buffer = Buffer.from(await s3Response.Body.transformToByteArray());
 
-       if (key.endsWith(".pdf")) {
-         const data = await pdfParse(buffer);
-         textContent = data.text;
-       } else {
-         textContent = buffer.toString("utf-8");
-       }
-    } else if (source.type === 'notion') {
-      console.log(`[Ingestion] Fetching Notion content using OAuth token from config...`);
-      textContent = "Mock Notion Document Content. This is a page about company policies.";
-    } else if (source.type === 'google_drive') {
-      console.log(`[Ingestion] Fetching Google Drive content using OAuth token from config...`);
-      textContent = "Mock Google Drive Document Content. Quarterly earnings report 2026.";
-    } else if (source.type === 'zendesk') {
+      if (key.endsWith(".pdf")) {
+        const data = await pdfParse(buffer);
+        textContent = data.text;
+      } else {
+        textContent = buffer.toString("utf-8");
+      }
+    } else if (source.type === "notion") {
+      console.log(
+        `[Ingestion] Fetching Notion content using OAuth token from config...`,
+      );
+      textContent =
+        "Mock Notion Document Content. This is a page about company policies.";
+    } else if (source.type === "google_drive") {
+      console.log(
+        `[Ingestion] Fetching Google Drive content using OAuth token from config...`,
+      );
+      textContent =
+        "Mock Google Drive Document Content. Quarterly earnings report 2026.";
+    } else if (source.type === "zendesk") {
       console.log(`[Ingestion] Fetching Zendesk help center articles...`);
-      textContent = "Mock Zendesk Article. How to reset your password and manage billing.";
+      textContent =
+        "Mock Zendesk Article. How to reset your password and manage billing.";
     } else {
       throw new Error(`Unsupported source type: ${source.type}`);
     }
@@ -135,7 +146,10 @@ export async function processIngestion(job: Job) {
       throw new Error("No text content extracted");
     }
 
-    const contentHash = crypto.createHash("sha256").update(textContent).digest("hex");
+    const contentHash = crypto
+      .createHash("sha256")
+      .update(textContent)
+      .digest("hex");
 
     const [document] = await db
       .insert(knowledge_documents)
@@ -166,7 +180,7 @@ export async function processIngestion(job: Job) {
       // We need to set the FTS vector as well, ideally via a trigger or raw SQL.
       // Drizzle handles the insert, but we'll manually update the fts column.
       await db.execute(
-        `UPDATE knowledge_chunks SET fts = to_tsvector('english', content) WHERE document_id = '${document.id}'`
+        `UPDATE knowledge_chunks SET fts = to_tsvector('english', content) WHERE document_id = '${document.id}'`,
       );
     }
 
@@ -174,7 +188,6 @@ export async function processIngestion(job: Job) {
       .update(knowledge_sources)
       .set({ status: "ready" })
       .where(eq(knowledge_sources.id, sourceId));
-
   } catch (error: any) {
     console.error(`Ingestion error for source ${sourceId}:`, error);
     await db
@@ -196,5 +209,5 @@ export const ingestionWorker = new Worker(
       port: 6379,
     },
     concurrency: 5,
-  }
+  },
 );

@@ -5,7 +5,9 @@
   "main": "index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "seed:demo": "tsx seed-demo.ts"
+    "seed:demo": "tsx seed-demo.ts",
+    "seed:sales": "tsx seed-sales.ts",
+    "reset:sales-demo": "tsx reset-sales.ts"
   },
   "keywords": [],
   "author": "",

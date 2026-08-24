@@ -1,10 +1,10 @@
-const fs = require('fs');
-const p = 'apps/api/routes/agent.ts';
-let c = fs.readFileSync(p, 'utf8');
+const fs = require("fs");
+const p = "apps/api/routes/agent.ts";
+let c = fs.readFileSync(p, "utf8");
 
 c = c.replace(
   "import { conversations, messages } from '@ai-workforce/db/schema';",
-  "import { conversations, messages, organizations } from '@ai-workforce/db/schema';"
+  "import { conversations, messages, organizations } from '@ai-workforce/db/schema';",
 );
 
 const endpoints = `
@@ -32,8 +32,9 @@ const endpoints = `
 `;
 
 c = c.replace(
-  'export default async function agentRoutes(fastify: FastifyInstance) {',
-  'export default async function agentRoutes(fastify: FastifyInstance) {\n' + endpoints
+  "export default async function agentRoutes(fastify: FastifyInstance) {",
+  "export default async function agentRoutes(fastify: FastifyInstance) {\n" +
+    endpoints,
 );
 
 fs.writeFileSync(p, c);

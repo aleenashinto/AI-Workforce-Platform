@@ -1,27 +1,19 @@
 import { Worker, Job } from "bullmq";
 import { db } from "@ai-workforce/db";
-import {
-  drafts,
-  outreach_events,
-  leads,
-} from "@ai-workforce/db/schema";
+import { drafts, outreach_events, leads } from "@ai-workforce/db/schema";
 import { eq } from "drizzle-orm";
 
 export const sequenceSchedulerWorker = new Worker(
   "sequence-scheduler",
   async (job: Job) => {
-    console.log(
-      `Running sequence scheduler for job ${job.id}...`
-    );
+    console.log(`Running sequence scheduler for job ${job.id}...`);
 
     // Find approved drafts that are ready to send.
     const readyDrafts = await db.query.drafts.findMany({
       where: eq(drafts.status, "approved"),
     });
 
-    console.log(
-      `Found ${readyDrafts.length} approved drafts.`
-    );
+    console.log(`Found ${readyDrafts.length} approved drafts.`);
 
     for (const draft of readyDrafts) {
       const lead = await db.query.leads.findFirst({
@@ -29,26 +21,17 @@ export const sequenceSchedulerWorker = new Worker(
       });
 
       if (!lead) {
-        console.log(
-          `Lead not found for draft ${draft.id}. Skipping.`
-        );
+        console.log(`Lead not found for draft ${draft.id}. Skipping.`);
         continue;
       }
 
       // Check suppression/bounce status before sending.
-      if (
-        lead.status === "suppressed" ||
-        lead.status === "bounced"
-      ) {
-        console.log(
-          `Skipping lead ${lead.id} - status is ${lead.status}`
-        );
+      if (lead.status === "suppressed" || lead.status === "bounced") {
+        console.log(`Skipping lead ${lead.id} - status is ${lead.status}`);
         continue;
       }
 
-      console.log(
-        `Sending email to ${lead.email}: ${draft.subject}`
-      );
+      console.log(`Sending email to ${lead.email}: ${draft.subject}`);
 
       // Mock email sending.
       // Real email provider integration can be added later.
@@ -70,9 +53,7 @@ export const sequenceSchedulerWorker = new Worker(
         })
         .where(eq(drafts.id, draft.id));
 
-      console.log(
-        `Draft ${draft.id} marked as sent.`
-      );
+      console.log(`Draft ${draft.id} marked as sent.`);
     }
 
     return {
@@ -80,27 +61,29 @@ export const sequenceSchedulerWorker = new Worker(
     };
   },
   {
-    connection: new (require("ioredis").default || require("ioredis"))(process.env.REDIS_URL || "redis://localhost:6379", { maxRetriesPerRequest: null, lazyConnect: true, retryStrategy: () => null }),
-  }
+    connection: new (require("ioredis").default || require("ioredis"))(
+      process.env.REDIS_URL || "redis://localhost:6379",
+      {
+        maxRetriesPerRequest: null,
+        lazyConnect: true,
+        retryStrategy: () => null,
+      },
+    ),
+  },
 );
 
 sequenceSchedulerWorker.on("completed", (job) => {
-  console.log(
-    `Sequence scheduler job ${job.id} completed.`
-  );
+  console.log(`Sequence scheduler job ${job.id} completed.`);
 });
 
 sequenceSchedulerWorker.on("failed", (job, error) => {
   console.error(
     `Sequence scheduler job ${job?.id ?? "unknown"} failed:`,
-    error
+    error,
   );
 });
 
 sequenceSchedulerWorker.on("error", (error) => {
-  if (String(error).includes('ECONNREFUSED')) return;
-  console.error(
-    "Sequence scheduler worker error:",
-    error
-  );
+  if (String(error).includes("ECONNREFUSED")) return;
+  console.error("Sequence scheduler worker error:", error);
 });

@@ -1,8 +1,8 @@
-import fastify from 'fastify';
+import fastify from "fastify";
 
 const app = fastify();
 
-app.post('/test', async (req, reply) => {
+app.post("/test", async (req, reply) => {
   console.log("Body is:", req.body);
   return { success: true };
 });
@@ -10,12 +10,12 @@ app.post('/test', async (req, reply) => {
 async function run() {
   await app.ready();
   const response = await app.inject({
-    method: 'POST',
-    url: '/test',
+    method: "POST",
+    url: "/test",
     headers: {
-      'content-type': 'application/json'
+      "content-type": "application/json",
     },
-    payload: { hello: "world" }
+    payload: { hello: "world" },
   });
   console.log(response.statusCode);
   console.log(response.body);

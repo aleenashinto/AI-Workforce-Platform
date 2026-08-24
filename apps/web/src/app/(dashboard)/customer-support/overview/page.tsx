@@ -1,14 +1,30 @@
-'use client';
+"use client";
 
 import { useState, useEffect } from "react";
-import { 
-  MessageSquare, AlertTriangle, Star, 
-  CheckCircle, Clock, DollarSign, Activity, MessagesSquare, RefreshCcw, ArrowRight
+import {
+  MessageSquare,
+  AlertTriangle,
+  Star,
+  CheckCircle,
+  Clock,
+  DollarSign,
+  Activity,
+  MessagesSquare,
+  RefreshCcw,
+  ArrowRight,
 } from "lucide-react";
 import { fetchApi } from "@/lib/api";
 import Link from "next/link";
 import {
-  BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell, PieChart, Pie
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  Tooltip,
+  ResponsiveContainer,
+  Cell,
+  PieChart,
+  Pie,
 } from "recharts";
 import { formatDistanceToNow, format } from "date-fns";
 
@@ -16,47 +32,110 @@ import { formatDistanceToNow, format } from "date-fns";
    DESIGN TOKENS
 ───────────────────────────────────────────── */
 const T = {
-  g:       "#00ff88",
-  bg:      "#040810",
-  bg2:     "#070e1a",
-  panel:   "#0a1628",
-  border:  "rgba(0,255,136,0.18)",
-  muted:   "rgba(0,255,136,0.45)",
-  text:    "#c8ffe8",
-  glow:    "0 0 20px rgba(0,255,136,0.35),0 0 60px rgba(0,255,136,0.12)",
-  mono:    "'Share Tech Mono', monospace",
+  g: "#00ff88",
+  bg: "#040810",
+  bg2: "#070e1a",
+  panel: "#0a1628",
+  border: "rgba(0,255,136,0.18)",
+  muted: "rgba(0,255,136,0.45)",
+  text: "#c8ffe8",
+  glow: "0 0 20px rgba(0,255,136,0.35),0 0 60px rgba(0,255,136,0.12)",
+  mono: "'Share Tech Mono', monospace",
   display: "'Orbitron', sans-serif",
-  body:    "'Rajdhani', sans-serif",
-  warn:    "#ffaa00",
-  red:     "#ff3355"
+  body: "'Rajdhani', sans-serif",
+  warn: "#ffaa00",
+  red: "#ff3355",
 };
 
 const Corners = () => (
   <>
-    {[["tl","1px 0 0 1px","0","0","auto","auto"],
-      ["tr","1px 1px 0 0","0","auto","0","auto"],
-      ["bl","0 0 1px 1px","auto","0","auto","0"],
-      ["br","0 1px 1px 0","auto","auto","0","0"]].map(([k, bw, t, l, b, r]) => (
-      <span key={k} style={{
-        position:"absolute", width:14, height:14,
-        borderColor: T.g, borderStyle:"solid", borderWidth: bw as any, opacity: 0.5,
-        top:t==="auto"?undefined:8, left:l==="auto"?undefined:8,
-        bottom:b==="auto"?undefined:8, right:r==="auto"?undefined:8,
-      }}/>
+    {[
+      ["tl", "1px 0 0 1px", "0", "0", "auto", "auto"],
+      ["tr", "1px 1px 0 0", "0", "auto", "0", "auto"],
+      ["bl", "0 0 1px 1px", "auto", "0", "auto", "0"],
+      ["br", "0 1px 1px 0", "auto", "auto", "0", "0"],
+    ].map(([k, bw, t, l, b, r]) => (
+      <span
+        key={k}
+        style={{
+          position: "absolute",
+          width: 14,
+          height: 14,
+          borderColor: T.g,
+          borderStyle: "solid",
+          borderWidth: bw as any,
+          opacity: 0.5,
+          top: t === "auto" ? undefined : 8,
+          left: l === "auto" ? undefined : 8,
+          bottom: b === "auto" ? undefined : 8,
+          right: r === "auto" ? undefined : 8,
+        }}
+      />
     ))}
   </>
 );
 
-const Card = ({ title, value, sub, icon: Icon, color = T.g, border = T.border }: any) => {
+const Card = ({
+  title,
+  value,
+  sub,
+  icon: Icon,
+  color = T.g,
+  border = T.border,
+}: any) => {
   return (
-    <div style={{ background: T.panel, border: `1px solid ${border}`, padding: "1.5rem", position: "relative", boxShadow: `0 0 30px rgba(0,255,136,0.03)` }}>
+    <div
+      style={{
+        background: T.panel,
+        border: `1px solid ${border}`,
+        padding: "1.5rem",
+        position: "relative",
+        boxShadow: `0 0 30px rgba(0,255,136,0.03)`,
+      }}
+    >
       <Corners />
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "1rem" }}>
-        <div style={{ fontFamily: T.mono, fontSize: "0.75rem", color: T.muted, letterSpacing: "0.1em", textTransform: "uppercase" }}>{title}</div>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "flex-start",
+          marginBottom: "1rem",
+        }}
+      >
+        <div
+          style={{
+            fontFamily: T.mono,
+            fontSize: "0.75rem",
+            color: T.muted,
+            letterSpacing: "0.1em",
+            textTransform: "uppercase",
+          }}
+        >
+          {title}
+        </div>
         <Icon size={16} color={color} />
       </div>
-      <div style={{ fontFamily: T.display, fontSize: "2rem", fontWeight: 700, color: "#fff", marginBottom: "0.5rem" }}>{value}</div>
-      <div style={{ fontFamily: T.mono, fontSize: "0.7rem", color: color, letterSpacing: "0.05em" }}>{sub}</div>
+      <div
+        style={{
+          fontFamily: T.display,
+          fontSize: "2rem",
+          fontWeight: 700,
+          color: "#fff",
+          marginBottom: "0.5rem",
+        }}
+      >
+        {value}
+      </div>
+      <div
+        style={{
+          fontFamily: T.mono,
+          fontSize: "0.7rem",
+          color: color,
+          letterSpacing: "0.05em",
+        }}
+      >
+        {sub}
+      </div>
     </div>
   );
 };
@@ -76,15 +155,17 @@ export default function SupportOverviewPage() {
       start_date.setHours(0, 0, 0, 0);
       let end_date = new Date();
 
-      if (dateRange === 'this_week') {
+      if (dateRange === "this_week") {
         const day = start_date.getDay();
-        const diff = start_date.getDate() - day + (day === 0 ? -6 : 1); 
+        const diff = start_date.getDate() - day + (day === 0 ? -6 : 1);
         start_date.setDate(diff);
-      } else if (dateRange === 'this_month') {
+      } else if (dateRange === "this_month") {
         start_date.setDate(1);
       }
 
-      const res = await fetchApi(`/analytics/support-overview?start_date=${start_date.toISOString()}&end_date=${end_date.toISOString()}`);
+      const res = await fetchApi(
+        `/analytics/support-overview?start_date=${start_date.toISOString()}&end_date=${end_date.toISOString()}`,
+      );
       if (res && res.success) {
         setData(res.data);
       } else {
@@ -117,37 +198,74 @@ export default function SupportOverviewPage() {
 
   return (
     <div style={{ padding: "2rem", maxWidth: 1400, margin: "0 auto" }}>
-      
-      <div style={{ marginBottom: "2rem", display: "flex", justifyContent: "space-between", alignItems: "flex-end" }}>
+      <div
+        style={{
+          marginBottom: "2rem",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "flex-end",
+        }}
+      >
         <div>
-          <h1 style={{ fontFamily: T.display, fontSize: "2.2rem", fontWeight: 700, color: "#fff", marginBottom: "0.5rem", display: "flex", alignItems: "center", gap: "1rem" }}>
+          <h1
+            style={{
+              fontFamily: T.display,
+              fontSize: "2.2rem",
+              fontWeight: 700,
+              color: "#fff",
+              marginBottom: "0.5rem",
+              display: "flex",
+              alignItems: "center",
+              gap: "1rem",
+            }}
+          >
             <Activity color={T.g} size={32} /> Support Overview
           </h1>
-          <p style={{ fontFamily: T.mono, fontSize: "0.9rem", color: T.g, letterSpacing: "0.05em" }}>
+          <p
+            style={{
+              fontFamily: T.mono,
+              fontSize: "0.9rem",
+              color: T.g,
+              letterSpacing: "0.05em",
+            }}
+          >
             AI Customer Support performance and metrics.
           </p>
         </div>
-        
+
         <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
-          <select 
+          <select
             value={dateRange}
             onChange={(e) => setDateRange(e.target.value)}
             disabled={loading}
             style={{
-              background: T.panel, border: `1px solid ${T.border}`, color: T.text, padding: "0.5rem 1rem",
-              fontFamily: T.mono, fontSize: "0.85rem", cursor: "pointer", outline: "none"
+              background: T.panel,
+              border: `1px solid ${T.border}`,
+              color: T.text,
+              padding: "0.5rem 1rem",
+              fontFamily: T.mono,
+              fontSize: "0.85rem",
+              cursor: "pointer",
+              outline: "none",
             }}
           >
             <option value="today">Today</option>
             <option value="this_week">This Week</option>
             <option value="this_month">This Month</option>
           </select>
-          <button 
+          <button
             onClick={fetchData}
             disabled={loading}
             style={{
-              background: "transparent", border: `1px solid ${T.border}`, color: T.text, padding: "0.5rem",
-              display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", opacity: loading ? 0.5 : 1
+              background: "transparent",
+              border: `1px solid ${T.border}`,
+              color: T.text,
+              padding: "0.5rem",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              cursor: "pointer",
+              opacity: loading ? 0.5 : 1,
             }}
           >
             <RefreshCcw size={16} />
@@ -156,74 +274,278 @@ export default function SupportOverviewPage() {
       </div>
 
       {error && (
-        <div style={{ background: "rgba(255,51,85,0.1)", border: `1px solid ${T.red}`, color: T.red, padding: "1rem", marginBottom: "2rem", fontFamily: T.body, fontSize: "1rem" }}>
+        <div
+          style={{
+            background: "rgba(255,51,85,0.1)",
+            border: `1px solid ${T.red}`,
+            color: T.red,
+            padding: "1rem",
+            marginBottom: "2rem",
+            fontFamily: T.body,
+            fontSize: "1rem",
+          }}
+        >
           {error}
-          <button onClick={fetchData} style={{ marginLeft: "1rem", background: "transparent", border: `1px solid ${T.red}`, color: T.red, padding: "0.2rem 0.5rem", cursor: "pointer" }}>Retry</button>
+          <button
+            onClick={fetchData}
+            style={{
+              marginLeft: "1rem",
+              background: "transparent",
+              border: `1px solid ${T.red}`,
+              color: T.red,
+              padding: "0.2rem 0.5rem",
+              cursor: "pointer",
+            }}
+          >
+            Retry
+          </button>
         </div>
       )}
 
       {loading && !data && (
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(12, 1fr)", gap: "1.5rem" }}>
-          <div style={{ gridColumn: "span 12", display: "flex", justifyContent: "center", padding: "4rem", color: T.g, fontFamily: T.mono }}>
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(12, 1fr)",
+            gap: "1.5rem",
+          }}
+        >
+          <div
+            style={{
+              gridColumn: "span 12",
+              display: "flex",
+              justifyContent: "center",
+              padding: "4rem",
+              color: T.g,
+              fontFamily: T.mono,
+            }}
+          >
             Loading Dashboard...
           </div>
         </div>
       )}
 
       {!loading && data && (
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(12, 1fr)", gap: "1.5rem" }}>
-          
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(12, 1fr)",
+            gap: "1.5rem",
+          }}
+        >
           {/* KPI Cards */}
           <div style={{ gridColumn: "span 12" }}>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(6, 1fr)", gap: "1rem" }}>
-              <Card title="Conversations" value={data.overview.totalConversations} sub="" icon={MessageSquare} />
-              <Card title="Deflection Rate" value={`${data.overview.deflectionRate.toFixed(1)}%`} sub={`${data.overview.aiResolved} AI Resolved`} icon={CheckCircle} />
-              <Card title="Escalations" value={data.overview.escalated} sub="" icon={AlertTriangle} color={T.warn} border={`rgba(255,170,0,0.3)`} />
-              <Card title="CSAT" value={data.overview.csat ? `${Number(data.overview.csat).toFixed(1)}/5` : "N/A"} sub="" icon={Star} />
-              <Card title="Resolution Time" value={formatSeconds(data.overview.avgResolutionTime)} sub="" icon={Clock} />
-              <Card title="Cost / Conv." value={data.overview.costPerConversation !== null ? `$${data.overview.costPerConversation}` : "N/A"} sub="" icon={DollarSign} />
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(6, 1fr)",
+                gap: "1rem",
+              }}
+            >
+              <Card
+                title="Conversations"
+                value={data.overview.totalConversations}
+                sub=""
+                icon={MessageSquare}
+              />
+              <Card
+                title="Deflection Rate"
+                value={`${data.overview.deflectionRate.toFixed(1)}%`}
+                sub={`${data.overview.aiResolved} AI Resolved`}
+                icon={CheckCircle}
+              />
+              <Card
+                title="Escalations"
+                value={data.overview.escalated}
+                sub=""
+                icon={AlertTriangle}
+                color={T.warn}
+                border={`rgba(255,170,0,0.3)`}
+              />
+              <Card
+                title="CSAT"
+                value={
+                  data.overview.csat
+                    ? `${Number(data.overview.csat).toFixed(1)}/5`
+                    : "N/A"
+                }
+                sub=""
+                icon={Star}
+              />
+              <Card
+                title="Resolution Time"
+                value={formatSeconds(data.overview.avgResolutionTime)}
+                sub=""
+                icon={Clock}
+              />
+              <Card
+                title="Cost / Conv."
+                value={
+                  data.overview.costPerConversation !== null
+                    ? `$${data.overview.costPerConversation}`
+                    : "N/A"
+                }
+                sub=""
+                icon={DollarSign}
+              />
             </div>
           </div>
 
           {/* Main Content Area - Charts & Tables */}
-          <div style={{ gridColumn: "span 8", display: "flex", flexDirection: "column", gap: "1.5rem" }}>
-            
+          <div
+            style={{
+              gridColumn: "span 8",
+              display: "flex",
+              flexDirection: "column",
+              gap: "1.5rem",
+            }}
+          >
             {/* Volume Chart */}
-            <div style={{ background: T.panel, border: `1px solid ${T.border}`, padding: "1.5rem", position: "relative", height: 320 }}>
+            <div
+              style={{
+                background: T.panel,
+                border: `1px solid ${T.border}`,
+                padding: "1.5rem",
+                position: "relative",
+                height: 320,
+              }}
+            >
               <Corners />
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.5rem" }}>
-                <div style={{ fontFamily: T.mono, fontSize: "0.8rem", color: T.muted, letterSpacing: "0.1em", textTransform: "uppercase" }}>Conversation Volume</div>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  marginBottom: "1.5rem",
+                }}
+              >
+                <div
+                  style={{
+                    fontFamily: T.mono,
+                    fontSize: "0.8rem",
+                    color: T.muted,
+                    letterSpacing: "0.1em",
+                    textTransform: "uppercase",
+                  }}
+                >
+                  Conversation Volume
+                </div>
               </div>
-              
+
               <div style={{ height: "calc(100% - 3rem)" }}>
                 {data.conversationVolume.length > 0 ? (
                   <ResponsiveContainer width="100%" height="100%">
                     <BarChart data={data.conversationVolume}>
-                      <XAxis dataKey="date" stroke={T.muted} fontSize={12} fontFamily={T.mono} tickLine={false} axisLine={false} />
-                      <YAxis stroke={T.muted} fontSize={12} fontFamily={T.mono} tickLine={false} axisLine={false} />
-                      <Tooltip cursor={{fill: 'rgba(0,255,136,0.1)'}} contentStyle={{background: T.panel, border: `1px solid ${T.border}`, color: '#fff', fontFamily: T.mono}} />
+                      <XAxis
+                        dataKey="date"
+                        stroke={T.muted}
+                        fontSize={12}
+                        fontFamily={T.mono}
+                        tickLine={false}
+                        axisLine={false}
+                      />
+                      <YAxis
+                        stroke={T.muted}
+                        fontSize={12}
+                        fontFamily={T.mono}
+                        tickLine={false}
+                        axisLine={false}
+                      />
+                      <Tooltip
+                        cursor={{ fill: "rgba(0,255,136,0.1)" }}
+                        contentStyle={{
+                          background: T.panel,
+                          border: `1px solid ${T.border}`,
+                          color: "#fff",
+                          fontFamily: T.mono,
+                        }}
+                      />
                       <Bar dataKey="count" fill={T.g} radius={[2, 2, 0, 0]} />
                     </BarChart>
                   </ResponsiveContainer>
                 ) : (
-                  <div style={{ display: "flex", height: "100%", alignItems: "center", justifyContent: "center", color: T.muted, fontFamily: T.mono }}>No conversation volume data</div>
+                  <div
+                    style={{
+                      display: "flex",
+                      height: "100%",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      color: T.muted,
+                      fontFamily: T.mono,
+                    }}
+                  >
+                    No conversation volume data
+                  </div>
                 )}
               </div>
             </div>
 
             {/* Recent Conversations */}
-            <div style={{ background: T.panel, border: `1px solid ${T.border}`, padding: "1.5rem", position: "relative", flex: 1 }}>
+            <div
+              style={{
+                background: T.panel,
+                border: `1px solid ${T.border}`,
+                padding: "1.5rem",
+                position: "relative",
+                flex: 1,
+              }}
+            >
               <Corners />
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.5rem" }}>
-                <div style={{ fontFamily: T.mono, fontSize: "0.8rem", color: T.muted, letterSpacing: "0.1em", textTransform: "uppercase" }}>Recent Conversations</div>
-                <Link href="/customer-support/conversations" style={{ color: T.g, fontFamily: T.mono, fontSize: "0.8rem", textDecoration: "none", display: "flex", alignItems: "center", gap: "4px" }}>View All <ArrowRight size={14}/></Link>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  marginBottom: "1.5rem",
+                }}
+              >
+                <div
+                  style={{
+                    fontFamily: T.mono,
+                    fontSize: "0.8rem",
+                    color: T.muted,
+                    letterSpacing: "0.1em",
+                    textTransform: "uppercase",
+                  }}
+                >
+                  Recent Conversations
+                </div>
+                <Link
+                  href="/customer-support/conversations"
+                  style={{
+                    color: T.g,
+                    fontFamily: T.mono,
+                    fontSize: "0.8rem",
+                    textDecoration: "none",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "4px",
+                  }}
+                >
+                  View All <ArrowRight size={14} />
+                </Link>
               </div>
-              
+
               {data.recentConversations.length > 0 ? (
                 <div style={{ width: "100%", overflowX: "auto" }}>
-                  <table style={{ width: "100%", borderCollapse: "collapse", textAlign: "left", fontFamily: T.body }}>
+                  <table
+                    style={{
+                      width: "100%",
+                      borderCollapse: "collapse",
+                      textAlign: "left",
+                      fontFamily: T.body,
+                    }}
+                  >
                     <thead>
-                      <tr style={{ borderBottom: `1px solid ${T.border}`, color: T.muted, fontFamily: T.mono, fontSize: "0.75rem", letterSpacing: "0.05em" }}>
+                      <tr
+                        style={{
+                          borderBottom: `1px solid ${T.border}`,
+                          color: T.muted,
+                          fontFamily: T.mono,
+                          fontSize: "0.75rem",
+                          letterSpacing: "0.05em",
+                        }}
+                      >
                         <th style={{ padding: "0.75rem 0.5rem" }}>CUSTOMER</th>
                         <th style={{ padding: "0.75rem 0.5rem" }}>CHANNEL</th>
                         <th style={{ padding: "0.75rem 0.5rem" }}>STATUS</th>
@@ -233,91 +555,315 @@ export default function SupportOverviewPage() {
                     </thead>
                     <tbody>
                       {data.recentConversations.map((c: any) => (
-                        <tr key={c.id} style={{ borderBottom: `1px solid rgba(0,255,136,0.05)`, color: "#fff", fontSize: "0.95rem" }}>
-                          <td style={{ padding: "0.75rem 0.5rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "150px" }}>{c.customer}</td>
-                          <td style={{ padding: "0.75rem 0.5rem", color: T.g }}>{capitalize(c.channel)}</td>
-                          <td style={{ padding: "0.75rem 0.5rem" }}>
-                            <span style={{ 
-                              padding: "0.2rem 0.5rem", borderRadius: "2px", fontSize: "0.75rem", fontFamily: T.mono, textTransform: "uppercase",
-                              background: c.status === 'resolved' ? 'rgba(0,255,136,0.1)' : c.status === 'escalated' ? 'rgba(255,170,0,0.1)' : 'rgba(255,255,255,0.05)',
-                              color: c.status === 'resolved' ? T.g : c.status === 'escalated' ? T.warn : '#fff',
-                              border: `1px solid ${c.status === 'resolved' ? T.g : c.status === 'escalated' ? T.warn : 'rgba(255,255,255,0.1)'}`
-                            }}>{c.status}</span>
+                        <tr
+                          key={c.id}
+                          style={{
+                            borderBottom: `1px solid rgba(0,255,136,0.05)`,
+                            color: "#fff",
+                            fontSize: "0.95rem",
+                          }}
+                        >
+                          <td
+                            style={{
+                              padding: "0.75rem 0.5rem",
+                              whiteSpace: "nowrap",
+                              overflow: "hidden",
+                              textOverflow: "ellipsis",
+                              maxWidth: "150px",
+                            }}
+                          >
+                            {c.customer}
                           </td>
-                          <td style={{ padding: "0.75rem 0.5rem", color: T.muted, fontSize: "0.85rem" }}>{formatDistanceToNow(new Date(c.time), { addSuffix: true })}</td>
-                          <td style={{ padding: "0.75rem 0.5rem", color: c.agent.includes('AI') ? T.g : '#fff' }}>{c.agent}</td>
+                          <td style={{ padding: "0.75rem 0.5rem", color: T.g }}>
+                            {capitalize(c.channel)}
+                          </td>
+                          <td style={{ padding: "0.75rem 0.5rem" }}>
+                            <span
+                              style={{
+                                padding: "0.2rem 0.5rem",
+                                borderRadius: "2px",
+                                fontSize: "0.75rem",
+                                fontFamily: T.mono,
+                                textTransform: "uppercase",
+                                background:
+                                  c.status === "resolved"
+                                    ? "rgba(0,255,136,0.1)"
+                                    : c.status === "escalated"
+                                      ? "rgba(255,170,0,0.1)"
+                                      : "rgba(255,255,255,0.05)",
+                                color:
+                                  c.status === "resolved"
+                                    ? T.g
+                                    : c.status === "escalated"
+                                      ? T.warn
+                                      : "#fff",
+                                border: `1px solid ${c.status === "resolved" ? T.g : c.status === "escalated" ? T.warn : "rgba(255,255,255,0.1)"}`,
+                              }}
+                            >
+                              {c.status}
+                            </span>
+                          </td>
+                          <td
+                            style={{
+                              padding: "0.75rem 0.5rem",
+                              color: T.muted,
+                              fontSize: "0.85rem",
+                            }}
+                          >
+                            {formatDistanceToNow(new Date(c.time), {
+                              addSuffix: true,
+                            })}
+                          </td>
+                          <td
+                            style={{
+                              padding: "0.75rem 0.5rem",
+                              color: c.agent.includes("AI") ? T.g : "#fff",
+                            }}
+                          >
+                            {c.agent}
+                          </td>
                         </tr>
                       ))}
                     </tbody>
                   </table>
                 </div>
               ) : (
-                <div style={{ display: "flex", height: "100px", alignItems: "center", justifyContent: "center", color: T.muted, fontFamily: T.mono }}>No recent conversations</div>
+                <div
+                  style={{
+                    display: "flex",
+                    height: "100px",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    color: T.muted,
+                    fontFamily: T.mono,
+                  }}
+                >
+                  No recent conversations
+                </div>
               )}
             </div>
-
           </div>
 
           {/* Side Content Area */}
-          <div style={{ gridColumn: "span 4", display: "flex", flexDirection: "column", gap: "1.5rem" }}>
-            
+          <div
+            style={{
+              gridColumn: "span 4",
+              display: "flex",
+              flexDirection: "column",
+              gap: "1.5rem",
+            }}
+          >
             {/* Channel Distribution */}
-            <div style={{ background: T.panel, border: `1px solid ${T.border}`, padding: "1.5rem", position: "relative", height: 260 }}>
+            <div
+              style={{
+                background: T.panel,
+                border: `1px solid ${T.border}`,
+                padding: "1.5rem",
+                position: "relative",
+                height: 260,
+              }}
+            >
               <Corners />
-              <div style={{ fontFamily: T.mono, fontSize: "0.8rem", color: T.muted, letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: "1rem" }}>Channel Distribution</div>
-              
+              <div
+                style={{
+                  fontFamily: T.mono,
+                  fontSize: "0.8rem",
+                  color: T.muted,
+                  letterSpacing: "0.1em",
+                  textTransform: "uppercase",
+                  marginBottom: "1rem",
+                }}
+              >
+                Channel Distribution
+              </div>
+
               <div style={{ height: "calc(100% - 2rem)" }}>
                 {data.channelDistribution.length > 0 ? (
                   <ResponsiveContainer width="100%" height="100%">
                     <PieChart>
-                      <Pie data={data.channelDistribution} dataKey="value" nameKey="name" cx="50%" cy="50%" innerRadius={50} outerRadius={80} stroke="none">
-                        {data.channelDistribution.map((entry: any, index: number) => (
-                          <Cell key={`cell-${index}`} fill={index === 0 ? T.g : index === 1 ? '#00cfff' : index === 2 ? '#fff' : T.muted} />
-                        ))}
+                      <Pie
+                        data={data.channelDistribution}
+                        dataKey="value"
+                        nameKey="name"
+                        cx="50%"
+                        cy="50%"
+                        innerRadius={50}
+                        outerRadius={80}
+                        stroke="none"
+                      >
+                        {data.channelDistribution.map(
+                          (entry: any, index: number) => (
+                            <Cell
+                              key={`cell-${index}`}
+                              fill={
+                                index === 0
+                                  ? T.g
+                                  : index === 1
+                                    ? "#00cfff"
+                                    : index === 2
+                                      ? "#fff"
+                                      : T.muted
+                              }
+                            />
+                          ),
+                        )}
                       </Pie>
-                      <Tooltip contentStyle={{background: T.panel, border: `1px solid ${T.border}`, color: '#fff', fontFamily: T.mono}} />
+                      <Tooltip
+                        contentStyle={{
+                          background: T.panel,
+                          border: `1px solid ${T.border}`,
+                          color: "#fff",
+                          fontFamily: T.mono,
+                        }}
+                      />
                     </PieChart>
                   </ResponsiveContainer>
                 ) : (
-                  <div style={{ display: "flex", height: "100%", alignItems: "center", justifyContent: "center", color: T.muted, fontFamily: T.mono }}>No channel data available</div>
+                  <div
+                    style={{
+                      display: "flex",
+                      height: "100%",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      color: T.muted,
+                      fontFamily: T.mono,
+                    }}
+                  >
+                    No channel data available
+                  </div>
                 )}
               </div>
             </div>
 
             {/* Top Questions */}
-            <div style={{ background: T.panel, border: `1px solid ${T.border}`, padding: "1.5rem", position: "relative", flex: 1 }}>
+            <div
+              style={{
+                background: T.panel,
+                border: `1px solid ${T.border}`,
+                padding: "1.5rem",
+                position: "relative",
+                flex: 1,
+              }}
+            >
               <Corners />
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.5rem" }}>
-                <div style={{ fontFamily: T.mono, fontSize: "0.8rem", color: T.muted, letterSpacing: "0.1em", textTransform: "uppercase", display: "flex", alignItems: "center", gap: "0.5rem" }}>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  marginBottom: "1.5rem",
+                }}
+              >
+                <div
+                  style={{
+                    fontFamily: T.mono,
+                    fontSize: "0.8rem",
+                    color: T.muted,
+                    letterSpacing: "0.1em",
+                    textTransform: "uppercase",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "0.5rem",
+                  }}
+                >
                   <MessagesSquare size={14} /> Knowledge Gaps
                 </div>
-                <Link href="/customer-support/knowledge-gaps" style={{ color: T.g, fontFamily: T.mono, fontSize: "0.8rem", textDecoration: "none", display: "flex", alignItems: "center", gap: "4px" }}>View All <ArrowRight size={14}/></Link>
+                <Link
+                  href="/customer-support/knowledge-gaps"
+                  style={{
+                    color: T.g,
+                    fontFamily: T.mono,
+                    fontSize: "0.8rem",
+                    textDecoration: "none",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "4px",
+                  }}
+                >
+                  View All <ArrowRight size={14} />
+                </Link>
               </div>
-              
-              <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "1rem",
+                }}
+              >
                 {knowledgeGaps.length > 0 ? (
                   knowledgeGaps.map((item, i) => (
-                    <div key={i} style={{ borderBottom: `1px solid rgba(255,255,255,0.05)`, paddingBottom: "1rem" }}>
-                      <div style={{ fontFamily: T.body, fontSize: "0.95rem", color: "#fff", marginBottom: "0.5rem" }}>"{item.question}"</div>
-                      <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-                        <div style={{ flex: 1, height: 4, background: "rgba(255,255,255,0.05)", borderRadius: 2 }}>
-                          <div style={{ width: `${Math.min(100, (Number(item.occurrence_count)/10)*100)}%`, height: "100%", background: T.warn }} />
+                    <div
+                      key={i}
+                      style={{
+                        borderBottom: `1px solid rgba(255,255,255,0.05)`,
+                        paddingBottom: "1rem",
+                      }}
+                    >
+                      <div
+                        style={{
+                          fontFamily: T.body,
+                          fontSize: "0.95rem",
+                          color: "#fff",
+                          marginBottom: "0.5rem",
+                        }}
+                      >
+                        "{item.question}"
+                      </div>
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "0.5rem",
+                        }}
+                      >
+                        <div
+                          style={{
+                            flex: 1,
+                            height: 4,
+                            background: "rgba(255,255,255,0.05)",
+                            borderRadius: 2,
+                          }}
+                        >
+                          <div
+                            style={{
+                              width: `${Math.min(100, (Number(item.occurrence_count) / 10) * 100)}%`,
+                              height: "100%",
+                              background: T.warn,
+                            }}
+                          />
                         </div>
-                        <span style={{ fontFamily: T.mono, fontSize: "0.7rem", color: T.muted }}>{item.occurrence_count} asks</span>
+                        <span
+                          style={{
+                            fontFamily: T.mono,
+                            fontSize: "0.7rem",
+                            color: T.muted,
+                          }}
+                        >
+                          {item.occurrence_count} asks
+                        </span>
                       </div>
                     </div>
                   ))
                 ) : (
-                  <div style={{ display: "flex", padding: "2rem", alignItems: "center", justifyContent: "center", color: T.muted, fontFamily: T.mono }}>No knowledge gaps found</div>
+                  <div
+                    style={{
+                      display: "flex",
+                      padding: "2rem",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      color: T.muted,
+                      fontFamily: T.mono,
+                    }}
+                  >
+                    No knowledge gaps found
+                  </div>
                 )}
               </div>
             </div>
-
           </div>
-
         </div>
       )}
-
     </div>
   );
 }

@@ -1,9 +1,12 @@
-const fs = require('fs');
-const p = 'apps/web/src/app/(dashboard)/customer-support/widget/page.tsx';
-let c = fs.readFileSync(p, 'utf8');
+const fs = require("fs");
+const p = "apps/web/src/app/(dashboard)/customer-support/widget/page.tsx";
+let c = fs.readFileSync(p, "utf8");
 
 const importAdd = `import { API_BASE } from "@/lib/api";`;
-c = c.replace('import { useState, useEffect } from "react";', importAdd + '\nimport { useState, useEffect } from "react";');
+c = c.replace(
+  'import { useState, useEffect } from "react";',
+  importAdd + '\nimport { useState, useEffect } from "react";',
+);
 
 const states = `
   const [isSaving, setIsSaving] = useState(false);
@@ -54,31 +57,34 @@ const states = `
   };
 `;
 
-c = c.replace('export default function WidgetConfigPage() {', 'export default function WidgetConfigPage() {' + states);
+c = c.replace(
+  "export default function WidgetConfigPage() {",
+  "export default function WidgetConfigPage() {" + states,
+);
 
 // Update button
 c = c.replace(
-  '<Save size={16} /> Save Changes',
-  '<Save size={16} /> {isSaving ? "Saving..." : "Save Changes"} {saveStatus === "Saved!" && "✓"}'
+  "<Save size={16} /> Save Changes",
+  '<Save size={16} /> {isSaving ? "Saving..." : "Save Changes"} {saveStatus === "Saved!" && "✓"}',
 );
 c = c.replace(
-  'button style={{',
-  'button onClick={handleSave} disabled={isSaving} style={{'
+  "button style={{",
+  "button onClick={handleSave} disabled={isSaving} style={{",
 );
 
 fs.writeFileSync(p, c);
 
-const apiRoute = 'apps/api/routes/agent.ts';
-let apiCode = fs.readFileSync(apiRoute, 'utf8');
+const apiRoute = "apps/api/routes/agent.ts";
+let apiCode = fs.readFileSync(apiRoute, "utf8");
 
 // The widget config endpoints need to read 'x-org-id' if req.user is undefined
 apiCode = apiCode.replace(
-  'const { org_id } = (req as any).user;',
-  'const org_id = (req as any).user?.org_id || req.headers["x-org-id"];'
+  "const { org_id } = (req as any).user;",
+  'const org_id = (req as any).user?.org_id || req.headers["x-org-id"];',
 );
 apiCode = apiCode.replace(
-  'const { org_id } = (req as any).user;',
-  'const org_id = (req as any).user?.org_id || req.headers["x-org-id"];'
+  "const { org_id } = (req as any).user;",
+  'const org_id = (req as any).user?.org_id || req.headers["x-org-id"];',
 );
 
 fs.writeFileSync(apiRoute, apiCode);

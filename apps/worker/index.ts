@@ -15,25 +15,33 @@ import { ingestionWorker } from "./src/jobs/ingestion";
 const originalConsoleError = console.error;
 console.error = (...args: any[]) => {
   const msg = String(args[0]);
-  if (msg.includes('ECONNREFUSED') || msg.includes('[ioredis] Unhandled error event')) return;
+  if (
+    msg.includes("ECONNREFUSED") ||
+    msg.includes("[ioredis] Unhandled error event")
+  )
+    return;
   originalConsoleError(...args);
 };
-process.on('unhandledRejection', (reason: any) => {
-  if (reason?.code === 'ECONNREFUSED' || String(reason).includes('ECONNREFUSED')) return;
-  if (reason?.errors?.some?.((e: any) => e.code === 'ECONNREFUSED')) return;
-  console.error('Unhandled Rejection:', reason);
+process.on("unhandledRejection", (reason: any) => {
+  if (
+    reason?.code === "ECONNREFUSED" ||
+    String(reason).includes("ECONNREFUSED")
+  )
+    return;
+  if (reason?.errors?.some?.((e: any) => e.code === "ECONNREFUSED")) return;
+  console.error("Unhandled Rejection:", reason);
 });
-process.on('uncaughtException', (err: any) => {
-  if (err?.code === 'ECONNREFUSED' || String(err).includes('ECONNREFUSED')) return;
-  if (err?.errors?.some?.((e: any) => e.code === 'ECONNREFUSED')) return;
-  console.error('Uncaught Exception:', err);
+process.on("uncaughtException", (err: any) => {
+  if (err?.code === "ECONNREFUSED" || String(err).includes("ECONNREFUSED"))
+    return;
+  if (err?.errors?.some?.((e: any) => e.code === "ECONNREFUSED")) return;
+  console.error("Uncaught Exception:", err);
 });
 
 async function start() {
   console.log("Starting AI Workforce worker...");
 
-  const redisUrl =
-    process.env.REDIS_URL || "redis://127.0.0.1:6379";
+  const redisUrl = process.env.REDIS_URL || "redis://127.0.0.1:6379";
 
   const connection = new IORedis(redisUrl, {
     maxRetriesPerRequest: null,
@@ -45,7 +53,10 @@ async function start() {
     await connection.connect();
     console.log("Worker successfully connected to Redis.");
   } catch (err) {
-    console.warn("Could not connect to Redis. Workers will not be started to prevent error spam.", err);
+    console.warn(
+      "Could not connect to Redis. Workers will not be started to prevent error spam.",
+      err,
+    );
     return;
   }
 
@@ -54,10 +65,7 @@ async function start() {
   });
 
   connection.on("error", (err) => {
-    console.error(
-      "Redis connection error:",
-      err.message
-    );
+    console.error("Redis connection error:", err.message);
   });
 
   connection.on("close", () => {
@@ -69,15 +77,12 @@ async function start() {
     dataRetentionProcessor,
     {
       connection,
-    }
+    },
   );
 
-  const dataRetentionQueue = new Queue(
-    "data-retention",
-    {
-      connection,
-    }
-  );
+  const dataRetentionQueue = new Queue("data-retention", {
+    connection,
+  });
 
   await dataRetentionQueue.add(
     "daily-retention-run",
@@ -86,7 +91,7 @@ async function start() {
       repeat: {
         pattern: "0 0 * * *",
       },
-    }
+    },
   );
 
   const workers = [
@@ -103,9 +108,7 @@ async function start() {
   const webhooksWorker = new Worker(
     "webhooks",
     async (job) => {
-      console.log(
-        `Processing webhooks job ${job.id}`
-      );
+      console.log(`Processing webhooks job ${job.id}`);
 
       return {
         status: "done",
@@ -115,13 +118,10 @@ async function start() {
     {
       connection,
       concurrency: 20,
-    }
+    },
   );
 
-  const allWorkers = [
-    ...workers,
-    webhooksWorker,
-  ];
+  const allWorkers = [...workers, webhooksWorker];
 
   const workerMap: Record<string, any> = {
     researchWorker,
@@ -132,7 +132,7 @@ async function start() {
     replyMonitorWorker,
     dataRetentionWorker,
     webhooksWorker,
-    ingestionWorker
+    ingestionWorker,
   };
 
   const undefinedWorkers = Object.entries(workerMap)
@@ -150,49 +150,32 @@ async function start() {
     if (!worker) continue;
 
     worker.on("completed", (job: any) => {
-      console.log(
-        `Job completed: ${worker.name} - ${job.id}`
-      );
+      console.log(`Job completed: ${worker.name} - ${job.id}`);
     });
 
     worker.on("failed", (job: any, err: any) => {
       console.error(
-        `Job failed: ${worker.name} - ${
-          job?.id ?? "unknown"
-        }`,
-        err
+        `Job failed: ${worker.name} - ${job?.id ?? "unknown"}`,
+        err,
       );
     });
 
     worker.on("error", (err: any) => {
-      console.error(
-        `Worker error: ${worker.name}`,
-        err
-      );
+      console.error(`Worker error: ${worker.name}`, err);
     });
   }
 
-  console.log(
-    "Workers are running and listening to queues."
-  );
+  console.log("Workers are running and listening to queues.");
 
   const shutdown = async (signal: string) => {
-    console.log(
-      `\nReceived ${signal}. Shutting down workers...`
-    );
+    console.log(`\nReceived ${signal}. Shutting down workers...`);
 
-    await Promise.all(
-      allWorkers.map((worker) =>
-        worker.close()
-      )
-    );
+    await Promise.all(allWorkers.map((worker) => worker.close()));
 
     await dataRetentionQueue.close();
     await connection.quit();
 
-    console.log(
-      "Workers shut down successfully."
-    );
+    console.log("Workers shut down successfully.");
 
     process.exit(0);
   };
@@ -207,10 +190,7 @@ async function start() {
 }
 
 start().catch((error) => {
-  console.error(
-    "Failed to start worker:",
-    error
-  );
+  console.error("Failed to start worker:", error);
 
   process.exit(1);
 });

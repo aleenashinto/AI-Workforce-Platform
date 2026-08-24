@@ -1,16 +1,19 @@
-const API_URL = (process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001").replace(/\/+$/, "");
+const API_URL = (
+  process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001"
+).replace(/\/+$/, "");
 export const API_BASE = API_URL;
 export async function fetchApi(endpoint: string, options: RequestInit = {}) {
   const url = endpoint.startsWith("http") ? endpoint : `${API_BASE}${endpoint}`;
-  
-  // We assume Dev Mode auth mock handles the org_id, so we don't strictly need a Bearer token here, 
+
+  // We assume Dev Mode auth mock handles the org_id, so we don't strictly need a Bearer token here,
   // but if we were using Clerk, we'd inject it here.
   const headers = {
     "Content-Type": "application/json",
     ...options.headers,
   };
 
-  const response = await fetch(url, { credentials: "include",
+  const response = await fetch(url, {
+    credentials: "include",
     ...options,
     headers,
   });
@@ -19,7 +22,8 @@ export async function fetchApi(endpoint: string, options: RequestInit = {}) {
     let errorDetail = "Unknown Error";
     try {
       const errBody = await response.json();
-      errorDetail = errBody.error?.message || errBody.message || JSON.stringify(errBody);
+      errorDetail =
+        errBody.error?.message || errBody.message || JSON.stringify(errBody);
     } catch {
       errorDetail = await response.text();
     }
@@ -28,7 +32,7 @@ export async function fetchApi(endpoint: string, options: RequestInit = {}) {
 
   // Handle empty responses
   if (response.status === 204) return null;
-  
+
   try {
     return await response.json();
   } catch {

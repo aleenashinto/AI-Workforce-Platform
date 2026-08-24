@@ -1,3 +1,3 @@
-export * from './src/authz/index';
+export * from "./src/authz/index";
 
-export * from './src/scoring/lead-scoring';
+export * from "./src/scoring/lead-scoring";
