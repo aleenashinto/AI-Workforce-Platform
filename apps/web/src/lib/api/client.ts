@@ -8,12 +8,25 @@ if (!BASE_URL) {
   );
 }
 
+/** Read a cookie by name (client-side only) */
+function getCookie(name: string): string | null {
+  if (typeof document === "undefined") return null;
+  const match = document.cookie.match(new RegExp(`(?:^|; )${name}=([^;]*)`));
+  return match ? decodeURIComponent(match[1]) : null;
+}
+
 async function request(url: string, options: RequestInit = {}) {
+  const token = getCookie("auth_token");
+  const authHeader: Record<string, string> = token
+    ? { Authorization: `Bearer ${token}` }
+    : {};
+
   const res = await fetch(`${BASE_URL}${url}`, {
     credentials: "include",
     ...options,
     headers: {
       "Content-Type": "application/json",
+      ...authHeader,
       ...options.headers,
     },
   });
