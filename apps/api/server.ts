@@ -140,6 +140,7 @@ fastify.register(salesAnalyticsRoutes, { prefix: "/sales/analytics" });
 fastify.register(agentRoutes, { prefix: "/agent" });
 fastify.register(knowledgeRoutes, { prefix: "/knowledge" });
 fastify.register(sequencesRoutes, { prefix: "/sequences" });
+fastify.register(draftsRoutes, { prefix: "/drafts" });
 fastify.register(draftsRoutes, { prefix: "/sales/drafts" });
 fastify.register(mailboxesRoutes, { prefix: "/mailboxes" });
 fastify.register(repliesRoutes, { prefix: "/replies" });
