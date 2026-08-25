@@ -89,7 +89,7 @@ const navigation = [
         path: "/sales-assistant/overview",
         icon: LayoutDashboard,
       },
-      { label: "ICP", path: "/sales-assistant/icp", icon: TargetIcon },
+      { label: "ICP", path: "/sales-assistant/icps", icon: TargetIcon },
       {
         label: "Lead Discovery",
         path: "/sales-assistant/lead-discovery",
