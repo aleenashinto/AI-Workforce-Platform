@@ -28,74 +28,7 @@ try {
 }
 
 export default async function salesRoutes(fastify: FastifyInstance) {
-  // -- ICP Endpoints --
-
-  fastify.get("/icps", async (request, reply) => {
-    const org_id =
-      (request.user as any)?.org_id ||
-      (request.headers["x-org-id"] as string) ||
-      "00000000-0000-0000-0000-000000000001";
-    try {
-      const allIcps = await db
-        .select()
-        .from(icps)
-        .where(eq(icps.org_id, org_id))
-        .orderBy(desc(icps.created_at));
-      return { success: true, data: allIcps };
-    } catch (error: any) {
-      request.log.error(error);
-      return reply.code(500).send({ error: "Failed to fetch ICPs" });
-    }
-  });
-
-  fastify.post(
-    "/icps",
-    { preHandler: requireAction("MANAGE_CAMPAIGNS") },
-    async (request, reply) => {
-      const org_id =
-        (request.user as any)?.org_id ||
-        (request.headers["x-org-id"] as string) ||
-        "00000000-0000-0000-0000-000000000001";
-      const { name, criteria } = request.body as any;
-      try {
-        const [newIcp] = await db
-          .insert(icps)
-          .values({
-            id: uuidv4(),
-            org_id,
-            name,
-            criteria,
-          })
-          .returning();
-        return { success: true, data: newIcp };
-      } catch (error: any) {
-        request.log.error(error);
-        return reply.code(500).send({ error: "Failed to create ICP" });
-      }
-    },
-  );
-
-  fastify.post(
-    "/icps/generate",
-    { preHandler: requireAction("MANAGE_CAMPAIGNS") },
-    async (request, reply) => {
-      const { website, customer_domains } = request.body as any;
-      // Mock AI ICP generation
-      return {
-        success: true,
-        data: {
-          industries: ["SaaS", "Fintech"],
-          companySize: [50, 500],
-          geography: ["North America", "Europe"],
-          persona: {
-            titles: ["CTO", "VP Engineering", "Head of Data"],
-            seniority: "Director+",
-          },
-          signals: { hiring: true, funding: true, leadership_changes: false },
-        },
-      };
-    },
-  );
+  // ICP endpoints removed in favor of routes/icps.ts
 
   // -- Leads Endpoints --
 
