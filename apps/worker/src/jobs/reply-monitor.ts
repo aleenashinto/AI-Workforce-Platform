@@ -52,6 +52,16 @@ export const replyMonitorWorker = new Worker(
 
     console.log(`Reply classified as "${category}" for lead ${leadId}.`);
 
+    // Reply Detection SLA: Stop any active sequence enrollments for this lead immediately!
+    const { sequence_enrollments } = require("@ai-workforce/db/schema");
+    const { and } = require("drizzle-orm");
+    await db
+      .update(sequence_enrollments)
+      .set({ status: "replied" })
+      .where(and(eq(sequence_enrollments.lead_id, leadId), eq(sequence_enrollments.status, "active")));
+
+    console.log(`[Reply SLA] Active sequences halted for lead ${leadId} within SLA window.`);
+
     if (["interested", "unsubscribe", "bounce"].includes(category)) {
       await db
         .update(leads)

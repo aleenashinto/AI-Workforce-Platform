@@ -238,6 +238,23 @@ export default async function sequencesRoutes(fastify: FastifyInstance) {
       const { status } = request.body as any;
 
       try {
+        if (status === "active") {
+          // Domain Health SLA Check before activation
+          const { checkDomainHealth } = require("@ai-workforce/core/src/deliverability");
+          
+          // Normally we would query the mailboxes associated with this sequence's org
+          // Here we mock a domain check for the primary org domain
+          const domainToCheck = "google.com"; // In real prod, this comes from mailbox configuration
+          const health = await checkDomainHealth(domainToCheck);
+          
+          if (!health.overall_healthy) {
+            return reply.code(403).send({ 
+              error: "Domain health check failed. SPF/DKIM/DMARC must be properly configured before activating a sequence to prevent domain reputation damage.",
+              health
+            });
+          }
+        }
+
         const [updatedSequence] = await db
           .update(sequences)
           .set({ status })

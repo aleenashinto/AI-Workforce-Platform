@@ -31,6 +31,7 @@ export default function CampaignsPage() {
   const [loading, setLoading] = useState(true);
   const [showNewForm, setShowNewForm] = useState(false);
   const [newCampaignName, setNewCampaignName] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
 
   const fetchCampaigns = async () => {
     try {
@@ -138,6 +139,8 @@ export default function CampaignsPage() {
         <div className="relative w-72">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
           <Input
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
             placeholder="Search campaigns..."
             className="pl-9 bg-[#2A2A3C] border-[#3F3F5A] text-white"
           />
@@ -189,7 +192,9 @@ export default function CampaignsPage() {
         </div>
       ) : (
         <div className="grid gap-4">
-          {campaigns.map((campaign) => (
+          {campaigns
+            .filter(c => c.name.toLowerCase().includes(searchTerm.toLowerCase()))
+            .map((campaign) => (
             <Card
               key={campaign.id}
               className="bg-[#1E1E2E] border-[#3F3F5A] text-white hover:bg-[#2A2A3C]/50 transition-colors"

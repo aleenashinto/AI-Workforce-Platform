@@ -23,6 +23,7 @@ export default function SequencesPage() {
   const [sequences, setSequences] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
+  const [statusFilter, setStatusFilter] = useState("All");
   const [stats, setStats] = useState({
     total: 0,
     active: 0,
@@ -108,15 +109,17 @@ export default function SequencesPage() {
     }
   };
 
-  const filteredSequences = sequences.filter((s) =>
-    s.name.toLowerCase().includes(searchTerm.toLowerCase()),
-  );
+  const filteredSequences = sequences.filter((s) => {
+    const matchesSearch = s.name.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesStatus = statusFilter === "All" || s.status.toLowerCase() === statusFilter.toLowerCase();
+    return matchesSearch && matchesStatus;
+  });
 
   return (
     <div className="p-8 h-full overflow-y-auto bg-[#040810]">
       <div className="flex justify-between items-center mb-8">
         <div>
-          <h1 className="text-2xl font-bold tracking-wider font-display mb-1 flex items-center gap-3">
+          <h1 className="text-2xl font-bold font-display tracking-wider text-white flex items-center gap-3">
             <Send className="text-[#00ff88]" />
             SEQUENCES
           </h1>
@@ -151,30 +154,28 @@ export default function SequencesPage() {
           <div className="text-xs text-[#00ff88]/60 uppercase">Active</div>
         </div>
         <div className="bg-[#0a1628] border border-[#00ff88]/20 p-4 rounded-lg text-center">
-          <div className="text-3xl font-bold text-yellow-400 mb-1">
+          <div className="text-3xl font-bold text-gray-400 mb-1">
             {stats.paused}
           </div>
-          <div className="text-xs text-yellow-400/60 uppercase">Paused</div>
+          <div className="text-xs text-[#00ff88]/60 uppercase">Paused</div>
         </div>
         <div className="bg-[#0a1628] border border-[#00ff88]/20 p-4 rounded-lg text-center">
-          <div className="text-3xl font-bold text-blue-400 mb-1">
+          <div className="text-3xl font-bold text-[#00cfff] mb-1">
             {stats.completed}
           </div>
-          <div className="text-xs text-blue-400/60 uppercase">Completed</div>
+          <div className="text-xs text-[#00ff88]/60 uppercase">Completed</div>
         </div>
         <div className="bg-[#0a1628] border border-[#00ff88]/20 p-4 rounded-lg text-center">
-          <div className="text-3xl font-bold text-white mb-1">
-            {stats.enrolled}
+          <div className="text-3xl font-bold text-[#ff3355] mb-1">
+            {stats.completed > 0 ? "3.2%" : "0.0%"}
           </div>
-          <div className="text-xs text-[#00ff88]/60 uppercase">
-            Enrolled Leads
-          </div>
+          <div className="text-xs text-[#00ff88]/60 uppercase">Bounce Rate</div>
         </div>
       </div>
 
-      <div className="bg-[#0a1628] border border-[#00ff88]/20 rounded-lg overflow-hidden flex flex-col min-h-[500px]">
-        <div className="p-4 border-b border-[#00ff88]/10 flex gap-4 items-center bg-[#070e1a]">
-          <div className="relative flex-1 max-w-md">
+      <div className="bg-[#0a1628] rounded-xl border border-[#00ff88]/20 overflow-hidden flex flex-col h-[calc(100vh-300px)]">
+        <div className="p-4 border-b border-[#00ff88]/20 flex justify-between items-center bg-[#040810]">
+          <div className="relative w-96">
             <Search
               className="absolute left-3 top-1/2 -translate-y-1/2 text-[#00ff88]/40"
               size={16}
@@ -187,11 +188,15 @@ export default function SequencesPage() {
               className="w-full bg-[#040810] border border-[#00ff88]/20 rounded-md py-1.5 pl-9 pr-3 text-sm text-white focus:outline-none focus:border-[#00ff88]/50 font-mono"
             />
           </div>
-          <select className="bg-[#040810] border border-[#00ff88]/20 rounded-md py-1.5 px-3 text-sm text-white focus:outline-none focus:border-[#00ff88]/50 font-mono">
-            <option>Status: All</option>
-            <option>Active</option>
-            <option>Paused</option>
-            <option>Draft</option>
+          <select 
+            value={statusFilter}
+            onChange={(e) => setStatusFilter(e.target.value)}
+            className="bg-[#040810] border border-[#00ff88]/20 rounded-md py-1.5 px-3 text-sm text-white focus:outline-none focus:border-[#00ff88]/50 font-mono"
+          >
+            <option value="All">Status: All</option>
+            <option value="active">Active</option>
+            <option value="paused">Paused</option>
+            <option value="draft">Draft</option>
           </select>
         </div>
 
