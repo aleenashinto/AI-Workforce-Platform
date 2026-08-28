@@ -115,7 +115,7 @@ const navigation = [
     key: "research",
     items: [
       { label: "Research Workspace", path: "/research", icon: Search },
-      { label: "Research History", path: "/research/history", icon: FileText },
+      { label: "Research History", path: "/research", icon: FileText },
     ],
   },
   {

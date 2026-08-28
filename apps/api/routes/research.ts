@@ -39,6 +39,10 @@ export default async function researchRoutes(fastify: FastifyInstance) {
 
   fastify.get("/:id", async (request, reply) => {
     const { id } = request.params as { id: string };
+    const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+    if (!uuidRegex.test(id)) {
+      return reply.status(400).send({ error: "Invalid ID format" });
+    }
     const records = await db
       .select()
       .from(research_projects)
@@ -67,6 +71,10 @@ export default async function researchRoutes(fastify: FastifyInstance) {
 
   fastify.post("/:id/execute", async (request, reply) => {
     const { id } = request.params as { id: string };
+    const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+    if (!uuidRegex.test(id)) {
+      return reply.status(400).send({ error: "Invalid ID format" });
+    }
 
     // Set to searching
     await db
@@ -174,6 +182,10 @@ export default async function researchRoutes(fastify: FastifyInstance) {
 
   fastify.delete("/:id", async (request, reply) => {
     const { id } = request.params as { id: string };
+    const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+    if (!uuidRegex.test(id)) {
+      return reply.status(400).send({ error: "Invalid ID format" });
+    }
     await db.delete(research_projects).where(eq(research_projects.id, id));
     return { success: true };
   });
