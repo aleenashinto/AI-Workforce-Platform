@@ -37,6 +37,11 @@ export default function ResearchWorkspace() {
   const [activeTab, setActiveTab] = useState("overview");
 
   useEffect(() => {
+    if (id === "history") {
+      router.replace("/research");
+      return;
+    }
+
     // Poll for status if not completed
     const fetchProject = async () => {
       try {
@@ -53,7 +58,7 @@ export default function ResearchWorkspace() {
       }
     };
     fetchProject();
-  }, [id]);
+  }, [id, router]);
 
   if (!project) {
     return (
