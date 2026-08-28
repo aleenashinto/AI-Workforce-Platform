@@ -24,6 +24,7 @@ import {
   FileText,
 } from "lucide-react";
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import {
   getMockSalesOverview,
   SalesOverviewData,
@@ -168,16 +169,21 @@ const Card = ({
 };
 
 export default function SalesOverviewPage() {
+  const router = useRouter();
   const [data, setData] = useState<SalesOverviewData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [dateRange, setDateRange] = useState("This Month");
   const [chartFilter, setChartFilter] = useState("Revenue");
+  const [searchTerm, setSearchTerm] = useState("");
+  const [statusFilter, setStatusFilter] = useState("all");
 
   const loadData = async () => {
     setLoading(true);
     setError(false);
     try {
+      // Simulate real API latency of 400ms for user interface feedback
+      await new Promise((resolve) => setTimeout(resolve, 400));
       const result = await getMockSalesOverview(dateRange);
       setData(result);
     } catch (e) {
@@ -185,6 +191,17 @@ export default function SalesOverviewPage() {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleDownload = () => {
+    if (!data) return;
+    const jsonString = `data:text/json;charset=utf-8,${encodeURIComponent(JSON.stringify(data, null, 2))}`;
+    const downloadAnchor = document.createElement("a");
+    downloadAnchor.setAttribute("href", jsonString);
+    downloadAnchor.setAttribute("download", `sales_overview_${dateRange.toLowerCase().replace(/\s+/g, "_")}.json`);
+    document.body.appendChild(downloadAnchor);
+    downloadAnchor.click();
+    downloadAnchor.remove();
   };
 
   useEffect(() => {
@@ -241,14 +258,21 @@ export default function SalesOverviewPage() {
           >
             <RefreshCw size={16} />
           </button>
-          <button className="p-2 border border-[rgba(0,207,255,0.3)] text-[#00cfff] hover:bg-[rgba(0,207,255,0.1)] transition-colors">
+          <button
+            onClick={handleDownload}
+            className="p-2 border border-[rgba(0,207,255,0.3)] text-[#00cfff] hover:bg-[rgba(0,207,255,0.1)] transition-colors"
+          >
             <Download size={16} />
           </button>
 
-          <button className="flex items-center gap-2 bg-transparent border border-[#00ff88] text-[#00ff88] font-mono text-xs px-4 py-2 uppercase font-bold hover:bg-[rgba(0,255,136,0.1)] transition-colors">
+          <button
+            onClick={() => router.push("/sales-assistant/leads")}
+            className="flex items-center gap-2 bg-transparent border border-[#00ff88] text-[#00ff88] font-mono text-xs px-4 py-2 uppercase font-bold hover:bg-[rgba(0,255,136,0.1)] transition-colors"
+          >
             <Plus size={14} /> Add Lead
           </button>
           <button
+            onClick={() => router.push("/sales-assistant/leads")}
             className="flex items-center gap-2 bg-[#00cfff] text-[#040810] border-none font-mono text-xs px-4 py-2 uppercase font-bold"
             style={{
               clipPath:
@@ -632,13 +656,36 @@ export default function SalesOverviewPage() {
                   />
                   <input
                     type="text"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
                     placeholder="Search leads..."
                     className="bg-[rgba(0,207,255,0.05)] border border-[rgba(0,207,255,0.2)] text-[#c8f2ff] font-mono text-xs pl-8 pr-3 py-1.5 outline-none focus:border-[#00cfff] w-48"
                   />
                 </div>
-                <button className="border border-[rgba(0,207,255,0.2)] text-[#00cfff] px-3 py-1.5 flex items-center gap-2 font-mono text-xs hover:bg-[rgba(0,207,255,0.1)]">
-                  <Filter size={14} /> Filter
-                </button>
+                <div className="relative">
+                  <Filter
+                    size={14}
+                    color={T.g2}
+                    className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none"
+                  />
+                  <select
+                    value={statusFilter}
+                    onChange={(e) => setStatusFilter(e.target.value)}
+                    className="appearance-none bg-[rgba(0,207,255,0.05)] border border-[rgba(0,207,255,0.2)] text-[#00cfff] font-mono text-xs pl-8 pr-8 py-1.5 outline-none cursor-pointer hover:border-[#00cfff] transition-colors"
+                  >
+                    <option value="all">All Stages</option>
+                    <option value="Lead Discovered">Discovered</option>
+                    <option value="Qualified">Qualified</option>
+                    <option value="Sequence Active">Active</option>
+                    <option value="Demo Scheduled">Scheduled</option>
+                    <option value="Closed Won">Closed Won</option>
+                  </select>
+                  <ChevronDown
+                    size={12}
+                    color={T.g2}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none"
+                  />
+                </div>
               </div>
             </div>
 
@@ -669,7 +716,26 @@ export default function SalesOverviewPage() {
                 </tr>
               </thead>
               <tbody>
-                {data.recentLeads.map((lead) => (
+                {(() => {
+                  const filteredLeads = (data?.recentLeads || []).filter((lead) => {
+                    const matchesSearch =
+                      lead.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                      lead.company.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                      lead.owner.toLowerCase().includes(searchTerm.toLowerCase());
+                    const matchesStatus =
+                      statusFilter === "all" || lead.stage === statusFilter;
+                    return matchesSearch && matchesStatus;
+                  });
+                  if (filteredLeads.length === 0) {
+                    return (
+                      <tr>
+                        <td colSpan={7} className="py-8 text-center font-mono text-xs text-[rgba(0,207,255,0.5)]">
+                          NO_LEADS_MATCH_FILTER
+                        </td>
+                      </tr>
+                    );
+                  }
+                  return filteredLeads.map((lead) => (
                   <tr
                     key={lead.id}
                     className="border-b border-[rgba(0,207,255,0.1)] hover:bg-[rgba(0,207,255,0.02)] transition-colors"
@@ -705,7 +771,8 @@ export default function SalesOverviewPage() {
                       </button>
                     </td>
                   </tr>
-                ))}
+                ));
+                })()}
               </tbody>
             </table>
           </div>
