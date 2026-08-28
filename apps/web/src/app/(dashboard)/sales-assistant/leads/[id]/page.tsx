@@ -15,6 +15,7 @@ import Link from "next/link";
 import React from "react";
 import { useState, useEffect } from "react";
 import { fetchApi } from "@/lib/api";
+import { useParams } from "next/navigation";
 
 const T = {
   g: "#00ff88",
@@ -92,17 +93,16 @@ const InfoItem = ({
   </div>
 );
 
-export default function LeadDetailsPage({
-  params,
-}: {
-  params: { id: string };
-}) {
+export default function LeadDetailsPage() {
+  const params = useParams();
+  const id = params?.id;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [lead, setLead] = useState<any | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchApi(`/leads/${params.id}`)
+    if (!id) return;
+    fetchApi(`/v1/crm/sales/leads/${id}`)
       .then((data) => {
         setLead(data?.data);
         setLoading(false);
@@ -111,7 +111,7 @@ export default function LeadDetailsPage({
         console.error("Failed to fetch lead", err);
         setLoading(false);
       });
-  }, [params.id]);
+  }, [id]);
 
   if (loading) {
     return (
