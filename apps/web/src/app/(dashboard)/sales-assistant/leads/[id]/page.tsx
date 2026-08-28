@@ -116,7 +116,7 @@ export default function LeadDetailsPage() {
             linkedin_url: "linkedin.com/in/johnsmith",
             status: "Qualified",
             score: 92,
-            score_breakdown: { fit: 90, intent: 95, activity: 85 },
+            score_breakdown: { fit: 36, intent: 38, activity: 18 },
             metadata: { title: "VP of Engineering", industry: "SaaS" },
             research_summary: "John recently posted about looking for AI-powered workforce solutions. Strong buying signals detected.",
             signals: [{ text: "Recent Funding Round ($50M Series B)" }, { text: "Hiring for 10+ Engineering roles" }]
@@ -135,7 +135,7 @@ export default function LeadDetailsPage() {
           linkedin_url: "linkedin.com/in/johnsmith",
           status: "Qualified",
           score: 92,
-          score_breakdown: { fit: 90, intent: 95, activity: 85 },
+          score_breakdown: { fit: 36, intent: 38, activity: 18 },
           metadata: { title: "VP of Engineering", industry: "SaaS" },
           research_summary: "John recently posted about looking for AI-powered workforce solutions. Strong buying signals detected.",
           signals: [{ text: "Recent Funding Round ($50M Series B)" }, { text: "Hiring for 10+ Engineering roles" }]
