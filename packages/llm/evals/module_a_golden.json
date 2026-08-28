@@ -1,0 +1,32 @@
+[
+  {
+    "id": "q1",
+    "question": "What is the refund policy for annual plans?",
+    "expected_answer": "Annual plans are non-refundable after 14 days of purchase.",
+    "expected_sources": ["chunk-refund-policy-1"]
+  },
+  {
+    "id": "q2",
+    "question": "How do I invite a teammate?",
+    "expected_answer": "Go to Settings > Team and click 'Invite Member'. Enter their email and select a role.",
+    "expected_sources": ["chunk-team-settings-1"]
+  },
+  {
+    "id": "q3",
+    "question": "Can I use PayPal?",
+    "expected_answer": "No, we currently only accept credit cards via Stripe.",
+    "expected_sources": ["chunk-billing-methods-1"]
+  },
+  {
+    "id": "q4",
+    "question": "What happens if I go over my lead limit?",
+    "expected_answer": "You will be charged $0.10 per additional lead on the Starter plan.",
+    "expected_sources": ["chunk-pricing-limits-1"]
+  },
+  {
+    "id": "q5",
+    "question": "Do you offer HIPAA compliance?",
+    "expected_answer": "HIPAA compliance is only available on the Enterprise plan.",
+    "expected_sources": ["chunk-security-compliance-1"]
+  }
+]

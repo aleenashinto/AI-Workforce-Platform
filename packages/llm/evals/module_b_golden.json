@@ -1,0 +1,47 @@
+[
+  {
+    "id": "lead1",
+    "domain": "acme.corp",
+    "icp_criteria": "B2B SaaS companies hiring software engineers.",
+    "expected_signals": [
+      {
+        "type": "hiring",
+        "description": "Currently hiring a Senior React Engineer"
+      }
+    ],
+    "expected_draft_points": [
+      "I saw you are hiring for a Senior React Engineer",
+      "Our AI platform can help your engineering team build features faster"
+    ]
+  },
+  {
+    "id": "lead2",
+    "domain": "globex.io",
+    "icp_criteria": "E-commerce brands looking for better customer support.",
+    "expected_signals": [
+      {
+        "type": "pain_point",
+        "description": "Recent Trustpilot reviews mention slow customer service response times"
+      }
+    ],
+    "expected_draft_points": [
+      "I noticed some recent reviews mentioning slow support response times",
+      "Our AI Customer Support agent can resolve tickets instantly 24/7"
+    ]
+  },
+  {
+    "id": "lead3",
+    "domain": "initech.com",
+    "icp_criteria": "Fintech startups that recently raised funding.",
+    "expected_signals": [
+      {
+        "type": "funding",
+        "description": "Raised a $10M Series A last month"
+      }
+    ],
+    "expected_draft_points": [
+      "Congratulations on the recent $10M Series A",
+      "With your new funding, scaling your sales team is likely a priority"
+    ]
+  }
+]
