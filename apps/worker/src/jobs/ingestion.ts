@@ -117,8 +117,75 @@ export async function processIngestion(job: Job) {
       const buffer = Buffer.from(await s3Response.Body.transformToByteArray());
 
       if (key.endsWith(".pdf")) {
-        const data = await pdfParse(buffer);
-        textContent = data.text;
+        if (process.env.LLAMAPARSE_API_KEY) {
+          console.log(`[Ingestion] Using LlamaParse to parse PDF: ${key}`);
+          try {
+            // 1. Upload to LlamaParse
+            const formData = new FormData();
+            const blob = new Blob([buffer], { type: "application/pdf" });
+            formData.append("file", blob, key);
+
+            const uploadRes = await fetch("https://api.llamaindex.ai/v1/parsing/upload", {
+              method: "POST",
+              headers: {
+                Authorization: `Bearer ${process.env.LLAMAPARSE_API_KEY}`,
+              },
+              body: formData,
+            });
+
+            if (!uploadRes.ok) {
+              throw new Error(`LlamaParse upload failed: ${uploadRes.statusText}`);
+            }
+
+            const { id: jobId } = await uploadRes.json() as { id: string };
+            console.log(`[Ingestion] LlamaParse job created: ${jobId}. Polling for result...`);
+
+            // 2. Poll for completion
+            let status = "PENDING";
+            const maxAttempts = 30;
+            for (let attempt = 0; attempt < maxAttempts; attempt++) {
+              await new Promise((r) => setTimeout(r, 2000));
+              const statusRes = await fetch(`https://api.llamaindex.ai/v1/parsing/job/${jobId}`, {
+                headers: {
+                  Authorization: `Bearer ${process.env.LLAMAPARSE_API_KEY}`,
+                },
+              });
+              if (statusRes.ok) {
+                const jobData = await statusRes.json() as { status: string };
+                status = jobData.status;
+                if (status === "SUCCESS") break;
+                if (status === "FAILED") throw new Error("LlamaParse job failed");
+              }
+            }
+
+            if (status !== "SUCCESS") {
+              throw new Error("LlamaParse timeout");
+            }
+
+            // 3. Fetch Markdown result
+            const resultRes = await fetch(`https://api.llamaindex.ai/v1/parsing/job/${jobId}/result/markdown`, {
+              headers: {
+                Authorization: `Bearer ${process.env.LLAMAPARSE_API_KEY}`,
+              },
+            });
+
+            if (!resultRes.ok) {
+              throw new Error(`Failed to fetch LlamaParse markdown: ${resultRes.statusText}`);
+            }
+
+            const parsedData = await resultRes.json() as { markdown: string };
+            textContent = parsedData.markdown;
+            console.log(`[Ingestion] LlamaParse successfully parsed ${key}`);
+          } catch (e: any) {
+            console.warn(`[Ingestion] LlamaParse failed, falling back to pdf-parse:`, e.message);
+            const data = await pdfParse(buffer);
+            textContent = data.text;
+          }
+        } else {
+          console.log(`[Ingestion] LLAMAPARSE_API_KEY not configured. Falling back to pdf-parse.`);
+          const data = await pdfParse(buffer);
+          textContent = data.text;
+        }
       } else {
         textContent = buffer.toString("utf-8");
       }

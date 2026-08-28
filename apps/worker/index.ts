@@ -11,6 +11,7 @@ import { emailSenderWorker } from "./src/jobs/email-sender";
 import { replyMonitorWorker } from "./src/jobs/reply-monitor";
 import dataRetentionProcessor from "./src/jobs/data-retention";
 import { ingestionWorker } from "./src/jobs/ingestion";
+import { replyFetcherWorker } from "./src/jobs/reply-fetcher";
 
 const originalConsoleError = console.error;
 console.error = (...args: any[]) => {
@@ -94,6 +95,20 @@ async function start() {
     },
   );
 
+  const replyFetcherQueue = new Queue("reply-fetcher", {
+    connection,
+  });
+
+  await replyFetcherQueue.add(
+    "poll-replies-run",
+    {},
+    {
+      repeat: {
+        pattern: "*/5 * * * *", // every 5 minutes
+      },
+    },
+  );
+
   const workers = [
     researchWorker,
     draftingWorker,
@@ -103,6 +118,7 @@ async function start() {
     replyMonitorWorker,
     dataRetentionWorker,
     ingestionWorker,
+    replyFetcherWorker,
   ];
 
   const webhooksWorker = new Worker(
@@ -133,6 +149,7 @@ async function start() {
     dataRetentionWorker,
     webhooksWorker,
     ingestionWorker,
+    replyFetcherWorker,
   };
 
   const undefinedWorkers = Object.entries(workerMap)
@@ -173,6 +190,7 @@ async function start() {
     await Promise.all(allWorkers.map((worker) => worker.close()));
 
     await dataRetentionQueue.close();
+    await replyFetcherQueue.close();
     await connection.quit();
 
     console.log("Workers shut down successfully.");

@@ -8,11 +8,52 @@ import { z } from "zod";
 const REDIS_URL = process.env.REDIS_URL || "redis://127.0.0.1:6379";
 
 const TOOLS = {
-  web_search: async (query: string) => `Search results for ${query}`,
-  fetch_page: async (url: string) => `Content for ${url}`,
-  get_company_record: async (domain: string) => `Company record for ${domain}`,
-  search_news: async (company: string) => `News for ${company}`,
-  get_job_postings: async (company: string) => `Jobs for ${company}`,
+  web_search: async (query: string) => {
+    const apiKey = process.env.EXA_API_KEY;
+    if (!apiKey) {
+      console.log("[Research Tools] EXA_API_KEY not configured. Returning mock search results.");
+      return `Search results for ${query}: NovaStack Technologies raised $10M Series A on 2026-06-15.`;
+    }
+    try {
+      const res = await fetch("https://api.exa.ai/search", {
+        method: "POST",
+        headers: {
+          "x-api-key": apiKey,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ query, numResults: 3, useAutoprompt: true }),
+      });
+      if (!res.ok) throw new Error("Exa API failed");
+      const data = await res.json() as any;
+      return (data.results || []).map((r: any) => `Title: ${r.title}\nURL: ${r.url}\nScore: ${r.score}\nPublished: ${r.publishedDate}\n`).join("\n");
+    } catch (e: any) {
+      return `Failed to search: ${e.message}`;
+    }
+  },
+  fetch_page: async (url: string) => {
+    const apiKey = process.env.EXA_API_KEY;
+    if (!apiKey) {
+      return `Content for ${url}: Acme Corp is a B2B SaaS company specializing in HR tech.`;
+    }
+    try {
+      const res = await fetch("https://api.exa.ai/contents", {
+        method: "POST",
+        headers: {
+          "x-api-key": apiKey,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ ids: [url] }),
+      });
+      if (!res.ok) throw new Error("Exa contents failed");
+      const data = await res.json() as any;
+      return data.results?.[0]?.text || "No content extracted";
+    } catch (e: any) {
+      return `Failed to fetch: ${e.message}`;
+    }
+  },
+  get_company_record: async (domain: string) => `Company record for ${domain}: Active hiring for senior typescript developers.`,
+  search_news: async (company: string) => `News for ${company}: CEO announced expansion to European markets.`,
+  get_job_postings: async (company: string) => `Jobs for ${company}: Hiring VP Engineering, Senior Fullstack Developer.`,
 };
 
 const SignalSchema = z.object({

@@ -98,15 +98,45 @@ export async function chatRoutes(fastify: FastifyInstance) {
         FROM vector_search v
         FULL OUTER JOIN keyword_search k ON v.id = k.id
         ORDER BY rrf_score DESC
-        LIMIT 6
+        LIMIT 40
       )
       SELECT * FROM fused_results;
     `;
 
-      // Dummy logic for testing when DB is empty
+      let finalResults = searchResults;
+      if (process.env.COHERE_API_KEY && searchResults.length > 0) {
+        try {
+          const response = await fetch("https://api.cohere.com/v1/rerank", {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${process.env.COHERE_API_KEY}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              model: "rerank-english-v3.0",
+              query,
+              documents: searchResults.map((r) => r.content),
+              top_n: 6,
+            }),
+          });
+          if (response.ok) {
+            const data = (await response.json()) as any;
+            finalResults = data.results.map((res: any) => searchResults[res.index]);
+          } else {
+            finalResults = searchResults.slice(0, 6);
+          }
+        } catch (e) {
+          console.warn("Cohere Rerank failed, falling back to top 6 RRF:", e);
+          finalResults = searchResults.slice(0, 6);
+        }
+      } else {
+        finalResults = searchResults.slice(0, 6);
+      }
+
+
       const context =
-        searchResults.length > 0
-          ? searchResults.map((r, i) => `[${i + 1}] ${r.content}`).join("\n\n")
+        finalResults.length > 0
+          ? finalResults.map((r, i) => `[${i + 1}] ${r.content}`).join("\n\n")
           : "[1] Dummy context for testing since DB might be empty.";
 
       const systemPrompt = `You are a helpful support agent. Answer ONLY from the provided context. Cite everything using [1], [2] etc. If you cannot answer, say "I cannot answer this based on the context."
@@ -281,14 +311,44 @@ export async function chatRoutes(fastify: FastifyInstance) {
         FROM vector_search v
         FULL OUTER JOIN keyword_search k ON v.id = k.id
         ORDER BY rrf_score DESC
-        LIMIT 6
+        LIMIT 40
       )
       SELECT * FROM fused_results;
     `;
 
+      let finalResults = searchResults;
+      if (process.env.COHERE_API_KEY && searchResults.length > 0) {
+        try {
+          const response = await fetch("https://api.cohere.com/v1/rerank", {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${process.env.COHERE_API_KEY}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              model: "rerank-english-v3.0",
+              query,
+              documents: searchResults.map((r) => r.content),
+              top_n: 6,
+            }),
+          });
+          if (response.ok) {
+            const data = (await response.json()) as any;
+            finalResults = data.results.map((res: any) => searchResults[res.index]);
+          } else {
+            finalResults = searchResults.slice(0, 6);
+          }
+        } catch (e) {
+          console.warn("Cohere Rerank failed, falling back to top 6 RRF:", e);
+          finalResults = searchResults.slice(0, 6);
+        }
+      } else {
+        finalResults = searchResults.slice(0, 6);
+      }
+
       const context =
-        searchResults.length > 0
-          ? searchResults.map((r, i) => `[${i + 1}] ${r.content}`).join("\n\n")
+        finalResults.length > 0
+          ? finalResults.map((r, i) => `[${i + 1}] ${r.content}`).join("\n\n")
           : "[1] Dummy context for testing since DB might be empty.";
 
       const systemPrompt = `You are a helpful support agent. Answer ONLY from the provided context. Cite everything using [1], [2] etc. If you cannot answer, say "I cannot answer this based on the context."\nContext:\n${context}`;

@@ -620,7 +620,7 @@ export default async function authRoutes(fastify: FastifyInstance) {
         maxAge: 60 * 60 * 24 * 7, // 7 days
       });
 
-      return { success: true };
+      return { success: true, token: jwtToken };
     },
   );
 
@@ -700,7 +700,7 @@ export default async function authRoutes(fastify: FastifyInstance) {
         maxAge: rememberMe ? 60 * 60 * 24 * 30 : 60 * 60 * 24, // 30 days or 1 day
       });
 
-      return { success: true };
+      return { success: true, token: jwtToken };
     },
   );
 
