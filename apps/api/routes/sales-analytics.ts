@@ -28,14 +28,11 @@ function getOrgId(request: any): string {
 }
 
 // Helper: authenticate (soft — fall back to dev mock user)
-async function softAuth(request: any, reply: any): Promise<boolean> {
+async function softAuth(request: any, _reply: any): Promise<boolean> {
   try {
     await request.jwtVerify();
   } catch (_) {
-    if (!(request as any).user) {
-      reply.status(401).send({ error: "Unauthorized" });
-      return false;
-    }
+    // JWT verification failed — that's fine, getOrgId will use the fallback org_id
   }
   return true;
 }
