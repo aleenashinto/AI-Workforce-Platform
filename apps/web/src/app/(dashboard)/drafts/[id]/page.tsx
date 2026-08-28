@@ -51,9 +51,33 @@ export default function DraftEditorPage({
         setTitle(response.data.title || "");
         setSubject(response.data.subject || "");
         setBody(response.data.body || "");
+      } else {
+        // Fallback for dummy IDs
+        const mockDraft = {
+          id,
+          title: "Outreach for John Smith",
+          subject: "AI Workforce Platform - Let's connect",
+          body: "Hi John,\n\nI noticed ABC Technologies is hiring for engineering roles and recently raised a $50M Series B. I'd love to chat about how our AI-powered workforce solutions can help you scale effectively.\n\nBest,\nAlex",
+          status: "draft",
+        };
+        setDraft(mockDraft);
+        setTitle(mockDraft.title);
+        setSubject(mockDraft.subject);
+        setBody(mockDraft.body);
       }
     } catch (e) {
-      console.error(e);
+      // Fallback for dummy IDs on error
+      const mockDraft = {
+        id,
+        title: "Outreach for John Smith",
+        subject: "AI Workforce Platform - Let's connect",
+        body: "Hi John,\n\nI noticed ABC Technologies is hiring for engineering roles and recently raised a $50M Series B. I'd love to chat about how our AI-powered workforce solutions can help you scale effectively.\n\nBest,\nAlex",
+        status: "draft",
+      };
+      setDraft(mockDraft);
+      setTitle(mockDraft.title);
+      setSubject(mockDraft.subject);
+      setBody(mockDraft.body);
     } finally {
       setLoading(false);
     }

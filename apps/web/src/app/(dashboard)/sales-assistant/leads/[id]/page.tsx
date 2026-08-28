@@ -557,10 +557,10 @@ export default function LeadDetailsPage() {
               >
                 <Target size={16} color={T.g2} /> Outreach
               </div>
-              <Link
-                href={`/sales-assistant/drafts/${lead.id}`}
-                style={{ textDecoration: "none" }}
-              >
+                <Link
+                  href={`/drafts/${lead.id}`}
+                  style={{ textDecoration: "none" }}
+                >
                 <button
                   style={{
                     background: T.g2,

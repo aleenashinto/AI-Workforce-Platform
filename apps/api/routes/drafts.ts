@@ -55,6 +55,10 @@ export default async function draftsRoutes(fastify: FastifyInstance) {
       "00000000-0000-0000-0000-000000000001";
     const { id } = request.params as any;
 
+    if (!id || id === "undefined" || !/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id)) {
+      return reply.code(400).send({ error: "Invalid draft ID format" });
+    }
+
     try {
       const draft = await db.query.drafts.findFirst({
         where: and(eq(drafts.id, id), eq(drafts.org_id, org_id)),
@@ -186,6 +190,10 @@ export default async function draftsRoutes(fastify: FastifyInstance) {
       (request.headers["x-org-id"] as string) ||
       "00000000-0000-0000-0000-000000000001";
     const { id } = request.params as any;
+
+    if (!id || id === "undefined" || !/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id)) {
+      return reply.code(400).send({ error: "Invalid draft ID format" });
+    }
 
     try {
       const versions = await db

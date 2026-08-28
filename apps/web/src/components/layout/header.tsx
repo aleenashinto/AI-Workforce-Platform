@@ -70,7 +70,7 @@ export function Header({
       return "LEAD_DISCOVERY";
     if (pathname.includes("/sales-assistant/leads")) return "LEADS_DATABASE";
     if (pathname.includes("/sales-assistant/research")) return "RESEARCH_LOGS";
-    if (pathname.includes("/sales-assistant/drafts")) return "OUTREACH_DRAFTS";
+    if (pathname.includes("/drafts")) return "OUTREACH_DRAFTS";
     if (pathname.includes("/sales-assistant/sequences")) return "SEQUENCES";
     if (pathname.includes("/sales-assistant/mailboxes")) return "MAILBOXES";
     if (pathname.includes("/sales-assistant/analytics"))
