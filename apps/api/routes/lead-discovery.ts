@@ -23,12 +23,12 @@ const leadDiscoveryRoutes: FastifyPluginAsync = async (
   fastify: FastifyInstance,
 ) => {
   // Get active ICP
-  fastify.get("/v1/lead-discovery", async (request, reply) => {
+  fastify.get("/", async (request, reply) => {
     return { success: true };
   });
 
   // Perform a search
-  fastify.post("/v1/lead-discovery/search", async (request, reply) => {
+  fastify.post("/search", async (request, reply) => {
     const { prompt, criteria, icpId } = request.body as any;
     let finalCriteria = criteria || {};
 
@@ -145,7 +145,7 @@ const leadDiscoveryRoutes: FastifyPluginAsync = async (
   });
 
   // Add to Leads
-  fastify.post("/v1/lead-discovery/add-to-leads", async (request, reply) => {
+  fastify.post("/add-to-leads", async (request, reply) => {
     const { prospects, org_id } = request.body as any;
 
     // Mock bulk insert (in a real app we'd insert into leads table)

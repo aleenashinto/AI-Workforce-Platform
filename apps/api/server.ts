@@ -154,7 +154,9 @@ fastify.register(searchRoutes);
 fastify.register(webhookRoutes);
 fastify.register(onboardingRoutes, { prefix: "/onboarding" });
 fastify.register(icpRoutes, { prefix: "/v1/icps" });
-fastify.register(leadDiscoveryRoutes);
+fastify.register(icpRoutes, { prefix: "/icps" });
+fastify.register(leadDiscoveryRoutes, { prefix: "/v1/lead-discovery" });
+fastify.register(leadDiscoveryRoutes, { prefix: "/lead-discovery" });
 fastify.register(researchRoutes, { prefix: "/v1/research" });
 
 // DEV ONLY: inject mock user if no auth token provided
