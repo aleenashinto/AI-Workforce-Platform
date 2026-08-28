@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState, useEffect } from "react";
 import {
@@ -35,7 +35,7 @@ export default function ICPOverviewPage() {
     const fetchIcps = async () => {
       try {
         const data = await apiClient.get("/icps");
-        setIcps(data || []);
+        setIcps(data.data || data || []);
       } catch (err) {
         console.error(err);
       } finally {
