@@ -158,6 +158,7 @@ fastify.register(icpRoutes, { prefix: "/icps" });
 fastify.register(leadDiscoveryRoutes, { prefix: "/v1/lead-discovery" });
 fastify.register(leadDiscoveryRoutes, { prefix: "/lead-discovery" });
 fastify.register(researchRoutes, { prefix: "/v1/research" });
+fastify.register(researchRoutes, { prefix: "/research" });
 
 // DEV ONLY: inject mock user if no auth token provided
 if (process.env.NODE_ENV !== "production") {
