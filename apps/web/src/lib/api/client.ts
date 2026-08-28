@@ -16,7 +16,7 @@ function getCookie(name: string): string | null {
 }
 
 async function request(url: string, options: RequestInit = {}) {
-  const token = getCookie("auth_token");
+  const token = typeof window !== "undefined" ? localStorage.getItem("auth_token") : null;
   const authHeader: Record<string, string> = token
     ? { Authorization: `Bearer ${token}` }
     : {};
