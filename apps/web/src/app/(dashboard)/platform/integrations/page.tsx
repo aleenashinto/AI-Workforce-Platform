@@ -177,7 +177,7 @@ export default function IntegrationsPage() {
   useEffect(() => {
     (async () => {
       try {
-        const res = await fetch("http://127.0.0.1:3001/v1/crm/settings");
+        const res = await fetch("/api/crm/settings");
         if (res.ok) {
           const json = await res.json();
           setData(json.data ?? json);
