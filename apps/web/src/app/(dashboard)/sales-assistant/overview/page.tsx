@@ -451,7 +451,10 @@ export default function SalesOverviewPage() {
                       <div className="font-mono text-[10px] text-[rgba(0,255,136,0.8)] mb-2 uppercase tracking-wide">
                         Recommended: {insight.action}
                       </div>
-                      <button className="text-xs font-mono text-[#00cfff] hover:text-white underline decoration-[rgba(0,207,255,0.3)] underline-offset-4">
+                      <button
+                        onClick={() => router.push(insight.cta.toLowerCase().includes("email") || insight.cta.toLowerCase().includes("sequence") ? "/sales-assistant/sequences" : "/sales-assistant/leads")}
+                        className="text-xs font-mono text-[#00cfff] hover:text-white underline decoration-[rgba(0,207,255,0.3)] underline-offset-4"
+                      >
                         {insight.cta} →
                       </button>
                     </div>
@@ -573,7 +576,10 @@ export default function SalesOverviewPage() {
                     <div className="font-mono text-[11px] text-[#00cfff] mb-3">
                       {f.description}
                     </div>
-                    <button className="text-[10px] font-mono border border-[rgba(0,207,255,0.3)] text-[#00cfff] px-3 py-1 hover:bg-[rgba(0,207,255,0.1)] uppercase w-full">
+                    <button
+                      onClick={() => router.push(f.cta.toLowerCase().includes("email") || f.cta.toLowerCase().includes("sequence") ? "/sales-assistant/sequences" : f.cta.toLowerCase().includes("mailbox") ? "/sales-assistant/mailboxes" : "/sales-assistant/leads")}
+                      className="text-[10px] font-mono border border-[rgba(0,207,255,0.3)] text-[#00cfff] px-3 py-1 hover:bg-[rgba(0,207,255,0.1)] uppercase w-full"
+                    >
                       {f.cta}
                     </button>
                   </div>
@@ -605,7 +611,13 @@ export default function SalesOverviewPage() {
                         {m.company} • {m.type}
                       </div>
                     </div>
-                    <button className="opacity-0 group-hover:opacity-100 transition-opacity font-mono text-[10px] bg-[rgba(0,255,136,0.1)] text-[#00ff88] border border-[#00ff88] px-2 py-1 flex items-center gap-1 shrink-0 whitespace-nowrap">
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        router.push("/sales-assistant/leads");
+                      }}
+                      className="opacity-0 group-hover:opacity-100 transition-opacity font-mono text-[10px] bg-[rgba(0,255,136,0.1)] text-[#00ff88] border border-[#00ff88] px-2 py-1 flex items-center gap-1 shrink-0 whitespace-nowrap"
+                    >
                       <Sparkles size={10} /> Prepare
                     </button>
                   </div>
@@ -631,7 +643,10 @@ export default function SalesOverviewPage() {
                     <div className="font-mono text-[10px] text-[rgba(255,255,255,0.6)] mb-3 leading-relaxed">
                       {a.description}
                     </div>
-                    <button className="text-[10px] font-mono text-[#00ff88] flex items-center gap-1 hover:underline underline-offset-4 uppercase">
+                    <button
+                      onClick={() => router.push(a.cta.toLowerCase().includes("campaign") || a.cta.toLowerCase().includes("sequence") ? "/sales-assistant/sequences" : "/sales-assistant/leads")}
+                      className="text-[10px] font-mono text-[#00ff88] flex items-center gap-1 hover:underline underline-offset-4 uppercase"
+                    >
                       {a.cta} <ArrowRight size={12} />
                     </button>
                   </div>
@@ -766,7 +781,10 @@ export default function SalesOverviewPage() {
                       {lead.lastActivity}
                     </td>
                     <td className="py-3 px-4 text-right">
-                      <button className="font-mono text-[10px] text-[#00cfff] hover:text-white uppercase tracking-wider">
+                      <button
+                        onClick={() => router.push(`/sales-assistant/leads/${lead.id}`)}
+                        className="font-mono text-[10px] text-[#00cfff] hover:text-white uppercase tracking-wider"
+                      >
                         View
                       </button>
                     </td>
@@ -819,7 +837,10 @@ export default function SalesOverviewPage() {
                   </div>
                 </div>
               </div>
-              <button className="w-full text-center border border-[rgba(0,207,255,0.3)] text-[#00cfff] font-mono text-xs py-2 uppercase hover:bg-[rgba(0,207,255,0.1)]">
+              <button
+                onClick={() => router.push("/sales-assistant/lead-discovery")}
+                className="w-full text-center border border-[rgba(0,207,255,0.3)] text-[#00cfff] font-mono text-xs py-2 uppercase hover:bg-[rgba(0,207,255,0.1)]"
+              >
                 Discover More Leads
               </button>
             </div>
