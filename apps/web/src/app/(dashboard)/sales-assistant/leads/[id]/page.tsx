@@ -271,7 +271,7 @@ export default function LeadDetailsPage() {
       </div>
 
       <div
-        style={{ display: "grid", gridTemplateColumns: "1fr 2fr", gap: "2rem" }}
+        style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "2rem" }}
       >
         {/* Left Column */}
         <div style={{ display: "flex", flexDirection: "column", gap: "2rem" }}>
