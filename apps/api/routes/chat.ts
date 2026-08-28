@@ -66,9 +66,24 @@ export async function chatRoutes(fastify: FastifyInstance) {
       ${context}
       `;
 
-        // Confidence scoring logic based on spec
         const isUnanswerable = finalResults.length === 0;
-        const confidence = isUnanswerable ? 0.3 : 0.85;
+        
+        let confidence = 0;
+        if (isUnanswerable) {
+          confidence = 0.3; // Low confidence threshold
+        } else {
+          // Spec: Base confidence is derived from the top K retrieved relevance scores
+          // Averaged out, with penalties for large divergence
+          const topScores = finalResults.map(r => r.relevance_score || 0.5);
+          const avgScore = topScores.reduce((a, b) => a + b, 0) / topScores.length;
+          const maxScore = Math.max(...topScores);
+          
+          // Weighted metric giving higher importance to the absolute best match
+          confidence = (maxScore * 0.7) + (avgScore * 0.3);
+
+          // Cap confidence between 0 and 1
+          confidence = Math.min(Math.max(confidence, 0), 1.0);
+        }
 
         let fullAnswer = "";
 

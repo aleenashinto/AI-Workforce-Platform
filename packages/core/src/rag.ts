@@ -7,6 +7,7 @@ export interface RetrievedChunk {
   document_id: string;
   content: string;
   rrf_score: number;
+  relevance_score?: number;
 }
 
 export async function hybridSearchWithRRF(
@@ -71,12 +72,12 @@ export async function hybridSearchWithRRF(
     // reranked contains { document, index, relevance_score }
     // We map it back to our chunks and sort by relevance_score
     const finalResults = reranked
-      .map((r) => chunks[r.index])
+      .map((r) => ({ ...chunks[r.index], relevance_score: r.relevance_score }))
       .slice(0, limit);
       
     return finalResults;
   } catch (err) {
     console.error("Reranking failed, falling back to top RRF chunks:", err);
-    return chunks.slice(0, limit);
+    return chunks.slice(0, limit).map(c => ({ ...c, relevance_score: c.rrf_score * 10 })); // Dummy scale
   }
 }
