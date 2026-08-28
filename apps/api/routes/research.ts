@@ -1,4 +1,4 @@
-﻿import { FastifyInstance } from "fastify";
+import { FastifyInstance } from "fastify";
 import { db } from "@ai-workforce/db";
 import { research_projects } from "@ai-workforce/db/schema";
 import { eq, desc } from "drizzle-orm";
@@ -139,10 +139,10 @@ export default async function researchRoutes(fastify: FastifyInstance) {
 
     try {
       const generated = await generateStructured(
-        "Generate a highly realistic, extremely detailed research payload for this question. MUST include DEMO DATA sources. Question: " +
-          project.question,
+        "deep",
+        "You are an AI research assistant. Generate a highly realistic, extremely detailed research payload based on the user's question.",
+        "Question: " + project.question,
         schema,
-        { provider: "openai", model: "gpt-4o-mini" },
       );
 
       // Append DEMO DATA to sources to satisfy requirements
