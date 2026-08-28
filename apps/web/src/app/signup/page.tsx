@@ -305,6 +305,10 @@ function SignUpContent() {
         throw new Error(data.error || "Failed to register account.");
       }
 
+      if (data.token) {
+        localStorage.setItem("auth_token", data.token);
+      }
+
       if (inviteToken) {
         router.push(`/auth/invite?token=${inviteToken}`);
       } else {

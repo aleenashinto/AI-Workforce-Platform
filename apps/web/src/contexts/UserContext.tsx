@@ -49,7 +49,16 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
       return url.replace(/\/+$/, "");
     };
 
-    fetch(`${getApiUrl()}/auth/me`, { credentials: "include" })
+    const token = typeof window !== "undefined" ? localStorage.getItem("auth_token") : null;
+    const headers: Record<string, string> = {};
+    if (token) {
+      headers["Authorization"] = `Bearer ${token}`;
+    }
+
+    fetch(`${getApiUrl()}/auth/me`, {
+      credentials: "include",
+      headers,
+    })
       .then((res) => {
         if (!res.ok) throw new Error("Not authenticated");
         return res.json();
@@ -112,6 +121,9 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
       // ignore
     }
     setUser(null);
+    if (typeof window !== "undefined") {
+      localStorage.removeItem("auth_token");
+    }
     window.location.href = "/login";
   };
 
