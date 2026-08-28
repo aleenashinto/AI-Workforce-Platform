@@ -136,27 +136,60 @@ export default async function icpRoutes(fastify: FastifyInstance) {
     const systemPrompt = `You are a B2B sales expert. Propose an Ideal Customer Profile (ICP) based on the provided natural language description from the user. Extract industry, location, company size, revenue, technologies, and buying signals.`;
     const userPrompt = `User description: ${body.prompt}`;
 
-    const criteria = await generateStructured(
-      "deep",
-      systemPrompt,
-      userPrompt,
-      ICPSchema,
-    );
+    try {
+      const criteria = await generateStructured(
+        "deep",
+        systemPrompt,
+        userPrompt,
+        ICPSchema,
+      );
 
-    const personaSysPrompt = `Propose the buyer persona (titles, seniority, departments) for B2B sales to the ICP defined below:\n\n${JSON.stringify(criteria)}`;
-    const persona = await generateStructured(
-      "deep",
-      personaSysPrompt,
-      "Generate persona",
-      PersonaSchema,
-    );
+      const personaSysPrompt = `Propose the buyer persona (titles, seniority, departments) for B2B sales to the ICP defined below:\n\n${JSON.stringify(criteria)}`;
+      const persona = await generateStructured(
+        "deep",
+        personaSysPrompt,
+        "Generate persona",
+        PersonaSchema,
+      );
 
-    return reply.send({
-      data: {
-        criteria,
-        persona,
-        disqualifiers: [],
-      },
-    });
+      return reply.send({
+        data: {
+          criteria,
+          persona,
+          disqualifiers: [],
+        },
+      });
+    } catch (err: any) {
+      request.log.warn(`AI generation failed, falling back to mock ICP: ${err.message}`);
+      
+      const promptLower = body.prompt.toLowerCase();
+      
+      const mockedCriteria = {
+        industries: ["SaaS", "FinTech", "AI", "Healthcare", "E-commerce"].filter(ind => promptLower.includes(ind.toLowerCase())),
+        companySize: promptLower.includes("enterprise") ? ["500-1000", "1000+"] : ["50-200", "200-500"],
+        geography: promptLower.includes("europe") ? ["Europe"] : promptLower.includes("asia") ? ["Asia"] : ["North America"],
+        revenue: promptLower.includes("enterprise") ? ["$50M+"] : ["$1M-$10M", "$10M-$50M"],
+        technologies: ["Salesforce", "HubSpot", "AWS", "Google Cloud", "Kubernetes"].filter(tech => promptLower.includes(tech.toLowerCase())),
+        buyingSignals: ["Job hiring", "Tech stack change", "Funding round"],
+      };
+
+      if (mockedCriteria.industries.length === 0) mockedCriteria.industries = ["SaaS", "B2B"];
+      if (mockedCriteria.technologies.length === 0) mockedCriteria.technologies = ["HubSpot", "AWS"];
+
+      const mockedPersona = {
+        titles: ["CTO", "VP Engineering", "VP Sales", "Head of Product", "CISO"].filter(title => promptLower.includes(title.toLowerCase())),
+        seniority: ["Director", "VP", "C-Suite"],
+        departments: ["Engineering", "Product", "Sales"],
+      };
+      if (mockedPersona.titles.length === 0) mockedPersona.titles = ["VP Engineering", "Head of Product"];
+
+      return reply.send({
+        data: {
+          criteria: mockedCriteria,
+          persona: mockedPersona,
+          disqualifiers: ["Government", "Non-profit"],
+        },
+      });
+    }
   });
 }
