@@ -94,8 +94,8 @@ export const generateStructured = async <T extends z.ZodTypeAny>(
   }
   const safeUserPrompt = guard.sanitized || userPrompt;
 
-  const openai = getOpenAIClient() as any;
-  const response = await openai.beta.chat.completions.parse({
+  const openai = getOpenAIClient();
+  const response = await openai.chat.completions.create({
     model: "gpt-4o-2024-08-06",
     messages: [
       { role: "system", content: systemPrompt },
@@ -106,16 +106,16 @@ export const generateStructured = async <T extends z.ZodTypeAny>(
       json_schema: {
         name: "output_schema",
         strict: true,
-        schema: zodToJsonSchema(schema as any),
+        schema: zodToJsonSchema(schema as any) as any,
       },
     },
   });
 
-  const parsed = response.choices[0]?.message?.parsed;
-  if (!parsed) {
+  const content = response.choices[0]?.message?.content;
+  if (!content) {
     throw new Error("OpenAI returned no structured output.");
   }
-  return parsed as z.infer<T>;
+  return JSON.parse(content) as z.infer<T>;
 };
 
 export const generateEmbeddings = async (
