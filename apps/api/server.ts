@@ -1,4 +1,5 @@
 import Fastify from "fastify";
+import { db, withTenant } from "@ai-workforce/db";
 import fastifyJwt from "@fastify/jwt";
 import fastifyWebsocket from "@fastify/websocket";
 import postgres from "postgres";
@@ -42,6 +43,21 @@ process.on("uncaughtException", (err: any) => {
 });
 
 const fastify = Fastify({ logger: true, bodyLimit: 10485760 });
+
+fastify.addHook("onRoute", (routeOptions) => {
+  const originalHandler = routeOptions.handler;
+  routeOptions.handler = async function (request, reply) {
+    const org_id = (request as any).user?.org_id || (request.headers["x-org-id"] as string);
+    // Wrap the handler in withTenant to enable database RLS if we have an org_id
+    // Skips webhooks and unauthenticated routes where org_id is absent.
+    if (org_id && !request.url.startsWith("/v1/webhooks") && !request.url.startsWith("/webhooks")) {
+      return withTenant(db, org_id, async () => {
+        return originalHandler.call(this, request, reply);
+      });
+    }
+    return originalHandler.call(this, request, reply);
+  };
+});
 
 fastify.register(fastifyCookie, {
   secret: process.env.COOKIE_SECRET || "supersecretcookie", // for signed cookies
