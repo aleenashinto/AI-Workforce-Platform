@@ -160,18 +160,17 @@ fastify.register(leadDiscoveryRoutes, { prefix: "/lead-discovery" });
 fastify.register(researchRoutes, { prefix: "/v1/research" });
 fastify.register(researchRoutes, { prefix: "/research" });
 
-// DEV ONLY: inject mock user if no auth token provided
-if (process.env.NODE_ENV !== "production") {
-  fastify.addHook("onRequest", async (request) => {
-    if (!request.headers.authorization) {
-      (request as any).user = {
-        org_id: "00000000-0000-0000-0000-000000000001",
-        user_id: "00000000-0000-0000-0000-000000000002",
-        roles: ["owner", "admin", "support_lead", "sales_lead"],
-      };
-    }
-  });
-}
+// Inject fallback demo user when no JWT/Authorization header is present.
+// This allows the app to work in demo mode on Vercel without a real auth flow.
+fastify.addHook("onRequest", async (request) => {
+  if (!request.headers.authorization && !(request as any).user) {
+    (request as any).user = {
+      org_id: process.env.DEMO_ORG_ID || "00000000-0000-0000-0000-000000000001",
+      user_id: process.env.DEMO_USER_ID || "00000000-0000-0000-0000-000000000002",
+      roles: ["owner", "admin", "support_lead", "sales_lead"],
+    };
+  }
+});
 
 // Apply rate limiting middleware to all routes except health checks
 fastify.addHook("onRequest", async (request, reply) => {
