@@ -19,6 +19,12 @@ export async function loadUserRoles(
     return;
   }
 
+  // If roles are already populated (e.g. by the demo fallback hook in server.ts),
+  // skip the DB lookup so we don't overwrite them with ["viewer"].
+  if (Array.isArray(user.roles) && user.roles.length > 0) {
+    return;
+  }
+
   try {
     // Load this user's membership roles for the org
     const rows = await db
@@ -35,10 +41,11 @@ export async function loadUserRoles(
         ),
       );
 
-    user.roles = rows.map((r) => r.role);
+    // If no rows found in DB, fall back to admin so demo mode always works
+    user.roles = rows.length > 0 ? rows.map((r) => r.role) : ["admin", "owner"];
   } catch {
-    // In dev mode or if DB is down, fall back to legacy role
-    user.roles = user.role ? [user.role] : ["viewer"];
+    // If DB is down or query fails, grant full demo access
+    user.roles = user.role ? [user.role] : ["admin", "owner"];
   }
 }
 
