@@ -422,6 +422,8 @@ export default function KnowledgePage() {
                   </td>
                   <td style={{ padding: "1rem", textAlign: "right" }}>
                     <button
+                      onClick={() => alert(`Syncing source: ${src.name}...`)}
+                      title="Sync Source"
                       style={{
                         background: "transparent",
                         border: "none",
@@ -431,17 +433,20 @@ export default function KnowledgePage() {
                     >
                       <RefreshCw size={16} />
                     </button>
-                    <button
-                      style={{
-                        background: "transparent",
-                        border: "none",
-                        color: T.muted,
-                        cursor: "pointer",
-                        marginLeft: "1rem",
-                      }}
-                    >
-                      <ExternalLink size={16} />
-                    </button>
+                    <Link href={`/knowledge/sources/${src.id}`}>
+                      <button
+                        title="View Source"
+                        style={{
+                          background: "transparent",
+                          border: "none",
+                          color: T.muted,
+                          cursor: "pointer",
+                          marginLeft: "1rem",
+                        }}
+                      >
+                        <ExternalLink size={16} />
+                      </button>
+                    </Link>
                   </td>
                 </tr>
               ))}
