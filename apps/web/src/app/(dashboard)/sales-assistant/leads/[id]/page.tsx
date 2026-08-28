@@ -124,9 +124,9 @@ export default function LeadDetailsPage() {
         }
         setLoading(false);
       })
-      .catch((err) => {
-        console.error("Failed to fetch lead", err);
-        // Fallback for dummy IDs on error
+      .catch(() => {
+        // Silently fallback to mock data for dummy IDs (e.g. "1", "2")
+        // without polluting the console with 400 errors.
         setLead({
           id,
           name: "John Smith",
