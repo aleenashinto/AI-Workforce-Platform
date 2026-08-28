@@ -174,15 +174,28 @@ function AddKnowledgeContent() {
         const uploadUrl = data.uploadUrl;
         if (!uploadUrl) throw new Error("Did not receive upload URL.");
 
-        const uploadRes = await fetch(uploadUrl, {
-          method: "PUT",
-          headers: {
-            "Content-Type": selectedFile!.type || "application/octet-stream",
-          },
-          body: selectedFile,
+        const base64Data = await new Promise<string>((resolve, reject) => {
+          const reader = new FileReader();
+          reader.readAsDataURL(selectedFile!);
+          reader.onload = () => {
+            const resultStr = reader.result as string;
+            const base64 = resultStr.split(",")[1];
+            resolve(base64);
+          };
+          reader.onerror = (error) => reject(error);
         });
 
-        if (!uploadRes.ok) throw new Error("Failed to upload file to storage.");
+        const uploadRes = await fetch(`${API_BASE}/knowledge/v1/sources/proxy-upload`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            uploadUrl,
+            contentType: selectedFile!.type || "application/octet-stream",
+            base64Data,
+          }),
+        });
+
+        if (!uploadRes.ok) throw new Error("Failed to upload file to storage via proxy.");
 
         const confirmRes = await fetch(
           `${API_BASE}/knowledge/v1/sources/confirm-upload`,

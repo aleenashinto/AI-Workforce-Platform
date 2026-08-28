@@ -91,6 +91,34 @@ export async function knowledgeRoutes(fastify: FastifyInstance) {
     }
   });
 
+  fastify.post("/v1/sources/proxy-upload", async (request, reply) => {
+    const { uploadUrl, contentType, base64Data } = request.body as any;
+    if (!uploadUrl || !base64Data) {
+      return reply.status(400).send({ error: "uploadUrl and base64Data are required" });
+    }
+
+    try {
+      const buffer = Buffer.from(base64Data, "base64");
+      const res = await fetch(uploadUrl, {
+        method: "PUT",
+        headers: {
+          "Content-Type": contentType || "application/octet-stream",
+          "Content-Length": String(buffer.byteLength),
+        },
+        body: buffer,
+      });
+
+      if (!res.ok) {
+        throw new Error(`S3 returned status ${res.status}: ${res.statusText}`);
+      }
+
+      return { success: true };
+    } catch (e: any) {
+      request.log.error(e);
+      return reply.status(500).send({ error: "Failed to proxy upload to S3", details: e.message });
+    }
+  });
+
   fastify.post("/v1/sources/confirm-upload", async (request, reply) => {
     const { source_id } = request.body as any;
 
