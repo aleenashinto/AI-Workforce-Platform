@@ -8,6 +8,11 @@ const nextConfig: NextConfig = {
         destination: "/dashboard",
         permanent: true,
       },
+      {
+        source: "/sales-assistant/drafts/:path*",
+        destination: "/drafts/:path*",
+        permanent: true,
+      },
     ];
   },
   async rewrites() {
