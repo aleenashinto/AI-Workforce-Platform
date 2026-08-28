@@ -150,6 +150,7 @@ import onboardingRoutes from "./routes/onboarding";
 import icpRoutes from "./routes/icps";
 import leadDiscoveryRoutes from "./routes/lead-discovery";
 import researchRoutes from "./routes/research";
+import leadsRoutes from "./routes/leads";
 
 fastify.register(salesRoutes);
 fastify.register(salesAnalyticsRoutes, { prefix: "/sales/analytics" });
@@ -165,6 +166,7 @@ fastify.register(chatRoutes);
 fastify.register(analyticsRoutes);
 fastify.register(crmRoutes, { prefix: "/crm" });
 fastify.register(salesRoutes, { prefix: "/v1/crm/sales" });
+fastify.register(leadsRoutes);
 fastify.register(authRoutes);
 fastify.register(searchRoutes);
 fastify.register(webhookRoutes);

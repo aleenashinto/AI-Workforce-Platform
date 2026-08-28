@@ -1,4 +1,4 @@
-﻿import { FastifyInstance, FastifyPluginAsync } from "fastify";
+import { FastifyInstance, FastifyPluginAsync } from "fastify";
 import { db } from "@ai-workforce/db";
 import {
   leads,
@@ -91,6 +91,10 @@ export default async function leadsRoutes(fastify: FastifyInstance) {
     const orgId = "00000000-0000-0000-0000-000000000001";
     const { id } = request.params as { id: string };
 
+    if (!id || id === "undefined" || !/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id)) {
+      return reply.status(400).send({ error: "Invalid lead ID format" });
+    }
+
     const leadArr = await db
       .select()
       .from(leads)
@@ -165,6 +169,10 @@ export default async function leadsRoutes(fastify: FastifyInstance) {
     const { id } = request.params as { id: string };
     const body = request.body as any;
 
+    if (!id || id === "undefined" || !/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id)) {
+      return reply.status(400).send({ error: "Invalid lead ID format" });
+    }
+
     const updated = await db
       .update(leads)
       .set({
@@ -182,6 +190,11 @@ export default async function leadsRoutes(fastify: FastifyInstance) {
 
   fastify.delete("/v1/crm/sales/leads/:id", async (request, reply) => {
     const { id } = request.params as { id: string };
+
+    if (!id || id === "undefined" || !/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id)) {
+      return reply.status(400).send({ error: "Invalid lead ID format" });
+    }
+
     await db.delete(leads).where(eq(leads.id, id));
     return { success: true };
   });

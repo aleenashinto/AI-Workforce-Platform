@@ -29,55 +29,9 @@ try {
 
 export default async function salesRoutes(fastify: FastifyInstance) {
   // ICP endpoints removed in favor of routes/icps.ts
+  // Leads endpoints moved to routes/leads.ts
 
-  // -- Leads Endpoints --
-
-  fastify.get("/leads", async (request, reply) => {
-    const org_id =
-      (request.user as any)?.org_id ||
-      (request.headers["x-org-id"] as string) ||
-      "00000000-0000-0000-0000-000000000001";
-    const { icp_id, status, min_score } = request.query as any;
-
-    try {
-      let conditions = [eq(leads.org_id, org_id)];
-      if (icp_id) conditions.push(eq(leads.icp_id, icp_id));
-      if (status) conditions.push(eq(leads.status, status));
-      // In a real app we'd cast and compare min_score, skipping for mock brevity
-
-      const allLeads = await db
-        .select()
-        .from(leads)
-        .where(and(...conditions))
-        .orderBy(desc(leads.created_at));
-      return { success: true, data: allLeads };
-    } catch (error: any) {
-      request.log.error(error);
-      return reply.code(500).send({ error: "Failed to fetch leads" });
-    }
-  });
-
-  fastify.get("/leads/:id", async (request, reply) => {
-    const org_id =
-      (request.user as any)?.org_id ||
-      (request.headers["x-org-id"] as string) ||
-      "00000000-0000-0000-0000-000000000001";
-    const { id } = request.params as any;
-
-    try {
-      const lead = await db
-        .select()
-        .from(leads)
-        .where(and(eq(leads.id, id), eq(leads.org_id, org_id)))
-        .limit(1);
-      if (!lead.length)
-        return reply.code(404).send({ error: "Lead not found" });
-      return { success: true, data: lead[0] };
-    } catch (error: any) {
-      request.log.error(error);
-      return reply.code(500).send({ error: "Failed to fetch lead" });
-    }
-  });
+  // -- Campaigns Endpoints --
 
   fastify.post(
     "/leads/discover",
