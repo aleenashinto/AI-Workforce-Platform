@@ -10,6 +10,7 @@ import { eq, desc, and, inArray } from "drizzle-orm";
 import { Queue } from "bullmq";
 import { requireAction } from "../middleware/authz";
 import { generateStructured } from "@ai-workforce/llm";
+import { z } from "zod";
 
 const draftingQueue = new Queue("drafting-queue", {
   connection: {
@@ -241,17 +242,18 @@ export default async function draftsRoutes(fastify: FastifyInstance) {
     async (request, reply) => {
       const { content, instruction } = request.body as any;
       try {
-        const result = await generateStructured({
-          model: "flash",
-          prompt: `Rewrite the following content based on this instruction: "${instruction}".\n\nContent:\n${content}`,
-          schema: {
-            type: "object",
-            properties: { rewritten_content: { type: "string" } },
-            required: ["rewritten_content"],
-          },
+        const schema = z.object({
+          rewritten_content: z.string(),
         });
+        const result = await generateStructured(
+          "fast",
+          "You are an AI assistant that improves email drafts based on instructions.",
+          `Rewrite the following content based on this instruction: "${instruction}".\n\nContent:\n${content}`,
+          schema,
+        );
         return { success: true, data: result.rewritten_content };
-      } catch (err) {
+      } catch (err: any) {
+        request.log.error(err);
         return reply.code(500).send({ error: "AI failed to rewrite" });
       }
     },

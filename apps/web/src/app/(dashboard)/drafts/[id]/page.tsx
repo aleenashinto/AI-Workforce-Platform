@@ -177,14 +177,24 @@ export default function DraftEditorPage({
         </div>
 
         <div className="flex items-center gap-3">
-          <div className="flex items-center gap-2 mr-4 font-mono text-xs text-gray-400">
-            {saving ? (
-              <span className="text-yellow-400">Saving...</span>
-            ) : (
-              <span className="flex items-center gap-1">
-                <Check size={14} className="text-[#00ff88]" /> Saved
-              </span>
-            )}
+          <div className="flex items-center gap-4 mr-4">
+            <div className="font-mono text-xs text-gray-400">
+              {saving ? (
+                <span className="text-yellow-400">Saving...</span>
+              ) : (
+                <span className="flex items-center gap-1">
+                  <Check size={14} className="text-[#00ff88]" /> Saved
+                </span>
+              )}
+            </div>
+
+            <button
+              onClick={() => handleSave("manual_save")}
+              disabled={saving}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded font-mono text-xs bg-[#00ff88]/10 text-[#00ff88] border border-[#00ff88]/30 hover:bg-[#00ff88]/20 transition-colors disabled:opacity-50"
+            >
+              <Save size={14} /> Save Changes
+            </button>
           </div>
 
           <button
