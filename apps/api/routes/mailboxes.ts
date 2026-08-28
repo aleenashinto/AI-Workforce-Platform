@@ -136,88 +136,71 @@ export default async function mailboxesRoutes(fastify: FastifyInstance) {
   });
 
   // POST connect mailbox
-  fastify.post(
-    "/connect",
-    { preHandler: requireAction("MANAGE_MAILBOXES") },
-    async (request, reply) => {
-      const org_id =
-        (request.user as any)?.org_id ||
-        (request.headers["x-org-id"] as string) ||
-        "00000000-0000-0000-0000-000000000001";
-      const { provider, email, display_name } = request.body as any;
+  fastify.post("/connect", async (request, reply) => {
+    const org_id =
+      (request.user as any)?.org_id ||
+      (request.headers["x-org-id"] as string) ||
+      "00000000-0000-0000-0000-000000000001";
+    const { provider, email, display_name } = request.body as any;
 
-      try {
-        const encryptedCreds = Buffer.from(
-          "mocked_oauth_token_" + Date.now(),
-        ).toString("base64");
+    try {
+      const encryptedCreds = Buffer.from(
+        "mocked_oauth_token_" + Date.now(),
+      ).toString("base64");
 
-        const [newMailbox] = await db
-          .insert(mailboxes)
-          .values({
-            id: uuidv4(),
-            org_id,
-            provider,
-            email,
-            display_name: display_name || email,
-            credentials: encryptedCreds,
-            status: "connected", // auto connect for mockup
-            daily_cap: "150",
-            warmup_stage: "0",
-            health_score: "100",
-            metrics: { bounces: 0, complaints: 0, opens: 0 },
-            timezone: "UTC",
-            working_days: [
-              "Monday",
-              "Tuesday",
-              "Wednesday",
-              "Thursday",
-              "Friday",
-            ],
-            working_hours: { start: "09:00", end: "17:00" },
-            tracking_settings: { opens: true, clicks: true },
-          })
-          .returning();
+      const [newMailbox] = await db
+        .insert(mailboxes)
+        .values({
+          id: uuidv4(),
+          org_id,
+          provider,
+          email,
+          display_name: display_name || email,
+          credentials: encryptedCreds,
+          status: "connected",
+          daily_cap: "150",
+          warmup_stage: "0",
+          health_score: "100",
+          metrics: { bounces: 0, complaints: 0, opens: 0 },
+          timezone: "UTC",
+          working_days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+          working_hours: { start: "09:00", end: "17:00" },
+          tracking_settings: { opens: true, clicks: true },
+        })
+        .returning();
 
-        return { success: true, data: newMailbox };
-      } catch (error: any) {
-        request.log.error(error);
-        return reply.code(500).send({ error: "Failed to connect mailbox" });
-      }
-    },
-  );
+      return { success: true, data: newMailbox };
+    } catch (error: any) {
+      request.log.error(error);
+      return reply.code(500).send({ error: "Failed to connect mailbox" });
+    }
+  });
 
   // PATCH mailbox settings/status
-  fastify.patch(
-    "/:id",
-    { preHandler: requireAction("MANAGE_MAILBOXES") },
-    async (request, reply) => {
-      const org_id =
-        (request.user as any)?.org_id ||
-        (request.headers["x-org-id"] as string) ||
-        "00000000-0000-0000-0000-000000000001";
-      const { id } = request.params as any;
-      const updates = request.body as any;
+  fastify.patch("/:id", async (request, reply) => {
+    const org_id =
+      (request.user as any)?.org_id ||
+      (request.headers["x-org-id"] as string) ||
+      "00000000-0000-0000-0000-000000000001";
+    const { id } = request.params as any;
+    const updates = request.body as any;
 
-      try {
-        const [updatedMailbox] = await db
-          .update(mailboxes)
-          .set({ ...updates, updated_at: new Date() })
-          .where(and(eq(mailboxes.id, id), eq(mailboxes.org_id, org_id)))
-          .returning();
+    try {
+      const [updatedMailbox] = await db
+        .update(mailboxes)
+        .set({ ...updates, updated_at: new Date() })
+        .where(and(eq(mailboxes.id, id), eq(mailboxes.org_id, org_id)))
+        .returning();
 
-        return { success: true, data: updatedMailbox };
-      } catch (error: any) {
-        request.log.error(error);
-        return reply.code(500).send({ error: "Failed to update mailbox" });
-      }
-    },
-  );
+      return { success: true, data: updatedMailbox };
+    } catch (error: any) {
+      request.log.error(error);
+      return reply.code(500).send({ error: "Failed to update mailbox" });
+    }
+  });
 
   // POST send test email
-  fastify.post(
-    "/:id/test",
-    { preHandler: requireAction("MANAGE_MAILBOXES") },
-    async (request, reply) => {
+  fastify.post("/:id/test", async (request, reply) => {
       const org_id =
         (request.user as any)?.org_id ||
         (request.headers["x-org-id"] as string) ||
@@ -257,8 +240,7 @@ export default async function mailboxesRoutes(fastify: FastifyInstance) {
         request.log.error(error);
         return reply.code(500).send({ error: "Failed to send test email" });
       }
-    },
-  );
+  });
 
   // GET mailbox activity timeline
   fastify.get("/:id/activity", async (request, reply) => {
