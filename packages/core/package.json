@@ -12,5 +12,10 @@
   "license": "ISC",
   "devDependencies": {
     "vitest": "^4.1.10"
+  },
+  "dependencies": {
+    "@ai-workforce/db": "workspace:*",
+    "@ai-workforce/llm": "workspace:*",
+    "drizzle-orm": "^0.45.2"
   }
 }
