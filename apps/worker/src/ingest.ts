@@ -25,12 +25,39 @@ export async function processIngestJob(job: Job, embedQueue: Queue) {
 
   console.log(`Starting ingest for source ${source_id}, file ${fileKey}`);
 
-  // 1. Fetch file from S3 (simulated if no real AWS creds)
-  // const s3Object = await s3.send(new GetObjectCommand({ Bucket: process.env.S3_BUCKET || 'ai-workforce-uploads', Key: fileKey }));
-  // const fileBuffer = await s3Object.Body?.transformToByteArray();
+  // 1. Fetch file from S3
+  let fileBuffer: Buffer | null = null;
+  try {
+    const s3Object = await s3.send(new GetObjectCommand({ Bucket: process.env.S3_BUCKET || 'ai-workforce-uploads', Key: fileKey }));
+    const byteArray = await s3Object.Body?.transformToByteArray();
+    if (byteArray) fileBuffer = Buffer.from(byteArray);
+  } catch (err: any) {
+    console.warn(`[Ingest] Could not fetch file from S3: ${err.message}. Falling back to demo mock.`);
+  }
 
-  // 2. Parse file (Mocking parser here)
-  const parsedText = `Simulated parsed text for ${fileKey}. \n\n# Chapter 1\nThis is the content.`;
+  // 2. Parse file
+  let parsedText = "";
+  if (fileBuffer) {
+    try {
+      if (fileKey.toLowerCase().endsWith(".pdf")) {
+        const pdfParse = require("pdf-parse");
+        const pdfData = await pdfParse(fileBuffer);
+        parsedText = pdfData.text;
+      } else {
+        // Assume text/markdown/csv
+        parsedText = fileBuffer.toString("utf-8");
+      }
+    } catch (parseErr: any) {
+      console.error(`[Ingest] Parsing failed for ${fileKey}:`, parseErr.message);
+      parsedText = `Failed to parse ${fileKey}: ${parseErr.message}`;
+    }
+  } else {
+    parsedText = `Simulated parsed text for ${fileKey}. \n\n# Chapter 1\nThis is the content.`;
+  }
+
+  // Ensure text is clean
+  parsedText = parsedText.replace(/\u0000/g, "").trim();
+  if (!parsedText) parsedText = "Empty document";
 
   // 3. Compute hash
   const contentHash = crypto
