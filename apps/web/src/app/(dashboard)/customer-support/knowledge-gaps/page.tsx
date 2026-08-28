@@ -61,7 +61,7 @@ export default function KnowledgeGapsPage() {
 
   useEffect(() => {
     fetchApi(
-      "/knowledge/v1/knowledge-gaps?org_id=00000000-0000-0000-0000-000000000001",
+      "/knowledge/knowledge-gaps"
     )
       .then((res) => {
         setGaps(res.data?.gaps || res.gaps || []);
@@ -117,7 +117,7 @@ export default function KnowledgeGapsPage() {
 
   const handleResolveGap = async (gapId: string) => {
     try {
-      await fetchApi(`/knowledge/v1/knowledge-gaps/${gapId}`, {
+      await fetchApi(`/knowledge/knowledge-gaps/${gapId}`, {
         method: "PATCH",
         body: JSON.stringify({ status: "resolved" }),
       });

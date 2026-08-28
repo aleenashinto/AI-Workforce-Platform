@@ -73,7 +73,7 @@ export default function KnowledgePage() {
   useEffect(() => {
     // Org ID will be injected by middleware, but we pass it anyway for the specific implementation
     fetchApi(
-      "/knowledge/v1/sources?org_id=00000000-0000-0000-0000-000000000001",
+      "/knowledge/sources"
     )
       .then((data) => {
         setSources(data?.sources || []);

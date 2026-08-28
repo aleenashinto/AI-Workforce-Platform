@@ -161,7 +161,7 @@ function AddKnowledgeContent() {
       }
 
       // 1. Create source
-      const res = await fetch(`${API_BASE}/knowledge/v1/sources`, {
+      const res = await fetch(`${API_BASE}/knowledge/sources`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
@@ -185,7 +185,7 @@ function AddKnowledgeContent() {
           reader.onerror = (error) => reject(error);
         });
 
-        const uploadRes = await fetch(`${API_BASE}/knowledge/v1/sources/proxy-upload`, {
+        const uploadRes = await fetch(`${API_BASE}/knowledge/sources/proxy-upload`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -198,7 +198,7 @@ function AddKnowledgeContent() {
         if (!uploadRes.ok) throw new Error("Failed to upload file to storage via proxy.");
 
         const confirmRes = await fetch(
-          `${API_BASE}/knowledge/v1/sources/confirm-upload`,
+          `${API_BASE}/knowledge/sources/confirm-upload`,
           {
             method: "POST",
             headers: { "Content-Type": "application/json" },
