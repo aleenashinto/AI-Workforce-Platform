@@ -3,21 +3,26 @@ import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { randomUUID } from "crypto";
 import { db } from "@ai-workforce/db";
-import { knowledge_sources, knowledge_gaps } from "@ai-workforce/db/schema";
+import {
+  knowledge_sources,
+  knowledge_gaps,
+  organizations,
+  memberships,
+} from "@ai-workforce/db/schema";
 import { eq, desc, and } from "drizzle-orm";
 import { Queue } from "bullmq";
 
 // Use an options object that prevents crashing when Redis isn't available
 const queueOpts = {
   connection: {
-    host: process.env.REDIS_HOST || "127.0.0.1",
-    port: 6379,
+    url: process.env.REDIS_URL || "redis://127.0.0.1:6379",
     maxRetriesPerRequest: null as any,
     retryStrategy: () => null,
     lazyConnect: true,
   },
 };
 const ingestionQueue = new Queue("ingestion", queueOpts);
+ingestionQueue.on("error", () => {});
 
 export async function knowledgeRoutes(fastify: FastifyInstance) {
   const s3 = new S3Client({
@@ -66,57 +71,65 @@ export async function knowledgeRoutes(fastify: FastifyInstance) {
   }
 
   fastify.post("/sources", async (request, reply) => {
-    const org_id = await getOrgId(request);
-    const { type, name, config } = request.body as any;
+    try {
+      const org_id = await getOrgId(request);
+      const { type, name, config } = (request.body as any) || {};
 
-    if (type === "file") {
-      const { filename, contentType } = config || {};
-      const fileKey = `${org_id}/${randomUUID()}-${filename || "file"}`;
+      if (type === "file") {
+        const { filename, contentType } = config || {};
+        const fileKey = `${org_id}/${randomUUID()}-${filename || "file"}`;
 
-      const command = new PutObjectCommand({
-        Bucket: process.env.S3_BUCKET || "ai-workforce-uploads",
-        Key: fileKey,
-        ContentType: contentType || "application/octet-stream",
-      });
+        const command = new PutObjectCommand({
+          Bucket: process.env.S3_BUCKET || "ai-workforce-uploads",
+          Key: fileKey,
+          ContentType: contentType || "application/octet-stream",
+        });
 
-      const presignedUrl = await getSignedUrl(s3, command, { expiresIn: 3600 });
+        const presignedUrl = await getSignedUrl(s3, command, { expiresIn: 3600 });
 
-      const [source] = await db
-        .insert(knowledge_sources)
-        .values({
-          org_id,
-          type,
-          name: name || filename || "Uploaded File",
-          status: "pending",
-          config: { file_key: fileKey, filename, contentType },
-        })
-        .returning();
+        const [source] = await db
+          .insert(knowledge_sources)
+          .values({
+            org_id,
+            type,
+            name: name || filename || "Uploaded File",
+            status: "pending",
+            config: { file_key: fileKey, filename, contentType },
+          })
+          .returning();
 
-      return { source, uploadUrl: presignedUrl };
-    } else {
-      const [source] = await db
-        .insert(knowledge_sources)
-        .values({
-          org_id,
-          type,
-          name: name || (config?.url ? config.url : "Knowledge Source"),
-          status: "ready",
-          config: config || {},
-        })
-        .returning();
+        return { success: true, source, uploadUrl: presignedUrl };
+      } else {
+        const [source] = await db
+          .insert(knowledge_sources)
+          .values({
+            org_id,
+            type: type || "website",
+            name: name || (config?.url ? config.url : "Knowledge Source"),
+            status: "ready",
+            config: config || {},
+          })
+          .returning();
 
-      if (type !== "file") {
-        try {
-          await ingestionQueue.add("process-source", { sourceId: source.id });
-        } catch (err: any) {
-          console.warn(
-            "Failed to enqueue ingestion job (Redis likely unavailable):",
-            err?.message,
-          );
+        if (type !== "file") {
+          try {
+            await ingestionQueue.add("process-source", { sourceId: source.id });
+          } catch (err: any) {
+            console.warn(
+              "Failed to enqueue ingestion job (Redis likely unavailable):",
+              err?.message,
+            );
+          }
         }
-      }
 
-      return { source };
+        return { success: true, source };
+      }
+    } catch (err: any) {
+      request.log.error(err, "Failed to create knowledge source");
+      return reply.status(500).send({
+        error: "Failed to create knowledge source",
+        message: err?.message || String(err),
+      });
     }
   });
 
