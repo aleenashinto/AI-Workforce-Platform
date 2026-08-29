@@ -1,12 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { usePathname } from "next/navigation";
 import {
   Search,
   Filter,
@@ -107,6 +102,9 @@ export default function InboxLayout({
 
   const list = getFilteredList();
 
+  const pathname = usePathname();
+  const isDetail = pathname !== "/customer-support/inbox" && pathname.startsWith("/customer-support/inbox");
+
   return (
     <div
       style={{
@@ -117,12 +115,10 @@ export default function InboxLayout({
     >
       {/* 1. Conversations List (Left Column) */}
       <div
+        className={`${isDetail ? "hidden md:flex" : "flex w-full md:w-[320px]"} shrink-0 flex-col`}
         style={{
-          width: 320,
           borderRight: `1px solid ${T.border}`,
           background: T.bg2,
-          display: "flex",
-          flexDirection: "column",
         }}
       >
         {/* Filters Header */}
@@ -309,10 +305,8 @@ export default function InboxLayout({
 
       {/* 2. Conversation View / Details */}
       <div
+        className={`${isDetail ? "flex flex-1" : "hidden md:flex flex-1"} flex-col min-w-0`}
         style={{
-          flex: 1,
-          display: "flex",
-          flexDirection: "column",
           background: T.bg,
           position: "relative",
         }}

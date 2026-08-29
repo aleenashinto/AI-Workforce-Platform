@@ -135,7 +135,9 @@ export default function AuditLogsPage() {
         style={{
           display: "flex",
           justifyContent: "space-between",
-          alignItems: "center",
+          alignItems: "flex-start",
+          flexWrap: "wrap",
+          gap: "1rem",
           marginBottom: "2.5rem",
         }}
       >
@@ -162,30 +164,43 @@ export default function AuditLogsPage() {
               letterSpacing: "0.05em",
             }}
           >
-            Track security and configuration changes across your organization.
+            Security tracking and historical system operations.
           </p>
         </div>
       </div>
 
-      <div style={{ display: "flex", gap: "1rem", marginBottom: "1.5rem" }}>
-        <div style={{ position: "relative", flex: 1 }}>
+      <div
+        style={{
+          display: "flex",
+          gap: "1rem",
+          marginBottom: "1.5rem",
+          flexWrap: "wrap",
+          alignItems: "center",
+        }}
+      >
+        <div style={{ flex: "1 1 240px", position: "relative", minWidth: 200 }}>
           <Search
-            size={14}
+            size={16}
             color={T.muted}
-            style={{ position: "absolute", left: 12, top: 10 }}
+            style={{
+              position: "absolute",
+              left: "1rem",
+              top: "50%",
+              transform: "translateY(-50%)",
+            }}
           />
           <input
             type="text"
-            placeholder="Search by user, action, resource..."
+            placeholder="Search audit trail..."
             style={{
               width: "100%",
               background: T.panel,
           borderRadius: "var(--t-radius)",
               border: `1px solid ${T.border}`,
               color: T.text,
+              padding: "0.5rem 1rem 0.5rem 2.5rem",
               fontFamily: T.mono,
               fontSize: "0.8rem",
-              padding: "0.5rem 1rem 0.5rem 2.2rem",
               outline: "none",
             }}
           />
@@ -253,10 +268,12 @@ export default function AuditLogsPage() {
           borderRadius: "var(--t-radius)",
           border: `1px solid ${T.border}`,
           position: "relative",
+          overflow: "hidden",
         }}
       >
         <Corners />
-        <table style={{ width: "100%", borderCollapse: "collapse" }}>
+        <div style={{ overflowX: "auto", WebkitOverflowScrolling: "touch" }}>
+          <table style={{ width: "100%", minWidth: 700, borderCollapse: "collapse" }}>
           <thead>
             <tr style={{ borderBottom: `1px solid ${T.border}` }}>
               <th
@@ -420,7 +437,8 @@ export default function AuditLogsPage() {
               </tr>
             ))}
           </tbody>
-        </table>
+          </table>
+        </div>
       </div>
     </div>
   );

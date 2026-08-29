@@ -245,7 +245,7 @@ export default function TeamPage() {
     <div style={{ padding: "2rem", maxWidth: 1100, margin: "0 auto", minHeight: "100vh" }}>
 
       {/* ── Header ─────────────────────────────────────────────────────── */}
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "2.5rem" }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: "1rem", marginBottom: "2.5rem" }}>
         <div>
           <h1 style={{ fontFamily: T.display, fontSize: "2.2rem", fontWeight: 700, color: "var(--t-heading)", marginBottom: "0.5rem", display: "flex", alignItems: "center", gap: "1rem", textShadow: "0 0 20px rgba(0,255,136,0.2)" }}>
             <Users color={T.g} size={32} /> Team Members
@@ -396,11 +396,12 @@ export default function TeamPage() {
 
       {/* ── Data Table ─────────────────────────────────────────────────── */}
       <div style={{ background: T.panel,
-          borderRadius: "var(--t-radius)", border: `1px solid ${T.border}`, position: "relative", boxShadow: "0 10px 40px rgba(0,0,0,0.4)" }}>
+          borderRadius: "var(--t-radius)", border: `1px solid ${T.border}`, position: "relative", boxShadow: "0 10px 40px rgba(0,0,0,0.4)", overflow: "hidden" }}>
         <Corners />
         <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 1, background: `linear-gradient(90deg,${T.g},transparent)` }} />
 
-        <table style={{ width: "100%", borderCollapse: "collapse" }}>
+        <div style={{ overflowX: "auto", WebkitOverflowScrolling: "touch" }}>
+          <table style={{ width: "100%", minWidth: 680, borderCollapse: "collapse" }}>
           <thead>
             <tr style={{ borderBottom: `1px solid ${T.border}`, background: "rgba(0,0,0,0.2)" }}>
               {["User", "Roles", "Status"].map((h, idx) => (
@@ -529,7 +530,8 @@ export default function TeamPage() {
               })
             )}
           </tbody>
-        </table>
+          </table>
+        </div>
       </div>
 
       {/* ── Invite Member Modal ─────────────────────────────────────────── */}

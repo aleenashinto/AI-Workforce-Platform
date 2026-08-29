@@ -126,25 +126,28 @@ export default function KnowledgePage() {
 
   return (
     <div style={{ padding: "2rem", maxWidth: 1200, margin: "0 auto" }}>
+      {/* Header */}
       <div
         style={{
           display: "flex",
           justifyContent: "space-between",
-          alignItems: "center",
-          marginBottom: "2.5rem",
+          alignItems: "flex-start",
+          flexWrap: "wrap",
+          gap: "1rem",
+          marginBottom: "2rem",
         }}
       >
         <div>
           <h1
             style={{
               fontFamily: T.display,
-              fontSize: "2.2rem",
-              fontWeight: 700,
+              fontSize: "1.8rem",
+              fontWeight: "bold",
               color: "var(--t-heading)",
-              marginBottom: "0.5rem",
+              textShadow: T.glow,
               display: "flex",
               alignItems: "center",
-              gap: "1rem",
+              gap: "0.8rem",
             }}
           >
             <Database color={T.g} size={32} /> Knowledge Base
@@ -196,6 +199,8 @@ export default function KnowledgePage() {
           gap: "1.5rem",
           marginBottom: "1.5rem",
           borderBottom: `1px solid rgba(0,255,136,0.1)`,
+          overflowX: "auto",
+          WebkitOverflowScrolling: "touch",
         }}
       >
         {["all", "ready", "processing", "failed"].map((t) => (
@@ -214,6 +219,7 @@ export default function KnowledgePage() {
                 activeTab === t ? `2px solid ${T.g}` : "2px solid transparent",
               paddingBottom: "0.5rem",
               transition: "all 0.2s",
+              whiteSpace: "nowrap",
             }}
           >
             {t}
@@ -228,6 +234,7 @@ export default function KnowledgePage() {
           border: `1px solid ${T.border}`,
           padding: "1.5rem",
           position: "relative",
+          overflow: "hidden",
         }}
       >
         <Corners />
@@ -255,13 +262,14 @@ export default function KnowledgePage() {
             NO_SOURCES_FOUND
           </div>
         ) : (
-          <table style={{ width: "100%", borderCollapse: "collapse" }}>
-            <thead>
-              <tr style={{ borderBottom: `1px solid ${T.border}` }}>
-                <th
-                  style={{
-                    textAlign: "left",
-                    padding: "1rem",
+          <div style={{ overflowX: "auto", WebkitOverflowScrolling: "touch" }}>
+            <table style={{ width: "100%", minWidth: 650, borderCollapse: "collapse" }}>
+              <thead>
+                <tr style={{ borderBottom: `1px solid ${T.border}` }}>
+                  <th
+                    style={{
+                      textAlign: "left",
+                      padding: "1rem",
                     fontFamily: T.mono,
                     fontSize: "0.75rem",
                     color: T.muted,
@@ -451,8 +459,9 @@ export default function KnowledgePage() {
               ))}
             </tbody>
           </table>
-        )}
-      </div>
+        </div>
+      )}
     </div>
-  );
+  </div>
+);
 }

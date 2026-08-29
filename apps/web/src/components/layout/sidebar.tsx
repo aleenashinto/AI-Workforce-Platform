@@ -24,6 +24,7 @@ import {
   ChevronRight,
   AlertTriangle,
   User,
+  X,
 } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useUserContext } from "@/contexts/UserContext";
@@ -206,13 +207,13 @@ export function Sidebar({
       `}
       style={{ background: T.sidebar, borderRight: `1px solid ${T.sidebarBorder}` }}
     >
-      {/* Logo */}
+      {/* Logo & Mobile Close */}
       <div
         style={{
           height: 80,
           display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
+          alignItems: "center",
+          justifyContent: "space-between",
           padding: "0 1.5rem",
           borderBottom: `1px solid ${T.border}`,
         }}
@@ -258,6 +259,16 @@ export function Sidebar({
             </span>
           </div>
         </div>
+
+        {setMobileMenuOpen && (
+          <button
+            onClick={() => setMobileMenuOpen(false)}
+            className="md:hidden text-gray-400 hover:text-white p-1 rounded transition-colors"
+            aria-label="Close sidebar"
+          >
+            <X size={20} />
+          </button>
+        )}
       </div>
 
       {/* Nav Menu */}
@@ -332,6 +343,7 @@ export function Sidebar({
                       label={label}
                       icon={Icon}
                       active={isActive(path)}
+                      onClick={() => setMobileMenuOpen?.(false)}
                     />
                   ))}
                 </div>
@@ -455,16 +467,19 @@ function NavItem({
   label,
   icon: Icon,
   active,
+  onClick,
 }: {
   href: string;
   label: string;
   icon: React.ElementType;
   active: boolean;
+  onClick?: () => void;
 }) {
   const [hov, setHov] = useState(false);
   return (
     <Link
       href={href}
+      onClick={onClick}
       onMouseEnter={() => setHov(true)}
       onMouseLeave={() => setHov(false)}
       style={{

@@ -456,28 +456,48 @@ export default function ConversationView() {
         {/* Header */}
         <div
           style={{
-            padding: "1.2rem 2rem",
+            padding: "1rem 1.5rem",
             borderBottom: `1px solid ${T.border}`,
             background: T.bg2,
             display: "flex",
+            flexWrap: "wrap",
+            gap: "0.75rem",
             justifyContent: "space-between",
             alignItems: "center",
           }}
         >
-          <div>
-            <div
+          <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+            <Link
+              href="/customer-support/inbox"
+              className="md:hidden"
               style={{
-                fontFamily: T.mono,
-                fontSize: "0.75rem",
-                color: T.muted,
-                marginBottom: "0.3rem",
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+                padding: "0.4rem",
+                borderRadius: "4px",
+                border: `1px solid ${T.border}`,
+                color: T.g,
+                background: "rgba(0,255,136,0.05)",
+                textDecoration: "none",
               }}
             >
-              CONVERSATION #{conversation.id.split("-")[0].toUpperCase()}
-            </div>
-            <div
-              style={{ display: "flex", gap: "0.8rem", alignItems: "center" }}
-            >
+              <ArrowLeft size={16} />
+            </Link>
+            <div>
+              <div
+                style={{
+                  fontFamily: T.mono,
+                  fontSize: "0.75rem",
+                  color: T.muted,
+                  marginBottom: "0.3rem",
+                }}
+              >
+                CONVERSATION #{conversation.id.split("-")[0].toUpperCase()}
+              </div>
+              <div
+                style={{ display: "flex", gap: "0.8rem", alignItems: "center", flexWrap: "wrap" }}
+              >
               <div style={{ position: "relative" }}>
                 <button
                   onClick={() => setShowStatus(!showStatus)}
@@ -570,8 +590,9 @@ export default function ConversationView() {
               )}
             </div>
           </div>
+        </div>
 
-          <div style={{ display: "flex", gap: "0.8rem", alignItems: "center" }}>
+        <div style={{ display: "flex", gap: "0.8rem", alignItems: "center", flexWrap: "wrap" }}>
             <div style={{ position: "relative" }}>
               <button
                 onClick={() => setShowAssign(!showAssign)}

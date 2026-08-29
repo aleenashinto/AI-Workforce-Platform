@@ -161,8 +161,9 @@ export default function ConversationsHistory() {
         style={{
           display: "flex",
           alignItems: "center",
-          justifyItems: "center",
           justifyContent: "space-between",
+          flexWrap: "wrap",
+          gap: "1rem",
           marginBottom: "2rem",
         }}
       >
@@ -191,7 +192,7 @@ export default function ConversationsHistory() {
             {"// RETENTION: 365 DAYS"}
           </p>
         </div>
-        <div style={{ display: "flex", gap: "1rem" }}>
+        <div style={{ display: "flex", gap: "0.8rem", flexWrap: "wrap", alignItems: "center" }}>
           <div
             style={{
               position: "relative",
@@ -366,16 +367,19 @@ export default function ConversationsHistory() {
           borderRadius: "var(--t-radius)",
           border: `1px solid ${T.border}`,
           position: "relative",
+          overflow: "hidden",
         }}
       >
         <Corners />
-        <table
-          style={{
-            width: "100%",
-            borderCollapse: "collapse",
-            textAlign: "left",
-          }}
-        >
+        <div style={{ overflowX: "auto", WebkitOverflowScrolling: "touch" }}>
+          <table
+            style={{
+              width: "100%",
+              minWidth: 720,
+              borderCollapse: "collapse",
+              textAlign: "left",
+            }}
+          >
           <thead>
             <tr
               style={{
@@ -636,7 +640,8 @@ export default function ConversationsHistory() {
               ))
             )}
           </tbody>
-        </table>
+          </table>
+        </div>
       </div>
     </div>
   );

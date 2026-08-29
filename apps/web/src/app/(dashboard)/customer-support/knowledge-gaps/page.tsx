@@ -201,7 +201,7 @@ export default function KnowledgeGapsPage() {
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "repeat(4, 1fr)",
+          gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
           gap: "1.5rem",
         }}
       >
@@ -249,8 +249,8 @@ export default function KnowledgeGapsPage() {
       </div>
 
       {/* SEARCH AND FILTERS */}
-      <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
-        <div style={{ flex: 1, position: "relative" }}>
+      <div style={{ display: "flex", gap: "1rem", alignItems: "center", flexWrap: "wrap" }}>
+        <div style={{ flex: "1 1 250px", position: "relative", minWidth: 200 }}>
           <Search
             size={18}
             color={T.muted}
@@ -293,7 +293,8 @@ export default function KnowledgeGapsPage() {
             outline: "none",
             appearance: "none",
             cursor: "pointer",
-            minWidth: 150,
+            minWidth: 140,
+            flex: "1 1 auto",
           }}
         >
           {["All", "Open", "Resolved", "Dismissed"].map((opt) => (
@@ -316,7 +317,8 @@ export default function KnowledgeGapsPage() {
             outline: "none",
             appearance: "none",
             cursor: "pointer",
-            minWidth: 150,
+            minWidth: 140,
+            flex: "1 1 auto",
           }}
         >
           {["All", "Critical", "High", "Medium", "Low"].map((opt) => (
@@ -336,10 +338,12 @@ export default function KnowledgeGapsPage() {
           position: "relative",
           flex: 1,
           minHeight: 400,
+          overflow: "hidden",
         }}
       >
         <Corners />
-        <table style={{ width: "100%", borderCollapse: "collapse" }}>
+        <div style={{ overflowX: "auto", WebkitOverflowScrolling: "touch" }}>
+          <table style={{ width: "100%", minWidth: 700, borderCollapse: "collapse" }}>
           <thead>
             <tr
               style={{
@@ -569,7 +573,8 @@ export default function KnowledgeGapsPage() {
               })
             )}
           </tbody>
-        </table>
+          </table>
+        </div>
       </div>
 
       {/* GAP DETAILS MODAL */}

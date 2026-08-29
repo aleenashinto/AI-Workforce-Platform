@@ -140,99 +140,101 @@ export default function MailboxesPage() {
               Loading mailboxes...
             </div>
           ) : (
-            <Table>
-              <TableHeader>
-                <TableRow className="hover:bg-transparent border-[#3F3F5A]">
-                  <TableHead className="text-[color:var(--t-text)]">Email Account</TableHead>
-                  <TableHead className="text-[color:var(--t-text)]">Provider</TableHead>
-                  <TableHead className="text-[color:var(--t-text)]">Status</TableHead>
-                  <TableHead className="text-[color:var(--t-text)]">Health Score</TableHead>
-                  <TableHead className="text-[color:var(--t-text)]">Bounces</TableHead>
-                  <TableHead className="text-right text-[color:var(--t-text)]">
-                    Actions
-                  </TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {mailboxes.length === 0 ? (
-                  <TableRow className="border-[#3F3F5A]">
-                    <TableCell
-                      colSpan={6}
-                      className="h-32 text-center text-[color:var(--t-text)]"
-                    >
-                      No mailboxes connected yet.
-                    </TableCell>
+            <div className="overflow-x-auto">
+              <Table className="min-w-[650px]">
+                <TableHeader>
+                  <TableRow className="hover:bg-transparent border-[#3F3F5A]">
+                    <TableHead className="text-[color:var(--t-text)]">Email Account</TableHead>
+                    <TableHead className="text-[color:var(--t-text)]">Provider</TableHead>
+                    <TableHead className="text-[color:var(--t-text)]">Status</TableHead>
+                    <TableHead className="text-[color:var(--t-text)]">Health Score</TableHead>
+                    <TableHead className="text-[color:var(--t-text)]">Bounces</TableHead>
+                    <TableHead className="text-right text-[color:var(--t-text)]">
+                      Actions
+                    </TableHead>
                   </TableRow>
-                ) : (
-                  mailboxes.map((mailbox) => (
-                    <TableRow
-                      key={mailbox.id}
-                      className="hover:bg-[#2A2A3C] transition-colors border-[#3F3F5A]"
-                    >
-                      <TableCell className="font-medium text-white">
-                        {mailbox.email}
-                      </TableCell>
-                      <TableCell className="capitalize text-[color:var(--t-text)]">
-                        {mailbox.provider}
-                      </TableCell>
-                      <TableCell>
-                        <span
-                          className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                            mailbox.status === "active"
-                              ? "bg-green-900/30 text-green-400"
-                              : mailbox.status === "warmup"
-                                ? "bg-blue-900/30 text-blue-400"
-                                : "bg-red-900/30 text-red-400"
-                          }`}
-                        >
-                          {mailbox.status}
-                        </span>
-                      </TableCell>
-                      <TableCell>
-                        <div className="flex items-center space-x-2">
-                          <div
-                            className={`font-semibold ${getHealthColor(mailbox.health_score || 100)}`}
-                          >
-                            {mailbox.health_score || 100}%
-                          </div>
-                          <div className="w-16 h-2 bg-[#2A2A3C] rounded-full overflow-hidden">
-                            <div
-                              className={`h-full ${mailbox.health_score >= 90 ? "bg-green-500" : mailbox.health_score >= 70 ? "bg-yellow-500" : "bg-red-500"}`}
-                              style={{
-                                width: `${mailbox.health_score || 100}%`,
-                              }}
-                            />
-                          </div>
-                        </div>
-                      </TableCell>
-                      <TableCell className="text-[color:var(--t-text)]">
-                        {mailbox.metrics?.bounces || 0}
-                      </TableCell>
-                      <TableCell className="text-right">
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          onClick={() =>
-                            togglePause(mailbox.id, mailbox.status === "paused")
-                          }
-                          className={`bg-[#2A2A3C] border-[#3F3F5A] ${mailbox.status === "paused" ? "text-green-400 hover:text-green-300 hover:bg-[#3F3F5A]" : "text-amber-400 hover:text-amber-300 hover:bg-[#3F3F5A]"}`}
-                        >
-                          {mailbox.status === "paused" ? (
-                            <>
-                              <Play className="h-4 w-4 mr-1" /> Resume
-                            </>
-                          ) : (
-                            <>
-                              <Pause className="h-4 w-4 mr-1" /> Pause
-                            </>
-                          )}
-                        </Button>
+                </TableHeader>
+                <TableBody>
+                  {mailboxes.length === 0 ? (
+                    <TableRow className="border-[#3F3F5A]">
+                      <TableCell
+                        colSpan={6}
+                        className="h-32 text-center text-[color:var(--t-text)]"
+                      >
+                        No mailboxes connected yet.
                       </TableCell>
                     </TableRow>
-                  ))
-                )}
-              </TableBody>
-            </Table>
+                  ) : (
+                    mailboxes.map((mailbox) => (
+                      <TableRow
+                        key={mailbox.id}
+                        className="hover:bg-[#2A2A3C] transition-colors border-[#3F3F5A]"
+                      >
+                        <TableCell className="font-medium text-white">
+                          {mailbox.email}
+                        </TableCell>
+                        <TableCell className="capitalize text-[color:var(--t-text)]">
+                          {mailbox.provider}
+                        </TableCell>
+                        <TableCell>
+                          <span
+                            className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                              mailbox.status === "active"
+                                ? "bg-green-900/30 text-green-400"
+                                : mailbox.status === "warmup"
+                                  ? "bg-blue-900/30 text-blue-400"
+                                  : "bg-red-900/30 text-red-400"
+                            }`}
+                          >
+                            {mailbox.status}
+                          </span>
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex items-center space-x-2">
+                            <div
+                              className={`font-semibold ${getHealthColor(mailbox.health_score || 100)}`}
+                            >
+                              {mailbox.health_score || 100}%
+                            </div>
+                            <div className="w-16 h-2 bg-[#2A2A3C] rounded-full overflow-hidden">
+                              <div
+                                className={`h-full ${mailbox.health_score >= 90 ? "bg-green-500" : mailbox.health_score >= 70 ? "bg-yellow-500" : "bg-red-500"}`}
+                                style={{
+                                  width: `${mailbox.health_score || 100}%`,
+                                }}
+                              />
+                            </div>
+                          </div>
+                        </TableCell>
+                        <TableCell className="text-[color:var(--t-text)]">
+                          {mailbox.metrics?.bounces || 0}
+                        </TableCell>
+                        <TableCell className="text-right">
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() =>
+                              togglePause(mailbox.id, mailbox.status === "paused")
+                            }
+                            className={`bg-[#2A2A3C] border-[#3F3F5A] ${mailbox.status === "paused" ? "text-green-400 hover:text-green-300 hover:bg-[#3F3F5A]" : "text-amber-400 hover:text-amber-300 hover:bg-[#3F3F5A]"}`}
+                          >
+                            {mailbox.status === "paused" ? (
+                              <>
+                                <Play className="h-4 w-4 mr-1" /> Resume
+                              </>
+                            ) : (
+                              <>
+                                <Pause className="h-4 w-4 mr-1" /> Pause
+                              </>
+                            )}
+                          </Button>
+                        </TableCell>
+                      </TableRow>
+                    ))
+                  )}
+                </TableBody>
+              </Table>
+            </div>
           )}
         </CardContent>
       </Card>

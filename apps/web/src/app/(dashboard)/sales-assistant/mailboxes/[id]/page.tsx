@@ -97,82 +97,85 @@ export default function MailboxDetailPage({
   return (
     <div className="h-full flex flex-col bg-[color:var(--t-bg)]">
       {/* HEADER */}
-      <header className="h-16 border-b border-[#00ff88]/20 flex items-center justify-between px-6 bg-[color:var(--t-panel)] shrink-0">
+      <header className="h-auto min-h-[5rem] border-b border-[#00ff88]/20 bg-[color:var(--t-bg2)] flex flex-wrap items-center justify-between px-6 py-4 gap-4 shrink-0">
         <div className="flex items-center gap-4">
           <Link
             href="/sales-assistant/mailboxes"
-            className="p-1.5 rounded hover:bg-[#00ff88]/10 text-[color:var(--t-text)] hover:text-[#00ff88] transition-colors"
+            className="p-2 border border-gray-700 rounded hover:border-[#00ff88] text-[color:var(--t-text)] hover:text-[#00ff88] transition-colors"
           >
-            <ArrowLeft size={18} />
+            <ArrowLeft size={16} />
           </Link>
-          <div className="flex flex-col">
-            <span className="font-mono text-sm font-bold text-white flex items-center gap-2">
-              {mailbox.display_name || mailbox.email}
+          <div>
+            <div className="flex items-center gap-3">
+              <h1 className="text-xl font-bold font-display text-white">
+                {mailbox.email}
+              </h1>
               <span
-                className={`px-2 py-0.5 rounded text-[10px] uppercase border ${
-                  mailbox.status === "connected" || mailbox.status === "healthy"
-                    ? "bg-[#00ff88]/10 text-[#00ff88] border-[#00ff88]/30"
-                    : mailbox.status === "paused"
-                      ? "bg-yellow-400/10 text-yellow-400 border-yellow-400/30"
-                      : "bg-red-400/10 text-red-400 border-red-400/30"
+                className={`px-2 py-0.5 rounded text-xs font-mono uppercase ${
+                  mailbox.status === "active" || mailbox.status === "connected"
+                    ? "bg-[#00ff88]/10 text-[#00ff88] border border-[#00ff88]/30"
+                    : mailbox.status === "warmup"
+                      ? "bg-blue-500/10 text-blue-400 border border-blue-500/30"
+                      : "bg-yellow-500/10 text-yellow-400 border border-yellow-500/30"
                 }`}
               >
                 {mailbox.status}
               </span>
-            </span>
-            <span className="text-xs text-[#00ff88]/60 font-mono">
-              {mailbox.email}
-            </span>
+            </div>
+            <div className="text-xs text-[color:var(--t-text)] font-mono mt-1">
+              Provider: <span className="capitalize">{mailbox.provider}</span> •
+              Display Name: {mailbox.display_name}
+            </div>
           </div>
         </div>
 
-        <div className="flex items-center gap-3 font-mono text-sm">
+        <div className="flex items-center gap-3 font-mono text-xs flex-wrap">
           <button
             onClick={() => setShowTestModal(true)}
-            className="flex items-center gap-2 px-4 py-1.5 rounded border border-gray-600 text-[color:var(--t-text)] hover:bg-gray-800 transition-colors"
+            className="flex items-center gap-2 px-3 py-1.5 rounded border border-[#00ff88]/40 text-[#00ff88] hover:bg-[#00ff88]/10 transition-colors"
           >
-            <Send size={14} /> TEST
+            <Send size={14} /> SEND TEST
           </button>
 
-          {mailbox.status === "paused" ? (
+          {mailbox.status === "active" ? (
             <button
-              onClick={() => handleStatusChange("connected")}
-              className="flex items-center gap-2 px-4 py-1.5 rounded border border-[#00ff88]/50 text-[#00ff88] hover:bg-[#00ff88]/10 transition-colors"
+              onClick={() => handleStatusChange("paused")}
+              className="flex items-center gap-2 px-3 py-1.5 rounded border border-yellow-500/40 text-yellow-400 hover:bg-yellow-500/10 transition-colors"
             >
-              <Play size={14} /> RESUME
+              <Pause size={14} /> PAUSE WARMUP
             </button>
           ) : (
             <button
-              onClick={() => handleStatusChange("paused")}
-              className="flex items-center gap-2 px-4 py-1.5 rounded border border-yellow-400/50 text-yellow-400 hover:bg-yellow-400/10 transition-colors"
+              onClick={() => handleStatusChange("active")}
+              className="flex items-center gap-2 px-3 py-1.5 rounded border border-[#00ff88]/40 text-[#00ff88] hover:bg-[#00ff88]/10 transition-colors"
             >
-              <Pause size={14} /> PAUSE
+              <Play size={14} /> RESUME
             </button>
           )}
 
-          <button className="flex items-center gap-2 px-4 py-1.5 rounded border border-red-500/50 text-red-400 hover:bg-red-500/10 transition-colors ml-2">
+          <button className="flex items-center gap-2 px-4 py-1.5 rounded border border-red-500/50 text-red-400 hover:bg-red-500/10 transition-colors">
             <Repeat size={14} /> RECONNECT
           </button>
         </div>
       </header>
 
       {/* TABS */}
-      <div className="flex border-b border-[#00ff88]/20 bg-[color:var(--t-bg2)] px-6 font-mono text-sm shrink-0">
+      <div className="flex border-b border-[#00ff88]/20 bg-[color:var(--t-bg2)] px-6 font-mono text-sm shrink-0 overflow-x-auto">
         <button
           onClick={() => setActiveTab("overview")}
-          className={`px-6 py-3 border-b-2 transition-colors ${activeTab === "overview" ? "border-[#00ff88] text-[#00ff88]" : "border-transparent text-[color:var(--t-text)] hover:text-white"}`}
+          className={`px-6 py-3 border-b-2 transition-colors whitespace-nowrap ${activeTab === "overview" ? "border-[#00ff88] text-[#00ff88]" : "border-transparent text-[color:var(--t-text)] hover:text-white"}`}
         >
           OVERVIEW
         </button>
         <button
           onClick={() => setActiveTab("activity")}
-          className={`px-6 py-3 border-b-2 transition-colors ${activeTab === "activity" ? "border-[#00ff88] text-[#00ff88]" : "border-transparent text-[color:var(--t-text)] hover:text-white"}`}
+          className={`px-6 py-3 border-b-2 transition-colors whitespace-nowrap ${activeTab === "activity" ? "border-[#00ff88] text-[#00ff88]" : "border-transparent text-[color:var(--t-text)] hover:text-white"}`}
         >
           ACTIVITY
         </button>
         <button
           onClick={() => setActiveTab("sequences")}
-          className={`px-6 py-3 border-b-2 transition-colors flex items-center gap-2 ${activeTab === "sequences" ? "border-[#00ff88] text-[#00ff88]" : "border-transparent text-[color:var(--t-text)] hover:text-white"}`}
+          className={`px-6 py-3 border-b-2 transition-colors flex items-center gap-2 whitespace-nowrap ${activeTab === "sequences" ? "border-[#00ff88] text-[#00ff88]" : "border-transparent text-[color:var(--t-text)] hover:text-white"}`}
         >
           SEQUENCES{" "}
           <span className="bg-[#00ff88]/20 text-[#00ff88] px-1.5 rounded text-xs">
@@ -181,21 +184,21 @@ export default function MailboxDetailPage({
         </button>
         <button
           onClick={() => setActiveTab("settings")}
-          className={`px-6 py-3 border-b-2 transition-colors ${activeTab === "settings" ? "border-[#00ff88] text-[#00ff88]" : "border-transparent text-[color:var(--t-text)] hover:text-white"}`}
+          className={`px-6 py-3 border-b-2 transition-colors whitespace-nowrap ${activeTab === "settings" ? "border-[#00ff88] text-[#00ff88]" : "border-transparent text-[color:var(--t-text)] hover:text-white"}`}
         >
           SETTINGS
         </button>
       </div>
 
       {/* CONTENT */}
-      <div className="flex-1 overflow-y-auto p-8">
+      <div className="flex-1 overflow-y-auto p-4 sm:p-8">
         {activeTab === "overview" && (
           <div className="max-w-4xl font-mono">
             <h2 className="text-xl font-bold font-display text-white mb-6">
               Mailbox Health
             </h2>
 
-            <div className="grid grid-cols-3 gap-6 mb-8">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
               <div className="bg-[color:var(--t-panel)] border border-[#00ff88]/30 p-6 rounded-lg relative overflow-hidden">
                 <div className="absolute -right-4 -top-4 text-[#00ff88]/5">
                   <CheckCircle size={100} />
@@ -286,57 +289,59 @@ export default function MailboxDetailPage({
               Activity Timeline
             </h2>
             <div className="bg-[color:var(--t-panel)] border border-gray-700 rounded-lg overflow-hidden">
-              <table className="w-full text-left border-collapse">
-                <thead>
-                  <tr className="bg-[color:var(--t-bg2)] border-b border-gray-700 text-xs text-[color:var(--t-text)] uppercase tracking-wider">
-                    <th className="p-4 font-normal">Date / Time</th>
-                    <th className="p-4 font-normal">Event</th>
-                    <th className="p-4 font-normal">Details</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {activities.length === 0 ? (
-                    <tr>
-                      <td colSpan={3} className="p-8 text-center text-[color:var(--t-text)]">
-                        No recent activity.
-                      </td>
+              <div className="overflow-x-auto">
+                <table className="w-full min-w-[600px] text-left border-collapse">
+                  <thead>
+                    <tr className="bg-[color:var(--t-bg2)] border-b border-gray-700 text-xs text-[color:var(--t-text)] uppercase tracking-wider">
+                      <th className="p-4 font-normal">Date / Time</th>
+                      <th className="p-4 font-normal">Event</th>
+                      <th className="p-4 font-normal">Details</th>
                     </tr>
-                  ) : (
-                    activities.map((act) => (
-                      <tr
-                        key={act.id}
-                        className="border-b border-gray-800 text-sm"
-                      >
-                        <td className="p-4 text-[color:var(--t-text)]">
-                          {new Date(act.created_at).toLocaleString()}
-                        </td>
-                        <td className="p-4">
-                          <span
-                            className={`px-2 py-0.5 rounded text-xs uppercase border ${
-                              act.event_type === "sent"
-                                ? "bg-blue-500/10 text-blue-400 border-blue-500/30"
-                                : act.event_type === "replied"
-                                  ? "bg-[#00ff88]/10 text-[#00ff88] border-[#00ff88]/30"
-                                  : act.event_type === "bounced"
-                                    ? "bg-red-500/10 text-red-400 border-red-500/30"
-                                    : "bg-gray-800 text-[color:var(--t-text)] border-gray-700"
-                            }`}
-                          >
-                            {act.event_type}
-                          </span>
-                        </td>
-                        <td className="p-4 text-[color:var(--t-text)]">
-                          {act.metadata?.test ? (
-                            <span className="text-yellow-500 mr-2">[TEST]</span>
-                          ) : null}
-                          To: {act.metadata?.to || "Unknown"} -{" "}
-                          {act.metadata?.subject}
+                  </thead>
+                  <tbody>
+                    {activities.length === 0 ? (
+                      <tr>
+                        <td colSpan={3} className="p-8 text-center text-[color:var(--t-text)]">
+                          No recent activity.
                         </td>
                       </tr>
-                    ))
-                  )}
-                </tbody>
-              </table>
+                    ) : (
+                      activities.map((act) => (
+                        <tr
+                          key={act.id}
+                          className="border-b border-gray-800 text-sm"
+                        >
+                          <td className="p-4 text-[color:var(--t-text)]">
+                            {new Date(act.created_at).toLocaleString()}
+                          </td>
+                          <td className="p-4">
+                            <span
+                              className={`px-2 py-0.5 rounded text-xs uppercase border ${
+                                act.event_type === "sent"
+                                  ? "bg-blue-500/10 text-blue-400 border-blue-500/30"
+                                  : act.event_type === "replied"
+                                    ? "bg-[#00ff88]/10 text-[#00ff88] border-[#00ff88]/30"
+                                    : act.event_type === "bounced"
+                                      ? "bg-red-500/10 text-red-400 border-red-500/30"
+                                      : "bg-gray-800 text-[color:var(--t-text)] border-gray-700"
+                              }`}
+                            >
+                              {act.event_type}
+                            </span>
+                          </td>
+                          <td className="p-4 text-[color:var(--t-text)]">
+                            {act.metadata?.test ? (
+                              <span className="text-yellow-500 mr-2">[TEST]</span>
+                            ) : null}
+                            To: {act.metadata?.to || "Unknown"} -{" "}
+                            {act.metadata?.subject}
+                          </td>
+                        </tr>
+                      ))
+                    )}
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         )}

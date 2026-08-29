@@ -90,7 +90,7 @@ export default function SupportAnalyticsPage() {
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "repeat(4, 1fr)",
+          gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
           gap: "1.5rem",
           marginBottom: "2rem",
         }}
@@ -161,7 +161,7 @@ export default function SupportAnalyticsPage() {
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "1fr 1fr",
+          gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
           gap: "1.5rem",
           marginBottom: "1.5rem",
         }}
@@ -294,7 +294,7 @@ export default function SupportAnalyticsPage() {
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "1fr 1fr",
+          gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
           gap: "1.5rem",
         }}
       >
@@ -381,7 +381,7 @@ export default function SupportAnalyticsPage() {
             border: `1px solid ${T.border}`,
             padding: "1.5rem",
             position: "relative",
-            height: 240,
+            minHeight: 240,
           }}
         >
           <Corners />
@@ -401,7 +401,8 @@ export default function SupportAnalyticsPage() {
             style={{
               display: "flex",
               gap: "1rem",
-              height: "100%",
+              height: "calc(100% - 3rem)",
+              minHeight: 140,
               alignItems: "center",
               justifyContent: "center",
             }}
@@ -430,6 +431,7 @@ export default function SupportAnalyticsPage() {
           padding: "1.5rem",
           position: "relative",
           marginTop: "1.5rem",
+          overflow: "hidden",
         }}
       >
         <Corners />
@@ -445,91 +447,93 @@ export default function SupportAnalyticsPage() {
         >
           Top Questions (Clustered)
         </div>
-        <table style={{ width: "100%", borderCollapse: "collapse" }}>
-          <thead>
-            <tr style={{ borderBottom: `1px solid rgba(0,255,136,0.1)` }}>
-              <th
-                style={{
-                  textAlign: "left",
-                  padding: "0.8rem",
-                  fontFamily: T.mono,
-                  fontSize: "0.7rem",
-                  color: T.muted,
-                  fontWeight: "normal",
-                }}
-              >
-                QUESTION THEME
-              </th>
-              <th
-                style={{
-                  textAlign: "left",
-                  padding: "0.8rem",
-                  fontFamily: T.mono,
-                  fontSize: "0.7rem",
-                  color: T.muted,
-                  fontWeight: "normal",
-                }}
-              >
-                VOLUME
-              </th>
-              <th
-                style={{
-                  textAlign: "left",
-                  padding: "0.8rem",
-                  fontFamily: T.mono,
-                  fontSize: "0.7rem",
-                  color: T.muted,
-                  fontWeight: "normal",
-                }}
-              >
-                AI RESOLVED
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {[
-              { q: "How do I reset my password?", v: 145, r: "98%" },
-              { q: "Where is my order?", v: 112, r: "85%" },
-              { q: "How to integrate with Salesforce?", v: 89, r: "45%" },
-            ].map((row, i) => (
-              <tr
-                key={i}
-                style={{ borderBottom: `1px solid var(--t-white-05)` }}
-              >
-                <td
+        <div style={{ overflowX: "auto", WebkitOverflowScrolling: "touch" }}>
+          <table style={{ width: "100%", minWidth: 500, borderCollapse: "collapse" }}>
+            <thead>
+              <tr style={{ borderBottom: `1px solid rgba(0,255,136,0.1)` }}>
+                <th
                   style={{
-                    padding: "1rem",
-                    fontFamily: T.body,
-                    fontSize: "0.95rem",
-                    color: "var(--t-heading)",
-                  }}
-                >
-                  {row.q}
-                </td>
-                <td
-                  style={{
-                    padding: "1rem",
+                    textAlign: "left",
+                    padding: "0.8rem",
                     fontFamily: T.mono,
-                    fontSize: "0.85rem",
-                    color: T.text,
+                    fontSize: "0.7rem",
+                    color: T.muted,
+                    fontWeight: "normal",
                   }}
                 >
-                  {row.v}
-                </td>
-                <td
+                  QUESTION THEME
+                </th>
+                <th
                   style={{
-                    padding: "1rem",
+                    textAlign: "left",
+                    padding: "0.8rem",
                     fontFamily: T.mono,
-                    fontSize: "0.85rem",
-                    color: T.g,
+                    fontSize: "0.7rem",
+                    color: T.muted,
+                    fontWeight: "normal",
                   }}
                 >
-                  {row.r}
-                </td>
+                  VOLUME
+                </th>
+                <th
+                  style={{
+                    textAlign: "left",
+                    padding: "0.8rem",
+                    fontFamily: T.mono,
+                    fontSize: "0.7rem",
+                    color: T.muted,
+                    fontWeight: "normal",
+                  }}
+                >
+                  AI RESOLVED
+                </th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {[
+                { q: "How do I reset my password?", v: 145, r: "98%" },
+                { q: "Where is my order?", v: 112, r: "85%" },
+                { q: "How to integrate with Salesforce?", v: 89, r: "45%" },
+              ].map((row, i) => (
+                <tr
+                  key={i}
+                  style={{ borderBottom: `1px solid var(--t-white-05)` }}
+                >
+                  <td
+                    style={{
+                      padding: "1rem",
+                      fontFamily: T.body,
+                      fontSize: "0.95rem",
+                      color: "var(--t-heading)",
+                    }}
+                  >
+                    {row.q}
+                  </td>
+                  <td
+                    style={{
+                      padding: "1rem",
+                      fontFamily: T.mono,
+                      fontSize: "0.85rem",
+                      color: T.text,
+                    }}
+                  >
+                    {row.v}
+                  </td>
+                  <td
+                    style={{
+                      padding: "1rem",
+                      fontFamily: T.mono,
+                      fontSize: "0.85rem",
+                      color: T.g,
+                    }}
+                  >
+                    {row.r}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

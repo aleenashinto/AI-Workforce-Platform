@@ -354,129 +354,136 @@ export default function LeadDiscoveryPage() {
                   </p>
                 </div>
               ) : (
-                <table className="w-full text-left text-sm text-[color:var(--t-text)]">
-                  <thead className="text-xs uppercase bg-[color:var(--t-panel)] border-[color:var(--t-border)] text-[color:var(--t-text)] text-[color:var(--t-muted)] sticky top-0">
-                    <tr>
-                      <th className="p-3 w-10">
-                        <Checkbox
-                          checked={
-                            selectedProspects.size === prospects.length &&
-                            prospects.length > 0
-                          }
-                          onCheckedChange={() =>
-                            setSelectedProspects(
-                              selectedProspects.size === prospects.length
-                                ? new Set()
-                                : new Set(prospects.map((p) => p.id)),
-                            )
-                          }
-                        />
-                      </th>
-                      <th className="p-3">Company</th>
-                      <th className="p-3">Contact</th>
-                      <th className="p-3">Role</th>
-                      <th className="p-3 text-center">ICP Match</th>
-                      <th className="p-3 text-center">Lead Score</th>
-                      <th className="p-3">Signals</th>
-                      <th className="p-3"></th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-[rgba(0,255,136,0.1)]">
-                    {prospects.map((p) => (
-                      <tr
-                        key={p.id}
-                        className="hover:bg-[#00ff88]/5 transition-colors group cursor-pointer"
-                        onClick={(e) => {
-                          if ((e.target as any).type !== "button")
-                            setSelectedProspect(p);
-                        }}
-                      >
-                        <td
-                          className="p-3"
-                          onClick={(e) => e.stopPropagation()}
-                        >
+                <div className="overflow-x-auto">
+                  <table className="w-full min-w-[700px] text-left text-sm text-[color:var(--t-text)]">
+                    <thead className="text-xs uppercase bg-[color:var(--t-panel)] border-[color:var(--t-border)] text-[color:var(--t-text)] text-[color:var(--t-muted)] sticky top-0">
+                      <tr>
+                        <th className="p-3 w-10">
                           <Checkbox
-                            checked={selectedProspects.has(p.id)}
-                            onCheckedChange={() => toggleProspect(p.id)}
-                          />
-                        </td>
-                        <td className="p-3">
-                          <div className="font-bold text-[color:var(--t-heading)]">
-                            {p.company.name}
-                          </div>
-                          <div className="text-xs text-[color:var(--t-text)] flex items-center gap-1">
-                            <MapPin className="w-3 h-3" /> {p.company.location}
-                          </div>
-                        </td>
-                        <td className="p-3 font-medium text-gray-200">
-                          {p.contact.name}
-                        </td>
-                        <td className="p-3">
-                          <div className="text-[color:var(--t-text)]">
-                            {p.contact.job_title}
-                          </div>
-                          <div className="text-xs text-[#00cfff]">
-                            {p.company.industry}
-                          </div>
-                        </td>
-                        <td className="p-3 text-center">
-                          <Badge
-                            variant="outline"
-                            className={
-                              p.scores.icpMatch >= 90
-                                ? "border-[#00ff88] text-[#00ff88] bg-[#00ff88]/10"
-                                : p.scores.icpMatch >= 70
-                                  ? "border-amber-400 text-amber-400 bg-amber-400/10"
-                                  : "border-gray-500 text-[color:var(--t-muted)]"
+                            checked={
+                              selectedProspects.size === prospects.length &&
+                              prospects.length > 0
                             }
-                          >
-                            {p.scores.icpMatch}%
-                          </Badge>
-                        </td>
-                        <td className="p-3 text-center">
-                          <div
-                            className="font-bold"
-                            style={{
-                              fontFamily: T.mono,
-                              color:
-                                p.scores.leadScore >= 90
-                                  ? "#ff3366"
-                                  : p.scores.leadScore >= 70
-                                    ? "#ffaa00"
-                                    : "#888",
-                            }}
-                          >
-                            {p.scores.leadScore}{" "}
-                            {p.scores.leadScore >= 90 && "🔥"}
-                          </div>
-                        </td>
-                        <td className="p-3">
-                          {p.signals?.length > 0 ? (
-                            <span className="text-xs px-2 py-1 bg-indigo-500/20 text-indigo-300 rounded border border-indigo-500/30">
-                              {p.signals.length} Signal
-                              {p.signals.length !== 1 && "s"}
-                            </span>
-                          ) : (
-                            <span className="text-[color:var(--t-text)] text-xs">-</span>
-                          )}
-                        </td>
-                        <td className="p-3 text-right">
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            className="opacity-0 group-hover:opacity-100 border-[#00cfff]/30 text-[#00cfff] hover:bg-[#00cfff]/20 h-7 text-xs transition-opacity"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              setSelectedProspect(p);
-                            }}
-                          >
-                            View
-                          </Button>
-                        </td>
+                            onCheckedChange={() =>
+                              setSelectedProspects(
+                                selectedProspects.size === prospects.length
+                                  ? new Set()
+                                  : new Set(prospects.map((p) => p.id)),
+                              )
+                            }
+                          />
+                        </th>
+                        <th className="p-3">Company</th>
+                        <th className="p-3">Contact</th>
+                        <th className="p-3">Role</th>
+                        <th className="p-3 text-center">ICP Match</th>
+                        <th className="p-3 text-center">Lead Score</th>
+                        <th className="p-3">Signals</th>
+                        <th className="p-3"></th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
+                    </thead>
+                    <tbody className="divide-y divide-[rgba(0,255,136,0.1)]">
+                      {prospects.map((p) => (
+                        <tr
+                          key={p.id}
+                          className="hover:bg-[#00ff88]/5 transition-colors group cursor-pointer"
+                          onClick={(e) => {
+                            if ((e.target as any).type !== "button")
+                              setSelectedProspect(p);
+                          }}
+                        >
+                          <td
+                            className="p-3"
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            <Checkbox
+                              checked={selectedProspects.has(p.id)}
+                              onCheckedChange={() => toggleProspect(p.id)}
+                            />
+                          </td>
+                          <td className="p-3">
+                            <div className="font-bold text-[color:var(--t-heading)]">
+                              {p.company.name}
+                            </div>
+                            <div className="text-xs text-[color:var(--t-text)] flex items-center gap-1">
+                              <MapPin className="w-3 h-3" /> {p.company.location}
+                            </div>
+                          </td>
+                          <td className="p-3 font-medium text-gray-200">
+                            {p.contact.name}
+                          </td>
+                          <td className="p-3">
+                            <div className="text-[color:var(--t-text)]">
+                              {p.contact.job_title}
+                            </div>
+                            <div className="text-xs text-[#00cfff]">
+                              {p.company.industry}
+                            </div>
+                          </td>
+                          <td className="p-3 text-center">
+                            <Badge
+                              variant="outline"
+                              className={
+                                p.scores.icpMatch >= 90
+                                  ? "border-[#00ff88] text-[#00ff88] bg-[#00ff88]/10"
+                                  : p.scores.icpMatch >= 70
+                                    ? "border-amber-400 text-amber-400 bg-amber-400/10"
+                                    : "border-gray-500 text-[color:var(--t-muted)]"
+                              }
+                            >
+                              {p.scores.icpMatch}%
+                            </Badge>
+                          </td>
+                          <td className="p-3 text-center">
+                            <div
+                              className="font-bold"
+                              style={{
+                                fontFamily: T.mono,
+                                color:
+                                  p.scores.leadScore >= 90
+                                    ? "#ff3366"
+                                    : p.scores.leadScore >= 70
+                                      ? "#ffaa00"
+                                      : "#888",
+                              }}
+                            >
+                              {p.scores.leadScore}{" "}
+                              {p.scores.leadScore >= 90 && "🔥"}
+                            </div>
+                          </td>
+                          <td className="p-3">
+                            <div className="flex gap-1 flex-wrap max-w-xs">
+                              {p.signals.map((sig: any, idx: number) => (
+                                <Badge
+                                  key={idx}
+                                  variant="secondary"
+                                  className="text-xs bg-[color:var(--t-bg2)] text-[#00cfff] border border-[#00cfff]/20"
+                                >
+                                  {sig}
+                                </Badge>
+                              ))}
+                            </div>
+                          </td>
+                          <td
+                            className="p-3 text-right"
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className="text-[color:var(--t-text)] hover:text-white"
+                              onClick={() => {
+                                setSelectedProspect(p);
+                              }}
+                            >
+                              View
+                            </Button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
               )}
             </div>
           </div>
@@ -486,7 +493,7 @@ export default function LeadDiscoveryPage() {
       {/* PROSPECT DRAWER */}
       {selectedProspect && (
         <div className="fixed inset-0 z-50 flex justify-end bg-black/60 backdrop-blur-sm animate-in fade-in">
-          <div className="w-[500px] h-full bg-[color:var(--t-bg2)] border-l border-[rgba(0,207,255,0.3)] shadow-2xl flex flex-col animate-in slide-in-from-right overflow-y-auto">
+          <div className="w-full sm:w-[500px] max-w-full h-full bg-[color:var(--t-bg2)] border-l border-[rgba(0,207,255,0.3)] shadow-2xl flex flex-col animate-in slide-in-from-right overflow-y-auto">
             <div className="p-6 border-b border-[rgba(0,207,255,0.2)] flex justify-between items-start bg-[color:var(--t-bg2)]">
               <div>
                 <h2 className="text-2xl font-bold text-[color:var(--t-heading)] mb-1">

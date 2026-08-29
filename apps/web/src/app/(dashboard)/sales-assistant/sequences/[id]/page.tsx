@@ -95,7 +95,7 @@ export default function SequenceEditorPage({
   return (
     <div className="h-full flex flex-col bg-[color:var(--t-bg)]">
       {/* HEADER */}
-      <header className="h-16 border-b border-[#00ff88]/20 flex items-center justify-between px-6 bg-[color:var(--t-panel)] shrink-0">
+      <header className="h-auto min-h-[4.5rem] border-b border-[#00ff88]/20 flex flex-wrap items-center justify-between px-6 py-3 bg-[color:var(--t-panel)] gap-4 shrink-0">
         <div className="flex items-center gap-4">
           <Link
             href="/sales-assistant/sequences"
@@ -124,7 +124,7 @@ export default function SequenceEditorPage({
           </div>
         </div>
 
-        <div className="flex items-center gap-3 font-mono text-sm">
+        <div className="flex items-center gap-3 font-mono text-sm flex-wrap">
           {sequence.status === "active" ? (
             <button
               onClick={() => handleStatusChange("paused")}
@@ -141,23 +141,23 @@ export default function SequenceEditorPage({
             </button>
           )}
 
-          <button className="flex items-center gap-2 px-4 py-1.5 rounded bg-blue-500/20 text-blue-400 border border-blue-500/50 hover:bg-blue-500/30 transition-colors ml-4">
+          <button className="flex items-center gap-2 px-4 py-1.5 rounded bg-blue-500/20 text-blue-400 border border-blue-500/50 hover:bg-blue-500/30 transition-colors">
             <Users size={14} /> ENROLL LEADS
           </button>
         </div>
       </header>
 
       {/* TABS */}
-      <div className="flex border-b border-[#00ff88]/20 bg-[color:var(--t-bg2)] px-6 font-mono text-sm shrink-0">
+      <div className="flex border-b border-[#00ff88]/20 bg-[color:var(--t-bg2)] px-6 font-mono text-sm shrink-0 overflow-x-auto">
         <button
           onClick={() => setActiveTab("builder")}
-          className={`px-6 py-3 border-b-2 transition-colors ${activeTab === "builder" ? "border-[#00ff88] text-[#00ff88]" : "border-transparent text-[color:var(--t-text)] hover:text-white"}`}
+          className={`px-6 py-3 border-b-2 transition-colors whitespace-nowrap ${activeTab === "builder" ? "border-[#00ff88] text-[#00ff88]" : "border-transparent text-[color:var(--t-text)] hover:text-white"}`}
         >
           BUILDER
         </button>
         <button
           onClick={() => setActiveTab("enrollments")}
-          className={`px-6 py-3 border-b-2 transition-colors flex items-center gap-2 ${activeTab === "enrollments" ? "border-[#00ff88] text-[#00ff88]" : "border-transparent text-[color:var(--t-text)] hover:text-white"}`}
+          className={`px-6 py-3 border-b-2 transition-colors flex items-center gap-2 whitespace-nowrap ${activeTab === "enrollments" ? "border-[#00ff88] text-[#00ff88]" : "border-transparent text-[color:var(--t-text)] hover:text-white"}`}
         >
           ENROLLMENTS{" "}
           <span className="bg-[#00ff88]/20 text-[#00ff88] px-1.5 rounded text-xs">
@@ -166,13 +166,13 @@ export default function SequenceEditorPage({
         </button>
         <button
           onClick={() => setActiveTab("analytics")}
-          className={`px-6 py-3 border-b-2 transition-colors ${activeTab === "analytics" ? "border-[#00ff88] text-[#00ff88]" : "border-transparent text-[color:var(--t-text)] hover:text-white"}`}
+          className={`px-6 py-3 border-b-2 transition-colors whitespace-nowrap ${activeTab === "analytics" ? "border-[#00ff88] text-[#00ff88]" : "border-transparent text-[color:var(--t-text)] hover:text-white"}`}
         >
           ANALYTICS
         </button>
         <button
           onClick={() => setActiveTab("settings")}
-          className={`px-6 py-3 border-b-2 transition-colors ${activeTab === "settings" ? "border-[#00ff88] text-[#00ff88]" : "border-transparent text-[color:var(--t-text)] hover:text-white"}`}
+          className={`px-6 py-3 border-b-2 transition-colors whitespace-nowrap ${activeTab === "settings" ? "border-[#00ff88] text-[#00ff88]" : "border-transparent text-[color:var(--t-text)] hover:text-white"}`}
         >
           SETTINGS
         </button>
@@ -181,9 +181,9 @@ export default function SequenceEditorPage({
       {/* MAIN CONTENT */}
       <div className="flex-1 overflow-hidden">
         {activeTab === "builder" && (
-          <div className="h-full flex">
+          <div className="h-full flex flex-col md:flex-row overflow-y-auto">
             {/* Visual Flow */}
-            <div className="flex-1 overflow-y-auto p-12 bg-gray-900/50 flex flex-col items-center">
+            <div className="flex-1 p-6 md:p-12 bg-gray-900/50 flex flex-col items-center">
               <div className="mb-6 flex flex-col items-center">
                 <div className="bg-[color:var(--t-panel)] border border-[#00ff88]/30 px-6 py-2 rounded-full font-mono text-xs text-[#00ff88] shadow-[0_0_15px_rgba(0,255,136,0.1)]">
                   TRIGGER: LEADS ENROLLED
@@ -230,8 +230,8 @@ export default function SequenceEditorPage({
               </div>
             </div>
 
-            {/* Properties Panel (stubbed for now) */}
-            <div className="w-96 bg-[color:var(--t-panel)] border-l border-[#00ff88]/20 p-6 flex flex-col">
+            {/* Properties Panel */}
+            <div className="w-full md:w-80 lg:w-96 bg-[color:var(--t-panel)] border-t md:border-t-0 md:border-l border-[#00ff88]/20 p-6 flex flex-col">
               <h3 className="font-mono text-[#00ff88] text-sm uppercase mb-6 flex items-center gap-2">
                 <Settings size={16} /> Builder Settings
               </h3>
@@ -244,72 +244,74 @@ export default function SequenceEditorPage({
         )}
 
         {activeTab === "enrollments" && (
-          <div className="p-8 h-full overflow-y-auto">
-            <table className="w-full text-left border-collapse">
-              <thead>
-                <tr className="bg-[color:var(--t-bg2)] border-b border-[#00ff88]/10 font-mono text-xs text-[#00ff88]/60 uppercase tracking-wider">
-                  <th className="p-4 font-normal">Lead</th>
-                  <th className="p-4 font-normal">Company</th>
-                  <th className="p-4 font-normal">Status</th>
-                  <th className="p-4 font-normal">Current Step</th>
-                  <th className="p-4 font-normal">Enrolled At</th>
-                </tr>
-              </thead>
-              <tbody>
-                {sequence.enrollments?.length === 0 ? (
-                  <tr>
-                    <td
-                      colSpan={5}
-                      className="p-8 text-center text-[#00ff88]/50 font-mono"
-                    >
-                      No enrollments yet.
-                    </td>
+          <div className="p-4 sm:p-8 h-full overflow-y-auto">
+            <div className="overflow-x-auto">
+              <table className="w-full min-w-[650px] text-left border-collapse">
+                <thead>
+                  <tr className="bg-[color:var(--t-bg2)] border-b border-[#00ff88]/10 font-mono text-xs text-[#00ff88]/60 uppercase tracking-wider">
+                    <th className="p-4 font-normal">Lead</th>
+                    <th className="p-4 font-normal">Company</th>
+                    <th className="p-4 font-normal">Status</th>
+                    <th className="p-4 font-normal">Current Step</th>
+                    <th className="p-4 font-normal">Enrolled At</th>
                   </tr>
-                ) : (
-                  sequence.enrollments?.map((e: any) => (
-                    <tr
-                      key={e.id}
-                      className="border-b border-[#00ff88]/5 font-mono text-sm"
-                    >
-                      <td className="p-4 font-bold text-white">
-                        {e.lead_name}
-                      </td>
-                      <td className="p-4 text-[color:var(--t-text)]">{e.lead_company}</td>
-                      <td className="p-4">
-                        <span
-                          className={`px-2 py-0.5 rounded text-xs border ${
-                            e.status === "active"
-                              ? "bg-[#00ff88]/10 text-[#00ff88] border-[#00ff88]/30"
-                              : e.status === "completed"
-                                ? "bg-blue-500/10 text-blue-400 border-blue-500/30"
-                                : e.status === "replied"
-                                  ? "bg-[#00cfff]/10 text-[#00cfff] border-[#00cfff]/30"
-                                  : "bg-gray-800 text-[color:var(--t-text)] border-gray-600"
-                          } uppercase`}
-                        >
-                          {e.status}
-                        </span>
-                      </td>
-                      <td className="p-4 text-[color:var(--t-text)]">
-                        Step {e.current_step}
-                      </td>
-                      <td className="p-4 text-[color:var(--t-text)] text-xs">
-                        {new Date(e.created_at).toLocaleDateString()}
+                </thead>
+                <tbody>
+                  {sequence.enrollments?.length === 0 ? (
+                    <tr>
+                      <td
+                        colSpan={5}
+                        className="p-8 text-center text-[#00ff88]/50 font-mono"
+                      >
+                        No enrollments yet.
                       </td>
                     </tr>
-                  ))
-                )}
-              </tbody>
-            </table>
+                  ) : (
+                    sequence.enrollments?.map((e: any) => (
+                      <tr
+                        key={e.id}
+                        className="border-b border-[#00ff88]/5 font-mono text-sm"
+                      >
+                        <td className="p-4 font-bold text-white">
+                          {e.lead_name}
+                        </td>
+                        <td className="p-4 text-[color:var(--t-text)]">{e.lead_company}</td>
+                        <td className="p-4">
+                          <span
+                            className={`px-2 py-0.5 rounded text-xs border ${
+                              e.status === "active"
+                                ? "bg-[#00ff88]/10 text-[#00ff88] border-[#00ff88]/30"
+                                : e.status === "completed"
+                                  ? "bg-blue-500/10 text-blue-400 border-blue-500/30"
+                                  : e.status === "replied"
+                                    ? "bg-[#00cfff]/10 text-[#00cfff] border-[#00cfff]/30"
+                                    : "bg-gray-800 text-[color:var(--t-text)] border-gray-600"
+                            } uppercase`}
+                          >
+                            {e.status}
+                          </span>
+                        </td>
+                        <td className="p-4 text-[color:var(--t-text)]">
+                          Step {e.current_step}
+                        </td>
+                        <td className="p-4 text-[color:var(--t-text)] text-xs">
+                          {new Date(e.created_at).toLocaleDateString()}
+                        </td>
+                      </tr>
+                    ))
+                  )}
+                </tbody>
+              </table>
+            </div>
           </div>
         )}
 
         {activeTab === "analytics" && (
-          <div className="p-8">
+          <div className="p-4 sm:p-8 overflow-y-auto">
             <h2 className="text-xl font-bold font-display text-white mb-6">
               Sequence Performance
             </h2>
-            <div className="grid grid-cols-4 gap-6 font-mono mb-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 font-mono mb-8">
               <div className="bg-[color:var(--t-panel)] border border-[#00ff88]/20 p-6 rounded-lg">
                 <div className="text-4xl font-bold text-white mb-2">
                   {sequence.stats?.enrolled || 0}
