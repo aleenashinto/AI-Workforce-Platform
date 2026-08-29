@@ -322,9 +322,10 @@ export default function ConversationView() {
               <div
                 style={{
                   background: T.panel,
+          borderRadius: "var(--t-radius)",
                   padding: "0.8rem",
                   borderRadius: "4px",
-                  border: `1px solid rgba(255,255,255,0.05)`,
+                  border: `1px solid var(--t-white-05)`,
                 }}
               >
                 <div
@@ -356,9 +357,10 @@ export default function ConversationView() {
               <div
                 style={{
                   background: T.panel,
+          borderRadius: "var(--t-radius)",
                   padding: "0.8rem",
                   borderRadius: "4px",
-                  border: `1px solid rgba(255,255,255,0.05)`,
+                  border: `1px solid var(--t-white-05)`,
                 }}
               >
                 <div
@@ -407,8 +409,8 @@ export default function ConversationView() {
                       fontFamily: T.mono,
                       fontSize: "0.7rem",
                       padding: "0.2rem 0.5rem",
-                      background: "rgba(255,255,255,0.05)",
-                      border: `1px solid rgba(255,255,255,0.1)`,
+                      background: "var(--t-white-05)",
+                      border: `1px solid var(--t-white-10)`,
                       color: T.text,
                       borderRadius: "4px",
                     }}
@@ -495,7 +497,7 @@ export default function ConversationView() {
                         ? "rgba(0,255,136,0.1)"
                         : conversation.status === "escalated"
                           ? "rgba(255,170,0,0.1)"
-                          : "rgba(255,255,255,0.05)",
+                          : "var(--t-white-05)",
                     color:
                       conversation.status === "active"
                         ? T.g
@@ -518,6 +520,7 @@ export default function ConversationView() {
                       left: 0,
                       marginTop: "0.5rem",
                       background: T.panel,
+          borderRadius: "var(--t-radius)",
                       border: `1px solid ${T.border}`,
                       borderRadius: "4px",
                       zIndex: 10,
@@ -540,7 +543,7 @@ export default function ConversationView() {
                           fontFamily: T.mono,
                           fontSize: "0.8rem",
                           cursor: "pointer",
-                          borderBottom: `1px solid rgba(255,255,255,0.05)`,
+                          borderBottom: `1px solid var(--t-white-05)`,
                         }}
                       >
                         {s.toUpperCase()}
@@ -581,6 +584,7 @@ export default function ConversationView() {
                 style={{
                   padding: "0.5rem 1rem",
                   background: T.panel,
+          borderRadius: "var(--t-radius)",
                   border: `1px solid ${T.border}`,
                   color: T.text,
                   cursor: "pointer",
@@ -603,6 +607,7 @@ export default function ConversationView() {
                     right: 0,
                     marginTop: "0.5rem",
                     background: T.panel,
+          borderRadius: "var(--t-radius)",
                     border: `1px solid ${T.border}`,
                     borderRadius: "4px",
                     zIndex: 10,
@@ -613,7 +618,7 @@ export default function ConversationView() {
                   <div
                     style={{
                       padding: "0.5rem 1rem",
-                      borderBottom: `1px solid rgba(255,255,255,0.1)`,
+                      borderBottom: `1px solid var(--t-white-10)`,
                       fontFamily: T.mono,
                       fontSize: "0.7rem",
                       color: T.muted,
@@ -634,7 +639,7 @@ export default function ConversationView() {
                       fontFamily: T.mono,
                       fontSize: "0.8rem",
                       cursor: "pointer",
-                      borderBottom: `1px solid rgba(255,255,255,0.05)`,
+                      borderBottom: `1px solid var(--t-white-05)`,
                     }}
                   >
                     ○ AI Support Agent (Unassigned)
@@ -654,7 +659,7 @@ export default function ConversationView() {
                         fontFamily: T.mono,
                         fontSize: "0.8rem",
                         cursor: "pointer",
-                        borderBottom: `1px solid rgba(255,255,255,0.05)`,
+                        borderBottom: `1px solid var(--t-white-05)`,
                       }}
                     >
                       ○ {a.name || a.email}
@@ -741,9 +746,10 @@ export default function ConversationView() {
                         fontSize: "0.7rem",
                         color: T.muted,
                         background: T.panel,
+          borderRadius: "var(--t-radius)",
                         padding: "0.4rem 1rem",
                         borderRadius: "20px",
-                        border: `1px solid rgba(255,255,255,0.05)`,
+                        border: `1px solid var(--t-white-05)`,
                       }}
                     >
                       {m.content} •{" "}
@@ -800,7 +806,7 @@ export default function ConversationView() {
                         : isAI
                           ? "rgba(0,255,136,0.05)"
                           : "rgba(0,207,255,0.05)",
-                      border: `1px solid ${isUser ? "rgba(255,255,255,0.1)" : isAI ? "rgba(0,255,136,0.2)" : "rgba(0,207,255,0.2)"}`,
+                      border: `1px solid ${isUser ? "var(--t-white-10)" : isAI ? "rgba(0,255,136,0.2)" : "rgba(0,207,255,0.2)"}`,
                       padding: "1rem 1.2rem",
                       maxWidth: "75%",
                       color: "var(--t-heading)",
@@ -883,7 +889,8 @@ export default function ConversationView() {
                     minHeight: "80px",
                     maxHeight: "200px",
                     background: T.panel,
-                    border: `1px solid ${replyText ? T.g : "rgba(255,255,255,0.1)"}`,
+          borderRadius: "var(--t-radius)",
+                    border: `1px solid ${replyText ? T.g : "var(--t-white-10)"}`,
                     color: T.text,
                     fontFamily: T.body,
                     fontSize: "0.95rem",
@@ -1026,7 +1033,7 @@ export default function ConversationView() {
                     flex: 1,
                     padding: "0.8rem",
                     background: "transparent",
-                    border: `1px solid rgba(255,255,255,0.1)`,
+                    border: `1px solid var(--t-white-10)`,
                     color: "var(--t-heading)",
                     borderRadius: "4px",
                     cursor: "pointer",
@@ -1108,7 +1115,7 @@ export default function ConversationView() {
                     flex: 1,
                     padding: "0.8rem",
                     background: "transparent",
-                    border: `1px solid rgba(255,255,255,0.1)`,
+                    border: `1px solid var(--t-white-10)`,
                     color: "var(--t-heading)",
                     borderRadius: "4px",
                     cursor: "pointer",
@@ -1185,6 +1192,7 @@ export default function ConversationView() {
                     fontSize: "0.7rem",
                     padding: "0.2rem 0.5rem",
                     background: T.panel,
+          borderRadius: "var(--t-radius)",
                     border: `1px solid ${T.border}`,
                     color: T.text,
                     borderRadius: "4px",
@@ -1260,7 +1268,8 @@ export default function ConversationView() {
                   <div
                     style={{
                       background: T.panel,
-                      border: `1px solid rgba(255,255,255,0.05)`,
+          borderRadius: "var(--t-radius)",
+                      border: `1px solid var(--t-white-05)`,
                       padding: "1rem",
                       borderRadius: "6px",
                       transition: "border-color 0.2s",

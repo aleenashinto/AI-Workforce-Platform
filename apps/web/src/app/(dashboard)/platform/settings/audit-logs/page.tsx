@@ -19,9 +19,9 @@ const T = {
   muted: "var(--t-muted)",
   text: "var(--t-text)",
   glow: "var(--t-glow)",
-  mono: "'Share Tech Mono', monospace",
-  display: "'Orbitron', sans-serif",
-  body: "'Rajdhani', sans-serif",
+  mono: "var(--t-font-mono)",
+  display: "var(--t-font-display)",
+  body: "var(--t-font-body)",
 };
 
 const Corners = () => (
@@ -182,6 +182,7 @@ export default function AuditLogsPage() {
             style={{
               width: "100%",
               background: T.panel,
+          borderRadius: "var(--t-radius)",
               border: `1px solid ${T.border}`,
               color: T.text,
               fontFamily: T.mono,
@@ -194,6 +195,7 @@ export default function AuditLogsPage() {
         <button
           style={{
             background: T.panel,
+          borderRadius: "var(--t-radius)",
             border: `1px solid ${T.border}`,
             padding: "0.5rem 1rem",
             color: T.text,
@@ -210,6 +212,7 @@ export default function AuditLogsPage() {
         <button
           style={{
             background: T.panel,
+          borderRadius: "var(--t-radius)",
             border: `1px solid ${T.border}`,
             padding: "0.5rem 1rem",
             color: T.text,
@@ -249,11 +252,12 @@ export default function AuditLogsPage() {
       <div
         style={{
           background: T.panel,
+          borderRadius: "var(--t-radius)",
           border: `1px solid ${T.border}`,
           position: "relative",
         }}
       >
-        <Corners />
+        <Corners className="corners" />
         <table style={{ width: "100%", borderCollapse: "collapse" }}>
           <thead>
             <tr style={{ borderBottom: `1px solid ${T.border}` }}>

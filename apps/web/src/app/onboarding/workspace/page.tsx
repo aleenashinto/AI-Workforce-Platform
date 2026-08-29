@@ -53,6 +53,7 @@ export default function WorkspaceSetupPage() {
         width: "100%",
         maxWidth: 600,
         background: T.panel,
+          borderRadius: "var(--t-radius)",
         border: `1px solid ${T.border}`,
         padding: "3rem",
         position: "relative",
@@ -69,7 +70,7 @@ export default function WorkspaceSetupPage() {
           background: `linear-gradient(90deg,${T.g2},${T.g})`,
         }}
       />
-      <Corners />
+      <Corners className="corners" />
 
       <h1
         style={{

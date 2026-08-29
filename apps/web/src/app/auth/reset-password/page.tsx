@@ -20,9 +20,9 @@ const T = {
   text: "var(--t-text)",
   glow: "var(--t-glow)",
   glow2: "var(--t-glow2)",
-  mono: "'Share Tech Mono', monospace",
-  display: "'Orbitron', sans-serif",
-  body: "'Rajdhani', sans-serif",
+  mono: "var(--t-font-mono)",
+  display: "var(--t-font-display)",
+  body: "var(--t-font-body)",
 };
 
 const Corners = () => (
@@ -159,6 +159,7 @@ export default function ResetPasswordPage() {
       <div
         style={{
           background: T.panel,
+          borderRadius: "var(--t-radius)",
           border: `1px solid ${T.border}`,
           width: "100%",
           maxWidth: 420,
@@ -178,7 +179,7 @@ export default function ResetPasswordPage() {
             background: `linear-gradient(90deg,${T.g},${T.g2})`,
           }}
         />
-        <Corners />
+        <Corners className="corners" />
 
         <div
           style={{
@@ -308,7 +309,7 @@ export default function ResetPasswordPage() {
               fontSize: "0.85rem",
               letterSpacing: "0.1em",
               textTransform: "uppercase",
-              color: !allReqsMet || !match ? "rgba(255,255,255,0.2)" : T.bg,
+              color: !allReqsMet || !match ? "var(--t-white-20)" : T.bg,
               background: !allReqsMet || !match ? "rgba(0,255,136,0.1)" : T.g,
               border: "none",
               padding: "1rem",

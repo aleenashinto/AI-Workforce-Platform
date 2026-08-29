@@ -11,9 +11,9 @@ const T = {
   muted: "var(--t-muted)",
   text: "var(--t-text)",
   glow: "var(--t-glow)",
-  mono: "'Share Tech Mono', monospace",
-  display: "'Orbitron', sans-serif",
-  body: "'Rajdhani', sans-serif",
+  mono: "var(--t-font-mono)",
+  display: "var(--t-font-display)",
+  body: "var(--t-font-body)",
 };
 
 const Corners = () => (
@@ -66,7 +66,7 @@ const PlanCard = ({
       boxShadow: isCurrent ? T.glow : "none",
     }}
   >
-    {isCurrent && <Corners />}
+    {isCurrent && <Corners className="corners" />}
 
     <div
       style={{
@@ -261,6 +261,7 @@ export default function BillingPage() {
       <div
         style={{
           background: T.panel,
+          borderRadius: "var(--t-radius)",
           border: `1px solid ${T.border}`,
           padding: "2rem",
           display: "flex",

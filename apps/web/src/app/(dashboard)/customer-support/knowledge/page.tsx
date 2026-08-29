@@ -28,9 +28,9 @@ const T = {
   muted: "var(--t-muted)",
   text: "var(--t-text)",
   glow: "var(--t-glow)",
-  mono: "'Share Tech Mono', monospace",
-  display: "'Orbitron', sans-serif",
-  body: "'Rajdhani', sans-serif",
+  mono: "var(--t-font-mono)",
+  display: "var(--t-font-display)",
+  body: "var(--t-font-body)",
   warn: "var(--t-warn)",
   red: "var(--t-red)",
 };
@@ -226,12 +226,13 @@ export default function KnowledgePage() {
       <div
         style={{
           background: T.panel,
+          borderRadius: "var(--t-radius)",
           border: `1px solid ${T.border}`,
           padding: "1.5rem",
           position: "relative",
         }}
       >
-        <Corners />
+        <Corners className="corners" />
 
         {loading ? (
           <div
@@ -371,7 +372,7 @@ export default function KnowledgePage() {
                         fontFamily: T.mono,
                         fontSize: "0.7rem",
                         color: T.text,
-                        background: "rgba(255,255,255,0.05)",
+                        background: "var(--t-white-05)",
                         padding: "0.2rem 0.6rem",
                         border: `1px solid ${T.border}`,
                       }}

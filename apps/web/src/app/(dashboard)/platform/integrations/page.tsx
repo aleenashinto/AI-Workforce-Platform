@@ -21,9 +21,9 @@ const T = {
   muted: "var(--t-muted)",
   text: "var(--t-text)",
   glow: "var(--t-glow)",
-  mono: "'Share Tech Mono', monospace",
-  display: "'Orbitron', sans-serif",
-  body: "'Rajdhani', sans-serif",
+  mono: "var(--t-font-mono)",
+  display: "var(--t-font-display)",
+  body: "var(--t-font-body)",
 };
 
 const Corners = () => (
@@ -249,6 +249,7 @@ export default function IntegrationsPage() {
                   key={i}
                   style={{
                     background: T.panel,
+          borderRadius: "var(--t-radius)",
                     border: `1px solid ${T.border}`,
                     padding: "2rem",
                     position: "relative",
@@ -256,7 +257,7 @@ export default function IntegrationsPage() {
                     flexDirection: "column",
                   }}
                 >
-                  <Corners />
+                  <Corners className="corners" />
                   <div
                     style={{
                       display: "flex",

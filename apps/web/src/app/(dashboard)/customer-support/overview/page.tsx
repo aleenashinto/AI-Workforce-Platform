@@ -40,9 +40,9 @@ const T = {
   muted: "var(--t-muted)",
   text: "var(--t-text)",
   glow: "var(--t-glow)",
-  mono: "'Share Tech Mono', monospace",
-  display: "'Orbitron', sans-serif",
-  body: "'Rajdhani', sans-serif",
+  mono: "var(--t-font-mono)",
+  display: "var(--t-font-display)",
+  body: "var(--t-font-body)",
   warn: "var(--t-warn)",
   red: "var(--t-red)",
 };
@@ -87,13 +87,14 @@ const Card = ({
     <div
       style={{
         background: T.panel,
+          borderRadius: "var(--t-radius)",
         border: `1px solid ${border}`,
         padding: "1.5rem",
         position: "relative",
         boxShadow: `0 0 30px rgba(0,255,136,0.03)`,
       }}
     >
-      <Corners />
+      <Corners className="corners" />
       <div
         style={{
           display: "flex",
@@ -240,6 +241,7 @@ export default function SupportOverviewPage() {
             disabled={loading}
             style={{
               background: T.panel,
+          borderRadius: "var(--t-radius)",
               border: `1px solid ${T.border}`,
               color: T.text,
               padding: "0.5rem 1rem",
@@ -404,13 +406,14 @@ export default function SupportOverviewPage() {
             <div
               style={{
                 background: T.panel,
+          borderRadius: "var(--t-radius)",
                 border: `1px solid ${T.border}`,
                 padding: "1.5rem",
                 position: "relative",
                 height: 320,
               }}
             >
-              <Corners />
+              <Corners className="corners" />
               <div
                 style={{
                   display: "flex",
@@ -455,6 +458,7 @@ export default function SupportOverviewPage() {
                         cursor={{ fill: "rgba(0,255,136,0.1)" }}
                         contentStyle={{
                           background: T.panel,
+          borderRadius: "var(--t-radius)",
                           border: `1px solid ${T.border}`,
                           color: "var(--t-heading)",
                           fontFamily: T.mono,
@@ -484,13 +488,14 @@ export default function SupportOverviewPage() {
             <div
               style={{
                 background: T.panel,
+          borderRadius: "var(--t-radius)",
                 border: `1px solid ${T.border}`,
                 padding: "1.5rem",
                 position: "relative",
                 flex: 1,
               }}
             >
-              <Corners />
+              <Corners className="corners" />
               <div
                 style={{
                   display: "flex",
@@ -590,14 +595,14 @@ export default function SupportOverviewPage() {
                                     ? "rgba(0,255,136,0.1)"
                                     : c.status === "escalated"
                                       ? "rgba(255,170,0,0.1)"
-                                      : "rgba(255,255,255,0.05)",
+                                      : "var(--t-white-05)",
                                 color:
                                   c.status === "resolved"
                                     ? T.g
                                     : c.status === "escalated"
                                       ? T.warn
                                       : "var(--t-heading)",
-                                border: `1px solid ${c.status === "resolved" ? T.g : c.status === "escalated" ? T.warn : "rgba(255,255,255,0.1)"}`,
+                                border: `1px solid ${c.status === "resolved" ? T.g : c.status === "escalated" ? T.warn : "var(--t-white-10)"}`,
                               }}
                             >
                               {c.status}
@@ -657,13 +662,14 @@ export default function SupportOverviewPage() {
             <div
               style={{
                 background: T.panel,
+          borderRadius: "var(--t-radius)",
                 border: `1px solid ${T.border}`,
                 padding: "1.5rem",
                 position: "relative",
                 height: 260,
               }}
             >
-              <Corners />
+              <Corners className="corners" />
               <div
                 style={{
                   fontFamily: T.mono,
@@ -711,6 +717,7 @@ export default function SupportOverviewPage() {
                       <Tooltip
                         contentStyle={{
                           background: T.panel,
+          borderRadius: "var(--t-radius)",
                           border: `1px solid ${T.border}`,
                           color: "var(--t-heading)",
                           fontFamily: T.mono,
@@ -739,13 +746,14 @@ export default function SupportOverviewPage() {
             <div
               style={{
                 background: T.panel,
+          borderRadius: "var(--t-radius)",
                 border: `1px solid ${T.border}`,
                 padding: "1.5rem",
                 position: "relative",
                 flex: 1,
               }}
             >
-              <Corners />
+              <Corners className="corners" />
               <div
                 style={{
                   display: "flex",
@@ -796,7 +804,7 @@ export default function SupportOverviewPage() {
                     <div
                       key={i}
                       style={{
-                        borderBottom: `1px solid rgba(255,255,255,0.05)`,
+                        borderBottom: `1px solid var(--t-white-05)`,
                         paddingBottom: "1rem",
                       }}
                     >
@@ -821,7 +829,7 @@ export default function SupportOverviewPage() {
                           style={{
                             flex: 1,
                             height: 4,
-                            background: "rgba(255,255,255,0.05)",
+                            background: "var(--t-white-05)",
                             borderRadius: 2,
                           }}
                         >

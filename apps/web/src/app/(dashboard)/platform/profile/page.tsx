@@ -13,9 +13,9 @@ const T = {
   muted: "var(--t-muted)",
   text: "var(--t-text)",
   glow: "var(--t-glow)",
-  mono: "'Share Tech Mono', monospace",
-  display: "'Orbitron', sans-serif",
-  body: "'Rajdhani', sans-serif",
+  mono: "var(--t-font-mono)",
+  display: "var(--t-font-display)",
+  body: "var(--t-font-body)",
 };
 
 const Corners = () => (
@@ -339,13 +339,14 @@ export default function ProfilePage() {
       <div
         style={{
           background: T.panel,
+          borderRadius: "var(--t-radius)",
           border: `1px solid ${T.border}`,
           padding: "2rem",
           position: "relative",
           marginBottom: "1.5rem",
         }}
       >
-        <Corners />
+        <Corners className="corners" />
         <div style={{ display: "flex", alignItems: "center", gap: "2rem" }}>
           <div style={{ position: "relative" }}>
             <div
@@ -447,13 +448,14 @@ export default function ProfilePage() {
       <div
         style={{
           background: T.panel,
+          borderRadius: "var(--t-radius)",
           border: `1px solid ${T.border}`,
           padding: "2rem",
           position: "relative",
           marginBottom: "1.5rem",
         }}
       >
-        <Corners />
+        <Corners className="corners" />
         <div
           style={{
             fontFamily: T.mono,
@@ -506,13 +508,14 @@ export default function ProfilePage() {
         <div
           style={{
             background: T.panel,
+          borderRadius: "var(--t-radius)",
             border: `1px solid ${T.border}`,
             padding: "2rem",
             position: "relative",
             marginBottom: "2rem",
           }}
         >
-          <Corners />
+          <Corners className="corners" />
           <div
             style={{
               fontFamily: T.mono,

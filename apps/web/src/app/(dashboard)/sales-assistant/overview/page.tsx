@@ -47,9 +47,9 @@ const T = {
   text2: "#c8f2ff",
   glow: "var(--t-glow)",
   glow2: "var(--t-glow2)",
-  mono: "'Share Tech Mono', monospace",
-  display: "'Orbitron', sans-serif",
-  body: "'Rajdhani', sans-serif",
+  mono: "var(--t-font-mono)",
+  display: "var(--t-font-display)",
+  body: "var(--t-font-body)",
   warn: "var(--t-warn)",
   red: "var(--t-red)",
   blue: "#0066ff",
@@ -102,13 +102,14 @@ const Card = ({
     <div
       style={{
         background: T.panel,
+          borderRadius: "var(--t-radius)",
         border: `1px solid ${T.border2}`,
         padding: "1.5rem",
         position: "relative",
         boxShadow: `0 0 30px rgba(0,207,255,0.03)`,
       }}
     >
-      <Corners />
+      <Corners className="corners" />
       <div
         style={{
           display: "flex",
@@ -360,7 +361,7 @@ export default function SalesOverviewPage() {
           {/* PERFORMANCE & AI INSIGHTS */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div className="lg:col-span-2 relative bg-[#0a1628] border border-[rgba(0,207,255,0.18)] p-6">
-              <Corners />
+              <Corners className="corners" />
               <div className="flex justify-between items-start mb-6">
                 <div className="font-mono text-sm text-[rgba(0,207,255,0.5)] tracking-widest uppercase">
                   Sales Performance
@@ -422,7 +423,7 @@ export default function SalesOverviewPage() {
             </div>
 
             <div className="lg:col-span-1 relative bg-[#0a1628] border border-[rgba(0,255,136,0.3)] p-6 shadow-[0_0_15px_rgba(0,255,136,0.05)]">
-              <Corners color={T.g} />
+              <Corners className="corners" color={} className="corners" />
               <div className="font-mono text-sm text-[#00ff88] tracking-widest uppercase mb-6 flex items-center gap-2">
                 <Sparkles size={16} /> AI Sales Insights
               </div>
@@ -445,7 +446,7 @@ export default function SalesOverviewPage() {
                           <AlertCircle size={14} color={T.warn} />
                         )}
                       </div>
-                      <p className="font-mono text-[11px] text-[rgba(255,255,255,0.7)] mb-3 leading-relaxed">
+                      <p className="font-mono text-[11px] text-[color:var(--t-white-70)] mb-3 leading-relaxed">
                         {insight.description}
                       </p>
                       <div className="font-mono text-[10px] text-[rgba(0,255,136,0.8)] mb-2 uppercase tracking-wide">
@@ -468,7 +469,7 @@ export default function SalesOverviewPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* Pipeline Stages */}
             <div className="relative bg-[#0a1628] border border-[rgba(0,207,255,0.18)] p-6 overflow-hidden">
-              <Corners />
+              <Corners className="corners" />
               <div className="font-mono text-sm text-[rgba(0,207,255,0.5)] tracking-widest uppercase mb-6">
                 Sales Pipeline
               </div>
@@ -500,7 +501,7 @@ export default function SalesOverviewPage() {
 
             {/* Lead Funnel */}
             <div className="relative bg-[#0a1628] border border-[rgba(0,207,255,0.18)] p-6">
-              <Corners />
+              <Corners className="corners" />
               <div className="font-mono text-sm text-[rgba(0,207,255,0.5)] tracking-widest uppercase mb-6">
                 Lead Funnel
               </div>
@@ -549,7 +550,7 @@ export default function SalesOverviewPage() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Follow-ups */}
             <div className="relative bg-[#0a1628] border border-[rgba(0,207,255,0.18)] p-6">
-              <Corners />
+              <Corners className="corners" />
               <div className="font-mono text-sm text-[rgba(0,207,255,0.5)] tracking-widest uppercase mb-6 flex justify-between">
                 <span>Today's Follow-ups</span>
                 <span className="text-[#00cfff]">{data.followUps.length}</span>
@@ -570,7 +571,7 @@ export default function SalesOverviewPage() {
                         {f.status}
                       </span>
                     </div>
-                    <div className="font-mono text-[10px] text-[rgba(255,255,255,0.5)] mb-2">
+                    <div className="font-mono text-[10px] text-[color:var(--t-white-50)] mb-2">
                       {f.company}
                     </div>
                     <div className="font-mono text-[11px] text-[#00cfff] mb-3">
@@ -589,7 +590,7 @@ export default function SalesOverviewPage() {
 
             {/* Upcoming Meetings */}
             <div className="relative bg-[#0a1628] border border-[rgba(0,207,255,0.18)] p-6">
-              <Corners />
+              <Corners className="corners" />
               <div className="font-mono text-sm text-[rgba(0,207,255,0.5)] tracking-widest uppercase mb-6 flex justify-between">
                 <span>Upcoming Meetings</span>
                 <Calendar size={16} color={T.g2} />
@@ -607,7 +608,7 @@ export default function SalesOverviewPage() {
                       <div className="font-body text-white font-bold truncate">
                         {m.contact}
                       </div>
-                      <div className="font-mono text-[10px] text-[rgba(255,255,255,0.5)] truncate">
+                      <div className="font-mono text-[10px] text-[color:var(--t-white-50)] truncate">
                         {m.company} • {m.type}
                       </div>
                     </div>
@@ -627,7 +628,7 @@ export default function SalesOverviewPage() {
 
             {/* AI Recommended Actions */}
             <div className="relative bg-[#0a1628] border border-[rgba(0,255,136,0.3)] p-6 shadow-[0_0_15px_rgba(0,255,136,0.05)]">
-              <Corners color={T.g} />
+              <Corners className="corners" color={} className="corners" />
               <div className="font-mono text-sm text-[#00ff88] tracking-widest uppercase mb-6 flex items-center gap-2">
                 <Target size={16} /> Recommended Actions
               </div>
@@ -640,7 +641,7 @@ export default function SalesOverviewPage() {
                     <div className="font-body text-white font-bold mb-1">
                       {a.title}
                     </div>
-                    <div className="font-mono text-[10px] text-[rgba(255,255,255,0.6)] mb-3 leading-relaxed">
+                    <div className="font-mono text-[10px] text-[color:var(--t-white-60)] mb-3 leading-relaxed">
                       {a.description}
                     </div>
                     <button
@@ -657,7 +658,7 @@ export default function SalesOverviewPage() {
 
           {/* RECENT LEADS TABLE */}
           <div className="relative bg-[#0a1628] border border-[rgba(0,207,255,0.18)] p-6 overflow-x-auto">
-            <Corners />
+            <Corners className="corners" />
             <div className="flex justify-between items-center mb-6 min-w-[700px]">
               <div className="font-mono text-sm text-[rgba(0,207,255,0.5)] tracking-widest uppercase">
                 Recent Leads
@@ -758,7 +759,7 @@ export default function SalesOverviewPage() {
                     <td className="py-3 px-4 font-body text-white font-semibold">
                       {lead.name}
                     </td>
-                    <td className="py-3 px-4 font-mono text-xs text-[rgba(255,255,255,0.7)]">
+                    <td className="py-3 px-4 font-mono text-xs text-[color:var(--t-white-70)]">
                       {lead.company}
                     </td>
                     <td className="py-3 px-4 text-center">
@@ -768,16 +769,16 @@ export default function SalesOverviewPage() {
                         {lead.score}
                       </span>
                     </td>
-                    <td className="py-3 px-4 font-mono text-xs text-[rgba(255,255,255,0.7)]">
+                    <td className="py-3 px-4 font-mono text-xs text-[color:var(--t-white-70)]">
                       {lead.stage}
                     </td>
-                    <td className="py-3 px-4 font-mono text-xs text-[rgba(255,255,255,0.7)] flex items-center gap-2">
+                    <td className="py-3 px-4 font-mono text-xs text-[color:var(--t-white-70)] flex items-center gap-2">
                       <div className="w-5 h-5 rounded-full bg-[rgba(0,207,255,0.2)] flex items-center justify-center text-[10px] text-[#00cfff] border border-[#00cfff]">
                         {lead.owner.charAt(0)}
                       </div>
                       {lead.owner}
                     </td>
-                    <td className="py-3 px-4 font-mono text-xs text-[rgba(255,255,255,0.5)]">
+                    <td className="py-3 px-4 font-mono text-xs text-[color:var(--t-white-50)]">
                       {lead.lastActivity}
                     </td>
                     <td className="py-3 px-4 text-right">
@@ -799,7 +800,7 @@ export default function SalesOverviewPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {/* Lead Discovery Summary */}
             <div className="relative bg-[#0a1628] border border-[rgba(0,207,255,0.18)] p-5 flex flex-col">
-              <Corners />
+              <Corners className="corners" />
               <div className="font-mono text-sm text-[rgba(0,207,255,0.5)] tracking-widest uppercase mb-4 flex items-center gap-2">
                 <Sparkles size={14} /> Discovery
               </div>
@@ -808,7 +809,7 @@ export default function SalesOverviewPage() {
                   <div className="font-display text-xl text-white">
                     {data.discoverySummary.discovered}
                   </div>
-                  <div className="font-mono text-[10px] text-[rgba(255,255,255,0.5)]">
+                  <div className="font-mono text-[10px] text-[color:var(--t-white-50)]">
                     Discovered
                   </div>
                 </div>
@@ -816,7 +817,7 @@ export default function SalesOverviewPage() {
                   <div className="font-display text-xl text-[#00ff88]">
                     {data.discoverySummary.aiQualified}
                   </div>
-                  <div className="font-mono text-[10px] text-[rgba(255,255,255,0.5)]">
+                  <div className="font-mono text-[10px] text-[color:var(--t-white-50)]">
                     AI Qualified
                   </div>
                 </div>
@@ -824,7 +825,7 @@ export default function SalesOverviewPage() {
                   <div className="font-display text-xl text-[#ffaa00]">
                     {data.discoverySummary.highQuality}
                   </div>
-                  <div className="font-mono text-[10px] text-[rgba(255,255,255,0.5)]">
+                  <div className="font-mono text-[10px] text-[color:var(--t-white-50)]">
                     High Quality
                   </div>
                 </div>
@@ -832,7 +833,7 @@ export default function SalesOverviewPage() {
                   <div className="font-display text-xl text-[#00cfff]">
                     {data.discoverySummary.opportunitiesCreated}
                   </div>
-                  <div className="font-mono text-[10px] text-[rgba(255,255,255,0.5)]">
+                  <div className="font-mono text-[10px] text-[color:var(--t-white-50)]">
                     Opportunities
                   </div>
                 </div>
@@ -847,13 +848,13 @@ export default function SalesOverviewPage() {
 
             {/* Sales Forecast */}
             <div className="relative bg-[#0a1628] border border-[rgba(0,207,255,0.18)] p-5 flex flex-col">
-              <Corners />
+              <Corners className="corners" />
               <div className="font-mono text-sm text-[rgba(0,207,255,0.5)] tracking-widest uppercase mb-4 flex items-center gap-2">
                 <TrendingUp size={14} /> Forecast
               </div>
               <div className="flex justify-between items-end mb-4">
                 <div>
-                  <div className="font-mono text-[10px] text-[rgba(255,255,255,0.5)] mb-1">
+                  <div className="font-mono text-[10px] text-[color:var(--t-white-50)] mb-1">
                     Expected Revenue
                   </div>
                   <div className="font-display text-2xl text-white">
@@ -861,7 +862,7 @@ export default function SalesOverviewPage() {
                   </div>
                 </div>
                 <div className="text-right">
-                  <div className="font-mono text-[10px] text-[rgba(255,255,255,0.5)] mb-1">
+                  <div className="font-mono text-[10px] text-[color:var(--t-white-50)] mb-1">
                     Confidence
                   </div>
                   <div className="font-mono text-lg text-[#00ff88]">
@@ -869,14 +870,14 @@ export default function SalesOverviewPage() {
                   </div>
                 </div>
               </div>
-              <p className="font-mono text-[10px] text-[rgba(255,255,255,0.5)] leading-relaxed flex-1">
+              <p className="font-mono text-[10px] text-[color:var(--t-white-50)] leading-relaxed flex-1">
                 {data.forecast.explanation}
               </p>
             </div>
 
             {/* Lead Sources */}
             <div className="relative bg-[#0a1628] border border-[rgba(0,207,255,0.18)] p-5">
-              <Corners />
+              <Corners className="corners" />
               <div className="font-mono text-sm text-[rgba(0,207,255,0.5)] tracking-widest uppercase mb-4 flex items-center gap-2">
                 <PieChart size={14} /> Sources
               </div>
@@ -884,7 +885,7 @@ export default function SalesOverviewPage() {
                 {data.leadSources.map((ls, i) => (
                   <div key={i}>
                     <div className="flex justify-between font-mono text-[11px] mb-1">
-                      <span className="text-[rgba(255,255,255,0.7)]">
+                      <span className="text-[color:var(--t-white-70)]">
                         {ls.source}
                       </span>
                       <span className="text-[#00cfff]">{ls.percentage}%</span>
@@ -902,7 +903,7 @@ export default function SalesOverviewPage() {
 
             {/* Recent Activity */}
             <div className="relative bg-[#0a1628] border border-[rgba(0,207,255,0.18)] p-5 overflow-y-auto max-h-[220px]">
-              <Corners />
+              <Corners className="corners" />
               <div className="font-mono text-sm text-[rgba(0,207,255,0.5)] tracking-widest uppercase mb-4 flex items-center gap-2">
                 <Activity size={14} /> Activity
               </div>
@@ -915,7 +916,7 @@ export default function SalesOverviewPage() {
                       <div className="font-body text-xs text-white mb-0.5">
                         {act.description}
                       </div>
-                      <div className="font-mono text-[9px] text-[rgba(255,255,255,0.4)]">
+                      <div className="font-mono text-[9px] text-[color:var(--t-white-40)]">
                         {act.timeAgo}
                       </div>
                     </div>

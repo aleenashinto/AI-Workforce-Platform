@@ -217,12 +217,13 @@ export default function KnowledgeGapsPage() {
             key={i}
             style={{
               background: T.panel,
+          borderRadius: "var(--t-radius)",
               border: `1px solid ${T.border}`,
               padding: "1.5rem",
               position: "relative",
             }}
           >
-            <Corners />
+            <Corners className="corners" />
             <div
               style={{
                 fontFamily: T.mono,
@@ -270,6 +271,7 @@ export default function KnowledgeGapsPage() {
             style={{
               width: "100%",
               background: T.panel,
+          borderRadius: "var(--t-radius)",
               border: `1px solid ${T.border}`,
               color: T.text,
               padding: "0.8rem 1rem 0.8rem 3rem",
@@ -284,6 +286,7 @@ export default function KnowledgeGapsPage() {
           onChange={(e) => setStatusFilter(e.target.value)}
           style={{
             background: T.panel,
+          borderRadius: "var(--t-radius)",
             border: `1px solid ${T.border}`,
             color: T.text,
             padding: "0.8rem 1rem",
@@ -306,6 +309,7 @@ export default function KnowledgeGapsPage() {
           onChange={(e) => setPriorityFilter(e.target.value)}
           style={{
             background: T.panel,
+          borderRadius: "var(--t-radius)",
             border: `1px solid ${T.border}`,
             color: T.text,
             padding: "0.8rem 1rem",
@@ -329,13 +333,14 @@ export default function KnowledgeGapsPage() {
       <div
         style={{
           background: T.panel,
+          borderRadius: "var(--t-radius)",
           border: `1px solid ${T.border}`,
           position: "relative",
           flex: 1,
           minHeight: 400,
         }}
       >
-        <Corners />
+        <Corners className="corners" />
         <table style={{ width: "100%", borderCollapse: "collapse" }}>
           <thead>
             <tr
@@ -599,7 +604,7 @@ export default function KnowledgeGapsPage() {
               overflowY: "auto",
             }}
           >
-            <Corners />
+            <Corners className="corners" />
             <button
               onClick={() => setSelectedGap(null)}
               style={{
@@ -659,6 +664,7 @@ export default function KnowledgeGapsPage() {
                   fontSize: "0.8rem",
                   color: T.text,
                   background: T.panel,
+          borderRadius: "var(--t-radius)",
                   padding: "0.5rem 1rem",
                   border: `1px solid ${T.border}`,
                 }}
@@ -681,6 +687,7 @@ export default function KnowledgeGapsPage() {
                   fontSize: "0.8rem",
                   color: T.text,
                   background: T.panel,
+          borderRadius: "var(--t-radius)",
                   padding: "0.5rem 1rem",
                   border: `1px solid ${T.border}`,
                 }}
@@ -804,6 +811,7 @@ export default function KnowledgeGapsPage() {
                 <div
                   style={{
                     background: T.panel,
+          borderRadius: "var(--t-radius)",
                     padding: "1rem",
                     border: `1px solid ${T.border}`,
                     display: "flex",

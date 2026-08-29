@@ -41,9 +41,9 @@ const T = {
   muted: "var(--t-muted)",
   text: "var(--t-text)",
   glow: "var(--t-glow)",
-  mono: "'Share Tech Mono', monospace",
-  display: "'Orbitron', sans-serif",
-  body: "'Rajdhani', sans-serif",
+  mono: "var(--t-font-mono)",
+  display: "var(--t-font-display)",
+  body: "var(--t-font-body)",
 };
 
 const navigation = [
@@ -200,7 +200,7 @@ export function Sidebar({
         md:relative md:translate-x-0
         ${mobileMenuOpen ? "translate-x-0" : "-translate-x-full"}
       `}
-      style={{ background: T.panel, borderRight: `1px solid ${T.border}` }}
+      style={{ background: T.sidebar, borderRight: `1px solid ${T.sidebarBorder}` }}
     >
       {/* Logo */}
       <div
@@ -292,7 +292,7 @@ export function Sidebar({
                     fontFamily: T.mono,
                     fontSize: "0.75rem",
                     letterSpacing: "0.1em",
-                    color: isExpanded ? T.text : T.muted,
+                    color: isExpanded ? T.sidebarText : T.sidebarMuted,
                     padding: "0.5rem 1.5rem",
                     display: "flex",
                     alignItems: "center",
@@ -396,7 +396,7 @@ export function Sidebar({
                 style={{
                   fontFamily: T.mono,
                   fontSize: "0.7rem",
-                  color: T.muted,
+                  color: T.sidebarMuted,
                   textTransform: "uppercase",
                 }}
               >
@@ -475,9 +475,9 @@ function NavItem({
         background: active
           ? "rgba(0,255,136,0.1)"
           : hov
-            ? "rgba(255,255,255,0.03)"
+            ? "var(--t-white-03)"
             : "transparent",
-        color: active ? T.g : hov ? "var(--t-heading)" : T.muted,
+        color: active ? T.g : hov ? T.sidebarText : T.sidebarMuted,
         borderLeft: active ? `3px solid ${T.g}` : `3px solid transparent`,
         boxShadow: active ? `inset 20px 0 20px -20px ${T.g}` : "none",
         transition: "all 0.2s",

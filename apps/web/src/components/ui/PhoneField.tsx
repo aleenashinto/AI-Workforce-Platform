@@ -8,7 +8,7 @@ const T = {
   muted: "var(--t-muted)",
   text: "var(--t-text)",
   bg: "var(--t-bg)",
-  mono: "'Share Tech Mono', monospace",
+  mono: "var(--t-font-mono)",
 };
 
 const COUNTRY_CODES = [

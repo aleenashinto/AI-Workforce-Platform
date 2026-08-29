@@ -39,9 +39,9 @@ const T = {
   muted2: "rgba(0,207,255,0.45)",
   text: "var(--t-text)",
   glow2: "var(--t-glow2)",
-  mono: "'Share Tech Mono', monospace",
-  display: "'Orbitron', sans-serif",
-  body: "'Rajdhani', sans-serif",
+  mono: "var(--t-font-mono)",
+  display: "var(--t-font-display)",
+  body: "var(--t-font-body)",
 };
 
 /* ── Corner decoration ──────────────────────────────────────────────── */
@@ -109,12 +109,13 @@ const StatCard = ({
   <div
     style={{
       background: T.panel,
+          borderRadius: "var(--t-radius)",
       border: `1px solid ${T.border2}`,
       padding: "1.5rem",
       position: "relative",
     }}
   >
-    <Corners />
+    <Corners className="corners" />
     <div
       style={{
         display: "flex",
@@ -176,12 +177,13 @@ const Panel = ({
   <div
     style={{
       background: T.panel,
+          borderRadius: "var(--t-radius)",
       border: `1px solid ${T.border2}`,
       padding: "2rem",
       position: "relative",
     }}
   >
-    <Corners />
+    <Corners className="corners" />
     <div
       style={{
         fontFamily: T.mono,
@@ -616,6 +618,7 @@ export default function AnalyticsPage() {
                 <Tooltip
                   contentStyle={{
                     background: T.panel,
+          borderRadius: "var(--t-radius)",
                     border: `1px solid ${T.border2}`,
                     fontFamily: T.mono,
                     fontSize: 12,

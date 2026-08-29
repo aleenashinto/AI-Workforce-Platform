@@ -44,6 +44,7 @@ export default function ProfileSetupPage() {
         width: "100%",
         maxWidth: 500,
         background: T.panel,
+          borderRadius: "var(--t-radius)",
         border: `1px solid ${T.border}`,
         padding: "3rem",
         position: "relative",
@@ -60,7 +61,7 @@ export default function ProfileSetupPage() {
           background: `linear-gradient(90deg,${T.g2},${T.g})`,
         }}
       />
-      <Corners />
+      <Corners className="corners" />
 
       <h1
         style={{

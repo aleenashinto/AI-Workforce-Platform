@@ -23,9 +23,9 @@ const T = {
   muted2: "rgba(0,207,255,0.45)",
   text: "var(--t-text)",
   glow: "var(--t-glow)",
-  mono: "'Share Tech Mono', monospace",
-  display: "'Orbitron', sans-serif",
-  body: "'Rajdhani', sans-serif",
+  mono: "var(--t-font-mono)",
+  display: "var(--t-font-display)",
+  body: "var(--t-font-body)",
   warn: "var(--t-warn)",
   red: "var(--t-red)",
 };
@@ -107,13 +107,14 @@ export default function SupportAnalyticsPage() {
             key={i}
             style={{
               background: T.panel,
+          borderRadius: "var(--t-radius)",
               border: `1px solid ${T.border}`,
               padding: "1.5rem",
               position: "relative",
               boxShadow: T.glow,
             }}
           >
-            <Corners />
+            <Corners className="corners" />
             <div
               style={{
                 fontFamily: T.mono,
@@ -171,13 +172,14 @@ export default function SupportAnalyticsPage() {
         <div
           style={{
             background: T.panel,
+          borderRadius: "var(--t-radius)",
             border: `1px solid ${T.border}`,
             padding: "1.5rem",
             position: "relative",
             height: 300,
           }}
         >
-          <Corners />
+          <Corners className="corners" />
           <div
             style={{
               fontFamily: T.mono,
@@ -228,13 +230,14 @@ export default function SupportAnalyticsPage() {
         <div
           style={{
             background: T.panel,
+          borderRadius: "var(--t-radius)",
             border: `1px solid ${T.border}`,
             padding: "1.5rem",
             position: "relative",
             height: 300,
           }}
         >
-          <Corners />
+          <Corners className="corners" />
           <div
             style={{
               fontFamily: T.mono,
@@ -301,12 +304,13 @@ export default function SupportAnalyticsPage() {
         <div
           style={{
             background: T.panel,
+          borderRadius: "var(--t-radius)",
             border: `1px solid ${T.border}`,
             padding: "1.5rem",
             position: "relative",
           }}
         >
-          <Corners />
+          <Corners className="corners" />
           <div
             style={{
               fontFamily: T.mono,
@@ -324,7 +328,7 @@ export default function SupportAnalyticsPage() {
           >
             <div
               style={{
-                borderBottom: `1px solid rgba(255,255,255,0.05)`,
+                borderBottom: `1px solid var(--t-white-05)`,
                 paddingBottom: "1rem",
               }}
             >
@@ -347,7 +351,7 @@ export default function SupportAnalyticsPage() {
             </div>
             <div
               style={{
-                borderBottom: `1px solid rgba(255,255,255,0.05)`,
+                borderBottom: `1px solid var(--t-white-05)`,
                 paddingBottom: "1rem",
               }}
             >
@@ -375,13 +379,14 @@ export default function SupportAnalyticsPage() {
         <div
           style={{
             background: T.panel,
+          borderRadius: "var(--t-radius)",
             border: `1px solid ${T.border}`,
             padding: "1.5rem",
             position: "relative",
             height: 240,
           }}
         >
-          <Corners />
+          <Corners className="corners" />
           <div
             style={{
               fontFamily: T.mono,
@@ -422,13 +427,14 @@ export default function SupportAnalyticsPage() {
       <div
         style={{
           background: T.panel,
+          borderRadius: "var(--t-radius)",
           border: `1px solid ${T.border}`,
           padding: "1.5rem",
           position: "relative",
           marginTop: "1.5rem",
         }}
       >
-        <Corners />
+        <Corners className="corners" />
         <div
           style={{
             fontFamily: T.mono,
@@ -490,7 +496,7 @@ export default function SupportAnalyticsPage() {
             ].map((row, i) => (
               <tr
                 key={i}
-                style={{ borderBottom: `1px solid rgba(255,255,255,0.05)` }}
+                style={{ borderBottom: `1px solid var(--t-white-05)` }}
               >
                 <td
                   style={{

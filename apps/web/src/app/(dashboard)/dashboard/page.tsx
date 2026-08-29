@@ -40,9 +40,9 @@ const T = {
   text: "var(--t-text)",
   glow: "var(--t-glow)",
   glow2: "var(--t-glow2)",
-  mono: "'Share Tech Mono', monospace",
-  display: "'Orbitron', sans-serif",
-  body: "'Rajdhani', sans-serif",
+  mono: "var(--t-font-mono)",
+  display: "var(--t-font-display)",
+  body: "var(--t-font-body)",
   warn: "var(--t-warn)",
   red: "var(--t-red)",
 };
@@ -90,13 +90,14 @@ const Card = ({
     <div
       style={{
         background: T.panel,
+          borderRadius: "var(--t-radius)",
         border: `1px solid ${border}`,
         padding: "1.5rem",
         position: "relative",
         boxShadow: `0 0 30px rgba(0,255,136,0.03)`,
       }}
     >
-      <Corners />
+      <Corners className="corners" />
       <div
         style={{
           display: "flex",
@@ -341,13 +342,14 @@ export default function DashboardPage() {
           <div
             style={{
               background: T.panel,
+          borderRadius: "var(--t-radius)",
               border: `1px solid ${T.border}`,
               padding: "1.5rem",
               position: "relative",
               height: 320,
             }}
           >
-            <Corners />
+            <Corners className="corners" />
             <div
               style={{
                 display: "flex",
@@ -455,12 +457,13 @@ export default function DashboardPage() {
           <div
             style={{
               background: T.panel,
+          borderRadius: "var(--t-radius)",
               border: `1px solid ${T.border}`,
               padding: "1.5rem",
               position: "relative",
             }}
           >
-            <Corners />
+            <Corners className="corners" />
             <div
               style={{
                 fontFamily: T.mono,
@@ -492,7 +495,7 @@ export default function DashboardPage() {
                   <div
                     style={{
                       border: `1px solid ${action.border}`,
-                      background: "rgba(255,255,255,0.02)",
+                      background: "var(--t-white-02)",
                       padding: "1rem",
                       display: "flex",
                       flexDirection: "column",
@@ -528,13 +531,14 @@ export default function DashboardPage() {
           <div
             style={{
               background: T.panel,
+          borderRadius: "var(--t-radius)",
               border: `1px solid ${T.border}`,
               padding: "1.5rem",
               position: "relative",
               flex: 1,
             }}
           >
-            <Corners />
+            <Corners className="corners" />
             <div
               style={{
                 fontFamily: T.mono,
@@ -585,7 +589,7 @@ export default function DashboardPage() {
                 <div
                   style={{
                     height: 4,
-                    background: "rgba(255,255,255,0.1)",
+                    background: "var(--t-white-10)",
                     borderRadius: 2,
                   }}
                 >
@@ -630,7 +634,7 @@ export default function DashboardPage() {
                 <div
                   style={{
                     height: 4,
-                    background: "rgba(255,255,255,0.1)",
+                    background: "var(--t-white-10)",
                     borderRadius: 2,
                   }}
                 >
@@ -675,7 +679,7 @@ export default function DashboardPage() {
                 <div
                   style={{
                     height: 4,
-                    background: "rgba(255,255,255,0.1)",
+                    background: "var(--t-white-10)",
                     borderRadius: 2,
                   }}
                 >
@@ -720,7 +724,7 @@ export default function DashboardPage() {
                 <div
                   style={{
                     height: 4,
-                    background: "rgba(255,255,255,0.1)",
+                    background: "var(--t-white-10)",
                     borderRadius: 2,
                   }}
                 >

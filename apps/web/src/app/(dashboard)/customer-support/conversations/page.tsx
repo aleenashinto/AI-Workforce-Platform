@@ -26,9 +26,9 @@ const T = {
   muted2: "rgba(0,207,255,0.45)",
   text: "var(--t-text)",
   glow: "var(--t-glow)",
-  mono: "'Share Tech Mono', monospace",
-  display: "'Orbitron', sans-serif",
-  body: "'Rajdhani', sans-serif",
+  mono: "var(--t-font-mono)",
+  display: "var(--t-font-display)",
+  body: "var(--t-font-body)",
   warn: "var(--t-warn)",
   red: "var(--t-red)",
 };
@@ -232,6 +232,7 @@ export default function ConversationsHistory() {
                   right: 0,
                   marginTop: "0.5rem",
                   background: T.panel,
+          borderRadius: "var(--t-radius)",
                   border: `1px solid ${T.border}`,
                   padding: "1rem",
                   zIndex: 10,
@@ -299,11 +300,12 @@ export default function ConversationsHistory() {
       <div
         style={{
           background: T.panel,
+          borderRadius: "var(--t-radius)",
           border: `1px solid ${T.border}`,
           position: "relative",
         }}
       >
-        <Corners />
+        <Corners className="corners" />
         <table
           style={{
             width: "100%",

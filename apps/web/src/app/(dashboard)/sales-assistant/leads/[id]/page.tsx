@@ -29,9 +29,9 @@ const T = {
   muted2: "rgba(0,207,255,0.45)",
   text: "var(--t-text)",
   glow2: "var(--t-glow2)",
-  mono: "'Share Tech Mono', monospace",
-  display: "'Orbitron', sans-serif",
-  body: "'Rajdhani', sans-serif",
+  mono: "var(--t-font-mono)",
+  display: "var(--t-font-display)",
+  body: "var(--t-font-body)",
   warn: "var(--t-warn)",
 };
 
@@ -278,12 +278,13 @@ export default function LeadDetailsPage() {
           <div
             style={{
               background: T.panel,
+          borderRadius: "var(--t-radius)",
               border: `1px solid ${T.border2}`,
               padding: "2rem",
               position: "relative",
             }}
           >
-            <Corners />
+            <Corners className="corners" />
             <div
               style={{
                 fontFamily: T.display,
@@ -309,12 +310,13 @@ export default function LeadDetailsPage() {
           <div
             style={{
               background: T.panel,
+          borderRadius: "var(--t-radius)",
               border: `1px solid ${T.border2}`,
               padding: "2rem",
               position: "relative",
             }}
           >
-            <Corners />
+            <Corners className="corners" />
             <div
               style={{
                 fontFamily: T.display,
@@ -342,12 +344,13 @@ export default function LeadDetailsPage() {
           <div
             style={{
               background: T.panel,
+          borderRadius: "var(--t-radius)",
               border: `1px solid ${T.border2}`,
               padding: "2rem",
               position: "relative",
             }}
           >
-            <Corners />
+            <Corners className="corners" />
             <div
               style={{
                 fontFamily: T.display,
@@ -419,12 +422,13 @@ export default function LeadDetailsPage() {
           <div
             style={{
               background: T.panel,
+          borderRadius: "var(--t-radius)",
               border: `1px solid ${T.border2}`,
               padding: "2rem",
               position: "relative",
             }}
           >
-            <Corners />
+            <Corners className="corners" />
             <div
               style={{
                 display: "flex",
@@ -531,12 +535,13 @@ export default function LeadDetailsPage() {
           <div
             style={{
               background: T.panel,
+          borderRadius: "var(--t-radius)",
               border: `1px solid ${T.border2}`,
               padding: "2rem",
               position: "relative",
             }}
           >
-            <Corners />
+            <Corners className="corners" />
             <div
               style={{
                 display: "flex",

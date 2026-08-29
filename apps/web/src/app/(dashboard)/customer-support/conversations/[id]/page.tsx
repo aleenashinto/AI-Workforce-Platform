@@ -30,9 +30,9 @@ const T = {
   muted: "var(--t-muted)",
   text: "var(--t-text)",
   glow: "var(--t-glow)",
-  mono: "'Share Tech Mono', monospace",
-  display: "'Orbitron', sans-serif",
-  body: "'Rajdhani', sans-serif",
+  mono: "var(--t-font-mono)",
+  display: "var(--t-font-display)",
+  body: "var(--t-font-body)",
   warn: "var(--t-warn)",
   red: "var(--t-red)",
 };
@@ -228,6 +228,7 @@ export default function ConversationPage({
               style={{
                 width: "100%",
                 background: T.panel,
+          borderRadius: "var(--t-radius)",
                 border: `1px solid ${T.border}`,
                 color: T.text,
                 fontFamily: T.mono,
@@ -474,6 +475,7 @@ export default function ConversationPage({
                         height: 32,
                         borderRadius: "50%",
                         background: T.panel,
+          borderRadius: "var(--t-radius)",
                         border: `1px solid ${T.border}`,
                         display: "flex",
                         alignItems: "center",
@@ -499,6 +501,7 @@ export default function ConversationPage({
                       <div
                         style={{
                           background: T.panel,
+          borderRadius: "var(--t-radius)",
                           border: `1px solid ${T.border}`,
                           padding: "1rem",
                           fontFamily: T.body,
@@ -592,6 +595,7 @@ export default function ConversationPage({
                     width: "100%",
                     height: 100,
                     background: T.panel,
+          borderRadius: "var(--t-radius)",
                     border: `1px solid ${T.border}`,
                     color: T.text,
                     fontFamily: T.mono,
@@ -601,7 +605,7 @@ export default function ConversationPage({
                     resize: "none",
                   }}
                 />
-                <Corners />
+                <Corners className="corners" />
                 <div
                   style={{
                     position: "absolute",
@@ -659,6 +663,7 @@ export default function ConversationPage({
           width: 280,
           borderLeft: `1px solid ${T.border}`,
           background: T.panel,
+          borderRadius: "var(--t-radius)",
           padding: "1.5rem",
           overflowY: "auto",
         }}

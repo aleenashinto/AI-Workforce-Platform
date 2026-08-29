@@ -40,9 +40,9 @@ const T = {
   muted: "var(--t-muted)",
   muted2: "rgba(0,207,255,0.45)",
   text: "var(--t-text)",
-  mono: "'Share Tech Mono', monospace",
-  display: "'Orbitron', sans-serif",
-  body: "'Rajdhani', sans-serif",
+  mono: "var(--t-font-mono)",
+  display: "var(--t-font-display)",
+  body: "var(--t-font-body)",
 };
 
 export default function LeadDiscoveryPage() {

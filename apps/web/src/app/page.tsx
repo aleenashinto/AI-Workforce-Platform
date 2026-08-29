@@ -21,9 +21,9 @@ const T = {
   text: "var(--t-text)",
   glow: "var(--t-glow)",
   glow2: "var(--t-glow2)",
-  mono: "'Share Tech Mono', monospace",
-  display: "'Orbitron', sans-serif",
-  body: "'Rajdhani', sans-serif",
+  mono: "var(--t-font-mono)",
+  display: "var(--t-font-display)",
+  body: "var(--t-font-body)",
 };
 
 /* ─────────────────────────────────────────────
@@ -556,13 +556,14 @@ function Hero({ onDeploy }: { onDeploy: () => void }) {
             style={{
               position: "relative",
               background: T.panel,
+          borderRadius: "var(--t-radius)",
               border: `1px solid ${T.border}`,
               borderRadius: 4,
               overflow: "hidden",
               boxShadow: `0 0 0 1px rgba(0,255,136,0.06), 0 40px 80px rgba(0,0,0,0.6), ${T.glow}`,
             }}
           >
-            <Corners />
+            <Corners className="corners" />
             <div
               style={{
                 background: "rgba(0,255,136,0.06)",
@@ -777,13 +778,14 @@ function AISupportAgent() {
           className="reveal"
           style={{
             background: T.panel,
+          borderRadius: "var(--t-radius)",
             border: `1px solid ${T.border}`,
             padding: "2rem",
             borderRadius: 4,
             position: "relative",
           }}
         >
-          <Corners />
+          <Corners className="corners" />
           <div
             style={{
               borderBottom: `1px solid ${T.border}`,
@@ -874,6 +876,7 @@ function AISalesAssistant() {
           className="reveal"
           style={{
             background: T.panel,
+          borderRadius: "var(--t-radius)",
             border: `1px solid ${T.border2}`,
             padding: "2rem",
             borderRadius: 4,
@@ -881,7 +884,7 @@ function AISalesAssistant() {
             order: -1,
           }}
         >
-          <Corners />
+          <Corners className="corners" />
           <div
             style={{
               borderBottom: `1px solid ${T.border2}`,
@@ -1097,6 +1100,7 @@ function Features() {
               border: `1px solid ${T.border}`,
               padding: "2rem",
               background: T.panel,
+          borderRadius: "var(--t-radius)",
             }}
           >
             <h4
@@ -1117,6 +1121,7 @@ function Features() {
               border: `1px solid ${T.border}`,
               padding: "2rem",
               background: T.panel,
+          borderRadius: "var(--t-radius)",
             }}
           >
             <h4
@@ -1138,6 +1143,7 @@ function Features() {
               border: `1px solid ${T.border}`,
               padding: "2rem",
               background: T.panel,
+          borderRadius: "var(--t-radius)",
             }}
           >
             <h4
@@ -1271,6 +1277,7 @@ function PriceCard({
       onMouseLeave={() => setHov(false)}
       style={{
         background: T.panel,
+          borderRadius: "var(--t-radius)",
         padding: "2rem",
         position: "relative",
         overflow: "hidden",

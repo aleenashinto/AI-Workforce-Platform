@@ -22,9 +22,9 @@ const T = {
   text: "var(--t-text)",
   glow: "var(--t-glow)",
   glow2: "var(--t-glow2)",
-  mono: "'Share Tech Mono', monospace",
-  display: "'Orbitron', sans-serif",
-  body: "'Rajdhani', sans-serif",
+  mono: "var(--t-font-mono)",
+  display: "var(--t-font-display)",
+  body: "var(--t-font-body)",
 };
 
 const Corners = () => (
@@ -209,6 +209,7 @@ function ResetForm() {
       <div
         style={{
           background: T.panel,
+          borderRadius: "var(--t-radius)",
           border: `1px solid ${T.border}`,
           width: "100%",
           maxWidth: 420,
@@ -228,7 +229,7 @@ function ResetForm() {
             background: `linear-gradient(90deg,${T.g},${T.g2})`,
           }}
         />
-        <Corners />
+        <Corners className="corners" />
 
         <div
           style={{

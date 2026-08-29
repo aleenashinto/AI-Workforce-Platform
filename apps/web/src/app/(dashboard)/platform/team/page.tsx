@@ -30,9 +30,9 @@ const T = {
   muted: "var(--t-muted)",
   text: "var(--t-text)",
   glow: "var(--t-glow)",
-  mono: "'Share Tech Mono', monospace",
-  display: "'Orbitron', sans-serif",
-  body: "'Rajdhani', sans-serif",
+  mono: "var(--t-font-mono)",
+  display: "var(--t-font-display)",
+  body: "var(--t-font-body)",
 };
 
 const ROLE_COLORS: Record<string, { bg: string; border: string; color: string }> = {
@@ -302,7 +302,8 @@ export default function TeamPage() {
       {/* ── Filter panel (dropdown) ─────────────────────────────────────── */}
       {showFilter && (
         <div style={{
-          background: T.panel, border: `1px solid ${T.border}`, padding: "1.25rem 1.5rem",
+          background: T.panel,
+          borderRadius: "var(--t-radius)", border: `1px solid ${T.border}`, padding: "1.25rem 1.5rem",
           marginBottom: "1rem", display: "flex", gap: "2rem", alignItems: "flex-end", flexWrap: "wrap",
           boxShadow: "0 8px 30px rgba(0,0,0,0.4)",
         }}>
@@ -373,8 +374,9 @@ export default function TeamPage() {
       )}
 
       {/* ── Data Table ─────────────────────────────────────────────────── */}
-      <div style={{ background: T.panel, border: `1px solid ${T.border}`, position: "relative", boxShadow: "0 10px 40px rgba(0,0,0,0.4)" }}>
-        <Corners />
+      <div style={{ background: T.panel,
+          borderRadius: "var(--t-radius)", border: `1px solid ${T.border}`, position: "relative", boxShadow: "0 10px 40px rgba(0,0,0,0.4)" }}>
+        <Corners className="corners" />
         <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 1, background: `linear-gradient(90deg,${T.g},transparent)` }} />
 
         <table style={{ width: "100%", borderCollapse: "collapse" }}>
@@ -443,15 +445,15 @@ export default function TeamPage() {
                                 style={{
                                   fontFamily: T.mono, fontSize: "0.65rem", cursor: "pointer",
                                   color: assigned ? c.color : T.muted,
-                                  background: assigned ? c.bg : "rgba(255,255,255,0.03)",
+                                  background: assigned ? c.bg : "var(--t-white-03)",
                                   padding: "0.4rem 0.8rem",
-                                  border: `1px solid ${assigned ? c.border : "rgba(255,255,255,0.1)"}`,
+                                  border: `1px solid ${assigned ? c.border : "var(--t-white-10)"}`,
                                   textTransform: "uppercase", letterSpacing: "0.05em",
                                   transition: "all 0.2s", borderRadius: "2px",
                                   display: "flex", alignItems: "center", gap: "0.4rem",
                                 }}
                               >
-                                {assigned ? <CheckCircle size={12} /> : <div style={{ width: 12, height: 12, borderRadius: "50%", border: "1px solid rgba(255,255,255,0.3)" }} />}
+                                {assigned ? <CheckCircle size={12} /> : <div style={{ width: 12, height: 12, borderRadius: "50%", border: "1px solid var(--t-white-30)" }} />}
                                 {ROLE_LABELS[role]}
                               </button>
                             );
@@ -512,8 +514,9 @@ export default function TeamPage() {
       {/* ── Invite Member Modal ─────────────────────────────────────────── */}
       {showInvite && (
         <div style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.85)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 50, padding: "1rem" }}>
-          <div style={{ background: T.panel, border: `1px solid ${T.border}`, width: "100%", maxWidth: 480, padding: "2rem", position: "relative", boxShadow: "0 20px 60px rgba(0,0,0,0.7)" }}>
-            <Corners />
+          <div style={{ background: T.panel,
+          borderRadius: "var(--t-radius)", border: `1px solid ${T.border}`, width: "100%", maxWidth: 480, padding: "2rem", position: "relative", boxShadow: "0 20px 60px rgba(0,0,0,0.7)" }}>
+            <Corners className="corners" />
             <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 1, background: `linear-gradient(90deg,${T.g},transparent)` }} />
 
             {/* Modal header */}
@@ -583,8 +586,8 @@ export default function TeamPage() {
                           style={{
                             fontFamily: T.mono, fontSize: "0.65rem", cursor: "pointer",
                             padding: "0.4rem 0.8rem", textTransform: "uppercase",
-                            background: active ? c.bg : "rgba(255,255,255,0.03)",
-                            border: `1px solid ${active ? c.border : "rgba(255,255,255,0.1)"}`,
+                            background: active ? c.bg : "var(--t-white-03)",
+                            border: `1px solid ${active ? c.border : "var(--t-white-10)"}`,
                             color: active ? c.color : T.muted, transition: "all 0.15s", borderRadius: "2px",
                           }}
                         >
