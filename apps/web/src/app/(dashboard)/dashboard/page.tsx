@@ -23,6 +23,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
+import { useUserContext } from "@/contexts/UserContext";
 
 /* ─────────────────────────────────────────────
    DESIGN TOKENS
@@ -143,6 +144,7 @@ const Card = ({
 };
 
 export default function DashboardPage() {
+  const { user } = useUserContext();
   const [hovAction, setHovAction] = useState("");
 
   const quickActions = [
@@ -192,7 +194,7 @@ export default function DashboardPage() {
             marginBottom: "0.5rem",
           }}
         >
-          Good morning, Aleena
+          Good morning, {user?.fullName || "User"}
         </h1>
         <p
           style={{
@@ -739,3 +741,4 @@ export default function DashboardPage() {
     </div>
   );
 }
+
