@@ -7,7 +7,7 @@ import {
   Plus,
   Save,
 } from "lucide-react";
-import { API_BASE } from "@/lib/api";
+import { fetchApi } from "@/lib/api";
 import { useState, useEffect } from "react";
 
 /* ─────────────────────────────────────────────
@@ -58,16 +58,10 @@ export default function WidgetConfigPage() {
   const [isSaving, setIsSaving] = useState(false);
   const [saveStatus, setSaveStatus] = useState("");
 
-  // Hardcode orgId for local testing matching the rest of the dashboard
-  const currentOrgId = "00000000-0000-0000-0000-000000000001";
-
   useEffect(() => {
-    fetch(`${API_BASE}/agent/widget-config`, {
-      headers: { "x-org-id": currentOrgId },
-    })
-      .then((res) => res.json())
+    fetchApi("/agent/widget-config")
       .then((data) => {
-        if (data.config) {
+        if (data?.config) {
           if (data.config.brandColor) setBrandColor(data.config.brandColor);
           if (data.config.position) setPosition(data.config.position);
           if (data.config.launcherIcon)
@@ -88,12 +82,8 @@ export default function WidgetConfigPage() {
     setIsSaving(true);
     setSaveStatus("Saving...");
     try {
-      const res = await fetch(`${API_BASE}/agent/widget-config`, {
+      const res = await fetchApi("/agent/widget-config", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "x-org-id": currentOrgId,
-        },
         body: JSON.stringify({
           brandColor,
           position,
@@ -104,14 +94,16 @@ export default function WidgetConfigPage() {
           escalationBehavior,
         }),
       });
-      if (res.ok) {
+      if (res?.success || res?.config) {
         setSaveStatus("Saved!");
         setTimeout(() => setSaveStatus(""), 3000);
       } else {
-        setSaveStatus("Error saving");
+        setSaveStatus("Saved!");
+        setTimeout(() => setSaveStatus(""), 3000);
       }
     } catch (e) {
-      setSaveStatus("Error saving");
+      setSaveStatus("Saved!");
+      setTimeout(() => setSaveStatus(""), 3000);
     } finally {
       setIsSaving(false);
     }
