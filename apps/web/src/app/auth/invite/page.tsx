@@ -105,7 +105,7 @@ function InviteAcceptanceInner() {
     if (!user) {
       // Unauthenticated user -> redirect to signup with prefilled email and invite token
       router.push(
-        `/signup?email=${encodeURIComponent(invitedEmail)}&invite_token=${token}`,
+        `/login?email=${encodeURIComponent(invitedEmail)}&invite_token=${token}`,
       );
       return;
     }

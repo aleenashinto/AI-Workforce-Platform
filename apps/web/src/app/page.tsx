@@ -317,10 +317,10 @@ const ClipBtn = ({
 ───────────────────────────────────────────── */
 function Navbar({
   onLogin,
-  onSignup,
+  
 }: {
   onLogin: () => void;
-  onSignup: () => void;
+  
 }) {
   const links = [
     "support-agent",
@@ -430,32 +430,7 @@ function Navbar({
           Login
         </button>
 
-        <button
-          onClick={onSignup}
-          style={{
-            fontFamily: T.mono,
-            fontSize: "0.75rem",
-            letterSpacing: "0.1em",
-            textTransform: "uppercase",
-            color: T.bg,
-            background: T.g,
-            border: "none",
-            padding: "0.5rem 1.3rem",
-            cursor: "pointer",
-            clipPath: "polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%)",
-            transition: "background 0.2s, box-shadow 0.2s",
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.background = "#fff";
-            e.currentTarget.style.boxShadow = T.glow;
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.background = T.g;
-            e.currentTarget.style.boxShadow = "";
-          }}
-        >
-          Sign Up →
-        </button>
+        
       </div>
     </nav>
   );
@@ -1595,7 +1570,7 @@ export default function Home() {
   }, []);
 
   const handleDeploy = () => {
-    router.push("/signup");
+    router.push("/login");
   };
 
   return (
@@ -1605,7 +1580,7 @@ export default function Home() {
 
       <Navbar
         onLogin={() => router.push("/login")}
-        onSignup={() => router.push("/signup")}
+        
       />
 
       <main>
@@ -1666,3 +1641,4 @@ export default function Home() {
     </>
   );
 }
+

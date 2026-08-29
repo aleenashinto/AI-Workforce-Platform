@@ -470,29 +470,6 @@ export default function LoginPage() {
         </form>
 
 
-        <div
-          style={{
-            fontFamily: T.mono,
-            fontSize: "0.7rem",
-            color: "rgba(200,255,232,0.35)",
-            textAlign: "center",
-            marginTop: "1.5rem",
-          }}
-        >
-          No account?{" "}
-          <Link
-            href="/signup"
-            style={{
-              color: T.g2,
-              textDecoration: "none",
-              transition: "text-shadow 0.2s",
-            }}
-            onMouseEnter={(e) => (e.currentTarget.style.textShadow = T.glow2)}
-            onMouseLeave={(e) => (e.currentTarget.style.textShadow = "")}
-          >
-            Register here
-          </Link>
-        </div>
       </div>
     </div>
   );
