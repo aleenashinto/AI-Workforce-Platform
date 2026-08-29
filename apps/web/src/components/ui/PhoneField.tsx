@@ -3,11 +3,11 @@
 import React, { useState, useEffect } from "react";
 
 const T = {
-  g: "#00ff88",
-  border: "rgba(0,255,136,0.18)",
-  muted: "rgba(0,255,136,0.45)",
-  text: "#c8ffe8",
-  bg: "#040810",
+  g: "var(--t-g)",
+  border: "var(--t-border)",
+  muted: "var(--t-muted)",
+  text: "var(--t-text)",
+  bg: "var(--t-bg)",
   mono: "'Share Tech Mono', monospace",
 };
 

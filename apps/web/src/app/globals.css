@@ -97,3 +97,43 @@
 .search-input::placeholder {
   color: #4a4f58;
 }
+/* DESIGN TOKENS CSS VARIABLES */
+:root {
+  /* LIGHT MODE (DEFAULT) */
+  --t-g: #00aa55;
+  --t-g2: #0088ff;
+  --t-warn: #e68a00;
+  --t-red: #e60026;
+  --t-bg: #f8f9fa;
+  --t-bg2: #e5e7eb;
+  --t-panel: #ffffff;
+  --t-border: rgba(0, 0, 0, 0.1);
+  --t-border2: rgba(0, 0, 0, 0.15);
+  --t-muted: rgba(0, 0, 0, 0.45);
+  --t-text: #111827;
+  --t-glow: 0 0 10px rgba(0, 170, 85, 0.15), 0 0 30px rgba(0, 170, 85, 0.05);
+  --t-glow2: 0 0 10px rgba(0, 136, 255, 0.15), 0 0 30px rgba(0, 136, 255, 0.05);
+  
+  --background: #f8f9fa;
+  --foreground: #111827;
+}
+
+.dark {
+  /* DARK MODE */
+  --t-g: #00ff88;
+  --t-g2: #00cfff;
+  --t-warn: #ffaa00;
+  --t-red: #ff3355;
+  --t-bg: #040810;
+  --t-bg2: #070e1a;
+  --t-panel: #0a1628;
+  --t-border: rgba(0,255,136,0.18);
+  --t-border2: rgba(0,207,255,0.18);
+  --t-muted: rgba(0,255,136,0.45);
+  --t-text: #c8ffe8;
+  --t-glow: 0 0 20px rgba(0,255,136,0.35),0 0 60px rgba(0,255,136,0.12);
+  --t-glow2: 0 0 20px rgba(0,207,255,0.35),0 0 60px rgba(0,207,255,0.12);
+  
+  --background: #040810;
+  --foreground: #c8ffe8;
+}

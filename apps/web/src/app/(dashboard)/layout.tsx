@@ -4,8 +4,8 @@ import { DashboardShell } from "@/components/layout/dashboard-shell";
    DESIGN TOKENS
 ───────────────────────────────────────────── */
 const T = {
-  bg: "#040810",
-  text: "#c8ffe8",
+  bg: "var(--t-bg)",
+  text: "var(--t-text)",
 };
 
 export default function DashboardLayout({

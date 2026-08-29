@@ -32,19 +32,19 @@ import { formatDistanceToNow, format } from "date-fns";
    DESIGN TOKENS
 ───────────────────────────────────────────── */
 const T = {
-  g: "#00ff88",
-  bg: "#040810",
-  bg2: "#070e1a",
-  panel: "#0a1628",
-  border: "rgba(0,255,136,0.18)",
-  muted: "rgba(0,255,136,0.45)",
-  text: "#c8ffe8",
-  glow: "0 0 20px rgba(0,255,136,0.35),0 0 60px rgba(0,255,136,0.12)",
+  g: "var(--t-g)",
+  bg: "var(--t-bg)",
+  bg2: "var(--t-bg2)",
+  panel: "var(--t-panel)",
+  border: "var(--t-border)",
+  muted: "var(--t-muted)",
+  text: "var(--t-text)",
+  glow: "var(--t-glow)",
   mono: "'Share Tech Mono', monospace",
   display: "'Orbitron', sans-serif",
   body: "'Rajdhani', sans-serif",
-  warn: "#ffaa00",
-  red: "#ff3355",
+  warn: "var(--t-warn)",
+  red: "var(--t-red)",
 };
 
 const Corners = () => (

@@ -10,32 +10,35 @@ import {
   HelpCircle,
   Menu,
   Loader2,
+  Sun,
+  Moon,
 } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import { useState, useEffect, useRef } from "react";
 import { useUserContext } from "@/contexts/UserContext";
+import { useTheme } from "next-themes";
 import Link from "next/link";
 
 /* ─────────────────────────────────────────────
    DESIGN TOKENS
 ───────────────────────────────────────────── */
 const T = {
-  g: "#00ff88",
-  g2: "#00cfff",
-  bg: "#040810",
-  bg2: "#070e1a",
-  panel: "#0a1628",
-  border: "rgba(0,255,136,0.18)",
-  border2: "rgba(0,207,255,0.18)",
-  muted: "rgba(0,255,136,0.45)",
+  g: "var(--t-g)",
+  g2: "var(--t-g2)",
+  bg: "var(--t-bg)",
+  bg2: "var(--t-bg2)",
+  panel: "var(--t-panel)",
+  border: "var(--t-border)",
+  border2: "var(--t-border2)",
+  muted: "var(--t-muted)",
   muted2: "rgba(0,207,255,0.45)",
-  text: "#c8ffe8",
-  glow: "0 0 20px rgba(0,255,136,0.35),0 0 60px rgba(0,255,136,0.12)",
+  text: "var(--t-text)",
+  glow: "var(--t-glow)",
   mono: "'Share Tech Mono', monospace",
   display: "'Orbitron', sans-serif",
   body: "'Rajdhani', sans-serif",
-  warn: "#ffaa00",
-  red: "#ff3355",
+  warn: "var(--t-warn)",
+  red: "var(--t-red)",
 };
 
 export function Header({
@@ -43,6 +46,9 @@ export function Header({
 }: {
   setMobileMenuOpen?: (open: boolean) => void;
 }) {
+  const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
   const pathname = usePathname();
   const router = useRouter();
 
@@ -380,6 +386,18 @@ export function Header({
             onMouseEnter={(e) => (e.currentTarget.style.color = T.g)}
             onMouseLeave={(e) => (e.currentTarget.style.color = T.muted)}
           />
+
+          {mounted && (
+            <div
+              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+              style={{ cursor: "pointer", transition: "color 0.2s" }}
+              onMouseEnter={(e) => (e.currentTarget.style.color = T.g)}
+              onMouseLeave={(e) => (e.currentTarget.style.color = T.muted)}
+              title="Toggle Theme"
+            >
+              {theme === "dark" ? <Sun size={20} /> : <Moon size={20} />}
+            </div>
+          )}
 
           <div
             style={{

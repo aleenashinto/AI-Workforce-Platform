@@ -18,31 +18,31 @@ import { useUserContext, MemberRole } from "@/contexts/UserContext";
 
 /* ─── Design Tokens ───────────────────────────────────────────────────────── */
 const T = {
-  g: "#00ff88",
-  g2: "#00cfff",
-  warn: "#ffaa00",
-  red: "#ff3355",
-  bg: "#040810",
-  bg2: "#070e1a",
-  panel: "#0a1628",
-  border: "rgba(0,255,136,0.18)",
-  border2: "rgba(0,207,255,0.18)",
-  muted: "rgba(0,255,136,0.45)",
-  text: "#c8ffe8",
-  glow: "0 0 20px rgba(0,255,136,0.35),0 0 60px rgba(0,255,136,0.12)",
+  g: "var(--t-g)",
+  g2: "var(--t-g2)",
+  warn: "var(--t-warn)",
+  red: "var(--t-red)",
+  bg: "var(--t-bg)",
+  bg2: "var(--t-bg2)",
+  panel: "var(--t-panel)",
+  border: "var(--t-border)",
+  border2: "var(--t-border2)",
+  muted: "var(--t-muted)",
+  text: "var(--t-text)",
+  glow: "var(--t-glow)",
   mono: "'Share Tech Mono', monospace",
   display: "'Orbitron', sans-serif",
   body: "'Rajdhani', sans-serif",
 };
 
 const ROLE_COLORS: Record<string, { bg: string; border: string; color: string }> = {
-  owner:         { bg: "rgba(255,200,0,0.12)",  border: "rgba(255,200,0,0.4)",  color: "#ffd700" },
-  admin:         { bg: "rgba(255,100,0,0.12)",  border: "rgba(255,100,0,0.4)",  color: "#ff8c42" },
-  support_lead:  { bg: "rgba(0,162,255,0.12)",  border: "rgba(0,162,255,0.4)",  color: "#00a2ff" },
-  support_agent: { bg: "rgba(0,200,255,0.12)",  border: "rgba(0,200,255,0.4)",  color: "#00c8ff" },
-  sales_lead:    { bg: "rgba(180,0,255,0.12)",  border: "rgba(180,0,255,0.4)",  color: "#b400ff" },
-  sales_rep:     { bg: "rgba(210,80,255,0.12)", border: "rgba(210,80,255,0.4)", color: "#d250ff" },
-  viewer:        { bg: "rgba(150,150,150,0.1)", border: "rgba(150,150,150,0.3)",color: "#999" },
+  owner:         { bg: "rgba(255,200,0,0.12)",  border: "var(--t-border)",  color: "#ffd700" },
+  admin:         { bg: "rgba(255,100,0,0.12)",  border: "var(--t-border)",  color: "#ff8c42" },
+  support_lead:  { bg: "rgba(0,162,255,0.12)",  border: "var(--t-border)",  color: "#00a2ff" },
+  support_agent: { bg: "rgba(0,200,255,0.12)",  border: "var(--t-border)",  color: "#00c8ff" },
+  sales_lead:    { bg: "rgba(180,0,255,0.12)",  border: "var(--t-border)",  color: "#b400ff" },
+  sales_rep:     { bg: "rgba(210,80,255,0.12)", border: "var(--t-border)", color: "#d250ff" },
+  viewer:        { bg: "rgba(150,150,150,0.1)", border: "var(--t-border)",color: "#999" },
 };
 
 const ALL_ROLES: MemberRole[] = [

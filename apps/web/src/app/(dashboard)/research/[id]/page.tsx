@@ -20,13 +20,13 @@ import { apiClient } from "@/lib/api/client";
 import { Button } from "@/components/ui/button";
 
 const T = {
-  g: "#00ff88",
-  g2: "#00cfff",
-  bg: "#040810",
-  bg2: "#070e1a",
-  panel: "#0a1628",
-  border: "rgba(0,255,136,0.18)",
-  muted: "rgba(0,255,136,0.45)",
+  g: "var(--t-g)",
+  g2: "var(--t-g2)",
+  bg: "var(--t-bg)",
+  bg2: "var(--t-bg2)",
+  panel: "var(--t-panel)",
+  border: "var(--t-border)",
+  muted: "var(--t-muted)",
 };
 
 export default function ResearchWorkspace() {
