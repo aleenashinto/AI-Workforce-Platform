@@ -68,7 +68,7 @@ export default function SupportAnalyticsPage() {
             fontFamily: T.display,
             fontSize: "2.2rem",
             fontWeight: 700,
-            color: "#fff",
+            color: "var(--t-heading)",
             marginBottom: "0.5rem",
             display: "flex",
             alignItems: "center",
@@ -134,7 +134,7 @@ export default function SupportAnalyticsPage() {
                   fontFamily: T.body,
                   fontSize: "2rem",
                   fontWeight: 700,
-                  color: "#fff",
+                  color: "var(--t-heading)",
                 }}
               >
                 {kpi.value}
@@ -333,7 +333,7 @@ export default function SupportAnalyticsPage() {
                 style={{
                   fontFamily: T.body,
                   fontSize: "0.95rem",
-                  color: "#fff",
+                  color: "var(--t-heading)",
                   marginBottom: "0.5rem",
                 }}
               >
@@ -356,7 +356,7 @@ export default function SupportAnalyticsPage() {
                 style={{
                   fontFamily: T.body,
                   fontSize: "0.95rem",
-                  color: "#fff",
+                  color: "var(--t-heading)",
                   marginBottom: "0.5rem",
                 }}
               >
@@ -497,7 +497,7 @@ export default function SupportAnalyticsPage() {
                     padding: "1rem",
                     fontFamily: T.body,
                     fontSize: "0.95rem",
-                    color: "#fff",
+                    color: "var(--t-heading)",
                   }}
                 >
                   {row.q}

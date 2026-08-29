@@ -123,7 +123,7 @@ const Card = ({
           fontFamily: T.display,
           fontSize: "2rem",
           fontWeight: 700,
-          color: "#fff",
+          color: "var(--t-heading)",
           marginBottom: "0.5rem",
         }}
       >
@@ -190,7 +190,7 @@ export default function DashboardPage() {
             fontFamily: T.display,
             fontSize: "2.2rem",
             fontWeight: 700,
-            color: "#fff",
+            color: "var(--t-heading)",
             marginBottom: "0.5rem",
           }}
         >
@@ -512,7 +512,7 @@ export default function DashboardPage() {
                       style={{
                         fontFamily: T.mono,
                         fontSize: "0.7rem",
-                        color: "#fff",
+                        color: "var(--t-heading)",
                         textAlign: "center",
                       }}
                     >

@@ -142,7 +142,7 @@ export default function KnowledgePage() {
               fontFamily: T.display,
               fontSize: "2.2rem",
               fontWeight: 700,
-              color: "#fff",
+              color: "var(--t-heading)",
               marginBottom: "0.5rem",
               display: "flex",
               alignItems: "center",
@@ -356,7 +356,7 @@ export default function KnowledgePage() {
                       padding: "1rem",
                       fontFamily: T.body,
                       fontSize: "1rem",
-                      color: "#fff",
+                      color: "var(--t-heading)",
                       fontWeight: 600,
                     }}
                   >

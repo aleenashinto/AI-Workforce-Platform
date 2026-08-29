@@ -118,7 +118,7 @@ export default function ResearchDashboard() {
           {
             label: "Research Projects",
             value: summary.total || 0,
-            color: "#fff",
+            color: "var(--t-heading)",
           },
           { label: "Active Research", value: summary.active || 0, color: T.g2 },
           { label: "Completed", value: summary.completed || 0, color: T.g },

@@ -83,7 +83,7 @@ export default function SettingsLayout({
             fontFamily: T.display,
             fontSize: "2.2rem",
             fontWeight: 700,
-            color: "#fff",
+            color: "var(--t-heading)",
             marginBottom: "2rem",
             display: "flex",
             alignItems: "center",

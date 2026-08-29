@@ -80,7 +80,7 @@ const UsageBar = ({ label, used, total, icon: Icon, unit }: any) => {
             gap: "0.8rem",
             fontFamily: T.display,
             fontSize: "1.2rem",
-            color: "#fff",
+            color: "var(--t-heading)",
           }}
         >
           <Icon size={18} color={T.g} /> {label}
@@ -144,7 +144,7 @@ export default function UsagePage() {
               fontFamily: T.display,
               fontSize: "2.2rem",
               fontWeight: 700,
-              color: "#fff",
+              color: "var(--t-heading)",
               marginBottom: "0.5rem",
               display: "flex",
               alignItems: "center",
@@ -210,7 +210,7 @@ export default function UsagePage() {
           style={{
             fontFamily: T.display,
             fontSize: "1.2rem",
-            color: "#fff",
+            color: "var(--t-heading)",
             marginBottom: "1.5rem",
           }}
         >

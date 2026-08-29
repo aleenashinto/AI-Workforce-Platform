@@ -196,7 +196,7 @@ export default function ResetPasswordPage() {
             fontFamily: T.display,
             fontSize: "1.6rem",
             fontWeight: 700,
-            color: "#fff",
+            color: "var(--t-heading)",
             marginBottom: "1.8rem",
           }}
         >
@@ -322,7 +322,7 @@ export default function ResetPasswordPage() {
             onMouseEnter={(e) => {
               if (allReqsMet && match) {
                 e.currentTarget.style.boxShadow = T.glow;
-                e.currentTarget.style.background = "#fff";
+                e.currentTarget.style.background = "var(--t-heading)";
               }
             }}
             onMouseLeave={(e) => {

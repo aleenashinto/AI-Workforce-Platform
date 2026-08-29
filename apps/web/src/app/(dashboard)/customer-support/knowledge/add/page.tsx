@@ -229,7 +229,7 @@ function AddKnowledgeContent() {
             fontFamily: T.display,
             fontSize: "2.2rem",
             fontWeight: 700,
-            color: "#fff",
+            color: "var(--t-heading)",
             marginBottom: "0.5rem",
           }}
         >
@@ -287,7 +287,7 @@ function AddKnowledgeContent() {
               style={{
                 fontFamily: T.mono,
                 fontSize: "0.8rem",
-                color: activeType === s.id ? "#fff" : T.muted,
+                color: activeType === s.id ? "var(--t-heading)" : T.muted,
                 textTransform: "uppercase",
               }}
             >
@@ -349,7 +349,7 @@ function AddKnowledgeContent() {
                 style={{
                   fontFamily: T.body,
                   fontSize: "1.1rem",
-                  color: "#fff",
+                  color: "var(--t-heading)",
                 }}
               >
                 {selectedFile

@@ -265,7 +265,7 @@ export default function ConversationView() {
                 fontFamily: T.body,
                 fontSize: "1.2rem",
                 fontWeight: 600,
-                color: "#fff",
+                color: "var(--t-heading)",
                 margin: "0 0 0.5rem 0",
               }}
             >
@@ -536,7 +536,7 @@ export default function ConversationView() {
                           padding: "0.8rem 1rem",
                           background: "transparent",
                           border: "none",
-                          color: "#fff",
+                          color: "var(--t-heading)",
                           fontFamily: T.mono,
                           fontSize: "0.8rem",
                           cursor: "pointer",
@@ -630,7 +630,7 @@ export default function ConversationView() {
                       padding: "0.8rem 1rem",
                       background: "transparent",
                       border: "none",
-                      color: "#fff",
+                      color: "var(--t-heading)",
                       fontFamily: T.mono,
                       fontSize: "0.8rem",
                       cursor: "pointer",
@@ -650,7 +650,7 @@ export default function ConversationView() {
                         padding: "0.8rem 1rem",
                         background: "transparent",
                         border: "none",
-                        color: "#fff",
+                        color: "var(--t-heading)",
                         fontFamily: T.mono,
                         fontSize: "0.8rem",
                         cursor: "pointer",
@@ -803,7 +803,7 @@ export default function ConversationView() {
                       border: `1px solid ${isUser ? "rgba(255,255,255,0.1)" : isAI ? "rgba(0,255,136,0.2)" : "rgba(0,207,255,0.2)"}`,
                       padding: "1rem 1.2rem",
                       maxWidth: "75%",
-                      color: "#fff",
+                      color: "var(--t-heading)",
                       fontFamily: T.body,
                       fontSize: "0.95rem",
                       lineHeight: 1.5,
@@ -1027,7 +1027,7 @@ export default function ConversationView() {
                     padding: "0.8rem",
                     background: "transparent",
                     border: `1px solid rgba(255,255,255,0.1)`,
-                    color: "#fff",
+                    color: "var(--t-heading)",
                     borderRadius: "4px",
                     cursor: "pointer",
                   }}
@@ -1109,7 +1109,7 @@ export default function ConversationView() {
                     padding: "0.8rem",
                     background: "transparent",
                     border: `1px solid rgba(255,255,255,0.1)`,
-                    color: "#fff",
+                    color: "var(--t-heading)",
                     borderRadius: "4px",
                     cursor: "pointer",
                   }}
@@ -1278,7 +1278,7 @@ export default function ConversationView() {
                         style={{
                           fontFamily: T.mono,
                           fontSize: "0.7rem",
-                          color: "#fff",
+                          color: "var(--t-heading)",
                         }}
                       >
                         #{(c.id || "").split("-")[0].toUpperCase()}

@@ -135,7 +135,7 @@ const Card = ({
           fontFamily: T.display,
           fontSize: "2rem",
           fontWeight: 700,
-          color: "#fff",
+          color: "var(--t-heading)",
           marginBottom: "0.5rem",
         }}
       >

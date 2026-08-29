@@ -226,7 +226,7 @@ export default function TeamPage() {
       {/* ── Header ─────────────────────────────────────────────────────── */}
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "2.5rem" }}>
         <div>
-          <h1 style={{ fontFamily: T.display, fontSize: "2.2rem", fontWeight: 700, color: "#fff", marginBottom: "0.5rem", display: "flex", alignItems: "center", gap: "1rem", textShadow: "0 0 20px rgba(0,255,136,0.2)" }}>
+          <h1 style={{ fontFamily: T.display, fontSize: "2.2rem", fontWeight: 700, color: "var(--t-heading)", marginBottom: "0.5rem", display: "flex", alignItems: "center", gap: "1rem", textShadow: "0 0 20px rgba(0,255,136,0.2)" }}>
             <Users color={T.g} size={32} /> Team Members
           </h1>
           <p style={{ fontFamily: T.mono, fontSize: "0.9rem", color: T.g, letterSpacing: "0.05em", opacity: 0.8 }}>
@@ -244,7 +244,7 @@ export default function TeamPage() {
             boxShadow: T.glow, clipPath: "polygon(10px 0%,100% 0%,calc(100% - 10px) 100%,0% 100%)",
             transition: "all 0.2s",
           }}
-          onMouseEnter={(e) => { e.currentTarget.style.background = "#fff"; }}
+          onMouseEnter={(e) => { e.currentTarget.style.background = "var(--t-heading)"; }}
           onMouseLeave={(e) => { e.currentTarget.style.background = T.g; }}
         >
           <UserPlus size={16} /> Invite Member
@@ -417,11 +417,11 @@ export default function TeamPage() {
                     {/* User cell */}
                     <td style={{ padding: "1.5rem" }}>
                       <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-                        <div style={{ width: 40, height: 40, borderRadius: "50%", background: `linear-gradient(135deg,${T.g}22,${T.g2}22)`, border: `1px solid ${T.border}`, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: T.display, color: "#fff", fontSize: "1.2rem", fontWeight: 700 }}>
+                        <div style={{ width: 40, height: 40, borderRadius: "50%", background: `linear-gradient(135deg,${T.g}22,${T.g2}22)`, border: `1px solid ${T.border}`, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: T.display, color: "var(--t-heading)", fontSize: "1.2rem", fontWeight: 700 }}>
                           {m.name.charAt(0)}
                         </div>
                         <div>
-                          <div style={{ fontFamily: T.body, fontSize: "1.1rem", color: "#fff", fontWeight: 600, marginBottom: "0.2rem" }}>{m.name}</div>
+                          <div style={{ fontFamily: T.body, fontSize: "1.1rem", color: "var(--t-heading)", fontWeight: 600, marginBottom: "0.2rem" }}>{m.name}</div>
                           <div style={{ fontFamily: T.mono, fontSize: "0.75rem", color: T.muted, display: "flex", alignItems: "center", gap: "0.4rem" }}>
                             <Mail size={12} /> {m.email}
                           </div>
@@ -484,7 +484,7 @@ export default function TeamPage() {
                           <button
                             onClick={() => setEditingIndex(null)}
                             style={{ background: T.g, border: "none", color: T.bg, fontFamily: T.mono, fontSize: "0.7rem", padding: "0.5rem 1rem", cursor: "pointer", textTransform: "uppercase", display: "inline-flex", alignItems: "center", gap: "0.4rem", fontWeight: "bold", boxShadow: T.glow, transition: "all 0.2s" }}
-                            onMouseEnter={(e) => { e.currentTarget.style.background = "#fff"; }}
+                            onMouseEnter={(e) => { e.currentTarget.style.background = "var(--t-heading)"; }}
                             onMouseLeave={(e) => { e.currentTarget.style.background = T.g; }}
                           >
                             <Shield size={14} /> Save Roles
@@ -518,7 +518,7 @@ export default function TeamPage() {
 
             {/* Modal header */}
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.5rem" }}>
-              <h2 style={{ fontFamily: T.display, fontSize: "1.2rem", color: "#fff", margin: 0, display: "flex", alignItems: "center", gap: "0.75rem" }}>
+              <h2 style={{ fontFamily: T.display, fontSize: "1.2rem", color: "var(--t-heading)", margin: 0, display: "flex", alignItems: "center", gap: "0.75rem" }}>
                 <UserPlus size={20} color={T.g} /> Invite Member
               </h2>
               <button onClick={() => setShowInvite(false)} style={{ background: "none", border: "none", cursor: "pointer", color: T.muted, padding: 4, display: "flex" }}>
@@ -600,7 +600,7 @@ export default function TeamPage() {
                   <button
                     onClick={handleInvite}
                     style={{ flex: 1, background: T.g, border: "none", color: T.bg, fontFamily: T.mono, fontSize: "0.8rem", fontWeight: "bold", padding: "0.9rem", cursor: "pointer", textTransform: "uppercase", display: "flex", alignItems: "center", justifyContent: "center", gap: "0.5rem", boxShadow: T.glow, transition: "all 0.2s" }}
-                    onMouseEnter={(e) => { e.currentTarget.style.background = "#fff"; }}
+                    onMouseEnter={(e) => { e.currentTarget.style.background = "var(--t-heading)"; }}
                     onMouseLeave={(e) => { e.currentTarget.style.background = T.g; }}
                   >
                     <Send size={16} /> Send Invitation

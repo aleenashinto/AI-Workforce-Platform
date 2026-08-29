@@ -87,7 +87,7 @@ const InfoItem = ({
     >
       {Icon && <Icon size={12} />} {label}
     </div>
-    <div style={{ fontFamily: T.body, fontSize: "0.95rem", color: "#fff" }}>
+    <div style={{ fontFamily: T.body, fontSize: "0.95rem", color: "var(--t-heading)" }}>
       {value}
     </div>
   </div>
@@ -211,7 +211,7 @@ export default function LeadDetailsPage() {
                 fontFamily: T.display,
                 fontSize: "2.2rem",
                 fontWeight: 700,
-                color: "#fff",
+                color: "var(--t-heading)",
                 marginBottom: "0.5rem",
               }}
             >
@@ -288,7 +288,7 @@ export default function LeadDetailsPage() {
               style={{
                 fontFamily: T.display,
                 fontSize: "1.1rem",
-                color: "#fff",
+                color: "var(--t-heading)",
                 marginBottom: "1.5rem",
                 display: "flex",
                 alignItems: "center",
@@ -319,7 +319,7 @@ export default function LeadDetailsPage() {
               style={{
                 fontFamily: T.display,
                 fontSize: "1.1rem",
-                color: "#fff",
+                color: "var(--t-heading)",
                 marginBottom: "1.5rem",
                 display: "flex",
                 alignItems: "center",
@@ -352,7 +352,7 @@ export default function LeadDetailsPage() {
               style={{
                 fontFamily: T.display,
                 fontSize: "1.1rem",
-                color: "#fff",
+                color: "var(--t-heading)",
                 marginBottom: "1.5rem",
                 display: "flex",
                 alignItems: "center",
@@ -437,7 +437,7 @@ export default function LeadDetailsPage() {
                 style={{
                   fontFamily: T.display,
                   fontSize: "1.1rem",
-                  color: "#fff",
+                  color: "var(--t-heading)",
                   display: "flex",
                   alignItems: "center",
                   gap: "0.5rem",
@@ -513,7 +513,7 @@ export default function LeadDetailsPage() {
                     paddingLeft: "1.2rem",
                     fontFamily: T.body,
                     fontSize: "0.95rem",
-                    color: "#fff",
+                    color: "var(--t-heading)",
                     display: "flex",
                     flexDirection: "column",
                     gap: "0.5rem",
@@ -549,7 +549,7 @@ export default function LeadDetailsPage() {
                 style={{
                   fontFamily: T.display,
                   fontSize: "1.1rem",
-                  color: "#fff",
+                  color: "var(--t-heading)",
                   display: "flex",
                   alignItems: "center",
                   gap: "0.5rem",

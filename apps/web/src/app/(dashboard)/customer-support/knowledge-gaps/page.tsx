@@ -155,7 +155,7 @@ export default function KnowledgeGapsPage() {
               fontFamily: T.display,
               fontSize: "2.2rem",
               fontWeight: 700,
-              color: "#fff",
+              color: "var(--t-heading)",
               marginBottom: "0.5rem",
               display: "flex",
               alignItems: "center",
@@ -480,7 +480,7 @@ export default function KnowledgeGapsPage() {
                         padding: "1.2rem 1.5rem",
                         fontFamily: T.body,
                         fontSize: "1rem",
-                        color: "#fff",
+                        color: "var(--t-heading)",
                         fontWeight: 600,
                       }}
                     >
@@ -632,7 +632,7 @@ export default function KnowledgeGapsPage() {
               style={{
                 fontFamily: T.body,
                 fontSize: "1.6rem",
-                color: "#fff",
+                color: "var(--t-heading)",
                 fontWeight: 600,
                 marginBottom: "1.5rem",
                 paddingRight: "2rem",
@@ -740,7 +740,7 @@ export default function KnowledgeGapsPage() {
                     }}
                   >
                     <span style={{ color: T.muted }}>Asked:</span>{" "}
-                    <span style={{ color: "#fff" }}>
+                    <span style={{ color: "var(--t-heading)" }}>
                       {selectedGap.occurrence_count} times
                     </span>
                   </div>
@@ -753,7 +753,7 @@ export default function KnowledgeGapsPage() {
                     }}
                   >
                     <span style={{ color: T.muted }}>AI Confidence:</span>{" "}
-                    <span style={{ color: "#fff" }}>
+                    <span style={{ color: "var(--t-heading)" }}>
                       {getConfidence(selectedGap)}%
                     </span>
                   </div>
@@ -766,7 +766,7 @@ export default function KnowledgeGapsPage() {
                     }}
                   >
                     <span style={{ color: T.muted }}>Escalations:</span>{" "}
-                    <span style={{ color: "#fff" }}>
+                    <span style={{ color: "var(--t-heading)" }}>
                       {Math.floor(selectedGap.occurrence_count / 3)}
                     </span>
                   </div>
@@ -779,7 +779,7 @@ export default function KnowledgeGapsPage() {
                     }}
                   >
                     <span style={{ color: T.muted }}>Last detected:</span>{" "}
-                    <span style={{ color: "#fff" }}>
+                    <span style={{ color: "var(--t-heading)" }}>
                       {new Date(
                         selectedGap.last_seen_at || Date.now(),
                       ).toLocaleDateString()}
@@ -875,7 +875,7 @@ export default function KnowledgeGapsPage() {
                     border: `1px solid rgba(255,170,0,0.2)`,
                     fontFamily: T.body,
                     fontSize: "0.95rem",
-                    color: "#fff",
+                    color: "var(--t-heading)",
                     borderLeft: `3px solid ${T.warn}`,
                   }}
                 >

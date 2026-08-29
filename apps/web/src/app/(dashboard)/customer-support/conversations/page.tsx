@@ -157,7 +157,7 @@ export default function ConversationsHistory() {
             style={{
               fontFamily: T.display,
               fontSize: "1.8rem",
-              color: "#fff",
+              color: "var(--t-heading)",
               textShadow: T.glow,
             }}
           >
@@ -445,7 +445,7 @@ export default function ConversationsHistory() {
                       padding: "1rem",
                       fontFamily: T.mono,
                       fontSize: "0.85rem",
-                      color: "#fff",
+                      color: "var(--t-heading)",
                     }}
                   >
                     {d.id.substring(0, 8)}
@@ -455,7 +455,7 @@ export default function ConversationsHistory() {
                       padding: "1rem",
                       fontFamily: T.body,
                       fontSize: "0.95rem",
-                      color: "#fff",
+                      color: "var(--t-heading)",
                       fontWeight: 600,
                     }}
                   >
@@ -479,7 +479,7 @@ export default function ConversationsHistory() {
                       padding: "1rem",
                       fontFamily: T.mono,
                       fontSize: "0.85rem",
-                      color: "#fff",
+                      color: "var(--t-heading)",
                     }}
                   >
                     <div

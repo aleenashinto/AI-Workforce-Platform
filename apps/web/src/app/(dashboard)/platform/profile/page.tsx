@@ -295,7 +295,7 @@ export default function ProfilePage() {
               fontFamily: T.display,
               fontSize: "2.2rem",
               fontWeight: 700,
-              color: "#fff",
+              color: "var(--t-heading)",
               marginBottom: "0.5rem",
               display: "flex",
               alignItems: "center",
@@ -412,7 +412,7 @@ export default function ProfilePage() {
               style={{
                 fontFamily: T.display,
                 fontSize: "1.3rem",
-                color: "#fff",
+                color: "var(--t-heading)",
                 fontWeight: 700,
               }}
             >

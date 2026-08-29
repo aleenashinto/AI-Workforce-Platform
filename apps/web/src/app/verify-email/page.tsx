@@ -178,7 +178,7 @@ function VerifyContent() {
               fontFamily: T.display,
               fontSize: "1.4rem",
               fontWeight: 700,
-              color: "#fff",
+              color: "var(--t-heading)",
               marginBottom: "0.5rem",
             }}
           >
@@ -337,7 +337,7 @@ function VerifyContent() {
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.boxShadow = T.glow;
-                e.currentTarget.style.background = "#fff";
+                e.currentTarget.style.background = "var(--t-heading)";
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.boxShadow = "";

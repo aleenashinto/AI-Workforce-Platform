@@ -130,7 +130,7 @@ export default function CompletePage() {
           fontFamily: T.display,
           fontSize: "2.2rem",
           fontWeight: 700,
-          color: "#fff",
+          color: "var(--t-heading)",
           marginBottom: "2rem",
           lineHeight: 1.2,
         }}

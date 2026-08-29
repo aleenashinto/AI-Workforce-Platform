@@ -181,7 +181,7 @@ export function ActionBtn({
   ) => {
     setHov(true);
     if (filled) {
-      (e.currentTarget as HTMLElement).style.background = "#fff";
+      (e.currentTarget as HTMLElement).style.background = "var(--t-heading)";
     } else {
       (e.currentTarget as HTMLElement).style.borderColor = T.g2;
       (e.currentTarget as HTMLElement).style.background =

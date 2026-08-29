@@ -293,7 +293,7 @@ export default function ConversationPage({
                         fontFamily: T.body,
                         fontSize: "0.95rem",
                         fontWeight: 600,
-                        color: "#fff",
+                        color: "var(--t-heading)",
                       }}
                     >
                       {c.external_id || "User"}
@@ -399,7 +399,7 @@ export default function ConversationPage({
                       fontFamily: T.body,
                       fontSize: "1.1rem",
                       fontWeight: 600,
-                      color: "#fff",
+                      color: "var(--t-heading)",
                     }}
                   >
                     {conversation.external_id || "User"}
@@ -563,7 +563,7 @@ export default function ConversationPage({
                           padding: "1rem",
                           fontFamily: T.body,
                           fontSize: "0.95rem",
-                          color: "#fff",
+                          color: "var(--t-heading)",
                           lineHeight: 1.5,
                         }}
                       >
@@ -693,7 +693,7 @@ export default function ConversationPage({
                 style={{
                   fontFamily: T.body,
                   fontSize: "0.95rem",
-                  color: "#fff",
+                  color: "var(--t-heading)",
                 }}
               >
                 {conversation?.id?.slice(0, 8)}
@@ -715,7 +715,7 @@ export default function ConversationPage({
                 style={{
                   fontFamily: T.body,
                   fontSize: "0.95rem",
-                  color: "#fff",
+                  color: "var(--t-heading)",
                   textTransform: "capitalize",
                 }}
               >

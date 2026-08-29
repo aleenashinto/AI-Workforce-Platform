@@ -147,7 +147,7 @@ export default function AuditLogsPage() {
               fontFamily: T.display,
               fontSize: "2.2rem",
               fontWeight: 700,
-              color: "#fff",
+              color: "var(--t-heading)",
               marginBottom: "0.5rem",
               display: "flex",
               alignItems: "center",
@@ -364,7 +364,7 @@ export default function AuditLogsPage() {
                     padding: "1rem",
                     fontFamily: T.body,
                     fontSize: "0.95rem",
-                    color: "#fff",
+                    color: "var(--t-heading)",
                     fontWeight: 600,
                   }}
                 >

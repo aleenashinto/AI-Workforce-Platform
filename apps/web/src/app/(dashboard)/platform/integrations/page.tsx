@@ -198,7 +198,7 @@ export default function IntegrationsPage() {
             fontFamily: T.display,
             fontSize: "2.2rem",
             fontWeight: 700,
-            color: "#fff",
+            color: "var(--t-heading)",
             marginBottom: "0.5rem",
             display: "flex",
             alignItems: "center",
@@ -282,7 +282,7 @@ export default function IntegrationsPage() {
                       style={{
                         fontFamily: T.display,
                         fontSize: "1.2rem",
-                        color: "#fff",
+                        color: "var(--t-heading)",
                       }}
                     >
                       {item.name}

@@ -65,7 +65,7 @@ export default function WelcomePage() {
           fontFamily: T.display,
           fontSize: "2.2rem",
           fontWeight: 700,
-          color: "#fff",
+          color: "var(--t-heading)",
           marginBottom: "1rem",
           lineHeight: 1.2,
         }}

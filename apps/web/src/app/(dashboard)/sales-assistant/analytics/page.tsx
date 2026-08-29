@@ -144,7 +144,7 @@ const StatCard = ({
           fontFamily: T.display,
           fontSize: "2rem",
           fontWeight: 700,
-          color: "#fff",
+          color: "var(--t-heading)",
           marginBottom: "0.5rem",
         }}
       >
@@ -326,7 +326,7 @@ export default function AnalyticsPage() {
               fontFamily: T.display,
               fontSize: "2rem",
               fontWeight: 700,
-              color: "#fff",
+              color: "var(--t-heading)",
               marginBottom: "0.5rem",
               display: "flex",
               alignItems: "center",
@@ -545,7 +545,7 @@ export default function AnalyticsPage() {
                           paddingLeft: "0.75rem",
                           fontFamily: T.body,
                           fontSize: "0.9rem",
-                          color: "#fff",
+                          color: "var(--t-heading)",
                           fontWeight: 600,
                           transition: "width 0.8s ease-out",
                         }}
@@ -621,7 +621,7 @@ export default function AnalyticsPage() {
                     fontSize: 12,
                   }}
                   labelStyle={{ color: T.g2 }}
-                  itemStyle={{ color: "#fff" }}
+                  itemStyle={{ color: "var(--t-heading)" }}
                 />
                 <Legend
                   wrapperStyle={{
@@ -722,7 +722,7 @@ export default function AnalyticsPage() {
                     <td
                       style={{
                         padding: "0.75rem 1rem",
-                        color: "#fff",
+                        color: "var(--t-heading)",
                         fontWeight: 600,
                       }}
                     >
@@ -755,7 +755,7 @@ export default function AnalyticsPage() {
                       style={{
                         padding: "0.75rem 1rem",
                         textAlign: "right",
-                        color: "#fff",
+                        color: "var(--t-heading)",
                       }}
                     >
                       {fmt(s.enrolled)}
@@ -888,7 +888,7 @@ export default function AnalyticsPage() {
                         <td
                           style={{
                             padding: "0.75rem 1rem",
-                            color: "#fff",
+                            color: "var(--t-heading)",
                             fontWeight: 600,
                           }}
                         >

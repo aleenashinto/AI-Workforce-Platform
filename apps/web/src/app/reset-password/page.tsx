@@ -247,7 +247,7 @@ function ResetForm() {
             fontFamily: T.display,
             fontSize: "1.4rem",
             fontWeight: 700,
-            color: "#fff",
+            color: "var(--t-heading)",
             marginBottom: "1.8rem",
           }}
         >
@@ -389,7 +389,7 @@ function ResetForm() {
               onMouseEnter={(e) => {
                 if (allReqsMet && !loading) {
                   e.currentTarget.style.boxShadow = T.glow;
-                  e.currentTarget.style.background = "#fff";
+                  e.currentTarget.style.background = "var(--t-heading)";
                 }
               }}
               onMouseLeave={(e) => {
@@ -441,7 +441,7 @@ function ResetForm() {
                 fontFamily: T.mono,
                 fontSize: "0.75rem",
                 lineHeight: 1.6,
-                color: "#fff",
+                color: "var(--t-heading)",
                 background: "rgba(0,255,136,0.05)",
                 border: `1px dashed ${T.border}`,
                 padding: "1.5rem",
@@ -470,7 +470,7 @@ function ResetForm() {
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.boxShadow = T.glow;
-                e.currentTarget.style.background = "#fff";
+                e.currentTarget.style.background = "var(--t-heading)";
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.boxShadow = "";

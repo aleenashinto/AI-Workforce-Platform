@@ -74,7 +74,7 @@ const SettingSection = ({ title, icon: Icon, children }: any) => (
           fontFamily: T.display,
           fontSize: "1.2rem",
           fontWeight: 700,
-          color: "#fff",
+          color: "var(--t-heading)",
         }}
       >
         {title}

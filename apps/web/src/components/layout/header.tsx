@@ -195,7 +195,7 @@ export function Header({
             fontFamily: T.mono,
             fontSize: "1rem",
             letterSpacing: "0.1em",
-            color: "#fff",
+            color: "var(--t-heading)",
             textTransform: "uppercase",
           }}
           className="truncate max-w-[150px] sm:max-w-none"
@@ -316,7 +316,7 @@ export function Header({
                           style={{
                             fontFamily: T.body,
                             fontSize: "0.9rem",
-                            color: "#fff",
+                            color: "var(--t-heading)",
                           }}
                         >
                           {result.title}
@@ -494,7 +494,7 @@ export function Header({
                     style={{
                       fontFamily: T.body,
                       fontSize: "0.9rem",
-                      color: "#fff",
+                      color: "var(--t-heading)",
                     }}
                   >
                     {fullName || user?.email || "Unknown User"}

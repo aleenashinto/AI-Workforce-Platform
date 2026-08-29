@@ -242,7 +242,7 @@ export default function InboxLayout({
                         fontFamily: T.body,
                         fontSize: "0.95rem",
                         fontWeight: 600,
-                        color: "#fff",
+                        color: "var(--t-heading)",
                       }}
                     >
                       {c.end_user?.name ||

@@ -235,7 +235,7 @@ export function Sidebar({
                 fontFamily: T.display,
                 fontSize: "1.1rem",
                 fontWeight: 700,
-                color: "#fff",
+                color: "var(--t-heading)",
                 letterSpacing: "0.05em",
               }}
             >
@@ -384,7 +384,7 @@ export function Sidebar({
                 style={{
                   fontFamily: T.body,
                   fontSize: "0.9rem",
-                  color: "#fff",
+                  color: "var(--t-heading)",
                   whiteSpace: "nowrap",
                   overflow: "hidden",
                   textOverflow: "ellipsis",
@@ -477,7 +477,7 @@ function NavItem({
           : hov
             ? "rgba(255,255,255,0.03)"
             : "transparent",
-        color: active ? T.g : hov ? "#fff" : T.muted,
+        color: active ? T.g : hov ? "var(--t-heading)" : T.muted,
         borderLeft: active ? `3px solid ${T.g}` : `3px solid transparent`,
         boxShadow: active ? `inset 20px 0 20px -20px ${T.g}` : "none",
         transition: "all 0.2s",

@@ -137,3 +137,11 @@
   --background: #040810;
   --foreground: #c8ffe8;
 }
+/* TEXT HEADING FIX */
+:root {
+  --t-heading: #111827;
+}
+
+.dark {
+  --t-heading: #ffffff;
+}

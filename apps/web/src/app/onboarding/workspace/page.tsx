@@ -76,7 +76,7 @@ export default function WorkspaceSetupPage() {
           fontFamily: T.display,
           fontSize: "1.6rem",
           fontWeight: 700,
-          color: "#fff",
+          color: "var(--t-heading)",
           marginBottom: "2rem",
         }}
       >

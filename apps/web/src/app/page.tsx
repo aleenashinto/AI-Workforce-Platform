@@ -203,7 +203,7 @@ const s = {
     fontFamily: T.display,
     fontSize: "clamp(1.8rem,3vw,2.8rem)",
     fontWeight: 700,
-    color: "#fff",
+    color: "var(--t-heading)",
     lineHeight: 1.1,
     letterSpacing: "0.01em",
   },
@@ -507,7 +507,7 @@ function Hero({ onDeploy }: { onDeploy: () => void }) {
               fontSize: "clamp(2.4rem,4.5vw,4.2rem)",
               fontWeight: 900,
               lineHeight: 1.05,
-              color: "#fff",
+              color: "var(--t-heading)",
             }}
           >
             Deploy AI Employees That <br />
@@ -626,7 +626,7 @@ function Hero({ onDeploy }: { onDeploy: () => void }) {
                   {/* SUPPORT_AGENT */}
                 </div>
                 <div className="term-line">
-                  <span style={{ color: "#fff" }}>User:</span> How do I
+                  <span style={{ color: "var(--t-heading)" }}>User:</span> How do I
                   configure SSO?
                 </div>
                 <div className="term-line">
@@ -752,7 +752,7 @@ function AISupportAgent() {
                     style={{
                       fontFamily: T.display,
                       fontSize: "1rem",
-                      color: "#fff",
+                      color: "var(--t-heading)",
                       marginBottom: "0.3rem",
                     }}
                   >
@@ -816,7 +816,7 @@ function AISupportAgent() {
             <div
               style={{
                 fontSize: "0.8rem",
-                color: "#fff",
+                color: "var(--t-heading)",
                 borderLeft: `2px solid ${T.g}`,
                 paddingLeft: "0.8rem",
               }}
@@ -914,7 +914,7 @@ function AISalesAssistant() {
             <div
               style={{
                 fontSize: "0.8rem",
-                color: "#fff",
+                color: "var(--t-heading)",
                 borderLeft: `2px solid ${T.g2}`,
                 paddingLeft: "0.8rem",
               }}
@@ -953,7 +953,7 @@ function AISalesAssistant() {
                     style={{
                       fontFamily: T.display,
                       fontSize: "1rem",
-                      color: "#fff",
+                      color: "var(--t-heading)",
                       marginBottom: "0.3rem",
                     }}
                   >
@@ -1102,7 +1102,7 @@ function Features() {
             <h4
               style={{
                 fontFamily: T.display,
-                color: "#fff",
+                color: "var(--t-heading)",
                 marginBottom: "0.5rem",
               }}
             >
@@ -1122,7 +1122,7 @@ function Features() {
             <h4
               style={{
                 fontFamily: T.display,
-                color: "#fff",
+                color: "var(--t-heading)",
                 marginBottom: "0.5rem",
               }}
             >
@@ -1143,7 +1143,7 @@ function Features() {
             <h4
               style={{
                 fontFamily: T.display,
-                color: "#fff",
+                color: "var(--t-heading)",
                 marginBottom: "0.5rem",
               }}
             >
@@ -1335,7 +1335,7 @@ function PriceCard({
           fontFamily: T.display,
           fontSize: "1.1rem",
           fontWeight: 700,
-          color: "#fff",
+          color: "var(--t-heading)",
           marginBottom: "1.2rem",
         }}
       >
@@ -1448,8 +1448,8 @@ function PriceBtn({
         transition: "all 0.2s",
         ...(filled
           ? {
-              color: hov ? "#fff" : T.bg,
-              background: hov ? "#fff" : T.g,
+              color: hov ? "var(--t-heading)" : T.bg,
+              background: hov ? "var(--t-heading)" : T.g,
               border: "none",
               clipPath: "polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%)",
               boxShadow: hov ? T.glow : "none",

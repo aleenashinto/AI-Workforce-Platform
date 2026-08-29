@@ -205,7 +205,7 @@ export default function ForgotPasswordPage() {
             fontFamily: T.display,
             fontSize: "1.6rem",
             fontWeight: 700,
-            color: "#fff",
+            color: "var(--t-heading)",
             marginBottom: "0.5rem",
           }}
         >
@@ -311,7 +311,7 @@ export default function ForgotPasswordPage() {
               onMouseEnter={(e) => {
                 if (!loading) {
                   e.currentTarget.style.boxShadow = T.glow;
-                  e.currentTarget.style.background = "#fff";
+                  e.currentTarget.style.background = "var(--t-heading)";
                 }
               }}
               onMouseLeave={(e) => {

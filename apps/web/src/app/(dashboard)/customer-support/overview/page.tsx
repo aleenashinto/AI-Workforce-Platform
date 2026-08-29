@@ -120,7 +120,7 @@ const Card = ({
           fontFamily: T.display,
           fontSize: "2rem",
           fontWeight: 700,
-          color: "#fff",
+          color: "var(--t-heading)",
           marginBottom: "0.5rem",
         }}
       >
@@ -212,7 +212,7 @@ export default function SupportOverviewPage() {
               fontFamily: T.display,
               fontSize: "2.2rem",
               fontWeight: 700,
-              color: "#fff",
+              color: "var(--t-heading)",
               marginBottom: "0.5rem",
               display: "flex",
               alignItems: "center",
@@ -456,7 +456,7 @@ export default function SupportOverviewPage() {
                         contentStyle={{
                           background: T.panel,
                           border: `1px solid ${T.border}`,
-                          color: "#fff",
+                          color: "var(--t-heading)",
                           fontFamily: T.mono,
                         }}
                       />
@@ -559,7 +559,7 @@ export default function SupportOverviewPage() {
                           key={c.id}
                           style={{
                             borderBottom: `1px solid rgba(0,255,136,0.05)`,
-                            color: "#fff",
+                            color: "var(--t-heading)",
                             fontSize: "0.95rem",
                           }}
                         >
@@ -596,7 +596,7 @@ export default function SupportOverviewPage() {
                                     ? T.g
                                     : c.status === "escalated"
                                       ? T.warn
-                                      : "#fff",
+                                      : "var(--t-heading)",
                                 border: `1px solid ${c.status === "resolved" ? T.g : c.status === "escalated" ? T.warn : "rgba(255,255,255,0.1)"}`,
                               }}
                             >
@@ -617,7 +617,7 @@ export default function SupportOverviewPage() {
                           <td
                             style={{
                               padding: "0.75rem 0.5rem",
-                              color: c.agent.includes("AI") ? T.g : "#fff",
+                              color: c.agent.includes("AI") ? T.g : "var(--t-heading)",
                             }}
                           >
                             {c.agent}
@@ -701,7 +701,7 @@ export default function SupportOverviewPage() {
                                   : index === 1
                                     ? "#00cfff"
                                     : index === 2
-                                      ? "#fff"
+                                      ? "var(--t-heading)"
                                       : T.muted
                               }
                             />
@@ -712,7 +712,7 @@ export default function SupportOverviewPage() {
                         contentStyle={{
                           background: T.panel,
                           border: `1px solid ${T.border}`,
-                          color: "#fff",
+                          color: "var(--t-heading)",
                           fontFamily: T.mono,
                         }}
                       />
@@ -804,7 +804,7 @@ export default function SupportOverviewPage() {
                         style={{
                           fontFamily: T.body,
                           fontSize: "0.95rem",
-                          color: "#fff",
+                          color: "var(--t-heading)",
                           marginBottom: "0.5rem",
                         }}
                       >

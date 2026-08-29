@@ -72,7 +72,7 @@ const PlanCard = ({
       style={{
         fontFamily: T.display,
         fontSize: "1.4rem",
-        color: "#fff",
+        color: "var(--t-heading)",
         marginBottom: "1rem",
       }}
     >
@@ -189,7 +189,7 @@ export default function BillingPage() {
               fontFamily: T.display,
               fontSize: "2.2rem",
               fontWeight: 700,
-              color: "#fff",
+              color: "var(--t-heading)",
               marginBottom: "0.5rem",
               display: "flex",
               alignItems: "center",
@@ -273,7 +273,7 @@ export default function BillingPage() {
             style={{
               fontFamily: T.display,
               fontSize: "1.1rem",
-              color: "#fff",
+              color: "var(--t-heading)",
               marginBottom: "0.5rem",
             }}
           >

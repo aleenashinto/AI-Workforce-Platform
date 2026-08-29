@@ -83,7 +83,7 @@ export default function ResearchPage() {
             style={{
               fontFamily: T.display,
               fontSize: "1.2rem",
-              color: "#fff",
+              color: "var(--t-heading)",
               display: "flex",
               alignItems: "center",
               gap: "0.5rem",
@@ -122,7 +122,7 @@ export default function ResearchPage() {
                   style={{
                     fontFamily: T.body,
                     fontSize: "1rem",
-                    color: "#fff",
+                    color: "var(--t-heading)",
                     fontWeight: 600,
                   }}
                 >
@@ -204,7 +204,7 @@ export default function ResearchPage() {
                   fontFamily: T.display,
                   fontSize: "2.5rem",
                   fontWeight: 700,
-                  color: "#fff",
+                  color: "var(--t-heading)",
                   margin: 0,
                 }}
               >
@@ -301,7 +301,7 @@ export default function ResearchPage() {
                       style={{
                         fontFamily: T.mono,
                         fontSize: "0.9rem",
-                        color: "#fff",
+                        color: "var(--t-heading)",
                         fontWeight: "bold",
                       }}
                     >
@@ -340,7 +340,7 @@ export default function ResearchPage() {
                       style={{
                         fontFamily: T.mono,
                         fontSize: "0.9rem",
-                        color: "#fff",
+                        color: "var(--t-heading)",
                         fontWeight: "bold",
                       }}
                     >
@@ -388,7 +388,7 @@ export default function ResearchPage() {
                   paddingLeft: "1.5rem",
                   fontFamily: T.body,
                   fontSize: "1rem",
-                  color: "#fff",
+                  color: "var(--t-heading)",
                   display: "flex",
                   flexDirection: "column",
                   gap: "1rem",

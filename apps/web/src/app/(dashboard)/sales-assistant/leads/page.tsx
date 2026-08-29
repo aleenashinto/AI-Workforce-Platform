@@ -175,7 +175,7 @@ export default function LeadsDashboard() {
       {/* KPI CARDS */}
       <div className="grid grid-cols-2 md:grid-cols-6 gap-4 mb-6">
         {[
-          { label: "Total Leads", value: summary.total || 0, color: "#fff" },
+          { label: "Total Leads", value: summary.total || 0, color: "var(--t-heading)" },
           { label: "New Leads", value: summary.new || 0, color: T.g2 },
           { label: "Qualified", value: summary.qualified || 0, color: T.g },
           { label: "Hot Leads", value: summary.hot || 0, color: "#ff3366" },
