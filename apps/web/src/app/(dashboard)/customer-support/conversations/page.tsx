@@ -41,9 +41,7 @@ const Corners = () => (
       ["bl", "0 0 1px 1px", "auto", "0", "auto", "0"],
       ["br", "0 1px 1px 0", "auto", "auto", "0", "0"],
     ].map(([k, bw, t, l, b, r]) => (
-      <span
-        key={k}
-        style={{
+      <span key={k} className="cyberpunk-corner" style={{
           position: "absolute",
           width: 8,
           height: 8,
@@ -232,11 +230,7 @@ export default function ConversationsHistory() {
                   right: 0,
                   marginTop: "0.5rem",
                   background: T.panel,
-          borderRadius: "var(--t-radius)",
-                  border: `1px solid ${T.border}`,
-                  padding: "1rem",
-                  zIndex: 10,
-                  borderRadius: 4,
+          
                   display: "flex",
                   flexDirection: "column",
                   gap: "0.5rem",
@@ -305,7 +299,7 @@ export default function ConversationsHistory() {
           position: "relative",
         }}
       >
-        <Corners className="corners" />
+        <Corners />
         <table
           style={{
             width: "100%",

@@ -70,7 +70,7 @@ export default function WorkspaceSetupPage() {
           background: `linear-gradient(90deg,${T.g2},${T.g})`,
         }}
       />
-      <Corners className="corners" />
+      <Corners />
 
       <h1
         style={{

@@ -224,9 +224,7 @@ const Corners = () => (
       ["bl", "0 0 1px 1px", "auto", "0", "auto", "0"],
       ["br", "0 1px 1px 0", "auto", "auto", "0", "0"],
     ].map(([k, bw, t, l, b, r]) => (
-      <span
-        key={k}
-        style={{
+      <span key={k} className="cyberpunk-corner" style={{
           position: "absolute",
           width: 14,
           height: 14,
@@ -556,14 +554,12 @@ function Hero({ onDeploy }: { onDeploy: () => void }) {
             style={{
               position: "relative",
               background: T.panel,
-          borderRadius: "var(--t-radius)",
-              border: `1px solid ${T.border}`,
-              borderRadius: 4,
+          
               overflow: "hidden",
               boxShadow: `0 0 0 1px rgba(0,255,136,0.06), 0 40px 80px rgba(0,0,0,0.6), ${T.glow}`,
             }}
           >
-            <Corners className="corners" />
+            <Corners />
             <div
               style={{
                 background: "rgba(0,255,136,0.06)",
@@ -778,14 +774,11 @@ function AISupportAgent() {
           className="reveal"
           style={{
             background: T.panel,
-          borderRadius: "var(--t-radius)",
-            border: `1px solid ${T.border}`,
-            padding: "2rem",
-            borderRadius: 4,
+          
             position: "relative",
           }}
         >
-          <Corners className="corners" />
+          <Corners />
           <div
             style={{
               borderBottom: `1px solid ${T.border}`,
@@ -876,15 +869,12 @@ function AISalesAssistant() {
           className="reveal"
           style={{
             background: T.panel,
-          borderRadius: "var(--t-radius)",
-            border: `1px solid ${T.border2}`,
-            padding: "2rem",
-            borderRadius: 4,
+          
             position: "relative",
             order: -1,
           }}
         >
-          <Corners className="corners" />
+          <Corners />
           <div
             style={{
               borderBottom: `1px solid ${T.border2}`,

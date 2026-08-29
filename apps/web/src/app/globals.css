@@ -180,6 +180,6 @@
 html:not(.dark) * {
   letter-spacing: normal !important;
 }
-html:not(.dark) .corners {
+html:not(.dark) .cyberpunk-corner {
   display: none !important;
 }

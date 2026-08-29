@@ -63,9 +63,7 @@ const Corners = ({ color = T.g2 }: { color?: string }) => (
       ["bl", "0 0 1px 1px", "auto", "0", "auto", "0"],
       ["br", "0 1px 1px 0", "auto", "auto", "0", "0"],
     ].map(([k, bw, t, l, b, r]) => (
-      <span
-        key={k}
-        style={{
+      <span key={k} className="cyberpunk-corner" style={{
           position: "absolute",
           width: 14,
           height: 14,
@@ -109,7 +107,7 @@ const Card = ({
         boxShadow: `0 0 30px rgba(0,207,255,0.03)`,
       }}
     >
-      <Corners className="corners" />
+      <Corners />
       <div
         style={{
           display: "flex",
@@ -361,7 +359,7 @@ export default function SalesOverviewPage() {
           {/* PERFORMANCE & AI INSIGHTS */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div className="lg:col-span-2 relative bg-[#0a1628] border border-[rgba(0,207,255,0.18)] p-6">
-              <Corners className="corners" />
+              <Corners />
               <div className="flex justify-between items-start mb-6">
                 <div className="font-mono text-sm text-[rgba(0,207,255,0.5)] tracking-widest uppercase">
                   Sales Performance
@@ -423,7 +421,7 @@ export default function SalesOverviewPage() {
             </div>
 
             <div className="lg:col-span-1 relative bg-[#0a1628] border border-[rgba(0,255,136,0.3)] p-6 shadow-[0_0_15px_rgba(0,255,136,0.05)]">
-              <Corners className="corners" color={} className="corners" />
+              <Corners />
               <div className="font-mono text-sm text-[#00ff88] tracking-widest uppercase mb-6 flex items-center gap-2">
                 <Sparkles size={16} /> AI Sales Insights
               </div>
@@ -469,7 +467,7 @@ export default function SalesOverviewPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* Pipeline Stages */}
             <div className="relative bg-[#0a1628] border border-[rgba(0,207,255,0.18)] p-6 overflow-hidden">
-              <Corners className="corners" />
+              <Corners />
               <div className="font-mono text-sm text-[rgba(0,207,255,0.5)] tracking-widest uppercase mb-6">
                 Sales Pipeline
               </div>
@@ -501,7 +499,7 @@ export default function SalesOverviewPage() {
 
             {/* Lead Funnel */}
             <div className="relative bg-[#0a1628] border border-[rgba(0,207,255,0.18)] p-6">
-              <Corners className="corners" />
+              <Corners />
               <div className="font-mono text-sm text-[rgba(0,207,255,0.5)] tracking-widest uppercase mb-6">
                 Lead Funnel
               </div>
@@ -550,7 +548,7 @@ export default function SalesOverviewPage() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Follow-ups */}
             <div className="relative bg-[#0a1628] border border-[rgba(0,207,255,0.18)] p-6">
-              <Corners className="corners" />
+              <Corners />
               <div className="font-mono text-sm text-[rgba(0,207,255,0.5)] tracking-widest uppercase mb-6 flex justify-between">
                 <span>Today's Follow-ups</span>
                 <span className="text-[#00cfff]">{data.followUps.length}</span>
@@ -590,7 +588,7 @@ export default function SalesOverviewPage() {
 
             {/* Upcoming Meetings */}
             <div className="relative bg-[#0a1628] border border-[rgba(0,207,255,0.18)] p-6">
-              <Corners className="corners" />
+              <Corners />
               <div className="font-mono text-sm text-[rgba(0,207,255,0.5)] tracking-widest uppercase mb-6 flex justify-between">
                 <span>Upcoming Meetings</span>
                 <Calendar size={16} color={T.g2} />
@@ -628,7 +626,7 @@ export default function SalesOverviewPage() {
 
             {/* AI Recommended Actions */}
             <div className="relative bg-[#0a1628] border border-[rgba(0,255,136,0.3)] p-6 shadow-[0_0_15px_rgba(0,255,136,0.05)]">
-              <Corners className="corners" color={} className="corners" />
+              <Corners />
               <div className="font-mono text-sm text-[#00ff88] tracking-widest uppercase mb-6 flex items-center gap-2">
                 <Target size={16} /> Recommended Actions
               </div>
@@ -658,7 +656,7 @@ export default function SalesOverviewPage() {
 
           {/* RECENT LEADS TABLE */}
           <div className="relative bg-[#0a1628] border border-[rgba(0,207,255,0.18)] p-6 overflow-x-auto">
-            <Corners className="corners" />
+            <Corners />
             <div className="flex justify-between items-center mb-6 min-w-[700px]">
               <div className="font-mono text-sm text-[rgba(0,207,255,0.5)] tracking-widest uppercase">
                 Recent Leads
@@ -800,7 +798,7 @@ export default function SalesOverviewPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {/* Lead Discovery Summary */}
             <div className="relative bg-[#0a1628] border border-[rgba(0,207,255,0.18)] p-5 flex flex-col">
-              <Corners className="corners" />
+              <Corners />
               <div className="font-mono text-sm text-[rgba(0,207,255,0.5)] tracking-widest uppercase mb-4 flex items-center gap-2">
                 <Sparkles size={14} /> Discovery
               </div>
@@ -848,7 +846,7 @@ export default function SalesOverviewPage() {
 
             {/* Sales Forecast */}
             <div className="relative bg-[#0a1628] border border-[rgba(0,207,255,0.18)] p-5 flex flex-col">
-              <Corners className="corners" />
+              <Corners />
               <div className="font-mono text-sm text-[rgba(0,207,255,0.5)] tracking-widest uppercase mb-4 flex items-center gap-2">
                 <TrendingUp size={14} /> Forecast
               </div>
@@ -877,7 +875,7 @@ export default function SalesOverviewPage() {
 
             {/* Lead Sources */}
             <div className="relative bg-[#0a1628] border border-[rgba(0,207,255,0.18)] p-5">
-              <Corners className="corners" />
+              <Corners />
               <div className="font-mono text-sm text-[rgba(0,207,255,0.5)] tracking-widest uppercase mb-4 flex items-center gap-2">
                 <PieChart size={14} /> Sources
               </div>
@@ -903,7 +901,7 @@ export default function SalesOverviewPage() {
 
             {/* Recent Activity */}
             <div className="relative bg-[#0a1628] border border-[rgba(0,207,255,0.18)] p-5 overflow-y-auto max-h-[220px]">
-              <Corners className="corners" />
+              <Corners />
               <div className="font-mono text-sm text-[rgba(0,207,255,0.5)] tracking-widest uppercase mb-4 flex items-center gap-2">
                 <Activity size={14} /> Activity
               </div>

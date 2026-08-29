@@ -70,9 +70,7 @@ const Corners = () => (
       ["bl", "0 0 1px 1px", "auto", "0", "auto", "0"],
       ["br", "0 1px 1px 0", "auto", "auto", "0", "0"],
     ].map(([k, bw, t, l, b, r]) => (
-      <span
-        key={k}
-        style={{
+      <span key={k} className="cyberpunk-corner" style={{
           position: "absolute",
           width: 14,
           height: 14,
@@ -376,7 +374,7 @@ export default function TeamPage() {
       {/* ── Data Table ─────────────────────────────────────────────────── */}
       <div style={{ background: T.panel,
           borderRadius: "var(--t-radius)", border: `1px solid ${T.border}`, position: "relative", boxShadow: "0 10px 40px rgba(0,0,0,0.4)" }}>
-        <Corners className="corners" />
+        <Corners />
         <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 1, background: `linear-gradient(90deg,${T.g},transparent)` }} />
 
         <table style={{ width: "100%", borderCollapse: "collapse" }}>
@@ -516,7 +514,7 @@ export default function TeamPage() {
         <div style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.85)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 50, padding: "1rem" }}>
           <div style={{ background: T.panel,
           borderRadius: "var(--t-radius)", border: `1px solid ${T.border}`, width: "100%", maxWidth: 480, padding: "2rem", position: "relative", boxShadow: "0 20px 60px rgba(0,0,0,0.7)" }}>
-            <Corners className="corners" />
+            <Corners />
             <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 1, background: `linear-gradient(90deg,${T.g},transparent)` }} />
 
             {/* Modal header */}

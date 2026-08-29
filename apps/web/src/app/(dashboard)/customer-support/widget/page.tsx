@@ -35,9 +35,7 @@ const Corners = () => (
       ["bl", "0 0 1px 1px", "auto", "0", "auto", "0"],
       ["br", "0 1px 1px 0", "auto", "auto", "0", "0"],
     ].map(([k, bw, t, l, b, r]) => (
-      <span
-        key={k}
-        style={{
+      <span key={k} className="cyberpunk-corner" style={{
           position: "absolute",
           width: 14,
           height: 14,
@@ -234,7 +232,7 @@ export default function WidgetConfigPage() {
             position: "relative",
           }}
         >
-          <Corners className="corners" />
+          <Corners />
 
           <div
             style={{
@@ -622,9 +620,7 @@ export default function WidgetConfigPage() {
           <div
             style={{
               background: T.panel,
-          borderRadius: "var(--t-radius)",
-              border: `1px solid ${T.border}`,
-              borderRadius: 12,
+          
               overflow: "hidden",
               boxShadow: `0 10px 40px ${brandColor}22`,
               display: "flex",
@@ -721,8 +717,7 @@ export default function WidgetConfigPage() {
                 <div
                   style={{
                     background: T.panel,
-          borderRadius: "var(--t-radius)",
-                    border: `1px solid ${T.border}`,
+          border: `1px solid ${T.border}`,
                     padding: "0.8rem",
                     borderRadius: "0 12px 12px 12px",
                     alignSelf: "flex-start",

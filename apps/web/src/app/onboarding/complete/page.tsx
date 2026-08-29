@@ -94,7 +94,7 @@ export default function CompletePage() {
           background: `linear-gradient(90deg,${T.g},${T.g2})`,
         }}
       />
-      <Corners className="corners" />
+      <Corners />
 
       <div
         style={{

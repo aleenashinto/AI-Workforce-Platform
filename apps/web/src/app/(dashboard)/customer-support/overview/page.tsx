@@ -55,9 +55,7 @@ const Corners = () => (
       ["bl", "0 0 1px 1px", "auto", "0", "auto", "0"],
       ["br", "0 1px 1px 0", "auto", "auto", "0", "0"],
     ].map(([k, bw, t, l, b, r]) => (
-      <span
-        key={k}
-        style={{
+      <span key={k} className="cyberpunk-corner" style={{
           position: "absolute",
           width: 14,
           height: 14,
@@ -94,7 +92,7 @@ const Card = ({
         boxShadow: `0 0 30px rgba(0,255,136,0.03)`,
       }}
     >
-      <Corners className="corners" />
+      <Corners />
       <div
         style={{
           display: "flex",
@@ -413,7 +411,7 @@ export default function SupportOverviewPage() {
                 height: 320,
               }}
             >
-              <Corners className="corners" />
+              <Corners />
               <div
                 style={{
                   display: "flex",
@@ -495,7 +493,7 @@ export default function SupportOverviewPage() {
                 flex: 1,
               }}
             >
-              <Corners className="corners" />
+              <Corners />
               <div
                 style={{
                   display: "flex",
@@ -669,7 +667,7 @@ export default function SupportOverviewPage() {
                 height: 260,
               }}
             >
-              <Corners className="corners" />
+              <Corners />
               <div
                 style={{
                   fontFamily: T.mono,
@@ -753,7 +751,7 @@ export default function SupportOverviewPage() {
                 flex: 1,
               }}
             >
-              <Corners className="corners" />
+              <Corners />
               <div
                 style={{
                   display: "flex",

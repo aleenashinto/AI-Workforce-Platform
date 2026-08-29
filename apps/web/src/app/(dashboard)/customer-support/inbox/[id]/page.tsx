@@ -322,9 +322,7 @@ export default function ConversationView() {
               <div
                 style={{
                   background: T.panel,
-          borderRadius: "var(--t-radius)",
-                  padding: "0.8rem",
-                  borderRadius: "4px",
+          
                   border: `1px solid var(--t-white-05)`,
                 }}
               >
@@ -357,9 +355,7 @@ export default function ConversationView() {
               <div
                 style={{
                   background: T.panel,
-          borderRadius: "var(--t-radius)",
-                  padding: "0.8rem",
-                  borderRadius: "4px",
+          
                   border: `1px solid var(--t-white-05)`,
                 }}
               >
@@ -520,9 +516,7 @@ export default function ConversationView() {
                       left: 0,
                       marginTop: "0.5rem",
                       background: T.panel,
-          borderRadius: "var(--t-radius)",
-                      border: `1px solid ${T.border}`,
-                      borderRadius: "4px",
+          
                       zIndex: 10,
                       minWidth: "150px",
                       overflow: "hidden",
@@ -584,8 +578,7 @@ export default function ConversationView() {
                 style={{
                   padding: "0.5rem 1rem",
                   background: T.panel,
-          borderRadius: "var(--t-radius)",
-                  border: `1px solid ${T.border}`,
+          border: `1px solid ${T.border}`,
                   color: T.text,
                   cursor: "pointer",
                   fontFamily: T.mono,
@@ -607,9 +600,7 @@ export default function ConversationView() {
                     right: 0,
                     marginTop: "0.5rem",
                     background: T.panel,
-          borderRadius: "var(--t-radius)",
-                    border: `1px solid ${T.border}`,
-                    borderRadius: "4px",
+          
                     zIndex: 10,
                     minWidth: "200px",
                     overflow: "hidden",
@@ -746,9 +737,7 @@ export default function ConversationView() {
                         fontSize: "0.7rem",
                         color: T.muted,
                         background: T.panel,
-          borderRadius: "var(--t-radius)",
-                        padding: "0.4rem 1rem",
-                        borderRadius: "20px",
+          
                         border: `1px solid var(--t-white-05)`,
                       }}
                     >
@@ -889,8 +878,7 @@ export default function ConversationView() {
                     minHeight: "80px",
                     maxHeight: "200px",
                     background: T.panel,
-          borderRadius: "var(--t-radius)",
-                    border: `1px solid ${replyText ? T.g : "var(--t-white-10)"}`,
+          border: `1px solid ${replyText ? T.g : "var(--t-white-10)"}`,
                     color: T.text,
                     fontFamily: T.body,
                     fontSize: "0.95rem",
@@ -1192,8 +1180,7 @@ export default function ConversationView() {
                     fontSize: "0.7rem",
                     padding: "0.2rem 0.5rem",
                     background: T.panel,
-          borderRadius: "var(--t-radius)",
-                    border: `1px solid ${T.border}`,
+          border: `1px solid ${T.border}`,
                     color: T.text,
                     borderRadius: "4px",
                   }}
@@ -1268,8 +1255,7 @@ export default function ConversationView() {
                   <div
                     style={{
                       background: T.panel,
-          borderRadius: "var(--t-radius)",
-                      border: `1px solid var(--t-white-05)`,
+          border: `1px solid var(--t-white-05)`,
                       padding: "1rem",
                       borderRadius: "6px",
                       transition: "border-color 0.2s",

@@ -35,9 +35,7 @@ const Corners = () => (
       ["bl", "0 0 1px 1px", "auto", "0", "auto", "0"],
       ["br", "0 1px 1px 0", "auto", "auto", "0", "0"],
     ].map(([k, bw, t, l, b, r]) => (
-      <span
-        key={k}
-        style={{
+      <span key={k} className="cyberpunk-corner" style={{
           position: "absolute",
           width: 14,
           height: 14,
@@ -152,7 +150,7 @@ function VerifyContent() {
             background: `linear-gradient(90deg,${T.g},${T.g2})`,
           }}
         />
-        <Corners className="corners" />
+        <Corners />
 
         <div style={{ textAlign: "center", marginBottom: "2rem" }}>
           <div
