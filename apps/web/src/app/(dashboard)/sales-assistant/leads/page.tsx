@@ -194,7 +194,7 @@ export default function LeadsDashboard() {
             key={i}
             className="bg-[color:var(--t-panel)] border border-[rgba(0,255,136,0.15)] rounded-xl p-4 flex flex-col justify-center"
           >
-            <span className="text-xs text-gray-400 uppercase tracking-wider mb-1 font-bold">
+            <span className="text-xs text-[color:var(--t-text)] uppercase tracking-wider mb-1 font-bold">
               {kpi.label}
             </span>
             <span
@@ -210,7 +210,7 @@ export default function LeadsDashboard() {
       {/* TOOLBAR */}
       <div className="flex flex-col md:flex-row gap-4 mb-4 items-center justify-between">
         <div className="relative w-full md:w-96">
-          <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+          <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-[color:var(--t-text)]" />
           <input
             type="text"
             placeholder="Search leads, companies, contacts..."
@@ -279,8 +279,8 @@ export default function LeadsDashboard() {
       {/* TABLE */}
       <div className="flex-1 bg-[color:var(--t-panel)] border border-[rgba(0,255,136,0.18)] rounded-xl overflow-hidden flex flex-col">
         <div className="overflow-x-auto flex-1">
-          <table className="w-full text-left text-sm text-gray-300 whitespace-nowrap">
-            <thead className="bg-black/40 text-gray-400 sticky top-0 text-xs uppercase font-bold tracking-wider">
+          <table className="w-full text-left text-sm text-[color:var(--t-text)] whitespace-nowrap">
+            <thead className="bg-black/40 text-[color:var(--t-text)] sticky top-0 text-xs uppercase font-bold tracking-wider">
               <tr>
                 <th className="p-4 w-10">
                   <input
@@ -309,13 +309,13 @@ export default function LeadsDashboard() {
             <tbody className="divide-y divide-[rgba(0,255,136,0.1)]">
               {loading ? (
                 <tr>
-                  <td colSpan={7} className="p-8 text-center text-gray-500">
+                  <td colSpan={7} className="p-8 text-center text-[color:var(--t-text)]">
                     Loading leads...
                   </td>
                 </tr>
               ) : leads.length === 0 ? (
                 <tr>
-                  <td colSpan={7} className="p-8 text-center text-gray-500">
+                  <td colSpan={7} className="p-8 text-center text-[color:var(--t-text)]">
                     No leads found. Try adjusting filters.
                   </td>
                 </tr>
@@ -341,7 +341,7 @@ export default function LeadsDashboard() {
                       <div className="font-bold text-white">
                         {lead.contact_name}
                       </div>
-                      <div className="text-xs text-gray-500 truncate max-w-[150px]">
+                      <div className="text-xs text-[color:var(--t-text)] truncate max-w-[150px]">
                         {lead.job_title || lead.email}
                       </div>
                     </td>
@@ -361,7 +361,7 @@ export default function LeadsDashboard() {
                               ? "border-amber-400 text-amber-400"
                               : lead.status === "new"
                                 ? "border-[#00cfff] text-[#00cfff]"
-                                : "border-gray-500 text-gray-400") +
+                                : "border-gray-500 text-[color:var(--t-text)]") +
                           " uppercase text-[10px]"
                         }
                       >
@@ -385,10 +385,10 @@ export default function LeadsDashboard() {
                           {lead.score} {Number(lead.score) >= 90 && "🔥"}
                         </div>
                       ) : (
-                        <span className="text-gray-600">-</span>
+                        <span className="text-[color:var(--t-text)]">-</span>
                       )}
                     </td>
-                    <td className="p-4 text-xs text-gray-400">{lead.source}</td>
+                    <td className="p-4 text-xs text-[color:var(--t-text)]">{lead.source}</td>
                     <td className="p-4">
                       <div className="flex items-center gap-2">
                         <div className="w-6 h-6 rounded-full bg-indigo-500/20 text-indigo-300 flex items-center justify-center text-xs font-bold border border-indigo-500/30">
@@ -446,7 +446,7 @@ export default function LeadsDashboard() {
                     variant="ghost"
                     size="icon"
                     onClick={() => setSelectedLead(null)}
-                    className="text-gray-400 hover:text-white hover:bg-white/10 h-7 w-7"
+                    className="text-[color:var(--t-text)] hover:text-white hover:bg-white/10 h-7 w-7"
                   >
                     <X className="w-4 h-4" />
                   </Button>
@@ -460,7 +460,7 @@ export default function LeadsDashboard() {
                     "text-sm font-bold uppercase tracking-wider pb-2 border-b-2 transition-colors " +
                     (activeTab === "overview"
                       ? "border-[#00ff88] text-[#00ff88]"
-                      : "border-transparent text-gray-500 hover:text-gray-300")
+                      : "border-transparent text-[color:var(--t-text)] hover:text-[color:var(--t-text)]")
                   }
                 >
                   Overview
@@ -471,7 +471,7 @@ export default function LeadsDashboard() {
                     "text-sm font-bold uppercase tracking-wider pb-2 border-b-2 transition-colors " +
                     (activeTab === "activity"
                       ? "border-[#00ff88] text-[#00ff88]"
-                      : "border-transparent text-gray-500 hover:text-gray-300")
+                      : "border-transparent text-[color:var(--t-text)] hover:text-[color:var(--t-text)]")
                   }
                 >
                   Activity
@@ -482,7 +482,7 @@ export default function LeadsDashboard() {
                     "text-sm font-bold uppercase tracking-wider pb-2 border-b-2 transition-colors " +
                     (activeTab === "notes"
                       ? "border-[#00ff88] text-[#00ff88]"
-                      : "border-transparent text-gray-500 hover:text-gray-300")
+                      : "border-transparent text-[color:var(--t-text)] hover:text-[color:var(--t-text)]")
                   }
                 >
                   Notes
@@ -491,7 +491,7 @@ export default function LeadsDashboard() {
             </div>
 
             {/* Scrollable Content */}
-            <div className="flex-1 overflow-y-auto p-6 text-gray-300 text-sm">
+            <div className="flex-1 overflow-y-auto p-6 text-[color:var(--t-text)] text-sm">
               {!leadDetail ? (
                 <div className="flex justify-center items-center h-full text-[#00ff88] animate-pulse">
                   Loading lead details...
@@ -501,7 +501,7 @@ export default function LeadsDashboard() {
                   {/* Scores */}
                   <div className="grid grid-cols-2 gap-4">
                     <div className="bg-[color:var(--t-panel)] border border-[rgba(0,255,136,0.2)] p-4 rounded-xl">
-                      <div className="text-xs uppercase text-gray-400 tracking-wider mb-1">
+                      <div className="text-xs uppercase text-[color:var(--t-text)] tracking-wider mb-1">
                         AI Lead Score
                       </div>
                       <div
@@ -512,7 +512,7 @@ export default function LeadsDashboard() {
                       </div>
                     </div>
                     <div className="bg-[color:var(--t-panel)] border border-[rgba(0,207,255,0.2)] p-4 rounded-xl">
-                      <div className="text-xs uppercase text-gray-400 tracking-wider mb-1">
+                      <div className="text-xs uppercase text-[color:var(--t-text)] tracking-wider mb-1">
                         Source
                       </div>
                       <div className="text-lg font-bold text-[#00cfff] mt-1">
@@ -527,12 +527,12 @@ export default function LeadsDashboard() {
                       <Activity className="w-4 h-4 text-[#00ff88]" /> AI
                       Intelligence
                     </h4>
-                    <p className="text-gray-300 mb-3">
+                    <p className="text-[color:var(--t-text)] mb-3">
                       Strong fit with Active ICP. The company matches target
                       firmographics and the contact holds a senior technology
                       role.
                     </p>
-                    <div className="bg-black/30 p-3 rounded border border-white/5 text-xs text-gray-400">
+                    <div className="bg-black/30 p-3 rounded border border-white/5 text-xs text-[color:var(--t-text)]">
                       <strong>Recommended Action:</strong> Personalize email
                       mentioning their recent expansion efforts and offer a
                       demo.
@@ -545,12 +545,12 @@ export default function LeadsDashboard() {
                       Contact Details
                     </h4>
                     <div className="space-y-2">
-                      <div className="flex items-center gap-3 text-gray-300">
-                        <Mail className="w-4 h-4 text-gray-500" />{" "}
+                      <div className="flex items-center gap-3 text-[color:var(--t-text)]">
+                        <Mail className="w-4 h-4 text-[color:var(--t-text)]" />{" "}
                         {leadDetail.email || "No email"}
                       </div>
-                      <div className="flex items-center gap-3 text-gray-300">
-                        <Phone className="w-4 h-4 text-gray-500" /> +1 (555)
+                      <div className="flex items-center gap-3 text-[color:var(--t-text)]">
+                        <Phone className="w-4 h-4 text-[color:var(--t-text)]" /> +1 (555)
                         000-0000
                       </div>
                     </div>
@@ -564,7 +564,7 @@ export default function LeadsDashboard() {
                       </h4>
                       <div className="bg-[color:var(--t-panel)] border border-white/10 rounded-xl p-4 grid grid-cols-2 gap-y-4 text-sm">
                         <div>
-                          <span className="text-gray-500 block text-[10px] uppercase">
+                          <span className="text-[color:var(--t-text)] block text-[10px] uppercase">
                             Domain
                           </span>
                           <span className="text-gray-200">
@@ -572,7 +572,7 @@ export default function LeadsDashboard() {
                           </span>
                         </div>
                         <div>
-                          <span className="text-gray-500 block text-[10px] uppercase">
+                          <span className="text-[color:var(--t-text)] block text-[10px] uppercase">
                             Industry
                           </span>
                           <span className="text-gray-200">
@@ -580,7 +580,7 @@ export default function LeadsDashboard() {
                           </span>
                         </div>
                         <div>
-                          <span className="text-gray-500 block text-[10px] uppercase">
+                          <span className="text-[color:var(--t-text)] block text-[10px] uppercase">
                             Employees
                           </span>
                           <span className="text-gray-200">
@@ -618,21 +618,21 @@ export default function LeadsDashboard() {
                 <div className="space-y-4">
                   <div className="relative pl-6 border-l border-white/10 pb-4">
                     <div className="absolute w-3 h-3 bg-[#00ff88] rounded-full -left-[6px] top-1"></div>
-                    <div className="text-xs text-gray-500 mb-1">Today</div>
+                    <div className="text-xs text-[color:var(--t-text)] mb-1">Today</div>
                     <div className="font-bold text-white text-sm">
                       Viewed by Alex
                     </div>
                   </div>
                   <div className="relative pl-6 border-l border-white/10 pb-4">
                     <div className="absolute w-3 h-3 bg-[#00cfff] rounded-full -left-[6px] top-1"></div>
-                    <div className="text-xs text-gray-500 mb-1">Yesterday</div>
+                    <div className="text-xs text-[color:var(--t-text)] mb-1">Yesterday</div>
                     <div className="font-bold text-white text-sm">
                       Discovered via AI Search
                     </div>
                   </div>
                   <div className="relative pl-6 pb-4">
                     <div className="absolute w-3 h-3 bg-gray-500 rounded-full -left-[6px] top-1"></div>
-                    <div className="text-xs text-gray-500 mb-1">Last Week</div>
+                    <div className="text-xs text-[color:var(--t-text)] mb-1">Last Week</div>
                     <div className="font-bold text-white text-sm">
                       Record Created
                     </div>

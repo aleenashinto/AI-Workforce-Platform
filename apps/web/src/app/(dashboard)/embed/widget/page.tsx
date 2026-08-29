@@ -40,7 +40,7 @@ export default function WidgetConfigPage() {
         <h1 className="text-3xl font-bold tracking-tight text-white">
           Widget Configuration
         </h1>
-        <p className="text-muted-foreground mt-1">
+        <p className="text-[color:var(--t-text)] mt-1">
           Customize and install the chat widget on your website.
         </p>
       </div>
@@ -50,7 +50,7 @@ export default function WidgetConfigPage() {
           <Card className="bg-[#2A2A3C] border-[#3F3F5A] text-white">
             <CardHeader>
               <CardTitle>Appearance & Behavior</CardTitle>
-              <CardDescription className="text-gray-400">
+              <CardDescription className="text-[color:var(--t-text)]">
                 Match the widget to your brand.
               </CardDescription>
             </CardHeader>
@@ -117,7 +117,7 @@ export default function WidgetConfigPage() {
           <Card className="bg-[#2A2A3C] border-[#3F3F5A] text-white">
             <CardHeader>
               <CardTitle>Installation Snippet</CardTitle>
-              <CardDescription className="text-gray-400">
+              <CardDescription className="text-[color:var(--t-text)]">
                 Paste this before the closing &lt;/body&gt; tag.
               </CardDescription>
             </CardHeader>
@@ -147,7 +147,7 @@ export default function WidgetConfigPage() {
           <Card className="bg-[#2A2A3C] border-[#3F3F5A] text-white h-full min-h-[500px] relative overflow-hidden flex flex-col">
             <CardHeader>
               <CardTitle>Live Preview</CardTitle>
-              <CardDescription className="text-gray-400">
+              <CardDescription className="text-[color:var(--t-text)]">
                 Interact with your configured widget.
               </CardDescription>
             </CardHeader>

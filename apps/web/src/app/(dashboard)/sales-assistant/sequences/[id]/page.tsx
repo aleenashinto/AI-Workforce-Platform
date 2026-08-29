@@ -99,7 +99,7 @@ export default function SequenceEditorPage({
         <div className="flex items-center gap-4">
           <Link
             href="/sales-assistant/sequences"
-            className="p-1.5 rounded hover:bg-[#00ff88]/10 text-gray-400 hover:text-[#00ff88] transition-colors"
+            className="p-1.5 rounded hover:bg-[#00ff88]/10 text-[color:var(--t-text)] hover:text-[#00ff88] transition-colors"
           >
             <ArrowLeft size={18} />
           </Link>
@@ -112,7 +112,7 @@ export default function SequenceEditorPage({
                     ? "bg-[#00ff88]/10 text-[#00ff88] border-[#00ff88]/30"
                     : sequence.status === "paused"
                       ? "bg-yellow-400/10 text-yellow-400 border-yellow-400/30"
-                      : "bg-gray-800 text-gray-400 border-gray-600"
+                      : "bg-gray-800 text-[color:var(--t-text)] border-gray-600"
                 }`}
               >
                 {sequence.status}
@@ -151,13 +151,13 @@ export default function SequenceEditorPage({
       <div className="flex border-b border-[#00ff88]/20 bg-[color:var(--t-bg2)] px-6 font-mono text-sm shrink-0">
         <button
           onClick={() => setActiveTab("builder")}
-          className={`px-6 py-3 border-b-2 transition-colors ${activeTab === "builder" ? "border-[#00ff88] text-[#00ff88]" : "border-transparent text-gray-400 hover:text-white"}`}
+          className={`px-6 py-3 border-b-2 transition-colors ${activeTab === "builder" ? "border-[#00ff88] text-[#00ff88]" : "border-transparent text-[color:var(--t-text)] hover:text-white"}`}
         >
           BUILDER
         </button>
         <button
           onClick={() => setActiveTab("enrollments")}
-          className={`px-6 py-3 border-b-2 transition-colors flex items-center gap-2 ${activeTab === "enrollments" ? "border-[#00ff88] text-[#00ff88]" : "border-transparent text-gray-400 hover:text-white"}`}
+          className={`px-6 py-3 border-b-2 transition-colors flex items-center gap-2 ${activeTab === "enrollments" ? "border-[#00ff88] text-[#00ff88]" : "border-transparent text-[color:var(--t-text)] hover:text-white"}`}
         >
           ENROLLMENTS{" "}
           <span className="bg-[#00ff88]/20 text-[#00ff88] px-1.5 rounded text-xs">
@@ -166,13 +166,13 @@ export default function SequenceEditorPage({
         </button>
         <button
           onClick={() => setActiveTab("analytics")}
-          className={`px-6 py-3 border-b-2 transition-colors ${activeTab === "analytics" ? "border-[#00ff88] text-[#00ff88]" : "border-transparent text-gray-400 hover:text-white"}`}
+          className={`px-6 py-3 border-b-2 transition-colors ${activeTab === "analytics" ? "border-[#00ff88] text-[#00ff88]" : "border-transparent text-[color:var(--t-text)] hover:text-white"}`}
         >
           ANALYTICS
         </button>
         <button
           onClick={() => setActiveTab("settings")}
-          className={`px-6 py-3 border-b-2 transition-colors ${activeTab === "settings" ? "border-[#00ff88] text-[#00ff88]" : "border-transparent text-gray-400 hover:text-white"}`}
+          className={`px-6 py-3 border-b-2 transition-colors ${activeTab === "settings" ? "border-[#00ff88] text-[#00ff88]" : "border-transparent text-[color:var(--t-text)] hover:text-white"}`}
         >
           SETTINGS
         </button>
@@ -207,11 +207,11 @@ export default function SequenceEditorPage({
                         <div className="font-bold text-sm text-white">
                           {step.name}
                         </div>
-                        <div className="text-xs text-gray-500 font-mono">
+                        <div className="text-xs text-[color:var(--t-text)] font-mono">
                           Day {step.day_offset}
                         </div>
                       </div>
-                      <div className="text-xs text-gray-400 capitalize flex items-center gap-1">
+                      <div className="text-xs text-[color:var(--t-text)] capitalize flex items-center gap-1">
                         {step.type.replace("_", " ")}
                       </div>
                     </div>
@@ -224,7 +224,7 @@ export default function SequenceEditorPage({
               ))}
 
               <div className="mt-8">
-                <button className="flex items-center gap-2 bg-[color:var(--t-bg)] border-2 border-dashed border-gray-700 hover:border-[#00ff88]/50 text-gray-400 hover:text-[#00ff88] px-8 py-3 rounded-lg font-mono text-sm transition-colors">
+                <button className="flex items-center gap-2 bg-[color:var(--t-bg)] border-2 border-dashed border-gray-700 hover:border-[#00ff88]/50 text-[color:var(--t-text)] hover:text-[#00ff88] px-8 py-3 rounded-lg font-mono text-sm transition-colors">
                   <Plus size={16} /> ADD STEP
                 </button>
               </div>
@@ -235,7 +235,7 @@ export default function SequenceEditorPage({
               <h3 className="font-mono text-[#00ff88] text-sm uppercase mb-6 flex items-center gap-2">
                 <Settings size={16} /> Builder Settings
               </h3>
-              <div className="text-xs text-gray-400 font-mono leading-relaxed">
+              <div className="text-xs text-[color:var(--t-text)] font-mono leading-relaxed">
                 Select a step on the left to edit its configuration,
                 personalization variables, and AI prompts.
               </div>
@@ -274,7 +274,7 @@ export default function SequenceEditorPage({
                       <td className="p-4 font-bold text-white">
                         {e.lead_name}
                       </td>
-                      <td className="p-4 text-gray-400">{e.lead_company}</td>
+                      <td className="p-4 text-[color:var(--t-text)]">{e.lead_company}</td>
                       <td className="p-4">
                         <span
                           className={`px-2 py-0.5 rounded text-xs border ${
@@ -284,16 +284,16 @@ export default function SequenceEditorPage({
                                 ? "bg-blue-500/10 text-blue-400 border-blue-500/30"
                                 : e.status === "replied"
                                   ? "bg-[#00cfff]/10 text-[#00cfff] border-[#00cfff]/30"
-                                  : "bg-gray-800 text-gray-400 border-gray-600"
+                                  : "bg-gray-800 text-[color:var(--t-text)] border-gray-600"
                           } uppercase`}
                         >
                           {e.status}
                         </span>
                       </td>
-                      <td className="p-4 text-gray-300">
+                      <td className="p-4 text-[color:var(--t-text)]">
                         Step {e.current_step}
                       </td>
-                      <td className="p-4 text-gray-500 text-xs">
+                      <td className="p-4 text-[color:var(--t-text)] text-xs">
                         {new Date(e.created_at).toLocaleDateString()}
                       </td>
                     </tr>
@@ -343,7 +343,7 @@ export default function SequenceEditorPage({
                 </div>
               </div>
             </div>
-            <div className="bg-[color:var(--t-panel)] border border-gray-800 p-8 rounded-lg text-center font-mono text-gray-500">
+            <div className="bg-[color:var(--t-panel)] border border-gray-800 p-8 rounded-lg text-center font-mono text-[color:var(--t-text)]">
               Detailed step performance funnel goes here.
             </div>
           </div>
@@ -384,7 +384,7 @@ export default function SequenceEditorPage({
                     readOnly
                     className="accent-[#00ff88] w-4 h-4"
                   />
-                  <span className="text-sm text-gray-300">
+                  <span className="text-sm text-[color:var(--t-text)]">
                     Skip Weekends & Holidays
                   </span>
                 </label>
@@ -397,7 +397,7 @@ export default function SequenceEditorPage({
                     readOnly
                     className="accent-[#00ff88] w-4 h-4"
                   />
-                  <span className="text-sm text-gray-300">
+                  <span className="text-sm text-[color:var(--t-text)]">
                     Stop sequence when lead replies
                   </span>
                 </label>

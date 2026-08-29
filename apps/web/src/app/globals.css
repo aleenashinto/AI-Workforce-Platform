@@ -15,7 +15,7 @@
 
 :root {
   --background: #f1f5f9;
-  --foreground: #0f172a;
+  --foreground: #000000;
   
   /* LIGHT MODE (Clean SaaS) */
   --t-g: #2563eb; 
@@ -34,9 +34,9 @@
   --t-border: #e2e8f0;
   --t-border2: #cbd5e1;
   
-  --t-muted: #64748b;
-  --t-text: #334155;
-  --t-heading: #0f172a;
+  --t-muted: #000000;
+  --t-text: #000000;
+  --t-heading: #000000;
   
   --t-glow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
   --t-glow2: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
@@ -182,4 +182,76 @@ html:not(.dark) * {
 }
 html:not(.dark) .cyberpunk-corner {
   display: none !important;
+}
+
+
+/* Light mode text contrast overrides - all gray text to black */
+html:not(.dark) {
+  color: #000000 !important;
+}
+
+html:not(.dark) .text-gray-300,
+html:not(.dark) .text-gray-400,
+html:not(.dark) .text-gray-500,
+html:not(.dark) .text-gray-600,
+html:not(.dark) .text-gray-700,
+html:not(.dark) .text-slate-400,
+html:not(.dark) .text-slate-500,
+html:not(.dark) .text-slate-600,
+html:not(.dark) .text-zinc-400,
+html:not(.dark) .text-zinc-500,
+html:not(.dark) .text-zinc-600,
+html:not(.dark) .text-neutral-400,
+html:not(.dark) .text-neutral-500,
+html:not(.dark) .text-muted-foreground {
+  color: #000000 !important;
+}
+
+html:not(.dark) p,
+html:not(.dark) label,
+html:not(.dark) span:not(aside span):not(button span):not([class*="bg-"]),
+html:not(.dark) td {
+  color: #000000;
+}
+
+html:not(.dark) .opacity-50,
+html:not(.dark) .opacity-60,
+html:not(.dark) .opacity-70 {
+  opacity: 0.95 !important;
+}
+
+/* Light mode input & card text */
+html:not(.dark) input:not([type="checkbox"]):not([type="radio"]),
+html:not(.dark) select,
+html:not(.dark) textarea {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+  border-color: #cbd5e1 !important;
+}
+
+html:not(.dark) input::placeholder,
+html:not(.dark) textarea::placeholder {
+  color: #64748b !important;
+}
+
+/* Keep Sidebar dark styling distinct */
+html:not(.dark) aside,
+html:not(.dark) .sidebar-container {
+  background-color: #1e293b !important;
+  color: #ffffff !important;
+}
+
+html:not(.dark) aside a,
+html:not(.dark) aside span,
+html:not(.dark) aside p,
+html:not(.dark) aside h1,
+html:not(.dark) aside h2,
+html:not(.dark) aside h3 {
+  color: #f8fafc !important;
+}
+
+html:not(.dark) aside .text-gray-300,
+html:not(.dark) aside .text-gray-400,
+html:not(.dark) aside .text-slate-400 {
+  color: #94a3b8 !important;
 }

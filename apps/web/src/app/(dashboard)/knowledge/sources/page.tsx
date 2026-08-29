@@ -89,7 +89,7 @@ export default function SourcesPage() {
           <h1 className="text-3xl font-bold tracking-tight text-white">
             Knowledge Sources
           </h1>
-          <p className="text-muted-foreground mt-1">
+          <p className="text-[color:var(--t-text)] mt-1">
             Manage the data your AI agents use to answer questions.
           </p>
         </div>
@@ -104,9 +104,9 @@ export default function SourcesPage() {
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {loading ? (
-          <div className="text-gray-400">Loading sources...</div>
+          <div className="text-[color:var(--t-text)]">Loading sources...</div>
         ) : sources.length === 0 ? (
-          <div className="text-gray-400">
+          <div className="text-[color:var(--t-text)]">
             No sources found. Add one to get started.
           </div>
         ) : (
@@ -128,7 +128,7 @@ export default function SourcesPage() {
                       <h3 className="font-semibold text-gray-200 truncate max-w-[200px]">
                         {source.name}
                       </h3>
-                      <p className="text-xs text-gray-500">
+                      <p className="text-xs text-[color:var(--t-text)]">
                         {new Date(source.created_at || 0).toLocaleDateString()}
                       </p>
                     </div>
@@ -152,7 +152,7 @@ export default function SourcesPage() {
                         source.status.slice(1)
                       : "Unknown"}
                   </Badge>
-                  <span className="text-xs text-gray-400 capitalize">
+                  <span className="text-xs text-[color:var(--t-text)] capitalize">
                     {source.type}
                   </span>
                 </div>
@@ -173,7 +173,7 @@ export default function SourcesPage() {
                 variant="ghost"
                 size="icon"
                 onClick={() => setIsModalOpen(false)}
-                className="text-gray-400 hover:text-white"
+                className="text-[color:var(--t-text)] hover:text-white"
               >
                 <X className="w-5 h-5" />
               </Button>
@@ -181,7 +181,7 @@ export default function SourcesPage() {
 
             <div className="space-y-4">
               <div>
-                <label className="text-sm text-gray-400 mb-1 block">
+                <label className="text-sm text-[color:var(--t-text)] mb-1 block">
                   Source Type
                 </label>
                 <select
@@ -197,7 +197,7 @@ export default function SourcesPage() {
 
               {sourceType === "file" && (
                 <div>
-                  <label className="text-sm text-gray-400 mb-1 block">
+                  <label className="text-sm text-[color:var(--t-text)] mb-1 block">
                     File Name
                   </label>
                   <Input
@@ -211,7 +211,7 @@ export default function SourcesPage() {
 
               {sourceType === "website" && (
                 <div>
-                  <label className="text-sm text-gray-400 mb-1 block">
+                  <label className="text-sm text-[color:var(--t-text)] mb-1 block">
                     Website URL
                   </label>
                   <Input
@@ -225,7 +225,7 @@ export default function SourcesPage() {
 
               {sourceType === "text" && (
                 <div>
-                  <label className="text-sm text-gray-400 mb-1 block">
+                  <label className="text-sm text-[color:var(--t-text)] mb-1 block">
                     Source Name
                   </label>
                   <Input
@@ -234,7 +234,7 @@ export default function SourcesPage() {
                     placeholder="e.g. FAQ"
                     className="bg-[#2A2A3C] border-[#3F3F5A] text-white focus-visible:ring-[#D122E3] mb-3"
                   />
-                  <label className="text-sm text-gray-400 mb-1 block">
+                  <label className="text-sm text-[color:var(--t-text)] mb-1 block">
                     Content
                   </label>
                   <textarea

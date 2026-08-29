@@ -108,7 +108,7 @@ export default function ToolsSettingsPage() {
           <h1 className="text-3xl font-bold tracking-tight text-white">
             Tool Plugins
           </h1>
-          <p className="text-muted-foreground mt-1">
+          <p className="text-[color:var(--t-text)] mt-1">
             Configure external tools the AI can use to take action.
           </p>
         </div>
@@ -134,7 +134,7 @@ export default function ToolsSettingsPage() {
                   </div>
                   {tool.name}
                 </CardTitle>
-                <CardDescription className="text-gray-400 mt-2">
+                <CardDescription className="text-[color:var(--t-text)] mt-2">
                   {tool.description}
                 </CardDescription>
               </div>
@@ -146,8 +146,8 @@ export default function ToolsSettingsPage() {
               </Badge>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="bg-[#2A2A3C] p-3 rounded-lg border border-[#3F3F5A] flex items-center gap-2 text-sm text-gray-300">
-                <Globe className="w-4 h-4 text-gray-500 shrink-0" />
+              <div className="bg-[#2A2A3C] p-3 rounded-lg border border-[#3F3F5A] flex items-center gap-2 text-sm text-[color:var(--t-text)]">
+                <Globe className="w-4 h-4 text-[color:var(--t-text)] shrink-0" />
                 <span className="truncate font-mono">{tool.endpoint}</span>
               </div>
 
@@ -159,7 +159,7 @@ export default function ToolsSettingsPage() {
                       Confirmation
                     </span>
                   ) : (
-                    <span className="text-gray-400 flex items-center">
+                    <span className="text-[color:var(--t-text)] flex items-center">
                       <Zap className="w-4 h-4 mr-1" /> Auto-Execute
                     </span>
                   )}
@@ -176,7 +176,7 @@ export default function ToolsSettingsPage() {
                   <Button
                     variant="ghost"
                     size="icon"
-                    className="text-gray-500 hover:text-rose-400 hover:bg-rose-500/10 h-8 w-8"
+                    className="text-[color:var(--t-text)] hover:text-rose-400 hover:bg-rose-500/10 h-8 w-8"
                   >
                     <Trash2 className="w-4 h-4" />
                   </Button>
@@ -199,7 +199,7 @@ export default function ToolsSettingsPage() {
                 variant="ghost"
                 size="icon"
                 onClick={() => setIsAddModalOpen(false)}
-                className="text-gray-400 hover:text-white"
+                className="text-[color:var(--t-text)] hover:text-white"
               >
                 <X className="w-5 h-5" />
               </Button>
@@ -208,7 +208,7 @@ export default function ToolsSettingsPage() {
             <div className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-gray-300">
+                  <label className="text-sm font-medium text-[color:var(--t-text)]">
                     Tool Name
                   </label>
                   <Input
@@ -217,7 +217,7 @@ export default function ToolsSettingsPage() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-gray-300">
+                  <label className="text-sm font-medium text-[color:var(--t-text)]">
                     Endpoint URL
                   </label>
                   <Input
@@ -228,7 +228,7 @@ export default function ToolsSettingsPage() {
               </div>
 
               <div className="space-y-2">
-                <label className="text-sm font-medium text-gray-300">
+                <label className="text-sm font-medium text-[color:var(--t-text)]">
                   Description (Instructions for AI)
                 </label>
                 <Input
@@ -238,7 +238,7 @@ export default function ToolsSettingsPage() {
               </div>
 
               <div className="space-y-2">
-                <label className="text-sm font-medium text-gray-300">
+                <label className="text-sm font-medium text-[color:var(--t-text)]">
                   Authorization Header
                 </label>
                 <Input
@@ -249,7 +249,7 @@ export default function ToolsSettingsPage() {
               </div>
 
               <div className="space-y-2">
-                <label className="text-sm font-medium text-gray-300 flex justify-between">
+                <label className="text-sm font-medium text-[color:var(--t-text)] flex justify-between">
                   JSON Schema (Parameters)
                   <span className="text-[#00F2FE] text-xs cursor-pointer hover:underline">
                     View Example
@@ -257,7 +257,7 @@ export default function ToolsSettingsPage() {
                 </label>
                 <Textarea
                   placeholder={`{ \n  "type": "object",\n  "properties": {}\n}`}
-                  className="bg-[#2A2A3C] border-[#3F3F5A] text-gray-300 font-mono text-sm h-32 focus-visible:ring-[#D122E3]"
+                  className="bg-[#2A2A3C] border-[#3F3F5A] text-[color:var(--t-text)] font-mono text-sm h-32 focus-visible:ring-[#D122E3]"
                 />
               </div>
 
@@ -267,7 +267,7 @@ export default function ToolsSettingsPage() {
                     <ShieldAlert className="w-4 h-4 text-amber-400" /> Require
                     Agent Confirmation
                   </h4>
-                  <p className="text-xs text-gray-400 mt-1">
+                  <p className="text-xs text-[color:var(--t-text)] mt-1">
                     If enabled, the AI will pause and wait for a human agent to
                     approve the tool execution. Recommended for write actions.
                   </p>
@@ -285,7 +285,7 @@ export default function ToolsSettingsPage() {
               <Button
                 variant="outline"
                 onClick={() => setIsAddModalOpen(false)}
-                className="border-[#3F3F5A] text-gray-300 hover:text-white hover:bg-[#2A2A3C]"
+                className="border-[#3F3F5A] text-[color:var(--t-text)] hover:text-white hover:bg-[#2A2A3C]"
               >
                 Cancel
               </Button>
@@ -315,7 +315,7 @@ export default function ToolsSettingsPage() {
                   setIsTestModalOpen(false);
                   setTestResult(null);
                 }}
-                className="text-gray-400 hover:text-white"
+                className="text-[color:var(--t-text)] hover:text-white"
               >
                 <X className="w-5 h-5" />
               </Button>
@@ -323,7 +323,7 @@ export default function ToolsSettingsPage() {
 
             <div className="space-y-4">
               <div className="space-y-2">
-                <label className="text-sm font-medium text-gray-300">
+                <label className="text-sm font-medium text-[color:var(--t-text)]">
                   Test Payload (JSON)
                 </label>
                 <Textarea
@@ -351,7 +351,7 @@ export default function ToolsSettingsPage() {
                   setIsTestModalOpen(false);
                   setTestResult(null);
                 }}
-                className="border-[#3F3F5A] text-gray-300 hover:text-white hover:bg-[#2A2A3C]"
+                className="border-[#3F3F5A] text-[color:var(--t-text)] hover:text-white hover:bg-[#2A2A3C]"
               >
                 Close
               </Button>

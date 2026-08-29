@@ -86,13 +86,13 @@ export default function ChatSupportPage() {
             <Button
               variant="ghost"
               size="icon"
-              className="text-gray-400 hover:text-white"
+              className="text-[color:var(--t-text)] hover:text-white"
             >
               <Filter className="w-4 h-4" />
             </Button>
           </div>
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[color:var(--t-text)]" />
             <Input
               placeholder="Search conversations..."
               className="pl-9 bg-[#1E1E2E] border-[#3F3F5A] text-white"
@@ -108,14 +108,14 @@ export default function ChatSupportPage() {
             >
               <div className="flex justify-between items-start mb-1">
                 <span
-                  className={`font-medium ${conv.unread ? "text-white" : "text-gray-300"}`}
+                  className={`font-medium ${conv.unread ? "text-white" : "text-[color:var(--t-text)]"}`}
                 >
                   {conv.user}
                 </span>
-                <span className="text-xs text-gray-500">{conv.time}</span>
+                <span className="text-xs text-[color:var(--t-text)]">{conv.time}</span>
               </div>
               <p
-                className={`text-sm truncate ${conv.unread ? "text-gray-300 font-medium" : "text-gray-500"}`}
+                className={`text-sm truncate ${conv.unread ? "text-[color:var(--t-text)] font-medium" : "text-[color:var(--t-text)]"}`}
               >
                 {conv.message}
               </p>
@@ -150,7 +150,7 @@ export default function ChatSupportPage() {
             </div>
             <div>
               <h3 className="font-semibold text-white">{activeConv.user}</h3>
-              <p className="text-xs text-gray-400 flex items-center gap-2">
+              <p className="text-xs text-[color:var(--t-text)] flex items-center gap-2">
                 Viewing via Website Widget
                 {activeConv.status === "escalated" && (
                   <span className="text-rose-400 flex items-center">
@@ -184,10 +184,10 @@ export default function ChatSupportPage() {
                 className={`flex flex-col max-w-[80%] ${msg.role === "user" ? "ml-auto items-end" : "mr-auto items-start"}`}
               >
                 <div className="flex items-center gap-2 mb-1">
-                  <span className="text-xs font-medium text-gray-400">
+                  <span className="text-xs font-medium text-[color:var(--t-text)]">
                     {msg.role === "user" ? "Visitor" : "AI Agent"}
                   </span>
-                  <span className="text-[10px] text-gray-500">{msg.time}</span>
+                  <span className="text-[10px] text-[color:var(--t-text)]">{msg.time}</span>
                   {msg.confidence && (
                     <span
                       className={`text-[10px] px-1.5 py-0.5 rounded ${msg.confidence > 0.8 ? "bg-emerald-500/20 text-emerald-400" : "bg-amber-500/20 text-amber-400"}`}
@@ -215,7 +215,7 @@ export default function ChatSupportPage() {
             <Button
               variant="ghost"
               size="icon"
-              className="absolute left-2 text-gray-400 hover:text-white"
+              className="absolute left-2 text-[color:var(--t-text)] hover:text-white"
             >
               <Paperclip className="w-5 h-5" />
             </Button>

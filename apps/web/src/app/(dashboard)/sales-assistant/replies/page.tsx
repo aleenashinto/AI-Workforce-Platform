@@ -133,7 +133,7 @@ export default function RepliesPage() {
         );
       case "out_of_office":
         return (
-          <Badge className="bg-[#2A2A3C] text-gray-400 hover:bg-[#3F3F5A] border-[#3F3F5A]">
+          <Badge className="bg-[#2A2A3C] text-[color:var(--t-text)] hover:bg-[#3F3F5A] border-[#3F3F5A]">
             OOO
           </Badge>
         );
@@ -147,7 +147,7 @@ export default function RepliesPage() {
         return (
           <Badge
             variant="outline"
-            className="capitalize border-[#3F3F5A] text-gray-400"
+            className="capitalize border-[#3F3F5A] text-[color:var(--t-text)]"
           >
             {classification.replace("_", " ")}
           </Badge>
@@ -165,7 +165,7 @@ export default function RepliesPage() {
 
         <button
           onClick={() => setFilter("all")}
-          className={`w-full text-left px-3 py-2 rounded-md text-sm font-medium transition-colors ${filter === "all" ? "bg-[#2A2A3C] text-indigo-400" : "text-gray-400 hover:bg-[#2A2A3C]/50"}`}
+          className={`w-full text-left px-3 py-2 rounded-md text-sm font-medium transition-colors ${filter === "all" ? "bg-[#2A2A3C] text-indigo-400" : "text-[color:var(--t-text)] hover:bg-[#2A2A3C]/50"}`}
         >
           All Replies
           <span className="float-right text-xs bg-[#1E1E2E] border border-[#3F3F5A] px-2 py-0.5 rounded-full">
@@ -174,7 +174,7 @@ export default function RepliesPage() {
         </button>
         <button
           onClick={() => setFilter("action_needed")}
-          className={`w-full text-left px-3 py-2 rounded-md text-sm font-medium transition-colors ${filter === "action_needed" ? "bg-[#2A2A3C] text-indigo-400" : "text-gray-400 hover:bg-[#2A2A3C]/50"}`}
+          className={`w-full text-left px-3 py-2 rounded-md text-sm font-medium transition-colors ${filter === "action_needed" ? "bg-[#2A2A3C] text-indigo-400" : "text-[color:var(--t-text)] hover:bg-[#2A2A3C]/50"}`}
         >
           Action Needed
           <span className="float-right text-xs bg-red-900/30 text-red-400 px-2 py-0.5 rounded-full border border-red-800">
@@ -191,7 +191,7 @@ export default function RepliesPage() {
         </button>
 
         <div className="pt-4 pb-2 px-3">
-          <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
+          <p className="text-xs font-semibold text-[color:var(--t-text)] uppercase tracking-wider">
             By Category
           </p>
         </div>
@@ -201,10 +201,10 @@ export default function RepliesPage() {
             <button
               key={cat}
               onClick={() => setFilter(cat)}
-              className={`w-full text-left px-3 py-2 rounded-md text-sm transition-colors ${filter === cat ? "bg-[#2A2A3C] text-indigo-400 font-medium" : "text-gray-400 hover:bg-[#2A2A3C]/50"}`}
+              className={`w-full text-left px-3 py-2 rounded-md text-sm transition-colors ${filter === cat ? "bg-[#2A2A3C] text-indigo-400 font-medium" : "text-[color:var(--t-text)] hover:bg-[#2A2A3C]/50"}`}
             >
               <span className="capitalize">{cat.replace("_", " ")}</span>
-              <span className="float-right text-xs text-gray-500">
+              <span className="float-right text-xs text-[color:var(--t-text)]">
                 {replies.filter((r) => r.classification === cat).length}
               </span>
             </button>
@@ -227,14 +227,14 @@ export default function RepliesPage() {
         </div>
 
         {loading ? (
-          <div className="text-center py-12 text-gray-400">
+          <div className="text-center py-12 text-[color:var(--t-text)]">
             Loading replies...
           </div>
         ) : filteredReplies.length === 0 ? (
           <div className="text-center py-12 bg-[#1E1E2E] rounded-lg border border-dashed border-[#3F3F5A]">
             <MessageSquare className="w-12 h-12 text-[#3F3F5A] mx-auto mb-3" />
             <h3 className="text-lg font-medium text-white">No replies found</h3>
-            <p className="text-gray-400">
+            <p className="text-[color:var(--t-text)]">
               You&apos;re all caught up in this view.
             </p>
           </div>
@@ -251,11 +251,11 @@ export default function RepliesPage() {
                       <CardTitle className="text-base text-white">
                         {reply.lead_name}
                       </CardTitle>
-                      <span className="text-sm text-gray-400">
+                      <span className="text-sm text-[color:var(--t-text)]">
                         at {reply.company}
                       </span>
                     </div>
-                    <div className="text-xs text-gray-500 mt-1">
+                    <div className="text-xs text-[color:var(--t-text)] mt-1">
                       Received{" "}
                       {formatDistanceToNow(new Date(reply.created_at), {
                         addSuffix: true,
@@ -266,7 +266,7 @@ export default function RepliesPage() {
                     {getClassificationBadge(reply.classification)}
                   </div>
                 </CardHeader>
-                <CardContent className="pt-4 text-gray-300 whitespace-pre-wrap text-sm">
+                <CardContent className="pt-4 text-[color:var(--t-text)] whitespace-pre-wrap text-sm">
                   {reply.content}
                 </CardContent>
                 <CardFooter className="bg-[#2A2A3C] rounded-b-lg border-t border-[#3F3F5A] py-3 flex justify-end space-x-2">

@@ -87,7 +87,7 @@ export default function SupportAnalyticsPage() {
         <h1 className="text-3xl font-bold tracking-tight text-white">
           Support Analytics
         </h1>
-        <p className="text-muted-foreground mt-1">
+        <p className="text-[color:var(--t-text)] mt-1">
           Monitor the performance and impact of your AI support agent.
         </p>
       </div>
@@ -95,7 +95,7 @@ export default function SupportAnalyticsPage() {
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         <Card className="bg-[#2A2A3C] border-[#3F3F5A] text-white">
           <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
-            <CardTitle className="text-sm font-medium text-gray-400">
+            <CardTitle className="text-sm font-medium text-[color:var(--t-text)]">
               Deflection Rate
             </CardTitle>
             <Bot className="w-4 h-4 text-emerald-400" />
@@ -115,7 +115,7 @@ export default function SupportAnalyticsPage() {
 
         <Card className="bg-[#2A2A3C] border-[#3F3F5A] text-white">
           <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
-            <CardTitle className="text-sm font-medium text-gray-400">
+            <CardTitle className="text-sm font-medium text-[color:var(--t-text)]">
               Total Conversations
             </CardTitle>
             <MessageSquare className="w-4 h-4 text-indigo-400" />
@@ -135,7 +135,7 @@ export default function SupportAnalyticsPage() {
 
         <Card className="bg-[#2A2A3C] border-[#3F3F5A] text-white">
           <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
-            <CardTitle className="text-sm font-medium text-gray-400">
+            <CardTitle className="text-sm font-medium text-[color:var(--t-text)]">
               Escalated to Human
             </CardTitle>
             <Users className="w-4 h-4 text-amber-400" />
@@ -155,7 +155,7 @@ export default function SupportAnalyticsPage() {
 
         <Card className="bg-[#2A2A3C] border-[#3F3F5A] text-white">
           <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
-            <CardTitle className="text-sm font-medium text-gray-400">
+            <CardTitle className="text-sm font-medium text-[color:var(--t-text)]">
               Avg CSAT
             </CardTitle>
             <ThumbsUp className="w-4 h-4 text-blue-400" />
@@ -178,7 +178,7 @@ export default function SupportAnalyticsPage() {
         <Card className="bg-[#2A2A3C] border-[#3F3F5A] text-white col-span-4">
           <CardHeader>
             <CardTitle>Conversation Volume</CardTitle>
-            <CardDescription className="text-gray-400">
+            <CardDescription className="text-[color:var(--t-text)]">
               AI handled vs Total conversations over time
             </CardDescription>
           </CardHeader>
@@ -235,7 +235,7 @@ export default function SupportAnalyticsPage() {
         <Card className="bg-[#2A2A3C] border-[#3F3F5A] text-white col-span-3">
           <CardHeader>
             <CardTitle>CSAT Distribution</CardTitle>
-            <CardDescription className="text-gray-400">
+            <CardDescription className="text-[color:var(--t-text)]">
               Customer satisfaction scores
             </CardDescription>
           </CardHeader>
@@ -285,7 +285,7 @@ export default function SupportAnalyticsPage() {
       <Card className="bg-[#2A2A3C] border-[#3F3F5A] text-white">
         <CardHeader>
           <CardTitle>Knowledge Gaps</CardTitle>
-          <CardDescription className="text-gray-400">
+          <CardDescription className="text-[color:var(--t-text)]">
             Most frequent topics the AI failed to answer
           </CardDescription>
         </CardHeader>
@@ -299,7 +299,7 @@ export default function SupportAnalyticsPage() {
               >
                 <div>
                   <h4 className="font-medium text-gray-200">{gap.topic}</h4>
-                  <p className="text-sm text-gray-500 mt-1">
+                  <p className="text-sm text-[color:var(--t-text)] mt-1">
                     {gap.count} failed queries
                   </p>
                 </div>

@@ -93,7 +93,7 @@ export default function ResearchBriefPage() {
           <h1 className="text-2xl font-bold text-white flex items-center gap-2">
             <Brain className="text-[#D122E3]" /> Research Brief: {lead.company}
           </h1>
-          <p className="text-gray-400 mt-1">
+          <p className="text-[color:var(--t-text)] mt-1">
             Generated for {lead.name} • Cost: $0.15
           </p>
         </div>
@@ -114,9 +114,9 @@ export default function ResearchBriefPage() {
       {!brief ? (
         <Card className="bg-[#1E1E2E] border-[#3F3F5A] text-white">
           <CardContent className="p-12 text-center flex flex-col items-center">
-            <Globe className="w-12 h-12 text-gray-500 mb-4" />
+            <Globe className="w-12 h-12 text-[color:var(--t-text)] mb-4" />
             <h3 className="text-lg font-medium mb-2">No Research Available</h3>
-            <p className="text-gray-400 max-w-md text-center mb-6">
+            <p className="text-[color:var(--t-text)] max-w-md text-center mb-6">
               The AI Research Agent hasn&apos;t analyzed this lead yet. Click
               regenerate to kick off the research job.
             </p>
@@ -137,7 +137,7 @@ export default function ResearchBriefPage() {
                 <CardTitle className="text-lg">Executive Summary</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-gray-300 leading-relaxed text-sm">
+                <p className="text-[color:var(--t-text)] leading-relaxed text-sm">
                   {brief.summary}
                 </p>
               </CardContent>
@@ -148,7 +148,7 @@ export default function ResearchBriefPage() {
                 <CardTitle className="text-lg">
                   Ranked Personalization Hooks
                 </CardTitle>
-                <CardDescription className="text-gray-400">
+                <CardDescription className="text-[color:var(--t-text)]">
                   AI-generated angles for outreach drafting
                 </CardDescription>
               </CardHeader>
@@ -158,7 +158,7 @@ export default function ResearchBriefPage() {
                     key={i}
                     className="flex gap-4 items-start p-4 bg-[#2A2A3C] rounded-lg border border-[#3F3F5A]/50"
                   >
-                    <div className="bg-[#1E1E2E] text-gray-400 font-mono text-sm w-6 h-6 flex items-center justify-center rounded-full shrink-0">
+                    <div className="bg-[#1E1E2E] text-[color:var(--t-text)] font-mono text-sm w-6 h-6 flex items-center justify-center rounded-full shrink-0">
                       {i + 1}
                     </div>
                     <p className="text-sm text-gray-200">&quot;{hook}&quot;</p>
@@ -188,7 +188,7 @@ export default function ResearchBriefPage() {
                         key={i}
                         className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active"
                       >
-                        <div className="flex items-center justify-center w-10 h-10 rounded-full border border-slate-700 bg-[#1E1E2E] text-slate-500 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2">
+                        <div className="flex items-center justify-center w-10 h-10 rounded-full border border-slate-700 bg-[#1E1E2E] text-[color:var(--t-text)] shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2">
                           <Clock className="w-4 h-4" />
                         </div>
                         <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-4 rounded-lg border border-slate-700 bg-[#2A2A3C] shadow">
@@ -196,7 +196,7 @@ export default function ResearchBriefPage() {
                             <span className="text-xs font-semibold uppercase text-emerald-400 bg-emerald-400/10 px-2 py-0.5 rounded">
                               {signal.type}
                             </span>
-                            <time className="font-mono text-xs text-slate-500">
+                            <time className="font-mono text-xs text-[color:var(--t-text)]">
                               {signal.date}
                             </time>
                           </div>
@@ -211,7 +211,7 @@ export default function ResearchBriefPage() {
                             >
                               Source Link
                             </a>
-                            <span className="text-gray-500">
+                            <span className="text-[color:var(--t-text)]">
                               {(signal.confidence * 100).toFixed(0)}% Conf.
                             </span>
                           </div>
@@ -255,7 +255,7 @@ export default function ResearchBriefPage() {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-xs text-gray-400 leading-relaxed mb-4">
+                <p className="text-xs text-[color:var(--t-text)] leading-relaxed mb-4">
                   The AI agent automatically filters signals older than 90 days
                   to ensure outreach remains relevant.
                 </p>

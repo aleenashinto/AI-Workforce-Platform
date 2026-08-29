@@ -14,10 +14,10 @@ export default function DocsPage() {
           <a href="#" className="text-white hover:text-[#00F2FE]">
             Introduction
           </a>
-          <a href="#" className="text-gray-400 hover:text-white">
+          <a href="#" className="text-[color:var(--t-text)] hover:text-white">
             Authentication
           </a>
-          <a href="#" className="text-gray-400 hover:text-white">
+          <a href="#" className="text-[color:var(--t-text)] hover:text-white">
             Webhooks
           </a>
         </div>
@@ -26,7 +26,7 @@ export default function DocsPage() {
       <main className="flex-1 p-8 max-w-5xl mx-auto w-full">
         <div className="mb-12">
           <h2 className="text-3xl font-bold mb-4">Quick Start</h2>
-          <p className="text-gray-400 mb-4">
+          <p className="text-[color:var(--t-text)] mb-4">
             Integrate AI Workforce into your own applications. All API requests
             require a Bearer token. Base URL:{" "}
             <code className="bg-[#1E1E2E] border border-[#3F3F5A] text-[#00F2FE] p-1 px-2 rounded">
@@ -37,7 +37,7 @@ export default function DocsPage() {
 
         <div className="mb-12">
           <h2 className="text-3xl font-bold mb-4">Widget Installation</h2>
-          <p className="text-gray-400 mb-4">
+          <p className="text-[color:var(--t-text)] mb-4">
             Embed our AI chat widget on your website by adding this code snippet
             before the closing &lt;/body&gt; tag.
           </p>
@@ -59,7 +59,7 @@ export default function DocsPage() {
                 <span className="font-mono font-semibold text-gray-200">
                   /chat/conversations
                 </span>
-                <span className="text-gray-400 text-sm ml-auto">
+                <span className="text-[color:var(--t-text)] text-sm ml-auto">
                   List active conversations
                 </span>
               </div>
@@ -73,7 +73,7 @@ export default function DocsPage() {
                 <span className="font-mono font-semibold text-gray-200">
                   /chat/conversations
                 </span>
-                <span className="text-gray-400 text-sm ml-auto">
+                <span className="text-[color:var(--t-text)] text-sm ml-auto">
                   Create a new conversation
                 </span>
               </div>
@@ -87,12 +87,12 @@ export default function DocsPage() {
                 <span className="font-mono font-semibold text-gray-200">
                   /chat/conversations/{"{id}"}/messages
                 </span>
-                <span className="text-gray-400 text-sm ml-auto">
+                <span className="text-[color:var(--t-text)] text-sm ml-auto">
                   Send a message to a conversation
                 </span>
               </div>
               <div className="p-4 border-t border-[#3F3F5A] bg-[#1A1A24]">
-                <h4 className="font-semibold mb-2 text-gray-300">
+                <h4 className="font-semibold mb-2 text-[color:var(--t-text)]">
                   Request Body
                 </h4>
                 <pre className="bg-[#1E1E2E] border border-[#3F3F5A] p-4 rounded text-sm font-mono overflow-x-auto text-[#00F2FE]">
@@ -112,7 +112,7 @@ export default function DocsPage() {
                 <span className="font-mono font-semibold text-gray-200">
                   /leads/{"{id}"}
                 </span>
-                <span className="text-gray-400 text-sm ml-auto">
+                <span className="text-[color:var(--t-text)] text-sm ml-auto">
                   Update a sales lead
                 </span>
               </div>

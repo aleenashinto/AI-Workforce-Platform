@@ -46,7 +46,7 @@ function getStatusIcon(status: string) {
     case "disconnected":
       return <AlertTriangle size={14} className="text-red-400" />;
     default:
-      return <Mail size={14} className="text-gray-500" />;
+      return <Mail size={14} className="text-[color:var(--t-text)]" />;
   }
 }
 
@@ -55,7 +55,7 @@ function getStatusColor(status: string) {
     return "text-[#00ff88]";
   if (status === "error" || status === "disconnected") return "text-red-400";
   if (status === "paused") return "text-yellow-400";
-  return "text-gray-400";
+  return "text-[color:var(--t-text)]";
 }
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
@@ -195,11 +195,11 @@ export default function MailboxesPage() {
         <div className="flex gap-3">
           <button
             onClick={fetchMailboxes}
-            className="bg-[color:var(--t-panel)] text-gray-300 border border-gray-700 px-4 py-2 rounded font-mono text-sm hover:bg-gray-800 transition-colors flex items-center gap-2"
+            className="bg-[color:var(--t-panel)] text-[color:var(--t-text)] border border-gray-700 px-4 py-2 rounded font-mono text-sm hover:bg-gray-800 transition-colors flex items-center gap-2"
           >
             <RefreshCw size={16} /> Refresh
           </button>
-          <button className="bg-[color:var(--t-panel)] text-gray-300 border border-gray-700 px-4 py-2 rounded font-mono text-sm hover:bg-gray-800 transition-colors flex items-center gap-2">
+          <button className="bg-[color:var(--t-panel)] text-[color:var(--t-text)] border border-gray-700 px-4 py-2 rounded font-mono text-sm hover:bg-gray-800 transition-colors flex items-center gap-2">
             <Settings size={16} /> Settings
           </button>
           <button
@@ -298,7 +298,7 @@ export default function MailboxesPage() {
             </button>
           )}
 
-          <div className="ml-auto text-xs text-gray-500 font-mono">
+          <div className="ml-auto text-xs text-[color:var(--t-text)] font-mono">
             {filteredMailboxes.length} of {mailboxes.length} mailbox
             {mailboxes.length !== 1 ? "es" : ""}
           </div>
@@ -354,11 +354,11 @@ export default function MailboxesPage() {
                       >
                         {mb.display_name || mb.email.split("@")[0]}
                       </Link>
-                      <div className="text-xs text-gray-400 mt-1">
+                      <div className="text-xs text-[color:var(--t-text)] mt-1">
                         {mb.email}
                       </div>
                     </td>
-                    <td className="p-4 text-gray-300 capitalize">
+                    <td className="p-4 text-[color:var(--t-text)] capitalize">
                       {mb.provider ?? "—"}
                     </td>
                     <td className="p-4">
@@ -369,10 +369,10 @@ export default function MailboxesPage() {
                         </span>
                       </div>
                     </td>
-                    <td className="p-4 text-gray-300">
+                    <td className="p-4 text-[color:var(--t-text)]">
                       {mb.stats?.used_today ?? 0} / {mb.daily_cap ?? "—"}
                     </td>
-                    <td className="p-4 text-gray-400">
+                    <td className="p-4 text-[color:var(--t-text)]">
                       {mb.stats?.sequences ?? 0}
                     </td>
                     <td className="p-4 font-bold text-[#00cfff]">
@@ -386,7 +386,7 @@ export default function MailboxesPage() {
                         >
                           Open
                         </Link>
-                        <button className="p-1.5 text-gray-400 hover:text-white transition-colors">
+                        <button className="p-1.5 text-[color:var(--t-text)] hover:text-white transition-colors">
                           <MoreHorizontal size={16} />
                         </button>
                       </div>
@@ -406,7 +406,7 @@ export default function MailboxesPage() {
             <h2 className="text-xl font-bold text-white mb-2">
               Connect your mailbox
             </h2>
-            <p className="text-sm text-gray-400 mb-6">
+            <p className="text-sm text-[color:var(--t-text)] mb-6">
               Choose your email provider
             </p>
 
@@ -454,12 +454,12 @@ export default function MailboxesPage() {
                       <div className="text-white font-bold group-hover:text-[#00ff88] transition-colors">
                         {provider.label}
                       </div>
-                      <div className="text-xs text-gray-500">{provider.sub}</div>
+                      <div className="text-xs text-[color:var(--t-text)]">{provider.sub}</div>
                     </div>
                   </div>
                   <LinkIcon
                     size={16}
-                    className="text-gray-500 group-hover:text-[#00ff88]"
+                    className="text-[color:var(--t-text)] group-hover:text-[#00ff88]"
                   />
                 </button>
               ))}
@@ -469,12 +469,12 @@ export default function MailboxesPage() {
                 className="flex items-center justify-between p-4 border border-gray-800 rounded-lg bg-[color:var(--t-bg)]/50 opacity-50 cursor-not-allowed"
               >
                 <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 rounded bg-gray-800 flex items-center justify-center font-sans font-bold text-lg text-gray-500">
+                  <div className="w-10 h-10 rounded bg-gray-800 flex items-center justify-center font-sans font-bold text-lg text-[color:var(--t-text)]">
                     @
                   </div>
                   <div className="text-left">
-                    <div className="text-gray-400 font-bold">Other SMTP</div>
-                    <div className="text-xs text-gray-600">Coming soon</div>
+                    <div className="text-[color:var(--t-text)] font-bold">Other SMTP</div>
+                    <div className="text-xs text-[color:var(--t-text)]">Coming soon</div>
                   </div>
                 </div>
               </button>
@@ -482,7 +482,7 @@ export default function MailboxesPage() {
 
             <button
               onClick={() => setShowConnectModal(false)}
-              className="mt-6 w-full py-2 text-center text-gray-400 hover:text-white transition-colors"
+              className="mt-6 w-full py-2 text-center text-[color:var(--t-text)] hover:text-white transition-colors"
             >
               Cancel
             </button>

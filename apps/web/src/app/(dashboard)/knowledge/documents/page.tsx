@@ -40,15 +40,15 @@ export default function DocumentsPage() {
           <h1 className="text-3xl font-bold tracking-tight text-white">
             Ingested Documents
           </h1>
-          <p className="text-muted-foreground mt-1">
+          <p className="text-[color:var(--t-text)] mt-1">
             Search and view all parsed documents across your sources.
           </p>
         </div>
         <div className="relative w-full md:w-64">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[color:var(--t-text)]" />
           <Input
             placeholder="Search documents..."
-            className="w-full pl-9 bg-[#2A2A3C] border-[#3F3F5A] text-white placeholder:text-gray-500"
+            className="w-full pl-9 bg-[#2A2A3C] border-[#3F3F5A] text-white placeholder:text-[color:var(--t-text)]"
           />
         </div>
       </div>
@@ -56,7 +56,7 @@ export default function DocumentsPage() {
       <Card className="bg-[#2A2A3C] border-[#3F3F5A] overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-sm text-left">
-            <thead className="text-xs text-gray-400 uppercase bg-[#1E1E2E] border-b border-[#3F3F5A]">
+            <thead className="text-xs text-[color:var(--t-text)] uppercase bg-[#1E1E2E] border-b border-[#3F3F5A]">
               <tr>
                 <th scope="col" className="px-6 py-4">
                   Title
@@ -85,7 +85,7 @@ export default function DocumentsPage() {
                     <FileText className="w-4 h-4 text-indigo-400" />
                     {doc.title}
                   </td>
-                  <td className="px-6 py-4 text-gray-300">
+                  <td className="px-6 py-4 text-[color:var(--t-text)]">
                     <Link
                       href={`/knowledge/sources/1`}
                       className="hover:text-indigo-400 hover:underline"
@@ -93,7 +93,7 @@ export default function DocumentsPage() {
                       {doc.source_name}
                     </Link>
                   </td>
-                  <td className="px-6 py-4 text-gray-300">{doc.chunks}</td>
+                  <td className="px-6 py-4 text-[color:var(--t-text)]">{doc.chunks}</td>
                   <td className="px-6 py-4">
                     <Badge
                       variant="outline"
@@ -109,7 +109,7 @@ export default function DocumentsPage() {
                         doc.sync_status.slice(1)}
                     </Badge>
                   </td>
-                  <td className="px-6 py-4 text-gray-400 flex items-center gap-2">
+                  <td className="px-6 py-4 text-[color:var(--t-text)] flex items-center gap-2">
                     <Calendar className="w-3.5 h-3.5" />
                     {new Date(doc.updated_at).toLocaleDateString()}
                   </td>
@@ -119,7 +119,7 @@ export default function DocumentsPage() {
                 <tr>
                   <td
                     colSpan={5}
-                    className="px-6 py-8 text-center text-gray-500"
+                    className="px-6 py-8 text-center text-[color:var(--t-text)]"
                   >
                     No documents found. Try adding a new knowledge source.
                   </td>

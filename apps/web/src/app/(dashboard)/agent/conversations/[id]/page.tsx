@@ -232,7 +232,7 @@ export default function ConversationDetailsPage({
 
   if (loading)
     return (
-      <div className="h-[calc(100vh-8rem)] flex items-center justify-center text-gray-400">
+      <div className="h-[calc(100vh-8rem)] flex items-center justify-center text-[color:var(--t-text)]">
         Loading conversation...
       </div>
     );
@@ -307,7 +307,7 @@ export default function ConversationDetailsPage({
                 <div
                   className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 shadow-lg ${
                     msg.role === "user"
-                      ? "bg-[#2A2A3C] border border-[#3F3F5A] text-gray-300"
+                      ? "bg-[#2A2A3C] border border-[#3F3F5A] text-[color:var(--t-text)]"
                       : msg.role === "assistant"
                         ? "bg-gradient-to-br from-[#D122E3] to-[#00F2FE] text-white"
                         : "bg-emerald-600/20 text-emerald-400 border border-emerald-500/30"
@@ -325,10 +325,10 @@ export default function ConversationDetailsPage({
                   className={`flex flex-col gap-1 ${msg.role === "user" ? "items-end" : "items-start"}`}
                 >
                   <div className="flex items-center gap-2 px-1">
-                    <span className="text-xs font-medium text-gray-400 capitalize">
+                    <span className="text-xs font-medium text-[color:var(--t-text)] capitalize">
                       {msg.role}
                     </span>
-                    <span className="text-xs text-gray-500">
+                    <span className="text-xs text-[color:var(--t-text)]">
                       {msg.time || "Just now"}
                     </span>
                     {msg.role === "assistant" && msg.confidence && (
@@ -368,7 +368,7 @@ export default function ConversationDetailsPage({
                     AI Copilot Suggestion
                   </div>
                   {copilotSuggestion === "Generating suggestion..." ? (
-                    <div className="text-sm text-gray-400 flex items-center gap-2">
+                    <div className="text-sm text-[color:var(--t-text)] flex items-center gap-2">
                       <div className="w-4 h-4 border-2 border-[#D122E3] border-t-transparent rounded-full animate-spin"></div>
                       Generating...
                     </div>
@@ -392,7 +392,7 @@ export default function ConversationDetailsPage({
                     size="sm"
                     variant="ghost"
                     onClick={() => setIsCopilotActive(false)}
-                    className="text-gray-400 hover:text-white h-8 text-xs px-4"
+                    className="text-[color:var(--t-text)] hover:text-white h-8 text-xs px-4"
                   >
                     Dismiss
                   </Button>
@@ -406,7 +406,7 @@ export default function ConversationDetailsPage({
               variant="outline"
               size="icon"
               onClick={() => setIsToolModalOpen(true)}
-              className="shrink-0 bg-[#2A2A3C] border-[#3F3F5A] text-gray-400 hover:text-white"
+              className="shrink-0 bg-[#2A2A3C] border-[#3F3F5A] text-[color:var(--t-text)] hover:text-white"
               disabled={!hasClaimed}
             >
               <ShieldAlert className="w-4 h-4" />
@@ -445,7 +445,7 @@ export default function ConversationDetailsPage({
                 <AlertTriangle className="w-6 h-6" />
                 <h3 className="text-lg font-bold">Tool Execution Required</h3>
               </div>
-              <p className="text-gray-300 text-sm mb-6">
+              <p className="text-[color:var(--t-text)] text-sm mb-6">
                 The AI attempted to execute the{" "}
                 <code className="bg-black/50 px-1.5 py-0.5 rounded text-amber-300 border border-amber-500/30">
                   process_refund
@@ -467,7 +467,7 @@ export default function ConversationDetailsPage({
                 <Button
                   variant="outline"
                   onClick={() => setIsToolModalOpen(false)}
-                  className="border-[#3F3F5A] text-gray-300 hover:text-white hover:bg-[#2A2A3C]"
+                  className="border-[#3F3F5A] text-[color:var(--t-text)] hover:text-white hover:bg-[#2A2A3C]"
                 >
                   <X className="w-4 h-4 mr-2" /> Reject
                 </Button>
@@ -485,12 +485,12 @@ export default function ConversationDetailsPage({
 
       {/* Right Sidebar - Customer Info */}
       <div className="w-80 border-l border-[#3F3F5A] bg-[#1E1E2E] p-6 flex flex-col overflow-y-auto relative">
-        <h3 className="font-semibold text-white mb-6 uppercase text-xs tracking-wider text-gray-400 flex items-center gap-2">
+        <h3 className="font-semibold text-white mb-6 uppercase text-xs tracking-wider text-[color:var(--t-text)] flex items-center gap-2">
           Customer Profile
         </h3>
 
         <div className="flex flex-col items-center mb-6">
-          <div className="w-20 h-20 rounded-full bg-gradient-to-br from-[#2A2A3C] to-[#1E1E2E] border-2 border-[#3F3F5A] flex items-center justify-center text-2xl font-bold text-gray-300 mb-4 shadow-lg">
+          <div className="w-20 h-20 rounded-full bg-gradient-to-br from-[#2A2A3C] to-[#1E1E2E] border-2 border-[#3F3F5A] flex items-center justify-center text-2xl font-bold text-[color:var(--t-text)] mb-4 shadow-lg">
             {conversation?.visitor_id
               ? conversation.visitor_id.substring(8, 10).toUpperCase()
               : "V_"}
@@ -508,13 +508,13 @@ export default function ConversationDetailsPage({
 
         <div className="space-y-5 text-sm bg-[#1A1A24] p-4 rounded-xl border border-[#3F3F5A]">
           <div>
-            <p className="text-gray-500 text-xs mb-1 uppercase tracking-wider">
+            <p className="text-[color:var(--t-text)] text-xs mb-1 uppercase tracking-wider">
               Email
             </p>
             <p className="text-gray-200">Unknown</p>
           </div>
           <div>
-            <p className="text-gray-500 text-xs mb-1 uppercase tracking-wider">
+            <p className="text-[color:var(--t-text)] text-xs mb-1 uppercase tracking-wider">
               Wait Time
             </p>
             <p className="text-gray-200 flex items-center">
@@ -522,12 +522,12 @@ export default function ConversationDetailsPage({
             </p>
           </div>
           <div>
-            <p className="text-gray-500 text-xs mb-1 uppercase tracking-wider">
+            <p className="text-[color:var(--t-text)] text-xs mb-1 uppercase tracking-wider">
               Plan
             </p>
             <Badge
               variant="outline"
-              className="border-[#3F3F5A] text-gray-300 mt-1 bg-[#2A2A3C]"
+              className="border-[#3F3F5A] text-[color:var(--t-text)] mt-1 bg-[#2A2A3C]"
             >
               Free Tier
             </Badge>
@@ -536,7 +536,7 @@ export default function ConversationDetailsPage({
 
         <hr className="border-[#3F3F5A] my-6" />
 
-        <h3 className="font-semibold text-white mb-4 uppercase text-xs tracking-wider text-gray-400">
+        <h3 className="font-semibold text-white mb-4 uppercase text-xs tracking-wider text-[color:var(--t-text)]">
           Recent Activity
         </h3>
         <div className="space-y-4">
@@ -544,14 +544,14 @@ export default function ConversationDetailsPage({
             <div className="w-4 h-4 rounded-full bg-[#1E1E2E] border-2 border-[#D122E3] shrink-0 mt-0.5 z-10"></div>
             <div>
               <p className="text-sm text-gray-200">Viewed Return Policy</p>
-              <p className="text-xs text-gray-500 mt-0.5">10 mins ago</p>
+              <p className="text-xs text-[color:var(--t-text)] mt-0.5">10 mins ago</p>
             </div>
           </div>
           <div className="flex gap-3 items-start relative">
             <div className="w-4 h-4 rounded-full bg-[#1E1E2E] border-2 border-[#3F3F5A] shrink-0 mt-0.5 z-10"></div>
             <div>
               <p className="text-sm text-gray-200">Visited Pricing Page</p>
-              <p className="text-xs text-gray-500 mt-0.5">15 mins ago</p>
+              <p className="text-xs text-[color:var(--t-text)] mt-0.5">15 mins ago</p>
             </div>
           </div>
         </div>

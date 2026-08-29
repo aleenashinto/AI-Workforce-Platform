@@ -59,11 +59,11 @@ export default function SourceDetailPage({
           <div className="flex items-center space-x-3 mb-1">
             <Link
               href="/knowledge/sources"
-              className="text-gray-400 hover:text-white transition-colors"
+              className="text-[color:var(--t-text)] hover:text-white transition-colors"
             >
               Sources
             </Link>
-            <span className="text-gray-600">/</span>
+            <span className="text-[color:var(--t-text)]">/</span>
             <span className="text-gray-200">{source.name}</span>
           </div>
           <h1 className="text-3xl font-bold tracking-tight text-white flex items-center gap-3">
@@ -106,30 +106,30 @@ export default function SourceDetailPage({
           </CardHeader>
           <CardContent className="space-y-4">
             <div>
-              <p className="text-sm text-gray-400">Type</p>
+              <p className="text-sm text-[color:var(--t-text)]">Type</p>
               <p className="font-medium capitalize flex items-center mt-1">
                 <FileText className="w-4 h-4 mr-2 text-indigo-400" />
                 {source.type}
               </p>
             </div>
             <div>
-              <p className="text-sm text-gray-400">Created At</p>
+              <p className="text-sm text-[color:var(--t-text)]">Created At</p>
               <p className="font-medium flex items-center mt-1">
-                <Clock className="w-4 h-4 mr-2 text-gray-500" />
+                <Clock className="w-4 h-4 mr-2 text-[color:var(--t-text)]" />
                 {new Date(source.created_at).toLocaleString()}
               </p>
             </div>
             <div>
-              <p className="text-sm text-gray-400">Last Synced</p>
+              <p className="text-sm text-[color:var(--t-text)]">Last Synced</p>
               <p className="font-medium flex items-center mt-1">
-                <RefreshCcw className="w-4 h-4 mr-2 text-gray-500" />
+                <RefreshCcw className="w-4 h-4 mr-2 text-[color:var(--t-text)]" />
                 {new Date(source.updated_at).toLocaleString()}
               </p>
             </div>
             {source.config &&
               Object.entries(source.config).map(([k, v]) => (
                 <div key={k}>
-                  <p className="text-sm text-gray-400 capitalize">
+                  <p className="text-sm text-[color:var(--t-text)] capitalize">
                     {k.replace(/([A-Z])/g, " $1").trim()}
                   </p>
                   <p className="font-medium mt-1 truncate" title={String(v)}>
@@ -148,7 +148,7 @@ export default function SourceDetailPage({
             <div className="space-y-4">
               {logs.map((log) => (
                 <div key={log.id} className="flex items-start gap-4 text-sm">
-                  <div className="min-w-[100px] text-gray-500">{log.time}</div>
+                  <div className="min-w-[100px] text-[color:var(--t-text)]">{log.time}</div>
                   <div className="flex items-center gap-2">
                     {log.type === "info" && (
                       <div className="w-2 h-2 rounded-full bg-blue-400 mt-1.5" />
@@ -165,7 +165,7 @@ export default function SourceDetailPage({
                           ? "text-emerald-400"
                           : log.type === "error"
                             ? "text-rose-400"
-                            : "text-gray-300"
+                            : "text-[color:var(--t-text)]"
                       }
                     >
                       {log.message}

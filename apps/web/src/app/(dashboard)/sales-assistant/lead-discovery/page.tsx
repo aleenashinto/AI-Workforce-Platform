@@ -143,7 +143,7 @@ export default function LeadDiscoveryPage() {
           >
             Lead Discovery
           </h1>
-          <p className="opacity-70 mt-1" style={{ fontFamily: T.mono }}>
+          <p className="opacity-90 mt-1" style={{ fontFamily: T.mono }}>
             Find high-quality prospects using AI and your Ideal Customer
             Profile.
           </p>
@@ -158,7 +158,7 @@ export default function LeadDiscoveryPage() {
                 setActiveIcpId(e.target.value);
                 setActiveIcp(icps.find((i) => i.id === e.target.value));
               }}
-              className="bg-transparent border-none text-white focus:ring-0 cursor-pointer outline-none"
+              className="bg-transparent border-none text-[color:var(--t-heading)] focus:ring-0 cursor-pointer outline-none"
             >
               {icps.map((icp) => (
                 <option
@@ -171,7 +171,7 @@ export default function LeadDiscoveryPage() {
               ))}
             </select>
           ) : (
-            <span className="text-gray-400">Loading...</span>
+            <span className="text-[color:var(--t-muted)]">Loading...</span>
           )}
         </div>
       </div>
@@ -189,7 +189,7 @@ export default function LeadDiscoveryPage() {
 
           <div className="p-4 space-y-6">
             <div className="space-y-3">
-              <h4 className="text-sm font-semibold text-white uppercase tracking-wider">
+              <h4 className="text-sm font-semibold text-[color:var(--t-heading)] uppercase tracking-wider">
                 Industry
               </h4>
               {[
@@ -209,7 +209,7 @@ export default function LeadDiscoveryPage() {
                   />
                   <label
                     htmlFor={"ind-" + ind}
-                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-gray-300"
+                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-90 text-[color:var(--t-text)]"
                   >
                     {ind}
                   </label>
@@ -218,20 +218,20 @@ export default function LeadDiscoveryPage() {
             </div>
 
             <div className="space-y-3">
-              <h4 className="text-sm font-semibold text-white uppercase tracking-wider">
+              <h4 className="text-sm font-semibold text-[color:var(--t-heading)] uppercase tracking-wider">
                 Location
               </h4>
               <Input
                 placeholder="Search regions..."
-                className="bg-black/50 border-[rgba(0,207,255,0.2)] text-white"
+                className="bg-[color:var(--t-panel)] border-[color:var(--t-border)] text-[color:var(--t-text)] border-[rgba(0,207,255,0.2)] text-[color:var(--t-heading)]"
               />
             </div>
 
             <div className="space-y-3">
-              <h4 className="text-sm font-semibold text-white uppercase tracking-wider">
+              <h4 className="text-sm font-semibold text-[color:var(--t-heading)] uppercase tracking-wider">
                 Company Size
               </h4>
-              <select className="bg-black/50 border border-[rgba(0,207,255,0.2)] text-white w-full p-2 rounded-md outline-none">
+              <select className="bg-[color:var(--t-panel)] border-[color:var(--t-border)] text-[color:var(--t-text)] border border-[rgba(0,207,255,0.2)] text-[color:var(--t-heading)] w-full p-2 rounded-md outline-none">
                 <option value="">Select size</option>
                 <option value="1-10">1 - 10</option>
                 <option value="11-50">11 - 50</option>
@@ -241,17 +241,17 @@ export default function LeadDiscoveryPage() {
             </div>
 
             <div className="space-y-3">
-              <h4 className="text-sm font-semibold text-white uppercase tracking-wider">
+              <h4 className="text-sm font-semibold text-[color:var(--t-heading)] uppercase tracking-wider">
                 Job Titles
               </h4>
               <Input
                 placeholder="e.g. CTO, Founder"
-                className="bg-black/50 border-[rgba(0,207,255,0.2)] text-white"
+                className="bg-[color:var(--t-panel)] border-[color:var(--t-border)] text-[color:var(--t-text)] border-[rgba(0,207,255,0.2)] text-[color:var(--t-heading)]"
               />
             </div>
 
             <div className="space-y-3">
-              <h4 className="text-sm font-semibold text-white uppercase tracking-wider">
+              <h4 className="text-sm font-semibold text-[color:var(--t-heading)] uppercase tracking-wider">
                 Buying Signals
               </h4>
               {["Recently Funded", "Hiring", "New Executive"].map((sig) => (
@@ -262,7 +262,7 @@ export default function LeadDiscoveryPage() {
                   />
                   <label
                     htmlFor={"sig-" + sig}
-                    className="text-sm font-medium leading-none text-gray-300"
+                    className="text-sm font-medium leading-none text-[color:var(--t-text)]"
                   >
                     {sig}
                   </label>
@@ -277,7 +277,7 @@ export default function LeadDiscoveryPage() {
           {/* AI SEARCH */}
           <div className="bg-gradient-to-r from-[color:var(--t-panel)] to-indigo-900/20 border border-[#00cfff]/30 rounded-xl p-6 relative overflow-hidden flex-shrink-0">
             <div className="absolute top-0 right-0 w-64 h-64 bg-[#00cfff] opacity-5 blur-[100px] pointer-events-none"></div>
-            <h2 className="text-lg font-bold text-white mb-3 flex items-center gap-2">
+            <h2 className="text-lg font-bold text-[color:var(--t-heading)] mb-3 flex items-center gap-2">
               <Sparkles className="w-5 h-5 text-[#00cfff]" /> AI Prospect Search
             </h2>
             <div className="flex gap-3">
@@ -286,7 +286,7 @@ export default function LeadDiscoveryPage() {
                 value={aiSearchPrompt}
                 onChange={(e) => setAiSearchPrompt(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && startDiscovery()}
-                className="bg-black/40 border-[#00cfff]/40 text-white text-base py-6 focus-visible:ring-[#00cfff]"
+                className="bg-[color:var(--t-panel)] border-[color:var(--t-border)] text-[color:var(--t-text)] border-[#00cfff]/40 text-[color:var(--t-heading)] text-base py-6 focus-visible:ring-[#00cfff]"
               />
               <Button
                 onClick={startDiscovery}
@@ -304,7 +304,7 @@ export default function LeadDiscoveryPage() {
 
           {/* RESULTS AREA */}
           <div className="flex-1 bg-[color:var(--t-panel)] border border-[rgba(0,255,136,0.18)] rounded-xl flex flex-col overflow-hidden">
-            <div className="p-4 border-b border-[rgba(0,255,136,0.18)] flex justify-between items-center bg-black/20">
+            <div className="p-4 border-b border-[rgba(0,255,136,0.18)] flex justify-between items-center bg-[color:var(--t-bg2)]">
               <div className="text-[#00ff88] font-bold tracking-widest text-sm flex items-center gap-2">
                 <Users className="w-4 h-4" />
                 {prospects.length} PROSPECTS FOUND
@@ -334,7 +334,7 @@ export default function LeadDiscoveryPage() {
                 <div className="h-full flex flex-col items-center justify-center text-center space-y-4">
                   <div className="w-16 h-16 border-4 border-[#00cfff]/20 border-t-[#00cfff] rounded-full animate-spin"></div>
                   <div className="space-y-1">
-                    <h3 className="text-xl font-bold text-white">
+                    <h3 className="text-xl font-bold text-[color:var(--t-heading)]">
                       AI Engine Running
                     </h3>
                     <p className="text-[#00cfff]/70">
@@ -343,9 +343,9 @@ export default function LeadDiscoveryPage() {
                   </div>
                 </div>
               ) : prospects.length === 0 ? (
-                <div className="h-full flex flex-col items-center justify-center text-center opacity-50">
+                <div className="h-full flex flex-col items-center justify-center text-center opacity-90">
                   <Target className="w-16 h-16 mb-4 text-[#00cfff]" />
-                  <h3 className="text-xl font-bold text-white mb-2">
+                  <h3 className="text-xl font-bold text-[color:var(--t-heading)] mb-2">
                     Ready to Discover
                   </h3>
                   <p className="max-w-md">
@@ -354,8 +354,8 @@ export default function LeadDiscoveryPage() {
                   </p>
                 </div>
               ) : (
-                <table className="w-full text-left text-sm text-gray-300">
-                  <thead className="text-xs uppercase bg-black/40 text-gray-400 sticky top-0">
+                <table className="w-full text-left text-sm text-[color:var(--t-text)]">
+                  <thead className="text-xs uppercase bg-[color:var(--t-panel)] border-[color:var(--t-border)] text-[color:var(--t-text)] text-[color:var(--t-muted)] sticky top-0">
                     <tr>
                       <th className="p-3 w-10">
                         <Checkbox
@@ -401,10 +401,10 @@ export default function LeadDiscoveryPage() {
                           />
                         </td>
                         <td className="p-3">
-                          <div className="font-bold text-white">
+                          <div className="font-bold text-[color:var(--t-heading)]">
                             {p.company.name}
                           </div>
-                          <div className="text-xs text-gray-500 flex items-center gap-1">
+                          <div className="text-xs text-[color:var(--t-text)] flex items-center gap-1">
                             <MapPin className="w-3 h-3" /> {p.company.location}
                           </div>
                         </td>
@@ -412,7 +412,7 @@ export default function LeadDiscoveryPage() {
                           {p.contact.name}
                         </td>
                         <td className="p-3">
-                          <div className="text-gray-300">
+                          <div className="text-[color:var(--t-text)]">
                             {p.contact.job_title}
                           </div>
                           <div className="text-xs text-[#00cfff]">
@@ -427,7 +427,7 @@ export default function LeadDiscoveryPage() {
                                 ? "border-[#00ff88] text-[#00ff88] bg-[#00ff88]/10"
                                 : p.scores.icpMatch >= 70
                                   ? "border-amber-400 text-amber-400 bg-amber-400/10"
-                                  : "border-gray-500 text-gray-400"
+                                  : "border-gray-500 text-[color:var(--t-muted)]"
                             }
                           >
                             {p.scores.icpMatch}%
@@ -457,7 +457,7 @@ export default function LeadDiscoveryPage() {
                               {p.signals.length !== 1 && "s"}
                             </span>
                           ) : (
-                            <span className="text-gray-600 text-xs">-</span>
+                            <span className="text-[color:var(--t-text)] text-xs">-</span>
                           )}
                         </td>
                         <td className="p-3 text-right">
@@ -487,9 +487,9 @@ export default function LeadDiscoveryPage() {
       {selectedProspect && (
         <div className="fixed inset-0 z-50 flex justify-end bg-black/60 backdrop-blur-sm animate-in fade-in">
           <div className="w-[500px] h-full bg-[color:var(--t-bg2)] border-l border-[rgba(0,207,255,0.3)] shadow-2xl flex flex-col animate-in slide-in-from-right overflow-y-auto">
-            <div className="p-6 border-b border-[rgba(0,207,255,0.2)] flex justify-between items-start bg-black/20">
+            <div className="p-6 border-b border-[rgba(0,207,255,0.2)] flex justify-between items-start bg-[color:var(--t-bg2)]">
               <div>
-                <h2 className="text-2xl font-bold text-white mb-1">
+                <h2 className="text-2xl font-bold text-[color:var(--t-heading)] mb-1">
                   {selectedProspect.contact.name}
                 </h2>
                 <p className="text-[#00cfff] flex items-center gap-2">
@@ -501,7 +501,7 @@ export default function LeadDiscoveryPage() {
                 variant="ghost"
                 size="icon"
                 onClick={() => setSelectedProspect(null)}
-                className="text-gray-400 hover:text-white hover:bg-white/10"
+                className="text-[color:var(--t-muted)] hover:text-[color:var(--t-heading)] hover:bg-white/10"
               >
                 <X className="w-5 h-5" />
               </Button>
@@ -510,50 +510,50 @@ export default function LeadDiscoveryPage() {
             <div className="p-6 space-y-6 flex-1">
               <div className="grid grid-cols-2 gap-4">
                 <div className="bg-[color:var(--t-panel)] border border-[rgba(0,255,136,0.2)] p-4 rounded-xl text-center">
-                  <div className="text-xs uppercase text-gray-400 tracking-wider mb-1">
+                  <div className="text-xs uppercase text-[color:var(--t-muted)] tracking-wider mb-1">
                     ICP Match
                   </div>
                   <div className="text-3xl font-bold text-[#00ff88]">
                     {selectedProspect.scores.icpMatch}%
                   </div>
-                  <div className="text-xs text-gray-500 mt-2">
+                  <div className="text-xs text-[color:var(--t-text)] mt-2">
                     Highly aligned firmographics
                   </div>
                 </div>
                 <div className="bg-[color:var(--t-panel)] border border-[rgba(255,51,102,0.2)] p-4 rounded-xl text-center">
-                  <div className="text-xs uppercase text-gray-400 tracking-wider mb-1">
+                  <div className="text-xs uppercase text-[color:var(--t-muted)] tracking-wider mb-1">
                     AI Lead Score
                   </div>
                   <div className="text-3xl font-bold text-[#ff3366]">
                     {selectedProspect.scores.leadScore} 🔥
                   </div>
-                  <div className="text-xs text-gray-500 mt-2">
+                  <div className="text-xs text-[color:var(--t-text)] mt-2">
                     Strong intent indicators
                   </div>
                 </div>
               </div>
 
               <div className="bg-[color:var(--t-panel)] border border-[rgba(0,207,255,0.2)] p-4 rounded-xl">
-                <h4 className="font-bold text-white mb-2 flex items-center gap-2">
+                <h4 className="font-bold text-[color:var(--t-heading)] mb-2 flex items-center gap-2">
                   <Sparkles className="w-4 h-4 text-[#00cfff]" /> AI
                   Recommendation
                 </h4>
-                <p className="text-gray-300 text-sm leading-relaxed">
+                <p className="text-[color:var(--t-text)] text-sm leading-relaxed">
                   {selectedProspect.aiRecommendation}
                 </p>
-                <div className="mt-3 p-3 bg-black/40 rounded text-xs text-gray-400 border border-white/5">
+                <div className="mt-3 p-3 bg-[color:var(--t-panel)] border-[color:var(--t-border)] text-[color:var(--t-text)] rounded text-xs text-[color:var(--t-muted)] border border-white/5">
                   <strong>Score Explanation:</strong>{" "}
                   {selectedProspect.scores.explanation}
                 </div>
               </div>
 
               <div>
-                <h4 className="font-bold text-white mb-3 uppercase tracking-wider text-sm flex items-center gap-2">
+                <h4 className="font-bold text-[color:var(--t-heading)] mb-3 uppercase tracking-wider text-sm flex items-center gap-2">
                   <Building className="w-4 h-4" /> Company Details
                 </h4>
                 <div className="bg-[color:var(--t-panel)] border border-white/10 rounded-xl p-4 grid grid-cols-2 gap-y-4 gap-x-2 text-sm">
                   <div>
-                    <span className="text-gray-500 block text-xs uppercase">
+                    <span className="text-[color:var(--t-text)] block text-xs uppercase">
                       Domain
                     </span>
                     <span className="text-gray-200">
@@ -561,7 +561,7 @@ export default function LeadDiscoveryPage() {
                     </span>
                   </div>
                   <div>
-                    <span className="text-gray-500 block text-xs uppercase">
+                    <span className="text-[color:var(--t-text)] block text-xs uppercase">
                       Industry
                     </span>
                     <span className="text-gray-200">
@@ -569,7 +569,7 @@ export default function LeadDiscoveryPage() {
                     </span>
                   </div>
                   <div>
-                    <span className="text-gray-500 block text-xs uppercase">
+                    <span className="text-[color:var(--t-text)] block text-xs uppercase">
                       Location
                     </span>
                     <span className="text-gray-200">
@@ -577,7 +577,7 @@ export default function LeadDiscoveryPage() {
                     </span>
                   </div>
                   <div>
-                    <span className="text-gray-500 block text-xs uppercase">
+                    <span className="text-[color:var(--t-text)] block text-xs uppercase">
                       Employees
                     </span>
                     <span className="text-gray-200">
@@ -589,7 +589,7 @@ export default function LeadDiscoveryPage() {
 
               {selectedProspect.signals?.length > 0 && (
                 <div>
-                  <h4 className="font-bold text-white mb-3 uppercase tracking-wider text-sm flex items-center gap-2">
+                  <h4 className="font-bold text-[color:var(--t-heading)] mb-3 uppercase tracking-wider text-sm flex items-center gap-2">
                     <TrendingUp className="w-4 h-4 text-amber-400" /> Buying
                     Signals
                   </h4>
@@ -620,7 +620,7 @@ export default function LeadDiscoveryPage() {
               )}
             </div>
 
-            <div className="p-6 border-t border-[rgba(0,207,255,0.2)] bg-black/40 flex gap-3">
+            <div className="p-6 border-t border-[rgba(0,207,255,0.2)] bg-[color:var(--t-panel)] border-[color:var(--t-border)] text-[color:var(--t-text)] flex gap-3">
               <Button
                 onClick={async () => {
                   try {

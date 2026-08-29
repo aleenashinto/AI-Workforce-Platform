@@ -56,7 +56,7 @@ export default function SendDashboardPage() {
   return (
     <div className="p-8 space-y-6 max-w-5xl mx-auto">
       <div
-        className="flex items-center text-sm text-gray-400 mb-4 cursor-pointer hover:text-white"
+        className="flex items-center text-sm text-[color:var(--t-text)] mb-4 cursor-pointer hover:text-white"
         onClick={() => router.back()}
       >
         <ArrowLeft className="h-4 w-4 mr-1" /> Back to Sequence
@@ -67,7 +67,7 @@ export default function SendDashboardPage() {
           <h1 className="text-3xl font-bold tracking-tight text-white">
             Send Dashboard
           </h1>
-          <p className="text-gray-400 mt-2">
+          <p className="text-[color:var(--t-text)] mt-2">
             Monitor delivery and performance in real-time.
           </p>
         </div>
@@ -95,7 +95,7 @@ export default function SendDashboardPage() {
       <Card className="shadow-sm bg-[#1E1E2E] border-[#3F3F5A]">
         <CardContent className="p-8">
           <div className="flex justify-between mb-2">
-            <span className="text-sm font-medium text-gray-400">Progress</span>
+            <span className="text-sm font-medium text-[color:var(--t-text)]">Progress</span>
             <span className="text-sm font-medium text-white">
               {stats.sent} / {stats.total} Emails Sent
             </span>
@@ -104,7 +104,7 @@ export default function SendDashboardPage() {
             value={progressPercent}
             className="h-3 mb-2 bg-[#2A2A3C] [&>div]:bg-gradient-to-r [&>div]:from-[#D122E3] [&>div]:to-[#00F2FE]"
           />
-          <p className="text-xs text-gray-500 text-right">
+          <p className="text-xs text-[color:var(--t-text)] text-right">
             {Math.round(progressPercent)}% completed
           </p>
         </CardContent>
@@ -127,7 +127,7 @@ export default function SendDashboardPage() {
               <h3 className="font-medium">Opens</h3>
             </div>
             <p className="text-3xl font-bold text-white">{stats.opens}</p>
-            <p className="text-xs text-gray-400 mt-1">
+            <p className="text-xs text-[color:var(--t-text)] mt-1">
               {stats.sent ? Math.round((stats.opens / stats.sent) * 100) : 0}%
               open rate
             </p>
@@ -140,7 +140,7 @@ export default function SendDashboardPage() {
               <h3 className="font-medium">Clicks</h3>
             </div>
             <p className="text-3xl font-bold text-white">{stats.clicks}</p>
-            <p className="text-xs text-gray-400 mt-1">
+            <p className="text-xs text-[color:var(--t-text)] mt-1">
               {stats.opens ? Math.round((stats.clicks / stats.opens) * 100) : 0}
               % click-to-open
             </p>
@@ -153,7 +153,7 @@ export default function SendDashboardPage() {
               <h3 className="font-medium">Replies</h3>
             </div>
             <p className="text-3xl font-bold text-white">{stats.replies}</p>
-            <p className="text-xs text-gray-400 mt-1">
+            <p className="text-xs text-[color:var(--t-text)] mt-1">
               {stats.sent ? Math.round((stats.replies / stats.sent) * 100) : 0}%
               reply rate
             </p>

@@ -50,7 +50,7 @@ export default function ICPOverviewPage() {
 
   if (loading) {
     return (
-      <div className="text-center py-12 text-gray-400">Loading ICPs...</div>
+      <div className="text-center py-12 text-[color:var(--t-text)]">Loading ICPs...</div>
     );
   }
 
@@ -63,7 +63,7 @@ export default function ICPOverviewPage() {
             <Target className="w-8 h-8 text-indigo-400" />
             Ideal Customer Profile
           </h1>
-          <p className="text-muted-foreground mt-1">
+          <p className="text-[color:var(--t-text)] mt-1">
             Define and manage who your AI Sales Assistant targets.
           </p>
         </div>
@@ -90,7 +90,7 @@ export default function ICPOverviewPage() {
           <h2 className="text-2xl font-semibold text-white mb-2">
             No Active ICP
           </h2>
-          <p className="text-gray-400 max-w-md mx-auto mb-6">
+          <p className="text-[color:var(--t-text)] max-w-md mx-auto mb-6">
             Create your first Ideal Customer Profile to start discovering
             high-fit leads automatically.
           </p>
@@ -122,7 +122,7 @@ export default function ICPOverviewPage() {
                   <h2 className="text-2xl font-bold text-white">
                     {activeIcp.name}
                   </h2>
-                  <p className="text-sm text-gray-400 mt-1">
+                  <p className="text-sm text-[color:var(--t-text)] mt-1">
                     {activeIcp.description || "No description provided."}
                   </p>
                 </div>
@@ -130,13 +130,13 @@ export default function ICPOverviewPage() {
               <div className="flex gap-2">
                 <Button
                   variant="outline"
-                  className="border-[#3F3F5A] text-gray-300 hover:text-white bg-transparent"
+                  className="border-[#3F3F5A] text-[color:var(--t-text)] hover:text-white bg-transparent"
                 >
                   Edit ICP
                 </Button>
                 <Button
                   variant="outline"
-                  className="border-[#3F3F5A] text-gray-300 hover:text-white bg-transparent"
+                  className="border-[#3F3F5A] text-[color:var(--t-text)] hover:text-white bg-transparent"
                 >
                   Performance
                 </Button>
@@ -145,13 +145,13 @@ export default function ICPOverviewPage() {
 
             <div className="grid grid-cols-4 divide-x divide-[#3F3F5A] bg-black/10">
               <div className="p-6 text-center">
-                <div className="text-sm text-gray-400 mb-1">Match Rate</div>
+                <div className="text-sm text-[color:var(--t-text)] mb-1">Match Rate</div>
                 <div className="text-3xl font-bold text-emerald-400">
                   {activeIcp.match_rate || "0"}%
                 </div>
               </div>
               <div className="p-6 text-center">
-                <div className="text-sm text-gray-400 mb-1">
+                <div className="text-sm text-[color:var(--t-text)] mb-1">
                   Target Companies
                 </div>
                 <div className="text-3xl font-bold text-white">
@@ -161,7 +161,7 @@ export default function ICPOverviewPage() {
                 </div>
               </div>
               <div className="p-6 text-center">
-                <div className="text-sm text-gray-400 mb-1">
+                <div className="text-sm text-[color:var(--t-text)] mb-1">
                   High-Fit Companies
                 </div>
                 <div className="text-3xl font-bold text-indigo-400">
@@ -171,7 +171,7 @@ export default function ICPOverviewPage() {
                 </div>
               </div>
               <div className="p-6 text-center">
-                <div className="text-sm text-gray-400 mb-1">
+                <div className="text-sm text-[color:var(--t-text)] mb-1">
                   Qualified Leads
                 </div>
                 <div className="text-3xl font-bold text-amber-400">
@@ -187,14 +187,14 @@ export default function ICPOverviewPage() {
             <Card className="bg-[#1E1E2E] border-[#3F3F5A]">
               <CardHeader className="pb-3 border-b border-[#3F3F5A]">
                 <CardTitle className="text-lg flex items-center gap-2 text-white">
-                  <Building2 className="w-5 h-5 text-gray-400" />
+                  <Building2 className="w-5 h-5 text-[color:var(--t-text)]" />
                   Company Criteria
                 </CardTitle>
               </CardHeader>
               <CardContent className="pt-4 space-y-4">
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <span className="text-xs text-gray-500 uppercase tracking-wider block mb-1">
+                    <span className="text-xs text-[color:var(--t-text)] uppercase tracking-wider block mb-1">
                       Industries
                     </span>
                     <div className="flex flex-wrap gap-1">
@@ -203,18 +203,18 @@ export default function ICPOverviewPage() {
                           <Badge
                             key={ind}
                             variant="secondary"
-                            className="bg-[#2A2A3C] text-gray-300"
+                            className="bg-[#2A2A3C] text-[color:var(--t-text)]"
                           >
                             {ind}
                           </Badge>
                         ))
                       ) : (
-                        <span className="text-sm text-gray-500">Any</span>
+                        <span className="text-sm text-[color:var(--t-text)]">Any</span>
                       )}
                     </div>
                   </div>
                   <div>
-                    <span className="text-xs text-gray-500 uppercase tracking-wider block mb-1">
+                    <span className="text-xs text-[color:var(--t-text)] uppercase tracking-wider block mb-1">
                       Locations
                     </span>
                     <div className="flex flex-wrap gap-1">
@@ -223,29 +223,29 @@ export default function ICPOverviewPage() {
                           <Badge
                             key={loc}
                             variant="secondary"
-                            className="bg-[#2A2A3C] text-gray-300"
+                            className="bg-[#2A2A3C] text-[color:var(--t-text)]"
                           >
                             {loc}
                           </Badge>
                         ))
                       ) : (
-                        <span className="text-sm text-gray-500">Any</span>
+                        <span className="text-sm text-[color:var(--t-text)]">Any</span>
                       )}
                     </div>
                   </div>
                   <div>
-                    <span className="text-xs text-gray-500 uppercase tracking-wider block mb-1">
+                    <span className="text-xs text-[color:var(--t-text)] uppercase tracking-wider block mb-1">
                       Company Size
                     </span>
-                    <div className="text-sm text-gray-300">
+                    <div className="text-sm text-[color:var(--t-text)]">
                       {activeIcp.criteria?.companySize?.join(", ") || "Any"}
                     </div>
                   </div>
                   <div>
-                    <span className="text-xs text-gray-500 uppercase tracking-wider block mb-1">
+                    <span className="text-xs text-[color:var(--t-text)] uppercase tracking-wider block mb-1">
                       Revenue
                     </span>
-                    <div className="text-sm text-gray-300">
+                    <div className="text-sm text-[color:var(--t-text)]">
                       {activeIcp.criteria?.revenue?.join(", ") || "Any"}
                     </div>
                   </div>
@@ -256,14 +256,14 @@ export default function ICPOverviewPage() {
             <Card className="bg-[#1E1E2E] border-[#3F3F5A]">
               <CardHeader className="pb-3 border-b border-[#3F3F5A]">
                 <CardTitle className="text-lg flex items-center gap-2 text-white">
-                  <Users className="w-5 h-5 text-gray-400" />
+                  <Users className="w-5 h-5 text-[color:var(--t-text)]" />
                   Contact Criteria
                 </CardTitle>
               </CardHeader>
               <CardContent className="pt-4 space-y-4">
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <span className="text-xs text-gray-500 uppercase tracking-wider block mb-1">
+                    <span className="text-xs text-[color:var(--t-text)] uppercase tracking-wider block mb-1">
                       Departments
                     </span>
                     <div className="flex flex-wrap gap-1">
@@ -272,18 +272,18 @@ export default function ICPOverviewPage() {
                           <Badge
                             key={dep}
                             variant="secondary"
-                            className="bg-[#2A2A3C] text-gray-300"
+                            className="bg-[#2A2A3C] text-[color:var(--t-text)]"
                           >
                             {dep}
                           </Badge>
                         ))
                       ) : (
-                        <span className="text-sm text-gray-500">Any</span>
+                        <span className="text-sm text-[color:var(--t-text)]">Any</span>
                       )}
                     </div>
                   </div>
                   <div>
-                    <span className="text-xs text-gray-500 uppercase tracking-wider block mb-1">
+                    <span className="text-xs text-[color:var(--t-text)] uppercase tracking-wider block mb-1">
                       Seniority
                     </span>
                     <div className="flex flex-wrap gap-1">
@@ -292,18 +292,18 @@ export default function ICPOverviewPage() {
                           <Badge
                             key={sen}
                             variant="secondary"
-                            className="bg-[#2A2A3C] text-gray-300"
+                            className="bg-[#2A2A3C] text-[color:var(--t-text)]"
                           >
                             {sen}
                           </Badge>
                         ))
                       ) : (
-                        <span className="text-sm text-gray-500">Any</span>
+                        <span className="text-sm text-[color:var(--t-text)]">Any</span>
                       )}
                     </div>
                   </div>
                   <div className="col-span-2">
-                    <span className="text-xs text-gray-500 uppercase tracking-wider block mb-1">
+                    <span className="text-xs text-[color:var(--t-text)] uppercase tracking-wider block mb-1">
                       Job Titles
                     </span>
                     <div className="flex flex-wrap gap-1">
@@ -312,13 +312,13 @@ export default function ICPOverviewPage() {
                           <Badge
                             key={title}
                             variant="secondary"
-                            className="bg-[#2A2A3C] text-gray-300"
+                            className="bg-[#2A2A3C] text-[color:var(--t-text)]"
                           >
                             {title}
                           </Badge>
                         ))
                       ) : (
-                        <span className="text-sm text-gray-500">Any</span>
+                        <span className="text-sm text-[color:var(--t-text)]">Any</span>
                       )}
                     </div>
                   </div>
@@ -329,13 +329,13 @@ export default function ICPOverviewPage() {
             <Card className="bg-[#1E1E2E] border-[#3F3F5A]">
               <CardHeader className="pb-3 border-b border-[#3F3F5A]">
                 <CardTitle className="text-lg flex items-center gap-2 text-white">
-                  <Activity className="w-5 h-5 text-gray-400" />
+                  <Activity className="w-5 h-5 text-[color:var(--t-text)]" />
                   Technology & Signals
                 </CardTitle>
               </CardHeader>
               <CardContent className="pt-4 space-y-4">
                 <div>
-                  <span className="text-xs text-gray-500 uppercase tracking-wider block mb-1">
+                  <span className="text-xs text-[color:var(--t-text)] uppercase tracking-wider block mb-1">
                     Technologies
                   </span>
                   <div className="flex flex-wrap gap-2">
@@ -343,21 +343,21 @@ export default function ICPOverviewPage() {
                       activeIcp.criteria.technologies.map((tech: string) => (
                         <div
                           key={tech}
-                          className="bg-[#2A2A3C] px-2 py-1 rounded text-sm text-gray-300 flex items-center gap-2"
+                          className="bg-[#2A2A3C] px-2 py-1 rounded text-sm text-[color:var(--t-text)] flex items-center gap-2"
                         >
                           <div className="w-2 h-2 bg-indigo-500 rounded-full"></div>{" "}
                           {tech}
                         </div>
                       ))
                     ) : (
-                      <span className="text-sm text-gray-500">
+                      <span className="text-sm text-[color:var(--t-text)]">
                         None specified
                       </span>
                     )}
                   </div>
                 </div>
                 <div>
-                  <span className="text-xs text-gray-500 uppercase tracking-wider block mb-1">
+                  <span className="text-xs text-[color:var(--t-text)] uppercase tracking-wider block mb-1">
                     Buying Signals
                   </span>
                   <div className="flex flex-wrap gap-2">
@@ -371,7 +371,7 @@ export default function ICPOverviewPage() {
                         </div>
                       ))
                     ) : (
-                      <span className="text-sm text-gray-500">
+                      <span className="text-sm text-[color:var(--t-text)]">
                         None specified
                       </span>
                     )}
@@ -383,7 +383,7 @@ export default function ICPOverviewPage() {
             <Card className="bg-[#1E1E2E] border-[#3F3F5A]">
               <CardHeader className="pb-3 border-b border-[#3F3F5A]">
                 <CardTitle className="text-lg flex items-center gap-2 text-white">
-                  <Filter className="w-5 h-5 text-gray-400" />
+                  <Filter className="w-5 h-5 text-[color:var(--t-text)]" />
                   Exclusion Criteria
                 </CardTitle>
               </CardHeader>
@@ -403,7 +403,7 @@ export default function ICPOverviewPage() {
                     ))}
                   </ul>
                 ) : (
-                  <p className="text-sm text-gray-500">
+                  <p className="text-sm text-[color:var(--t-text)]">
                     No exclusion criteria defined.
                   </p>
                 )}
@@ -430,18 +430,18 @@ export default function ICPOverviewPage() {
                     </CardTitle>
                     <Badge
                       variant="outline"
-                      className="text-gray-400 border-[#3F3F5A] bg-transparent"
+                      className="text-[color:var(--t-text)] border-[#3F3F5A] bg-transparent"
                     >
                       {icp.status}
                     </Badge>
                   </div>
                 </CardHeader>
                 <CardContent className="p-4 pt-0">
-                  <div className="text-sm text-gray-400 mb-3 line-clamp-2">
+                  <div className="text-sm text-[color:var(--t-text)] mb-3 line-clamp-2">
                     {icp.description || "No description"}
                   </div>
                   <div className="flex items-center justify-between text-sm pt-3 border-t border-[#3F3F5A]">
-                    <span className="text-gray-400">
+                    <span className="text-[color:var(--t-text)]">
                       Match Rate:{" "}
                       <span className="text-white font-medium">
                         {icp.match_rate || "0"}%

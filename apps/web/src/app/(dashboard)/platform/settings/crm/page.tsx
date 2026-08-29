@@ -94,7 +94,7 @@ export default function CRMSettingsPage() {
           <Link2 className="w-8 h-8 text-indigo-400" />
           Connect CRM
         </h1>
-        <p className="text-gray-400 mt-1">
+        <p className="text-[color:var(--t-text)] mt-1">
           Sync your leads and customer data directly with your CRM.
         </p>
       </div>
@@ -125,7 +125,7 @@ export default function CRMSettingsPage() {
               </div>
               <div className="flex-1">
                 <div className="text-xl font-semibold">HubSpot</div>
-                <span className={`text-xs px-2 py-0.5 rounded-full border font-mono mt-1 inline-block ${isConnected("hubspot") ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/30" : "text-gray-400 border-gray-600"}`}>
+                <span className={`text-xs px-2 py-0.5 rounded-full border font-mono mt-1 inline-block ${isConnected("hubspot") ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/30" : "text-[color:var(--t-text)] border-gray-600"}`}>
                   {isConnected("hubspot") ? "● Connected" : "Not Connected"}
                 </span>
               </div>
@@ -133,7 +133,7 @@ export default function CRMSettingsPage() {
 
             {isConnected("hubspot") ? (
               <div className="space-y-3">
-                <p className="text-sm text-gray-400 flex items-center gap-2">
+                <p className="text-sm text-[color:var(--t-text)] flex items-center gap-2">
                   <CheckCircle2 size={14} className="text-emerald-400" />
                   Last sync: {getIntegration("hubspot")?.last_sync_at
                     ? new Date(getIntegration("hubspot")!.last_sync_at!).toLocaleString()
@@ -151,7 +151,7 @@ export default function CRMSettingsPage() {
             ) : showHubspotForm ? (
               <div className="space-y-3">
                 <div className="relative">
-                  <Key size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                  <Key size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-[color:var(--t-text)]" />
                   <input
                     type="password"
                     value={hubspotKey}
@@ -170,7 +170,7 @@ export default function CRMSettingsPage() {
                   </button>
                   <button
                     onClick={() => setShowHubspotForm(false)}
-                    className="px-4 py-2 border border-[#3F3F5A] text-gray-300 hover:text-white rounded-lg text-sm transition-colors"
+                    className="px-4 py-2 border border-[#3F3F5A] text-[color:var(--t-text)] hover:text-white rounded-lg text-sm transition-colors"
                   >
                     Cancel
                   </button>
@@ -194,7 +194,7 @@ export default function CRMSettingsPage() {
               </div>
               <div className="flex-1">
                 <div className="text-xl font-semibold">Salesforce</div>
-                <span className={`text-xs px-2 py-0.5 rounded-full border font-mono mt-1 inline-block ${isConnected("salesforce") ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/30" : "text-gray-400 border-gray-600"}`}>
+                <span className={`text-xs px-2 py-0.5 rounded-full border font-mono mt-1 inline-block ${isConnected("salesforce") ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/30" : "text-[color:var(--t-text)] border-gray-600"}`}>
                   {isConnected("salesforce") ? "● Connected" : "Not Connected"}
                 </span>
               </div>
@@ -202,7 +202,7 @@ export default function CRMSettingsPage() {
 
             {isConnected("salesforce") ? (
               <div className="space-y-3">
-                <p className="text-sm text-gray-400 flex items-center gap-2">
+                <p className="text-sm text-[color:var(--t-text)] flex items-center gap-2">
                   <CheckCircle2 size={14} className="text-emerald-400" />
                   Last sync: {getIntegration("salesforce")?.last_sync_at
                     ? new Date(getIntegration("salesforce")!.last_sync_at!).toLocaleString()
@@ -220,7 +220,7 @@ export default function CRMSettingsPage() {
             ) : showSalesforceForm ? (
               <div className="space-y-3">
                 <div className="relative">
-                  <Key size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                  <Key size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-[color:var(--t-text)]" />
                   <input
                     type="password"
                     value={salesforceKey}
@@ -239,7 +239,7 @@ export default function CRMSettingsPage() {
                   </button>
                   <button
                     onClick={() => setShowSalesforceForm(false)}
-                    className="px-4 py-2 border border-[#3F3F5A] text-gray-300 hover:text-white rounded-lg text-sm transition-colors"
+                    className="px-4 py-2 border border-[#3F3F5A] text-[color:var(--t-text)] hover:text-white rounded-lg text-sm transition-colors"
                   >
                     Cancel
                   </button>
@@ -248,7 +248,7 @@ export default function CRMSettingsPage() {
             ) : (
               <button
                 onClick={() => setShowSalesforceForm(true)}
-                className="w-full px-4 py-2 border border-[#3F3F5A] text-gray-300 hover:text-white rounded-lg text-sm transition-colors"
+                className="w-full px-4 py-2 border border-[#3F3F5A] text-[color:var(--t-text)] hover:text-white rounded-lg text-sm transition-colors"
               >
                 Connect Salesforce
               </button>
@@ -261,7 +261,7 @@ export default function CRMSettingsPage() {
       <div className="bg-[#1E1E2E] border border-[#3F3F5A] rounded-xl p-6 text-white">
         <div className="mb-4">
           <div className="text-lg font-semibold">Field Mapping</div>
-          <div className="text-sm text-gray-400 mt-1">How your AI data maps to CRM fields</div>
+          <div className="text-sm text-[color:var(--t-text)] mt-1">How your AI data maps to CRM fields</div>
         </div>
         <div className="space-y-3">
           {[
@@ -272,8 +272,8 @@ export default function CRMSettingsPage() {
             { from: "Status",     to: "Lead Status"   },
           ].map(({ from, to }) => (
             <div key={from} className="flex items-center gap-4 p-3 bg-[#2A2A3C] rounded-lg border border-[#3F3F5A]">
-              <div className="flex-1 text-sm font-medium text-gray-300">{from}</div>
-              <ArrowRight className="w-4 h-4 text-gray-500 shrink-0" />
+              <div className="flex-1 text-sm font-medium text-[color:var(--t-text)]">{from}</div>
+              <ArrowRight className="w-4 h-4 text-[color:var(--t-text)] shrink-0" />
               <div className="flex-1 text-sm font-medium text-indigo-300 text-right">{to}</div>
             </div>
           ))}

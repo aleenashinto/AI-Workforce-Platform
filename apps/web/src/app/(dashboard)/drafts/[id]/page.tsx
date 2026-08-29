@@ -182,7 +182,7 @@ export default function DraftEditorPage({
         <div className="flex items-center gap-4">
           <Link
             href="/drafts"
-            className="p-1.5 rounded hover:bg-[#00ff88]/10 text-gray-400 hover:text-[#00ff88] transition-colors"
+            className="p-1.5 rounded hover:bg-[#00ff88]/10 text-[color:var(--t-text)] hover:text-[#00ff88] transition-colors"
           >
             <ArrowLeft size={18} />
           </Link>
@@ -190,7 +190,7 @@ export default function DraftEditorPage({
             <span className="font-mono text-sm text-[#00ff88]/60 uppercase tracking-widest">
               {draft.type?.replace("_", " ")}
             </span>
-            <span className="text-gray-600">/</span>
+            <span className="text-[color:var(--t-text)]">/</span>
             <input
               value={title}
               onChange={(e) => setTitle(e.target.value)}
@@ -202,7 +202,7 @@ export default function DraftEditorPage({
 
         <div className="flex items-center gap-3">
           <div className="flex items-center gap-4 mr-4">
-            <div className="font-mono text-xs text-gray-400">
+            <div className="font-mono text-xs text-[color:var(--t-text)]">
               {saving ? (
                 <span className="text-yellow-400">Saving...</span>
               ) : (
@@ -226,7 +226,7 @@ export default function DraftEditorPage({
               if (!showVersions) fetchVersions();
               setShowVersions(!showVersions);
             }}
-            className={`flex items-center gap-2 px-3 py-1.5 rounded font-mono text-xs border transition-colors ${showVersions ? "bg-[#00ff88]/20 text-[#00ff88] border-[#00ff88]/50" : "bg-transparent text-gray-400 border-gray-700 hover:text-white hover:border-gray-500"}`}
+            className={`flex items-center gap-2 px-3 py-1.5 rounded font-mono text-xs border transition-colors ${showVersions ? "bg-[#00ff88]/20 text-[#00ff88] border-[#00ff88]/50" : "bg-transparent text-[color:var(--t-text)] border-gray-700 hover:text-white hover:border-gray-500"}`}
           >
             <History size={14} /> History (v{draft.version_number})
           </button>
@@ -288,7 +288,7 @@ export default function DraftEditorPage({
                       <div className="flex justify-end gap-2">
                         <button
                           onClick={() => setShowAiInput(false)}
-                          className="text-gray-400 text-xs hover:text-white"
+                          className="text-[color:var(--t-text)] text-xs hover:text-white"
                         >
                           Cancel
                         </button>
@@ -330,14 +330,14 @@ export default function DraftEditorPage({
               </h3>
               <button
                 onClick={() => setShowVersions(false)}
-                className="text-gray-400 hover:text-white"
+                className="text-[color:var(--t-text)] hover:text-white"
               >
                 <X size={16} />
               </button>
             </div>
             <div className="flex-1 overflow-y-auto p-4 flex flex-col gap-3">
               {versions.length === 0 ? (
-                <div className="text-center text-gray-500 font-mono text-xs p-4">
+                <div className="text-center text-[color:var(--t-text)] font-mono text-xs p-4">
                   No history yet.
                 </div>
               ) : (
@@ -350,11 +350,11 @@ export default function DraftEditorPage({
                       <span className="font-mono text-xs font-bold text-[#00ff88]">
                         v{v.version_number}
                       </span>
-                      <span className="text-xs text-gray-500">
+                      <span className="text-xs text-[color:var(--t-text)]">
                         {new Date(v.created_at).toLocaleTimeString()}
                       </span>
                     </div>
-                    <div className="text-xs text-gray-400 capitalize flex items-center gap-1">
+                    <div className="text-xs text-[color:var(--t-text)] capitalize flex items-center gap-1">
                       {v.change_type === "ai_rewrite" ? (
                         <Wand2 size={12} className="text-[#00cfff]" />
                       ) : (

@@ -15,7 +15,7 @@ export default function GeneralSettingsPage() {
             Organization Profile
           </h1>
           {/* eslint-disable-next-line react/no-unescaped-entities */}
-          <p className="text-sm text-gray-500">
+          <p className="text-sm text-[color:var(--t-text)]">
             Manage your organization's basic information and branding.
           </p>
         </div>
@@ -80,7 +80,7 @@ export default function GeneralSettingsPage() {
                 Logo
               </label>
               <div className="flex items-center gap-4">
-                <div className="w-16 h-16 bg-gray-50 border border-gray-200 rounded-lg flex items-center justify-center text-gray-400 text-xs font-medium">
+                <div className="w-16 h-16 bg-gray-50 border border-gray-200 rounded-lg flex items-center justify-center text-[color:var(--t-text)] text-xs font-medium">
                   Logo
                 </div>
                 <Button
@@ -104,7 +104,7 @@ export default function GeneralSettingsPage() {
                     className="absolute -top-2 -left-2 w-16 h-16 cursor-pointer"
                   />
                 </div>
-                <span className="text-sm font-mono bg-gray-100 text-gray-600 px-2.5 py-1 rounded-md border border-gray-200">
+                <span className="text-sm font-mono bg-gray-100 text-[color:var(--t-text)] px-2.5 py-1 rounded-md border border-gray-200">
                   #4f46e5
                 </span>
               </div>
@@ -124,7 +124,7 @@ export default function GeneralSettingsPage() {
           <h2 className="text-base font-semibold text-red-600">Danger Zone</h2>
         </div>
         <div className="p-6">
-          <p className="text-sm text-gray-600 mb-6">
+          <p className="text-sm text-[color:var(--t-text)] mb-6">
             Once you delete your organization, there is no going back. All data
             will be permanently wiped.
           </p>

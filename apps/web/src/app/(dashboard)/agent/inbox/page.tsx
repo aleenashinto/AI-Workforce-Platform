@@ -60,13 +60,13 @@ export default function AgentInboxPage() {
           <h2 className="text-xl font-bold text-white mb-4">Agent Inbox</h2>
           <div className="flex bg-[#2A2A3C] p-1 rounded-lg">
             <button
-              className={`flex-1 py-1.5 text-sm font-medium rounded-md transition-colors ${activeTab === "queue" ? "bg-indigo-600 text-white" : "text-gray-400 hover:text-white"}`}
+              className={`flex-1 py-1.5 text-sm font-medium rounded-md transition-colors ${activeTab === "queue" ? "bg-indigo-600 text-white" : "text-[color:var(--t-text)] hover:text-white"}`}
               onClick={() => setActiveTab("queue")}
             >
               Unassigned Queue
             </button>
             <button
-              className={`flex-1 py-1.5 text-sm font-medium rounded-md transition-colors ${activeTab === "mine" ? "bg-indigo-600 text-white" : "text-gray-400 hover:text-white"}`}
+              className={`flex-1 py-1.5 text-sm font-medium rounded-md transition-colors ${activeTab === "mine" ? "bg-indigo-600 text-white" : "text-[color:var(--t-text)] hover:text-white"}`}
               onClick={() => setActiveTab("mine")}
             >
               My Chats
@@ -85,11 +85,11 @@ export default function AgentInboxPage() {
                 <span className="font-semibold text-gray-200">
                   {chat.visitor}
                 </span>
-                <span className="text-xs text-gray-500 flex items-center">
+                <span className="text-xs text-[color:var(--t-text)] flex items-center">
                   <Clock className="w-3 h-3 mr-1" /> {chat.waitTime}
                 </span>
               </div>
-              <p className="text-sm text-gray-400 truncate">
+              <p className="text-sm text-[color:var(--t-text)] truncate">
                 {chat.lastMessage}
               </p>
               <div className="mt-2 flex gap-2">
@@ -107,7 +107,7 @@ export default function AgentInboxPage() {
             </div>
           ))}
           {displayList.length === 0 && (
-            <div className="p-8 text-center text-gray-500">
+            <div className="p-8 text-center text-[color:var(--t-text)]">
               <CheckCircle2 className="w-12 h-12 mx-auto mb-2 opacity-20" />
               <p>No conversations found.</p>
             </div>
@@ -123,7 +123,7 @@ export default function AgentInboxPage() {
             <h3 className="text-2xl font-bold text-white mb-2">
               Unassigned Conversation
             </h3>
-            <p className="text-gray-400 mb-6 max-w-md text-center">
+            <p className="text-[color:var(--t-text)] mb-6 max-w-md text-center">
               The AI copilot is currently paused or struggling. Claim this
               conversation to take over and assist the customer.
             </p>
@@ -141,7 +141,7 @@ export default function AgentInboxPage() {
             </div>
           </div>
         ) : (
-          <div className="flex-1 flex items-center justify-center flex-col text-gray-500">
+          <div className="flex-1 flex items-center justify-center flex-col text-[color:var(--t-text)]">
             <MessageSquare className="w-16 h-16 mb-4 opacity-20" />
             <p>Select a conversation from the queue.</p>
           </div>

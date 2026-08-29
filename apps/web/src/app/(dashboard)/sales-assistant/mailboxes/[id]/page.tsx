@@ -101,7 +101,7 @@ export default function MailboxDetailPage({
         <div className="flex items-center gap-4">
           <Link
             href="/sales-assistant/mailboxes"
-            className="p-1.5 rounded hover:bg-[#00ff88]/10 text-gray-400 hover:text-[#00ff88] transition-colors"
+            className="p-1.5 rounded hover:bg-[#00ff88]/10 text-[color:var(--t-text)] hover:text-[#00ff88] transition-colors"
           >
             <ArrowLeft size={18} />
           </Link>
@@ -129,7 +129,7 @@ export default function MailboxDetailPage({
         <div className="flex items-center gap-3 font-mono text-sm">
           <button
             onClick={() => setShowTestModal(true)}
-            className="flex items-center gap-2 px-4 py-1.5 rounded border border-gray-600 text-gray-300 hover:bg-gray-800 transition-colors"
+            className="flex items-center gap-2 px-4 py-1.5 rounded border border-gray-600 text-[color:var(--t-text)] hover:bg-gray-800 transition-colors"
           >
             <Send size={14} /> TEST
           </button>
@@ -160,19 +160,19 @@ export default function MailboxDetailPage({
       <div className="flex border-b border-[#00ff88]/20 bg-[color:var(--t-bg2)] px-6 font-mono text-sm shrink-0">
         <button
           onClick={() => setActiveTab("overview")}
-          className={`px-6 py-3 border-b-2 transition-colors ${activeTab === "overview" ? "border-[#00ff88] text-[#00ff88]" : "border-transparent text-gray-400 hover:text-white"}`}
+          className={`px-6 py-3 border-b-2 transition-colors ${activeTab === "overview" ? "border-[#00ff88] text-[#00ff88]" : "border-transparent text-[color:var(--t-text)] hover:text-white"}`}
         >
           OVERVIEW
         </button>
         <button
           onClick={() => setActiveTab("activity")}
-          className={`px-6 py-3 border-b-2 transition-colors ${activeTab === "activity" ? "border-[#00ff88] text-[#00ff88]" : "border-transparent text-gray-400 hover:text-white"}`}
+          className={`px-6 py-3 border-b-2 transition-colors ${activeTab === "activity" ? "border-[#00ff88] text-[#00ff88]" : "border-transparent text-[color:var(--t-text)] hover:text-white"}`}
         >
           ACTIVITY
         </button>
         <button
           onClick={() => setActiveTab("sequences")}
-          className={`px-6 py-3 border-b-2 transition-colors flex items-center gap-2 ${activeTab === "sequences" ? "border-[#00ff88] text-[#00ff88]" : "border-transparent text-gray-400 hover:text-white"}`}
+          className={`px-6 py-3 border-b-2 transition-colors flex items-center gap-2 ${activeTab === "sequences" ? "border-[#00ff88] text-[#00ff88]" : "border-transparent text-[color:var(--t-text)] hover:text-white"}`}
         >
           SEQUENCES{" "}
           <span className="bg-[#00ff88]/20 text-[#00ff88] px-1.5 rounded text-xs">
@@ -181,7 +181,7 @@ export default function MailboxDetailPage({
         </button>
         <button
           onClick={() => setActiveTab("settings")}
-          className={`px-6 py-3 border-b-2 transition-colors ${activeTab === "settings" ? "border-[#00ff88] text-[#00ff88]" : "border-transparent text-gray-400 hover:text-white"}`}
+          className={`px-6 py-3 border-b-2 transition-colors ${activeTab === "settings" ? "border-[#00ff88] text-[#00ff88]" : "border-transparent text-[color:var(--t-text)] hover:text-white"}`}
         >
           SETTINGS
         </button>
@@ -206,7 +206,7 @@ export default function MailboxDetailPage({
                 <div className="text-3xl font-bold text-white mb-1">
                   {mailbox.health_score}%
                 </div>
-                <div className="text-xs text-gray-400">Health Score</div>
+                <div className="text-xs text-[color:var(--t-text)]">Health Score</div>
               </div>
 
               <div className="bg-[color:var(--t-panel)] border border-blue-400/30 p-6 rounded-lg relative overflow-hidden">
@@ -218,11 +218,11 @@ export default function MailboxDetailPage({
                 </div>
                 <div className="text-3xl font-bold text-white mb-1">
                   {mailbox.stats?.used_today || 0}{" "}
-                  <span className="text-gray-600 text-lg">
+                  <span className="text-[color:var(--t-text)] text-lg">
                     / {mailbox.daily_cap}
                   </span>
                 </div>
-                <div className="text-xs text-gray-400">Emails sent today</div>
+                <div className="text-xs text-[color:var(--t-text)]">Emails sent today</div>
               </div>
 
               <div className="bg-[color:var(--t-panel)] border border-purple-400/30 p-6 rounded-lg relative overflow-hidden">
@@ -235,7 +235,7 @@ export default function MailboxDetailPage({
                 <div className="text-3xl font-bold text-white mb-1">
                   {mailbox.stats?.remaining_today || mailbox.daily_cap}
                 </div>
-                <div className="text-xs text-gray-400">Remaining today</div>
+                <div className="text-xs text-[color:var(--t-text)]">Remaining today</div>
               </div>
             </div>
 
@@ -244,7 +244,7 @@ export default function MailboxDetailPage({
             </h3>
             <div className="bg-[color:var(--t-panel)] border border-gray-700 rounded-lg p-6 grid grid-cols-2 gap-y-6">
               <div>
-                <div className="text-xs text-gray-500 uppercase mb-1">
+                <div className="text-xs text-[color:var(--t-text)] uppercase mb-1">
                   Provider
                 </div>
                 <div className="text-sm text-white capitalize">
@@ -252,7 +252,7 @@ export default function MailboxDetailPage({
                 </div>
               </div>
               <div>
-                <div className="text-xs text-gray-500 uppercase mb-1">
+                <div className="text-xs text-[color:var(--t-text)] uppercase mb-1">
                   Timezone
                 </div>
                 <div className="text-sm text-white">
@@ -260,7 +260,7 @@ export default function MailboxDetailPage({
                 </div>
               </div>
               <div>
-                <div className="text-xs text-gray-500 uppercase mb-1">
+                <div className="text-xs text-[color:var(--t-text)] uppercase mb-1">
                   Working Days
                 </div>
                 <div className="text-sm text-white">
@@ -268,7 +268,7 @@ export default function MailboxDetailPage({
                 </div>
               </div>
               <div>
-                <div className="text-xs text-gray-500 uppercase mb-1">
+                <div className="text-xs text-[color:var(--t-text)] uppercase mb-1">
                   Working Hours
                 </div>
                 <div className="text-sm text-white">
@@ -288,7 +288,7 @@ export default function MailboxDetailPage({
             <div className="bg-[color:var(--t-panel)] border border-gray-700 rounded-lg overflow-hidden">
               <table className="w-full text-left border-collapse">
                 <thead>
-                  <tr className="bg-[color:var(--t-bg2)] border-b border-gray-700 text-xs text-gray-500 uppercase tracking-wider">
+                  <tr className="bg-[color:var(--t-bg2)] border-b border-gray-700 text-xs text-[color:var(--t-text)] uppercase tracking-wider">
                     <th className="p-4 font-normal">Date / Time</th>
                     <th className="p-4 font-normal">Event</th>
                     <th className="p-4 font-normal">Details</th>
@@ -297,7 +297,7 @@ export default function MailboxDetailPage({
                 <tbody>
                   {activities.length === 0 ? (
                     <tr>
-                      <td colSpan={3} className="p-8 text-center text-gray-500">
+                      <td colSpan={3} className="p-8 text-center text-[color:var(--t-text)]">
                         No recent activity.
                       </td>
                     </tr>
@@ -307,7 +307,7 @@ export default function MailboxDetailPage({
                         key={act.id}
                         className="border-b border-gray-800 text-sm"
                       >
-                        <td className="p-4 text-gray-400">
+                        <td className="p-4 text-[color:var(--t-text)]">
                           {new Date(act.created_at).toLocaleString()}
                         </td>
                         <td className="p-4">
@@ -319,13 +319,13 @@ export default function MailboxDetailPage({
                                   ? "bg-[#00ff88]/10 text-[#00ff88] border-[#00ff88]/30"
                                   : act.event_type === "bounced"
                                     ? "bg-red-500/10 text-red-400 border-red-500/30"
-                                    : "bg-gray-800 text-gray-400 border-gray-700"
+                                    : "bg-gray-800 text-[color:var(--t-text)] border-gray-700"
                             }`}
                           >
                             {act.event_type}
                           </span>
                         </td>
-                        <td className="p-4 text-gray-300">
+                        <td className="p-4 text-[color:var(--t-text)]">
                           {act.metadata?.test ? (
                             <span className="text-yellow-500 mr-2">[TEST]</span>
                           ) : null}
@@ -346,13 +346,13 @@ export default function MailboxDetailPage({
             <h2 className="text-xl font-bold text-white mb-6">
               Assigned Sequences
             </h2>
-            <p className="text-gray-400 mb-6">
+            <p className="text-[color:var(--t-text)] mb-6">
               This mailbox is used to send emails for the following sequences.
             </p>
 
             <div className="grid grid-cols-1 gap-4">
               {mailbox.assigned_sequences?.length === 0 ? (
-                <div className="p-8 border border-dashed border-gray-700 rounded-lg text-center text-gray-500">
+                <div className="p-8 border border-dashed border-gray-700 rounded-lg text-center text-[color:var(--t-text)]">
                   No sequences assigned to this mailbox.
                 </div>
               ) : (
@@ -363,13 +363,13 @@ export default function MailboxDetailPage({
                   >
                     <div>
                       <div className="font-bold text-white mb-1">{s.name}</div>
-                      <div className="text-xs text-gray-400">
+                      <div className="text-xs text-[color:var(--t-text)]">
                         {s.goal || "No goal set"}
                       </div>
                     </div>
                     <Link
                       href={`/sales-assistant/sequences/${s.id}`}
-                      className="px-4 py-1.5 bg-gray-800 text-gray-300 hover:text-white rounded text-sm transition-colors"
+                      className="px-4 py-1.5 bg-gray-800 text-[color:var(--t-text)] hover:text-white rounded text-sm transition-colors"
                     >
                       View
                     </Link>
@@ -392,7 +392,7 @@ export default function MailboxDetailPage({
                   Identity
                 </h3>
                 <div>
-                  <label className="block text-xs text-gray-400 uppercase mb-2">
+                  <label className="block text-xs text-[color:var(--t-text)] uppercase mb-2">
                     Display Name
                   </label>
                   <input
@@ -402,7 +402,7 @@ export default function MailboxDetailPage({
                   />
                 </div>
                 <div>
-                  <label className="block text-xs text-gray-400 uppercase mb-2">
+                  <label className="block text-xs text-[color:var(--t-text)] uppercase mb-2">
                     Reply-To Address
                   </label>
                   <input
@@ -412,7 +412,7 @@ export default function MailboxDetailPage({
                   />
                 </div>
                 <div>
-                  <label className="block text-xs text-gray-400 uppercase mb-2">
+                  <label className="block text-xs text-[color:var(--t-text)] uppercase mb-2">
                     Signature (HTML)
                   </label>
                   <textarea
@@ -429,7 +429,7 @@ export default function MailboxDetailPage({
                   Sending Limits
                 </h3>
                 <div>
-                  <label className="block text-xs text-gray-400 uppercase mb-2">
+                  <label className="block text-xs text-[color:var(--t-text)] uppercase mb-2">
                     Daily Sending Cap
                   </label>
                   <input
@@ -437,7 +437,7 @@ export default function MailboxDetailPage({
                     defaultValue={mailbox.daily_cap}
                     className="w-full bg-[color:var(--t-bg)] border border-gray-700 rounded p-2 text-white"
                   />
-                  <p className="text-xs text-gray-500 mt-2">
+                  <p className="text-xs text-[color:var(--t-text)] mt-2">
                     Maximum number of emails this mailbox can send per day to
                     protect sender reputation.
                   </p>
@@ -458,13 +458,13 @@ export default function MailboxDetailPage({
             <h2 className="text-xl font-bold text-white mb-2">
               Send Test Email
             </h2>
-            <p className="text-sm text-gray-400 mb-6">
+            <p className="text-sm text-[color:var(--t-text)] mb-6">
               Verify connection for {mailbox.email}
             </p>
 
             <div className="flex flex-col gap-4">
               <div>
-                <label className="block text-xs text-gray-400 uppercase mb-1">
+                <label className="block text-xs text-[color:var(--t-text)] uppercase mb-1">
                   To
                 </label>
                 <input
@@ -476,7 +476,7 @@ export default function MailboxDetailPage({
                 />
               </div>
               <div>
-                <label className="block text-xs text-gray-400 uppercase mb-1">
+                <label className="block text-xs text-[color:var(--t-text)] uppercase mb-1">
                   Message
                 </label>
                 <textarea
@@ -491,7 +491,7 @@ export default function MailboxDetailPage({
             <div className="mt-6 flex justify-end gap-3">
               <button
                 onClick={() => setShowTestModal(false)}
-                className="px-4 py-2 text-gray-400 hover:text-white transition-colors"
+                className="px-4 py-2 text-[color:var(--t-text)] hover:text-white transition-colors"
               >
                 Cancel
               </button>

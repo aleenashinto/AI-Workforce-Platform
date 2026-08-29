@@ -75,7 +75,7 @@ export default function CampaignsPage() {
           <h1 className="text-3xl font-bold tracking-tight text-white">
             Outreach Campaigns
           </h1>
-          <p className="text-muted-foreground mt-1">
+          <p className="text-[color:var(--t-text)] mt-1">
             Manage and monitor automated AI email campaigns.
           </p>
         </div>
@@ -90,7 +90,7 @@ export default function CampaignsPage() {
       <div className="grid gap-4 md:grid-cols-3">
         <Card className="bg-[#2A2A3C] border-[#3F3F5A] text-white">
           <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
-            <CardTitle className="text-sm font-medium text-gray-400">
+            <CardTitle className="text-sm font-medium text-[color:var(--t-text)]">
               Total Emails Sent
             </CardTitle>
             <Mail className="w-4 h-4 text-indigo-400" />
@@ -105,7 +105,7 @@ export default function CampaignsPage() {
         </Card>
         <Card className="bg-[#2A2A3C] border-[#3F3F5A] text-white">
           <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
-            <CardTitle className="text-sm font-medium text-gray-400">
+            <CardTitle className="text-sm font-medium text-[color:var(--t-text)]">
               Average Reply Rate
             </CardTitle>
             <Mail className="w-4 h-4 text-emerald-400" />
@@ -120,7 +120,7 @@ export default function CampaignsPage() {
         </Card>
         <Card className="bg-[#2A2A3C] border-[#3F3F5A] text-white">
           <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
-            <CardTitle className="text-sm font-medium text-gray-400">
+            <CardTitle className="text-sm font-medium text-[color:var(--t-text)]">
               Meetings Booked
             </CardTitle>
             <Mail className="w-4 h-4 text-amber-400" />
@@ -137,7 +137,7 @@ export default function CampaignsPage() {
 
       <div className="flex justify-between items-center bg-[#1E1E2E] p-4 rounded-xl border border-[#3F3F5A]">
         <div className="relative w-72">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[color:var(--t-text)]" />
           <Input
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
@@ -183,11 +183,11 @@ export default function CampaignsPage() {
       )}
 
       {loading ? (
-        <div className="text-center py-8 text-gray-400">
+        <div className="text-center py-8 text-[color:var(--t-text)]">
           Loading campaigns...
         </div>
       ) : campaigns.length === 0 ? (
-        <div className="text-center py-8 text-gray-400">
+        <div className="text-center py-8 text-[color:var(--t-text)]">
           No campaigns found. Create one to get started!
         </div>
       ) : (
@@ -209,14 +209,14 @@ export default function CampaignsPage() {
                         campaign.status === "active"
                           ? "text-emerald-400 border-emerald-500/50 bg-emerald-500/10"
                           : campaign.status === "draft"
-                            ? "text-gray-400 border-gray-500/50 bg-gray-500/10"
+                            ? "text-[color:var(--t-text)] border-gray-500/50 bg-gray-500/10"
                             : "text-blue-400 border-blue-500/50 bg-blue-500/10"
                       }
                     >
                       {(campaign.status || "draft").toUpperCase()}
                     </Badge>
                   </div>
-                  <p className="text-sm text-gray-400">
+                  <p className="text-sm text-[color:var(--t-text)]">
                     Targeting enriched leads based on AI prompt template.
                   </p>
                 </div>
@@ -226,19 +226,19 @@ export default function CampaignsPage() {
                     <p className="text-xl font-bold text-gray-200">
                       {campaign.sent || 0}
                     </p>
-                    <p className="text-xs text-gray-500 uppercase">Sent</p>
+                    <p className="text-xs text-[color:var(--t-text)] uppercase">Sent</p>
                   </div>
                   <div className="text-center">
                     <p className="text-xl font-bold text-gray-200">
                       {campaign.replied || 0}
                     </p>
-                    <p className="text-xs text-gray-500 uppercase">Replied</p>
+                    <p className="text-xs text-[color:var(--t-text)] uppercase">Replied</p>
                   </div>
                   <div className="text-center">
                     <p className="text-xl font-bold text-emerald-400">
                       {campaign.clickRate || "0%"}
                     </p>
-                    <p className="text-xs text-gray-500 uppercase">
+                    <p className="text-xs text-[color:var(--t-text)] uppercase">
                       Reply Rate
                     </p>
                   </div>
@@ -248,7 +248,7 @@ export default function CampaignsPage() {
                   <Button
                     variant="outline"
                     size="icon"
-                    className="border-[#3F3F5A] text-gray-300 hover:text-white hover:bg-[#3F3F5A]"
+                    className="border-[#3F3F5A] text-[color:var(--t-text)] hover:text-white hover:bg-[#3F3F5A]"
                   >
                     <Settings className="w-4 h-4" />
                   </Button>

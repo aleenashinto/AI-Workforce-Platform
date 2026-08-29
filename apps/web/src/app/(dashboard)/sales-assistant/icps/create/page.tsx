@@ -127,14 +127,14 @@ export default function CreateICPPage() {
         <Button
           variant="ghost"
           onClick={() => router.push("/sales-assistant/icps")}
-          className="text-gray-400 hover:text-white px-0"
+          className="text-[color:var(--t-text)] hover:text-white px-0"
         >
           <ArrowLeft className="w-4 h-4 mr-2" /> Back to ICPs
         </Button>
         <h1 className="text-3xl font-bold tracking-tight text-white">
           Create Ideal Customer Profile
         </h1>
-        <p className="text-gray-400">
+        <p className="text-[color:var(--t-text)]">
           How would you like to define your target customer?
         </p>
 
@@ -148,7 +148,7 @@ export default function CreateICPPage() {
                 <Wand2 className="w-6 h-6 text-indigo-400" />
               </div>
               <CardTitle className="text-white">AI ICP Builder</CardTitle>
-              <CardDescription className="text-gray-400 mt-2">
+              <CardDescription className="text-[color:var(--t-text)] mt-2">
                 Describe your ideal customer in plain English and let our AI
                 generate the perfect profile criteria, job titles, and buying
                 signals.
@@ -162,10 +162,10 @@ export default function CreateICPPage() {
           >
             <CardHeader>
               <div className="w-12 h-12 bg-[#2A2A3C] rounded-lg flex items-center justify-center mb-4 group-hover:bg-[#3F3F5A]">
-                <Target className="w-6 h-6 text-gray-300" />
+                <Target className="w-6 h-6 text-[color:var(--t-text)]" />
               </div>
               <CardTitle className="text-white">Manual Builder</CardTitle>
-              <CardDescription className="text-gray-400 mt-2">
+              <CardDescription className="text-[color:var(--t-text)] mt-2">
                 Manually specify exactly which industries, company sizes,
                 locations, and decision-makers you want to target.
               </CardDescription>
@@ -182,7 +182,7 @@ export default function CreateICPPage() {
         <Button
           variant="ghost"
           onClick={() => setMethod("select")}
-          className="text-gray-400 hover:text-white px-0"
+          className="text-[color:var(--t-text)] hover:text-white px-0"
         >
           <ArrowLeft className="w-4 h-4 mr-2" /> Back
         </Button>
@@ -194,7 +194,7 @@ export default function CreateICPPage() {
                 Describe your ideal customer
               </CardTitle>
             </div>
-            <CardDescription className="text-gray-400 text-base">
+            <CardDescription className="text-[color:var(--t-text)] text-base">
               Example: "I want to sell our AI customer support platform to SaaS
               companies in Europe with 50-500 employees, growing quickly, using
               AWS, and hiring customer-support employees."
@@ -231,7 +231,7 @@ export default function CreateICPPage() {
           <Button
             variant="ghost"
             onClick={() => setMethod("select")}
-            className="text-gray-400 hover:text-white px-2"
+            className="text-[color:var(--t-text)] hover:text-white px-2"
           >
             <ArrowLeft className="w-5 h-5" />
           </Button>
@@ -239,7 +239,7 @@ export default function CreateICPPage() {
             <h1 className="text-2xl font-bold tracking-tight text-white">
               Create Ideal Customer Profile
             </h1>
-            <p className="text-gray-400 text-sm">
+            <p className="text-[color:var(--t-text)] text-sm">
               Define the firmographic and technographic criteria.
             </p>
           </div>
@@ -262,7 +262,7 @@ export default function CreateICPPage() {
             </CardHeader>
             <CardContent className="pt-6 space-y-4">
               <div>
-                <label className="text-sm text-gray-400 mb-1 block">
+                <label className="text-sm text-[color:var(--t-text)] mb-1 block">
                   ICP Name
                 </label>
                 <Input
@@ -273,7 +273,7 @@ export default function CreateICPPage() {
                 />
               </div>
               <div>
-                <label className="text-sm text-gray-400 mb-1 block">
+                <label className="text-sm text-[color:var(--t-text)] mb-1 block">
                   Description
                 </label>
                 <Textarea
@@ -295,7 +295,7 @@ export default function CreateICPPage() {
             <CardContent className="pt-6 space-y-6">
               {/* Industries */}
               <div>
-                <label className="text-sm font-medium text-gray-300 block mb-2">
+                <label className="text-sm font-medium text-[color:var(--t-text)] block mb-2">
                   Industry
                 </label>
                 <div className="flex gap-2 mb-2">
@@ -338,7 +338,7 @@ export default function CreateICPPage() {
 
               {/* Locations */}
               <div>
-                <label className="text-sm font-medium text-gray-300 block mb-2">
+                <label className="text-sm font-medium text-[color:var(--t-text)] block mb-2">
                   Location
                 </label>
                 <div className="flex gap-2 mb-2">
@@ -382,7 +382,7 @@ export default function CreateICPPage() {
               {/* Grid for Size and Rev */}
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="text-sm font-medium text-gray-300 block mb-2">
+                  <label className="text-sm font-medium text-[color:var(--t-text)] block mb-2">
                     Company Size
                   </label>
                   <div className="flex gap-2 mb-2">
@@ -435,7 +435,7 @@ export default function CreateICPPage() {
                   </div>
                 </div>
                 <div>
-                  <label className="text-sm font-medium text-gray-300 block mb-2">
+                  <label className="text-sm font-medium text-[color:var(--t-text)] block mb-2">
                     Annual Revenue
                   </label>
                   <div className="flex gap-2 mb-2">
@@ -489,7 +489,7 @@ export default function CreateICPPage() {
             </CardHeader>
             <CardContent className="pt-6 space-y-6">
               <div>
-                <label className="text-sm font-medium text-gray-300 block mb-2">
+                <label className="text-sm font-medium text-[color:var(--t-text)] block mb-2">
                   Job Titles
                 </label>
                 <div className="flex gap-2 mb-2">
@@ -531,7 +531,7 @@ export default function CreateICPPage() {
               </div>
 
               <div>
-                <label className="text-sm font-medium text-gray-300 block mb-2">
+                <label className="text-sm font-medium text-[color:var(--t-text)] block mb-2">
                   Seniority
                 </label>
                 <div className="flex gap-2 mb-2">
@@ -582,7 +582,7 @@ export default function CreateICPPage() {
             </CardHeader>
             <CardContent className="pt-6 space-y-6">
               <div>
-                <label className="text-sm font-medium text-gray-300 block mb-2">
+                <label className="text-sm font-medium text-[color:var(--t-text)] block mb-2">
                   Technologies
                 </label>
                 <div className="flex gap-2 mb-2">
@@ -636,7 +636,7 @@ export default function CreateICPPage() {
               </div>
 
               <div>
-                <label className="text-sm font-medium text-gray-300 block mb-2">
+                <label className="text-sm font-medium text-[color:var(--t-text)] block mb-2">
                   Buying Signals
                 </label>
                 <div className="flex gap-2 mb-2">

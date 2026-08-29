@@ -90,9 +90,9 @@ export default function SequencesPage() {
       case "completed":
         return <CheckCircle size={14} className="text-blue-400" />;
       case "draft":
-        return <Edit3 size={14} className="text-gray-400" />;
+        return <Edit3 size={14} className="text-[color:var(--t-text)]" />;
       default:
-        return <Archive size={14} className="text-gray-500" />;
+        return <Archive size={14} className="text-[color:var(--t-text)]" />;
     }
   };
 
@@ -105,7 +105,7 @@ export default function SequencesPage() {
       case "completed":
         return "text-blue-400";
       default:
-        return "text-gray-400";
+        return "text-[color:var(--t-text)]";
     }
   };
 
@@ -128,7 +128,7 @@ export default function SequencesPage() {
           </p>
         </div>
         <div className="flex gap-3">
-          <button className="bg-[color:var(--t-panel)] text-gray-300 border border-gray-700 px-4 py-2 rounded font-mono text-sm hover:bg-gray-800 transition-colors flex items-center gap-2">
+          <button className="bg-[color:var(--t-panel)] text-[color:var(--t-text)] border border-gray-700 px-4 py-2 rounded font-mono text-sm hover:bg-gray-800 transition-colors flex items-center gap-2">
             <FileText size={16} /> Templates
           </button>
           <button
@@ -154,7 +154,7 @@ export default function SequencesPage() {
           <div className="text-xs text-[#00ff88]/60 uppercase">Active</div>
         </div>
         <div className="bg-[color:var(--t-panel)] border border-[#00ff88]/20 p-4 rounded-lg text-center">
-          <div className="text-3xl font-bold text-gray-400 mb-1">
+          <div className="text-3xl font-bold text-[color:var(--t-text)] mb-1">
             {stats.paused}
           </div>
           <div className="text-xs text-[#00ff88]/60 uppercase">Paused</div>
@@ -245,7 +245,7 @@ export default function SequencesPage() {
                       >
                         {seq.name}
                       </Link>
-                      <div className="text-xs text-gray-500 mt-1">
+                      <div className="text-xs text-[color:var(--t-text)] mt-1">
                         Updated {new Date(seq.updated_at).toLocaleDateString()}
                       </div>
                     </td>
@@ -256,13 +256,13 @@ export default function SequencesPage() {
                         {getStatusIcon(seq.status)} {seq.status}
                       </div>
                     </td>
-                    <td className="p-4 text-right text-gray-300">
+                    <td className="p-4 text-right text-[color:var(--t-text)]">
                       {seq.stats?.enrolled || 0}
                     </td>
                     <td className="p-4 text-right text-[#00ff88]">
                       {seq.stats?.active || 0}
                     </td>
-                    <td className="p-4 text-right text-gray-400">
+                    <td className="p-4 text-right text-[color:var(--t-text)]">
                       {seq.stats?.completed || 0}
                     </td>
                     <td className="p-4 text-right text-[#00cfff] font-bold">

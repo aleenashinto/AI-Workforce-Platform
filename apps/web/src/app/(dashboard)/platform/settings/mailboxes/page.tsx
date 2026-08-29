@@ -73,7 +73,7 @@ export default function MailboxesPage() {
           <h1 className="text-3xl font-bold tracking-tight text-white">
             Mailboxes
           </h1>
-          <p className="text-gray-400 mt-2">
+          <p className="text-[color:var(--t-text)] mt-2">
             Manage your sending infrastructure and monitor deliverability.
           </p>
         </div>
@@ -87,7 +87,7 @@ export default function MailboxesPage() {
           <CardContent className="p-6">
             <div className="flex items-center space-x-2">
               <Mail className="h-5 w-5 text-indigo-400" />
-              <h3 className="font-semibold text-gray-400">Total Connected</h3>
+              <h3 className="font-semibold text-[color:var(--t-text)]">Total Connected</h3>
             </div>
             <p className="text-3xl font-bold mt-4 text-white">
               {mailboxes.length}
@@ -99,7 +99,7 @@ export default function MailboxesPage() {
           <CardContent className="p-6">
             <div className="flex items-center space-x-2">
               <Activity className="h-5 w-5 text-emerald-400" />
-              <h3 className="font-semibold text-gray-400">Avg Health Score</h3>
+              <h3 className="font-semibold text-[color:var(--t-text)]">Avg Health Score</h3>
             </div>
             <p className="text-3xl font-bold mt-4 text-emerald-400">
               {mailboxes.length
@@ -119,7 +119,7 @@ export default function MailboxesPage() {
           <CardContent className="p-6">
             <div className="flex items-center space-x-2">
               <AlertTriangle className="h-5 w-5 text-amber-400" />
-              <h3 className="font-semibold text-gray-400">Issues Detected</h3>
+              <h3 className="font-semibold text-[color:var(--t-text)]">Issues Detected</h3>
             </div>
             <p className="text-3xl font-bold mt-4 text-amber-400">
               {mailboxes.filter((m) => (m.health_score || 100) < 80).length}
@@ -136,19 +136,19 @@ export default function MailboxesPage() {
         </CardHeader>
         <CardContent className="p-0">
           {loading ? (
-            <div className="p-8 text-center text-gray-400">
+            <div className="p-8 text-center text-[color:var(--t-text)]">
               Loading mailboxes...
             </div>
           ) : (
             <Table>
               <TableHeader>
                 <TableRow className="hover:bg-transparent border-[#3F3F5A]">
-                  <TableHead className="text-gray-400">Email Account</TableHead>
-                  <TableHead className="text-gray-400">Provider</TableHead>
-                  <TableHead className="text-gray-400">Status</TableHead>
-                  <TableHead className="text-gray-400">Health Score</TableHead>
-                  <TableHead className="text-gray-400">Bounces</TableHead>
-                  <TableHead className="text-right text-gray-400">
+                  <TableHead className="text-[color:var(--t-text)]">Email Account</TableHead>
+                  <TableHead className="text-[color:var(--t-text)]">Provider</TableHead>
+                  <TableHead className="text-[color:var(--t-text)]">Status</TableHead>
+                  <TableHead className="text-[color:var(--t-text)]">Health Score</TableHead>
+                  <TableHead className="text-[color:var(--t-text)]">Bounces</TableHead>
+                  <TableHead className="text-right text-[color:var(--t-text)]">
                     Actions
                   </TableHead>
                 </TableRow>
@@ -158,7 +158,7 @@ export default function MailboxesPage() {
                   <TableRow className="border-[#3F3F5A]">
                     <TableCell
                       colSpan={6}
-                      className="h-32 text-center text-gray-400"
+                      className="h-32 text-center text-[color:var(--t-text)]"
                     >
                       No mailboxes connected yet.
                     </TableCell>
@@ -172,7 +172,7 @@ export default function MailboxesPage() {
                       <TableCell className="font-medium text-white">
                         {mailbox.email}
                       </TableCell>
-                      <TableCell className="capitalize text-gray-400">
+                      <TableCell className="capitalize text-[color:var(--t-text)]">
                         {mailbox.provider}
                       </TableCell>
                       <TableCell>
@@ -205,7 +205,7 @@ export default function MailboxesPage() {
                           </div>
                         </div>
                       </TableCell>
-                      <TableCell className="text-gray-400">
+                      <TableCell className="text-[color:var(--t-text)]">
                         {mailbox.metrics?.bounces || 0}
                       </TableCell>
                       <TableCell className="text-right">

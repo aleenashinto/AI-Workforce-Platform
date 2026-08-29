@@ -43,7 +43,7 @@ export default function NewSourcePage() {
         <h1 className="text-3xl font-bold tracking-tight text-white">
           Add Knowledge Source
         </h1>
-        <p className="text-muted-foreground mt-1">
+        <p className="text-[color:var(--t-text)] mt-1">
           Ingest new data into your AI workforce knowledge base.
         </p>
       </div>
@@ -84,17 +84,17 @@ export default function NewSourcePage() {
           <Card className="bg-[#2A2A3C] border-[#3F3F5A] text-white">
             <CardHeader>
               <CardTitle>Upload Document</CardTitle>
-              <CardDescription className="text-gray-400">
+              <CardDescription className="text-[color:var(--t-text)]">
                 Support PDF, DOCX, TXT. Max file size 50MB.
               </CardDescription>
             </CardHeader>
             <CardContent>
               <div className="border-2 border-dashed border-[#3F3F5A] hover:border-indigo-500 rounded-lg p-12 text-center transition-colors">
-                <UploadCloud className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+                <UploadCloud className="w-12 h-12 text-[color:var(--t-text)] mx-auto mb-4" />
                 <h3 className="text-lg font-medium">
                   Drag & drop your files here
                 </h3>
-                <p className="text-gray-400 mt-2 mb-6">
+                <p className="text-[color:var(--t-text)] mt-2 mb-6">
                   or click to browse from your computer
                 </p>
                 <Button className="bg-[#1E1E2E] hover:bg-gray-800 text-white">
@@ -110,7 +110,7 @@ export default function NewSourcePage() {
             <form onSubmit={handleSubmit}>
               <CardHeader>
                 <CardTitle>Website Crawl</CardTitle>
-                <CardDescription className="text-gray-400">
+                <CardDescription className="text-[color:var(--t-text)]">
                   Provide a URL and we will extract the content.
                 </CardDescription>
               </CardHeader>
@@ -150,7 +150,7 @@ export default function NewSourcePage() {
             <form onSubmit={handleSubmit}>
               <CardHeader>
                 <CardTitle>Direct Text Input</CardTitle>
-                <CardDescription className="text-gray-400">
+                <CardDescription className="text-[color:var(--t-text)]">
                   Paste FAQs or snippets directly.
                 </CardDescription>
               </CardHeader>
@@ -187,7 +187,7 @@ export default function NewSourcePage() {
           <Card className="bg-[#2A2A3C] border-[#3F3F5A] text-white">
             <CardHeader>
               <CardTitle>Third-Party Integrations</CardTitle>
-              <CardDescription className="text-gray-400">
+              <CardDescription className="text-[color:var(--t-text)]">
                 Connect your existing tools to automatically sync data.
               </CardDescription>
             </CardHeader>
@@ -207,7 +207,7 @@ export default function NewSourcePage() {
                     />
                   </div>
                   <h3 className="font-medium text-lg">Notion Workspace</h3>
-                  <p className="text-sm text-gray-400 mt-2 mb-4">
+                  <p className="text-sm text-[color:var(--t-text)] mt-2 mb-4">
                     Sync pages and databases
                   </p>
                   <Button
@@ -233,7 +233,7 @@ export default function NewSourcePage() {
                     />
                   </div>
                   <h3 className="font-medium text-lg">Google Drive</h3>
-                  <p className="text-sm text-gray-400 mt-2 mb-4">
+                  <p className="text-sm text-[color:var(--t-text)] mt-2 mb-4">
                     Sync docs and spreadsheets
                   </p>
                   <Button

@@ -58,7 +58,7 @@ export default function DraftsWorkspacePage() {
       case "support_response":
         return <Bot size={16} className="text-orange-400" />;
       default:
-        return <FileText size={16} className="text-gray-400" />;
+        return <FileText size={16} className="text-[color:var(--t-text)]" />;
     }
   };
 
@@ -66,7 +66,7 @@ export default function DraftsWorkspacePage() {
     switch (status) {
       case "draft":
         return (
-          <span className="px-2 py-0.5 rounded text-xs bg-gray-800 text-gray-300 border border-gray-700">
+          <span className="px-2 py-0.5 rounded text-xs bg-gray-800 text-[color:var(--t-text)] border border-gray-700">
             Draft
           </span>
         );
@@ -84,7 +84,7 @@ export default function DraftsWorkspacePage() {
         );
       default:
         return (
-          <span className="px-2 py-0.5 rounded text-xs bg-gray-800 text-gray-300 border border-gray-700">
+          <span className="px-2 py-0.5 rounded text-xs bg-gray-800 text-[color:var(--t-text)] border border-gray-700">
             {status}
           </span>
         );
@@ -246,7 +246,7 @@ export default function DraftsWorkspacePage() {
                         {getIconForType(draft.type)}
                       </div>
                     </td>
-                    <td className="p-4 text-gray-400 capitalize">
+                    <td className="p-4 text-[color:var(--t-text)] capitalize">
                       {draft.type?.replace("_", " ") || "Unknown"}
                     </td>
                     <td className="p-4">
@@ -261,20 +261,20 @@ export default function DraftsWorkspacePage() {
                     <td className="p-4 text-[#00ff88]/70 capitalize">
                       {draft.source_type || "-"}
                     </td>
-                    <td className="p-4 text-gray-500 text-xs">
+                    <td className="p-4 text-[color:var(--t-text)] text-xs">
                       {new Date(draft.updated_at).toLocaleDateString()}
                     </td>
                     <td className="p-4 text-right">
                       <div className="flex items-center justify-end gap-2">
                         <Link
                           href={`/drafts/${draft.id}`}
-                          className="p-1.5 hover:bg-[#00ff88]/10 rounded text-gray-400 hover:text-[#00ff88] transition-colors"
+                          className="p-1.5 hover:bg-[#00ff88]/10 rounded text-[color:var(--t-text)] hover:text-[#00ff88] transition-colors"
                         >
                           <FileText size={16} />
                         </Link>
                         <button
                           onClick={() => deleteDraft(draft.id)}
-                          className="p-1.5 hover:bg-red-500/10 rounded text-gray-400 hover:text-red-400 transition-colors"
+                          className="p-1.5 hover:bg-red-500/10 rounded text-[color:var(--t-text)] hover:text-red-400 transition-colors"
                         >
                           <Trash2 size={16} />
                         </button>

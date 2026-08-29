@@ -132,7 +132,7 @@ export default function ResearchDashboard() {
             key={i}
             className="bg-[color:var(--t-panel)] border border-[rgba(0,255,136,0.15)] rounded-xl p-4 flex flex-col justify-center"
           >
-            <span className="text-xs text-gray-400 uppercase tracking-wider mb-1 font-bold">
+            <span className="text-xs text-[color:var(--t-text)] uppercase tracking-wider mb-1 font-bold">
               {kpi.label}
             </span>
             <span
@@ -163,7 +163,7 @@ export default function ResearchDashboard() {
             <h3 className="text-xl font-bold text-white mb-2">
               Research Smarter with AI
             </h3>
-            <p className="text-gray-400 mb-6 max-w-md">
+            <p className="text-[color:var(--t-text)] mb-6 max-w-md">
               Investigate questions, compare evidence, and generate
               source-backed research reports.
             </p>
@@ -198,12 +198,12 @@ export default function ResearchDashboard() {
                 </div>
               </div>
 
-              <p className="text-gray-400 text-sm line-clamp-2 mb-4 flex-1">
+              <p className="text-[color:var(--t-text)] text-sm line-clamp-2 mb-4 flex-1">
                 {item.question}
               </p>
 
               <div className="flex items-center justify-between mt-auto pt-4 border-t border-white/5">
-                <div className="flex items-center text-xs text-gray-500 gap-1">
+                <div className="flex items-center text-xs text-[color:var(--t-text)] gap-1">
                   <Calendar className="w-3 h-3" />{" "}
                   {new Date(item.created_at).toLocaleDateString()}
                 </div>
@@ -233,7 +233,7 @@ export default function ResearchDashboard() {
             </div>
             <div className="p-6 space-y-4">
               <div>
-                <label className="block text-xs uppercase text-gray-400 font-bold mb-1">
+                <label className="block text-xs uppercase text-[color:var(--t-text)] font-bold mb-1">
                   Research Title *
                 </label>
                 <input
@@ -244,7 +244,7 @@ export default function ResearchDashboard() {
                 />
               </div>
               <div>
-                <label className="block text-xs uppercase text-gray-400 font-bold mb-1">
+                <label className="block text-xs uppercase text-[color:var(--t-text)] font-bold mb-1">
                   Research Question *
                 </label>
                 <textarea
@@ -255,7 +255,7 @@ export default function ResearchDashboard() {
                 />
               </div>
               <div>
-                <label className="block text-xs uppercase text-gray-400 font-bold mb-1">
+                <label className="block text-xs uppercase text-[color:var(--t-text)] font-bold mb-1">
                   Objective
                 </label>
                 <input
@@ -267,7 +267,7 @@ export default function ResearchDashboard() {
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs uppercase text-gray-400 font-bold mb-1">
+                  <label className="block text-xs uppercase text-[color:var(--t-text)] font-bold mb-1">
                     Research Type
                   </label>
                   <select
@@ -286,7 +286,7 @@ export default function ResearchDashboard() {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-xs uppercase text-gray-400 font-bold mb-1">
+                  <label className="block text-xs uppercase text-[color:var(--t-text)] font-bold mb-1">
                     Depth
                   </label>
                   <select
@@ -306,7 +306,7 @@ export default function ResearchDashboard() {
               <Button
                 variant="outline"
                 onClick={() => setShowCreate(false)}
-                className="border-gray-500 text-gray-300 hover:bg-white/5"
+                className="border-gray-500 text-[color:var(--t-text)] hover:bg-white/5"
               >
                 Cancel
               </Button>
