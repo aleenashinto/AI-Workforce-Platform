@@ -175,7 +175,7 @@ export function Header({
 
   return (
     <header
-      className="flex h-20 shrink-0 items-center justify-between px-4 md:px-8 bg-[rgba(10,22,40,0.6)] backdrop-blur-md z-10"
+      className="flex h-20 shrink-0 items-center justify-between px-4 md:px-8 bg-[color:var(--t-panel)]/90 backdrop-blur-md z-10 transition-colors duration-200"
       style={{ borderBottom: `1px solid ${T.border}` }}
     >
       <div className="flex items-center gap-2 md:gap-4">
@@ -389,15 +389,31 @@ export function Header({
           />
 
           {mounted && (
-            <div
+            <button
+              type="button"
               onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-              style={{ cursor: "pointer", transition: "color 0.2s" }}
-              onMouseEnter={(e) => (e.currentTarget.style.color = T.g)}
-              onMouseLeave={(e) => (e.currentTarget.style.color = T.muted)}
-              title="Toggle Theme"
+              style={{
+                background: "var(--t-bg2)",
+                border: `1px solid ${T.border}`,
+                color: T.text,
+                cursor: "pointer",
+                padding: "0.45rem",
+                borderRadius: "var(--t-radius)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                transition: "all 0.2s ease",
+              }}
+              className="focus:outline-none focus:ring-2 focus:ring-[color:var(--t-g)] hover:scale-105"
+              aria-label={theme === "dark" ? "Switch to Light Mode" : "Switch to Dark Mode"}
+              title={theme === "dark" ? "Switch to Light Mode" : "Switch to Dark Mode"}
             >
-              {theme === "dark" ? <Sun size={20} /> : <Moon size={20} />}
-            </div>
+              {theme === "dark" ? (
+                <Sun size={18} className="text-[#ffaa00] transition-transform duration-300 hover:rotate-45" />
+              ) : (
+                <Moon size={18} className="text-[#0284c7] transition-transform duration-300 hover:-rotate-12" />
+              )}
+            </button>
           )}
 
           <div

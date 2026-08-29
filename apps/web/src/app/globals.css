@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&display=swap");
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
@@ -8,38 +8,41 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
-  --font-mono: var(--font-geist-mono);
-  --font-heading: "Inter", system-ui, -apple-system, sans-serif;
+  --font-sans: var(--t-font-body);
+  --font-mono: var(--t-font-mono);
+  --font-heading: var(--t-font-display);
 }
 
 :root {
-  --background: #f1f5f9;
-  --foreground: #000000;
+  /* LIGHT MODE (Clean Enterprise SaaS) */
+  --background: #f8fafc;
+  --foreground: #0f172a;
   
-  /* LIGHT MODE (Clean SaaS) */
-  --t-g: #2563eb; 
-  --t-g2: #3b82f6; 
-  --t-warn: #eab308;
+  --t-g: #0284c7; 
+  --t-g-rgb: 2, 132, 199;
+  --t-g2: #0ea5e9; 
+  --t-g2-rgb: 14, 165, 233;
+  --t-warn: #f59e0b;
   --t-red: #ef4444;
-  --t-bg: #f1f5f9; 
-  --t-bg2: #e2e8f0;
+  --t-success: #10b981;
+  --t-bg: #f8fafc; 
+  --t-bg2: #f1f5f9;
   --t-panel: #ffffff;
   
-  --t-sidebar: #1e293b;
-  --t-sidebar-border: #1e293b;
-  --t-sidebar-text: #f8fafc;
-  --t-sidebar-muted: #94a3b8;
+  --t-sidebar: #ffffff;
+  --t-sidebar-border: #e2e8f0;
+  --t-sidebar-text: #0f172a;
+  --t-sidebar-muted: #64748b;
   
   --t-border: #e2e8f0;
   --t-border2: #cbd5e1;
   
-  --t-muted: #000000;
-  --t-text: #000000;
-  --t-heading: #000000;
+  --t-muted: #475569;
+  --t-text: #0f172a;
+  --t-heading: #0f172a;
   
-  --t-glow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
-  --t-glow2: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --t-glow: 0 1px 3px 0 rgb(0 0 0 / 0.08), 0 1px 2px -1px rgb(0 0 0 / 0.08);
+  --t-glow2: 0 4px 6px -1px rgb(0 0 0 / 0.08), 0 2px 4px -2px rgb(0 0 0 / 0.08);
   
   --t-font-display: "Inter", system-ui, sans-serif;
   --t-font-mono: "Inter", system-ui, sans-serif;
@@ -47,28 +50,31 @@
   
   --t-radius: 0.75rem;
 
-  /* White Opacity (re-mapped to black for contrast) */
+  /* White Opacity - mapped for light mode contrast */
   --t-white-02: rgba(0, 0, 0, 0.02);
-  --t-white-03: rgba(0, 0, 0, 0.03);
-  --t-white-05: rgba(0, 0, 0, 0.05);
-  --t-white-10: rgba(0, 0, 0, 0.1);
-  --t-white-20: rgba(0, 0, 0, 0.2);
-  --t-white-30: rgba(0, 0, 0, 0.3);
-  --t-white-40: rgba(0, 0, 0, 0.4);
-  --t-white-50: rgba(0, 0, 0, 0.5);
-  --t-white-60: rgba(0, 0, 0, 0.6);
-  --t-white-70: rgba(0, 0, 0, 0.7);
+  --t-white-03: rgba(0, 0, 0, 0.04);
+  --t-white-05: rgba(0, 0, 0, 0.06);
+  --t-white-10: rgba(0, 0, 0, 0.08);
+  --t-white-20: rgba(0, 0, 0, 0.12);
+  --t-white-30: rgba(0, 0, 0, 0.18);
+  --t-white-40: rgba(0, 0, 0, 0.25);
+  --t-white-50: rgba(0, 0, 0, 0.35);
+  --t-white-60: rgba(0, 0, 0, 0.45);
+  --t-white-70: rgba(0, 0, 0, 0.55);
 }
 
 .dark {
+  /* DARK MODE (Cyber / AI Aesthetic) */
   --background: #040810;
   --foreground: #c8ffe8;
   
-  /* DARK MODE */
   --t-g: #00ff88;
+  --t-g-rgb: 0, 255, 136;
   --t-g2: #00cfff;
+  --t-g2-rgb: 0, 207, 255;
   --t-warn: #ffaa00;
   --t-red: #ff3355;
+  --t-success: #00ff88;
   --t-bg: #040810;
   --t-bg2: #070e1a;
   --t-panel: #0a1628;
@@ -94,7 +100,7 @@
   
   --t-radius: 0px;
 
-  /* White Opacity */
+  /* White Opacity in Dark Mode */
   --t-white-02: rgba(255, 255, 255, 0.02);
   --t-white-03: rgba(255, 255, 255, 0.03);
   --t-white-05: rgba(255, 255, 255, 0.05);
@@ -108,150 +114,51 @@
 }
 
 @layer base {
+  * {
+    transition: background-color 150ms ease, border-color 150ms ease;
+  }
   body {
     @apply bg-background text-foreground;
-    font-family:
-      "Inter",
-      system-ui,
-      -apple-system,
-      sans-serif;
+    font-family: var(--t-font-body);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
 }
 
-/* Light Theme Dot Grid Background */
-.bg-dot-grid {
-  background-color: #f1f5f9;
-  background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
-  background-size: 24px 24px;
-}
-
-/* Component Overrides for Light Theme */
-.app-container {
-  background-color: #f1f5f9;
-  min-height: 100vh;
-}
-
-.sidebar-container {
-  background-color: var(--t-sidebar);
-  border-right: 1px solid var(--t-sidebar-border);
-}
-
-.header-container {
-  background-color: #ffffff;
-  border-bottom: 1px solid #e5e7eb;
-}
-
-/* Search Input */
-.search-input {
-  background: transparent;
-  border: none;
-  color: inherit;
-  outline: none;
-  width: 100%;
-}
-.search-input::placeholder {
-  color: var(--t-muted);
-}
-.ambient-orb {
-  position: fixed;
-  border-radius: 50%;
-  filter: blur(100px);
-  z-index: -1;
-  pointer-events: none;
-}
-.orb-cyan {
-  width: 400px;
-  height: 400px;
-  background: rgba(34, 211, 238, 0.2);
-  top: -100px;
-  right: -50px;
-}
-.orb-purple {
-  width: 300px;
-  height: 300px;
-  background: rgba(168, 85, 247, 0.2);
-  bottom: -50px;
-  left: -50px;
-}
-
-/* Light mode overrides */
+/* Light Mode Global SaaS Overrides */
 html:not(.dark) * {
   letter-spacing: normal !important;
 }
+
 html:not(.dark) .cyberpunk-corner {
   display: none !important;
 }
 
-
-/* Light mode text contrast overrides - all gray text to black */
-html:not(.dark) {
-  color: #000000 !important;
-}
-
-html:not(.dark) .text-gray-300,
-html:not(.dark) .text-gray-400,
-html:not(.dark) .text-gray-500,
-html:not(.dark) .text-gray-600,
-html:not(.dark) .text-gray-700,
-html:not(.dark) .text-slate-400,
-html:not(.dark) .text-slate-500,
-html:not(.dark) .text-slate-600,
-html:not(.dark) .text-zinc-400,
-html:not(.dark) .text-zinc-500,
-html:not(.dark) .text-zinc-600,
-html:not(.dark) .text-neutral-400,
-html:not(.dark) .text-neutral-500,
-html:not(.dark) .text-muted-foreground {
-  color: #000000 !important;
-}
-
-html:not(.dark) p,
-html:not(.dark) label,
-html:not(.dark) span:not(aside span):not(button span):not([class*="bg-"]),
-html:not(.dark) td {
-  color: #000000;
-}
-
-html:not(.dark) .opacity-50,
-html:not(.dark) .opacity-60,
-html:not(.dark) .opacity-70 {
-  opacity: 0.95 !important;
-}
-
-/* Light mode input & card text */
 html:not(.dark) input:not([type="checkbox"]):not([type="radio"]),
 html:not(.dark) select,
 html:not(.dark) textarea {
   background-color: #ffffff !important;
-  color: #000000 !important;
+  color: #0f172a !important;
   border-color: #cbd5e1 !important;
 }
 
 html:not(.dark) input::placeholder,
 html:not(.dark) textarea::placeholder {
-  color: #64748b !important;
-}
-
-/* Keep Sidebar dark styling distinct */
-html:not(.dark) aside,
-html:not(.dark) .sidebar-container {
-  background-color: #1e293b !important;
-  color: #ffffff !important;
-}
-
-html:not(.dark) aside a,
-html:not(.dark) aside span,
-html:not(.dark) aside p,
-html:not(.dark) aside h1,
-html:not(.dark) aside h2,
-html:not(.dark) aside h3 {
-  color: #f8fafc !important;
-}
-
-html:not(.dark) aside .text-gray-300,
-html:not(.dark) aside .text-gray-400,
-html:not(.dark) aside .text-slate-400 {
   color: #94a3b8 !important;
+}
+
+/* Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--t-bg2);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--t-border2);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--t-g);
 }

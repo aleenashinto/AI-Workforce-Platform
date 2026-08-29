@@ -24,7 +24,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
       />
 
       {/* Main Content Area */}
-      <div className="flex flex-col flex-1 overflow-hidden bg-black/30">
+      <div className="flex flex-col flex-1 overflow-hidden bg-[color:var(--t-bg)] transition-colors duration-200">
         <Header setMobileMenuOpen={setMobileMenuOpen} />
         <main className="flex-1 overflow-y-auto p-4 md:p-8 relative">
           {children}
