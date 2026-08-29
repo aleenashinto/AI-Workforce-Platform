@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { GoogleIcon } from "@/components/icons/social";
+
 
 /* ─────────────────────────────────────────────
    DESIGN TOKENS
@@ -146,46 +146,7 @@ function ModalField({
   );
 }
 
-function SocialBtn({
-  provider,
-  icon,
-  onClick,
-}: {
-  provider: string;
-  icon: React.ReactNode;
-  onClick: () => void;
-}) {
-  const [hov, setHov] = useState(false);
-  return (
-    <button
-      onClick={onClick}
-      type="button"
-      onMouseEnter={() => setHov(true)}
-      onMouseLeave={() => setHov(false)}
-      style={{
-        width: "100%",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        gap: "0.6rem",
-        fontFamily: T.mono,
-        fontSize: "0.75rem",
-        letterSpacing: "0.05em",
-        padding: "0.75rem",
-        cursor: "pointer",
-        transition: "all 0.2s",
-        color: hov ? "#fff" : T.text,
-        background: hov ? "rgba(0,255,136,0.05)" : "rgba(0,0,0,0.2)",
-        border: `1px solid ${hov ? T.g : T.border}`,
-        boxShadow: hov ? T.glow : "none",
-        marginBottom: "0.8rem",
-      }}
-    >
-      <span style={{ fontSize: "1rem" }}>{icon}</span>
-      Continue with {provider}
-    </button>
-  );
-}
+
 
 export default function LoginPage() {
   const router = useRouter();
@@ -508,35 +469,6 @@ export default function LoginPage() {
           </button>
         </form>
 
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "1rem",
-            marginBottom: "1.5rem",
-          }}
-        >
-          <div style={{ flex: 1, height: 1, background: T.border }} />
-          <div
-            style={{
-              fontFamily: T.mono,
-              fontSize: "0.65rem",
-              letterSpacing: "0.1em",
-              color: T.muted,
-            }}
-          >
-            OR
-          </div>
-          <div style={{ flex: 1, height: 1, background: T.border }} />
-        </div>
-
-        <SocialBtn
-          provider="Google"
-          icon={<GoogleIcon size={16} />}
-          onClick={() =>
-            (window.location.href = `${process.env.NEXT_PUBLIC_API_URL}/auth/google/login`)
-          }
-        />
 
         <div
           style={{
