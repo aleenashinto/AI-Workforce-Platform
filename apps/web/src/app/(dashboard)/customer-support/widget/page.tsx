@@ -120,7 +120,7 @@ export default function WidgetConfigPage() {
   const [activeTab, setActiveTab] = useState("appearance");
 
   // Widget Configuration State
-  const [brandColor, setBrandColor] = useState("#00ff88");
+  const [brandColor, setBrandColor] = useState("var(--t-g)");
   const [position, setPosition] = useState("Bottom Right");
   const [launcherIcon, setLauncherIcon] = useState("Chat Bubble");
   const [greeting, setGreeting] = useState(
@@ -311,7 +311,7 @@ export default function WidgetConfigPage() {
                     onChange={(e) => setBrandColor(e.target.value)}
                     style={{
                       flex: 1,
-                      background: "rgba(0,255,136,0.03)",
+                      background: "rgba(var(--t-g-rgb), )",
                       border: `1px solid ${T.border}`,
                       color: T.text,
                       fontFamily: T.mono,
@@ -348,7 +348,7 @@ export default function WidgetConfigPage() {
                     onChange={(e) => setPosition(e.target.value)}
                     style={{
                       width: "100%",
-                      background: "rgba(0,255,136,0.03)",
+                      background: "rgba(var(--t-g-rgb), )",
                       border: `1px solid ${T.border}`,
                       color: T.text,
                       fontFamily: T.mono,
@@ -381,7 +381,7 @@ export default function WidgetConfigPage() {
                     onChange={(e) => setLauncherIcon(e.target.value)}
                     style={{
                       width: "100%",
-                      background: "rgba(0,255,136,0.03)",
+                      background: "rgba(var(--t-g-rgb), )",
                       border: `1px solid ${T.border}`,
                       color: T.text,
                       fontFamily: T.mono,
@@ -428,7 +428,7 @@ export default function WidgetConfigPage() {
                   style={{
                     width: "100%",
                     height: 80,
-                    background: "rgba(0,255,136,0.03)",
+                    background: "rgba(var(--t-g-rgb), )",
                     border: `1px solid ${T.border}`,
                     color: T.text,
                     fontFamily: T.mono,
@@ -459,7 +459,7 @@ export default function WidgetConfigPage() {
                   style={{
                     width: "100%",
                     height: 120,
-                    background: "rgba(0,255,136,0.03)",
+                    background: "rgba(var(--t-g-rgb), )",
                     border: `1px solid ${T.border}`,
                     color: T.text,
                     fontFamily: T.mono,
@@ -500,7 +500,7 @@ export default function WidgetConfigPage() {
                   onChange={(e) => setPrimaryLanguage(e.target.value)}
                   style={{
                     width: "100%",
-                    background: "rgba(0,255,136,0.03)",
+                    background: "rgba(var(--t-g-rgb), )",
                     border: `1px solid ${T.border}`,
                     color: T.text,
                     fontFamily: T.mono,
@@ -536,7 +536,7 @@ export default function WidgetConfigPage() {
                   onChange={(e) => setEscalationBehavior(e.target.value)}
                   style={{
                     width: "100%",
-                    background: "rgba(0,255,136,0.03)",
+                    background: "rgba(var(--t-g-rgb), )",
                     border: `1px solid ${T.border}`,
                     color: T.text,
                     fontFamily: T.mono,

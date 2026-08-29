@@ -268,7 +268,7 @@ function AddKnowledgeContent() {
               setSuccessMsg("");
             }}
             style={{
-              background: activeType === s.id ? "rgba(0,255,136,0.1)" : T.panel,
+              background: activeType === s.id ? "rgba(var(--t-g-rgb), )" : T.panel,
               border: `1px solid ${activeType === s.id ? T.g : T.border}`,
               padding: "1.5rem",
               display: "flex",
@@ -333,7 +333,7 @@ function AddKnowledgeContent() {
               onClick={() => fileInputRef.current?.click()}
               style={{
                 border: `2px dashed ${T.border}`,
-                background: "rgba(0,255,136,0.02)",
+                background: "rgba(var(--t-g-rgb), )",
                 padding: "3rem 2rem",
                 display: "flex",
                 flexDirection: "column",
@@ -412,7 +412,7 @@ function AddKnowledgeContent() {
                   placeholder="https://example.com"
                   style={{
                     width: "100%",
-                    background: "rgba(0,255,136,0.03)",
+                    background: "rgba(var(--t-g-rgb), )",
                     border: `1px solid ${T.border}`,
                     color: T.text,
                     fontFamily: T.mono,
@@ -448,7 +448,7 @@ function AddKnowledgeContent() {
                     onChange={(e) => setDepth(e.target.value)}
                     style={{
                       width: "100%",
-                      background: "rgba(0,255,136,0.03)",
+                      background: "rgba(var(--t-g-rgb), )",
                       border: `1px solid ${T.border}`,
                       color: T.text,
                       fontFamily: T.mono,
@@ -486,7 +486,7 @@ function AddKnowledgeContent() {
                   placeholder="/docs/*, /blog/*"
                   style={{
                     width: "100%",
-                    background: "rgba(0,255,136,0.03)",
+                    background: "rgba(var(--t-g-rgb), )",
                     border: `1px solid ${T.border}`,
                     color: T.text,
                     fontFamily: T.mono,
@@ -517,7 +517,7 @@ function AddKnowledgeContent() {
                   placeholder="/login, /cart"
                   style={{
                     width: "100%",
-                    background: "rgba(0,255,136,0.03)",
+                    background: "rgba(var(--t-g-rgb), )",
                     border: `1px solid ${T.border}`,
                     color: T.text,
                     fontFamily: T.mono,
@@ -566,7 +566,7 @@ function AddKnowledgeContent() {
                 placeholder="https://example.com/sitemap.xml"
                 style={{
                   width: "100%",
-                  background: "rgba(0,255,136,0.03)",
+                  background: "rgba(var(--t-g-rgb), )",
                   border: `1px solid ${T.border}`,
                   color: T.text,
                   fontFamily: T.mono,
@@ -621,7 +621,7 @@ function AddKnowledgeContent() {
                   placeholder="e.g. Return Policy"
                   style={{
                     width: "100%",
-                    background: "rgba(0,255,136,0.03)",
+                    background: "rgba(var(--t-g-rgb), )",
                     border: `1px solid ${T.border}`,
                     color: T.text,
                     fontFamily: T.mono,
@@ -652,7 +652,7 @@ function AddKnowledgeContent() {
                   style={{
                     width: "100%",
                     height: 200,
-                    background: "rgba(0,255,136,0.03)",
+                    background: "rgba(var(--t-g-rgb), )",
                     border: `1px solid ${T.border}`,
                     color: T.text,
                     fontFamily: T.body,
@@ -750,7 +750,7 @@ export default function AddKnowledgePage() {
         <div
           style={{
             padding: "2rem",
-            color: "#00ff88",
+            color: "var(--t-g)",
             fontFamily: '"Share Tech Mono", monospace',
           }}
         >

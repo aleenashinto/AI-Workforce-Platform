@@ -92,7 +92,7 @@ const Card = ({
         border: `1px solid ${border}`,
         padding: "1.5rem",
         position: "relative",
-        boxShadow: `0 0 30px rgba(0,255,136,0.03)`,
+        boxShadow: `0 0 30px rgba(var(--t-g-rgb), )`,
       }}
     >
       <Corners />
@@ -423,7 +423,7 @@ export default function DashboardPage() {
                     style={{
                       width: "100%",
                       height: `${h}%`,
-                      background: `linear-gradient(0deg, rgba(0,255,136,0.1), ${T.g})`,
+                      background: `linear-gradient(0deg, rgba(var(--t-g-rgb), ), ${T.g})`,
                       borderTop: `2px solid ${T.g}`,
                     }}
                   />
@@ -431,7 +431,7 @@ export default function DashboardPage() {
                     style={{
                       width: "100%",
                       height: `${h * 0.7}%`,
-                      background: `linear-gradient(0deg, rgba(0,207,255,0.1), ${T.g2})`,
+                      background: `linear-gradient(0deg, rgba(var(--t-g2-rgb), ), ${T.g2})`,
                       borderTop: `2px solid ${T.g2}`,
                     }}
                   />

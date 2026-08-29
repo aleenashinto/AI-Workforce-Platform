@@ -84,7 +84,7 @@ export default function SequencesPage() {
   const getStatusIcon = (status: string) => {
     switch (status) {
       case "active":
-        return <Play size={14} className="text-[#00ff88]" />;
+        return <Play size={14} className="text-[color:var(--t-g)]" />;
       case "paused":
         return <Pause size={14} className="text-yellow-400" />;
       case "completed":
@@ -99,7 +99,7 @@ export default function SequencesPage() {
   const getStatusColor = (status: string) => {
     switch (status) {
       case "active":
-        return "text-[#00ff88]";
+        return "text-[color:var(--t-g)]";
       case "paused":
         return "text-yellow-400";
       case "completed":
@@ -116,24 +116,24 @@ export default function SequencesPage() {
   });
 
   return (
-    <div className="p-8 h-full overflow-y-auto bg-[#040810]">
+    <div className="p-8 h-full overflow-y-auto bg-[color:var(--t-bg)]">
       <div className="flex justify-between items-center mb-8">
         <div>
           <h1 className="text-2xl font-bold font-display tracking-wider text-white flex items-center gap-3">
-            <Send className="text-[#00ff88]" />
+            <Send className="text-[color:var(--t-g)]" />
             SEQUENCES
           </h1>
-          <p className="text-sm text-[#00ff88]/60 font-mono">
+          <p className="text-sm text-[color:var(--t-g)]/60 font-mono">
             Automate personalized sales outreach and follow-ups.
           </p>
         </div>
         <div className="flex gap-3">
-          <button className="bg-[#0a1628] text-gray-300 border border-gray-700 px-4 py-2 rounded font-mono text-sm hover:bg-gray-800 transition-colors flex items-center gap-2">
+          <button className="bg-[color:var(--t-panel)] text-gray-300 border border-gray-700 px-4 py-2 rounded font-mono text-sm hover:bg-gray-800 transition-colors flex items-center gap-2">
             <FileText size={16} /> Templates
           </button>
           <button
             onClick={handleCreate}
-            className="bg-[#00ff88] text-[#040810] px-4 py-2 rounded font-bold font-mono text-sm hover:bg-[#00cfff] transition-colors flex items-center gap-2 shadow-[0_0_15px_rgba(0,255,136,0.4)]"
+            className="bg-[color:var(--t-g)] text-[color:var(--t-bg)] px-4 py-2 rounded font-bold font-mono text-sm hover:bg-[color:var(--t-g2)] transition-colors flex items-center gap-2 shadow-[0_0_15px_rgba(var(--t-g-rgb), )]"
           >
             <Plus size={16} /> CREATE SEQUENCE
           </button>
@@ -141,43 +141,43 @@ export default function SequencesPage() {
       </div>
 
       <div className="grid grid-cols-5 gap-4 mb-8 font-mono">
-        <div className="bg-[#0a1628] border border-[#00ff88]/20 p-4 rounded-lg text-center">
+        <div className="bg-[color:var(--t-panel)] border border-[color:var(--t-g)]/20 p-4 rounded-lg text-center">
           <div className="text-3xl font-bold text-white mb-1">
             {stats.total}
           </div>
-          <div className="text-xs text-[#00ff88]/60 uppercase">Total</div>
+          <div className="text-xs text-[color:var(--t-g)]/60 uppercase">Total</div>
         </div>
-        <div className="bg-[#0a1628] border border-[#00ff88]/20 p-4 rounded-lg text-center">
-          <div className="text-3xl font-bold text-[#00ff88] mb-1">
+        <div className="bg-[color:var(--t-panel)] border border-[color:var(--t-g)]/20 p-4 rounded-lg text-center">
+          <div className="text-3xl font-bold text-[color:var(--t-g)] mb-1">
             {stats.active}
           </div>
-          <div className="text-xs text-[#00ff88]/60 uppercase">Active</div>
+          <div className="text-xs text-[color:var(--t-g)]/60 uppercase">Active</div>
         </div>
-        <div className="bg-[#0a1628] border border-[#00ff88]/20 p-4 rounded-lg text-center">
+        <div className="bg-[color:var(--t-panel)] border border-[color:var(--t-g)]/20 p-4 rounded-lg text-center">
           <div className="text-3xl font-bold text-gray-400 mb-1">
             {stats.paused}
           </div>
-          <div className="text-xs text-[#00ff88]/60 uppercase">Paused</div>
+          <div className="text-xs text-[color:var(--t-g)]/60 uppercase">Paused</div>
         </div>
-        <div className="bg-[#0a1628] border border-[#00ff88]/20 p-4 rounded-lg text-center">
-          <div className="text-3xl font-bold text-[#00cfff] mb-1">
+        <div className="bg-[color:var(--t-panel)] border border-[color:var(--t-g)]/20 p-4 rounded-lg text-center">
+          <div className="text-3xl font-bold text-[color:var(--t-g2)] mb-1">
             {stats.completed}
           </div>
-          <div className="text-xs text-[#00ff88]/60 uppercase">Completed</div>
+          <div className="text-xs text-[color:var(--t-g)]/60 uppercase">Completed</div>
         </div>
-        <div className="bg-[#0a1628] border border-[#00ff88]/20 p-4 rounded-lg text-center">
+        <div className="bg-[color:var(--t-panel)] border border-[color:var(--t-g)]/20 p-4 rounded-lg text-center">
           <div className="text-3xl font-bold text-[#ff3355] mb-1">
             {stats.completed > 0 ? "3.2%" : "0.0%"}
           </div>
-          <div className="text-xs text-[#00ff88]/60 uppercase">Bounce Rate</div>
+          <div className="text-xs text-[color:var(--t-g)]/60 uppercase">Bounce Rate</div>
         </div>
       </div>
 
-      <div className="bg-[#0a1628] rounded-xl border border-[#00ff88]/20 overflow-hidden flex flex-col h-[calc(100vh-300px)]">
-        <div className="p-4 border-b border-[#00ff88]/20 flex justify-between items-center bg-[#040810]">
+      <div className="bg-[color:var(--t-panel)] rounded-xl border border-[color:var(--t-g)]/20 overflow-hidden flex flex-col h-[calc(100vh-300px)]">
+        <div className="p-4 border-b border-[color:var(--t-g)]/20 flex justify-between items-center bg-[color:var(--t-bg)]">
           <div className="relative w-96">
             <Search
-              className="absolute left-3 top-1/2 -translate-y-1/2 text-[#00ff88]/40"
+              className="absolute left-3 top-1/2 -translate-y-1/2 text-[color:var(--t-g)]/40"
               size={16}
             />
             <input
@@ -185,13 +185,13 @@ export default function SequencesPage() {
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               placeholder="Search sequences..."
-              className="w-full bg-[#040810] border border-[#00ff88]/20 rounded-md py-1.5 pl-9 pr-3 text-sm text-white focus:outline-none focus:border-[#00ff88]/50 font-mono"
+              className="w-full bg-[color:var(--t-bg)] border border-[color:var(--t-g)]/20 rounded-md py-1.5 pl-9 pr-3 text-sm text-white focus:outline-none focus:border-[color:var(--t-g)]/50 font-mono"
             />
           </div>
           <select 
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
-            className="bg-[#040810] border border-[#00ff88]/20 rounded-md py-1.5 px-3 text-sm text-white focus:outline-none focus:border-[#00ff88]/50 font-mono"
+            className="bg-[color:var(--t-bg)] border border-[color:var(--t-g)]/20 rounded-md py-1.5 px-3 text-sm text-white focus:outline-none focus:border-[color:var(--t-g)]/50 font-mono"
           >
             <option value="All">Status: All</option>
             <option value="active">Active</option>
@@ -203,7 +203,7 @@ export default function SequencesPage() {
         <div className="overflow-x-auto flex-1">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="bg-[#070e1a] border-b border-[#00ff88]/10 font-mono text-xs text-[#00ff88]/60 uppercase tracking-wider">
+              <tr className="bg-[color:var(--t-bg2)] border-b border-[color:var(--t-g)]/10 font-mono text-xs text-[color:var(--t-g)]/60 uppercase tracking-wider">
                 <th className="p-4 font-normal">Sequence Name</th>
                 <th className="p-4 font-normal">Status</th>
                 <th className="p-4 font-normal text-right">Enrolled</th>
@@ -218,7 +218,7 @@ export default function SequencesPage() {
                 <tr>
                   <td
                     colSpan={7}
-                    className="p-8 text-center text-[#00ff88]/50 font-mono"
+                    className="p-8 text-center text-[color:var(--t-g)]/50 font-mono"
                   >
                     Loading sequences...
                   </td>
@@ -227,7 +227,7 @@ export default function SequencesPage() {
                 <tr>
                   <td
                     colSpan={7}
-                    className="p-8 text-center text-[#00ff88]/50 font-mono"
+                    className="p-8 text-center text-[color:var(--t-g)]/50 font-mono"
                   >
                     No sequences found.
                   </td>
@@ -236,12 +236,12 @@ export default function SequencesPage() {
                 filteredSequences.map((seq) => (
                   <tr
                     key={seq.id}
-                    className="border-b border-[#00ff88]/5 hover:bg-[#00ff88]/5 transition-colors font-mono text-sm"
+                    className="border-b border-[color:var(--t-g)]/5 hover:bg-[color:var(--t-g)]/5 transition-colors font-mono text-sm"
                   >
                     <td className="p-4">
                       <Link
                         href={`/sales-assistant/sequences/${seq.id}`}
-                        className="text-white hover:text-[#00ff88] font-semibold flex items-center gap-2"
+                        className="text-white hover:text-[color:var(--t-g)] font-semibold flex items-center gap-2"
                       >
                         {seq.name}
                       </Link>
@@ -259,20 +259,20 @@ export default function SequencesPage() {
                     <td className="p-4 text-right text-gray-300">
                       {seq.stats?.enrolled || 0}
                     </td>
-                    <td className="p-4 text-right text-[#00ff88]">
+                    <td className="p-4 text-right text-[color:var(--t-g)]">
                       {seq.stats?.active || 0}
                     </td>
                     <td className="p-4 text-right text-gray-400">
                       {seq.stats?.completed || 0}
                     </td>
-                    <td className="p-4 text-right text-[#00cfff] font-bold">
+                    <td className="p-4 text-right text-[color:var(--t-g2)] font-bold">
                       {seq.stats?.reply_rate || "0.0"}%
                     </td>
                     <td className="p-4 text-right">
                       <div className="flex items-center justify-end gap-2">
                         <Link
                           href={`/sales-assistant/sequences/${seq.id}`}
-                          className="p-1.5 bg-[#00ff88]/10 text-[#00ff88] rounded hover:bg-[#00ff88]/20 transition-colors text-xs font-bold uppercase px-3"
+                          className="p-1.5 bg-[color:var(--t-g)]/10 text-[color:var(--t-g)] rounded hover:bg-[color:var(--t-g)]/20 transition-colors text-xs font-bold uppercase px-3"
                         >
                           Open
                         </Link>

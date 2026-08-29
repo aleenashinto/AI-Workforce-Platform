@@ -48,7 +48,7 @@ export default function ProfileSetupPage() {
         border: `1px solid ${T.border}`,
         padding: "3rem",
         position: "relative",
-        boxShadow: `0 0 60px rgba(0,255,136,0.1), 0 0 0 1px rgba(0,255,136,0.06)`,
+        boxShadow: `0 0 60px rgba(var(--t-g-rgb), ), 0 0 0 1px rgba(var(--t-g-rgb), )`,
       }}
     >
       <div

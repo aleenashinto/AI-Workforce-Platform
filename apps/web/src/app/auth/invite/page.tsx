@@ -177,7 +177,7 @@ function InviteAcceptanceInner() {
           inset: 0,
           zIndex: 0,
           pointerEvents: "none",
-          backgroundImage: `linear-gradient(rgba(0,255,136,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(0,255,136,0.04) 1px, transparent 1px)`,
+          backgroundImage: `linear-gradient(rgba(var(--t-g-rgb), ) 1px, transparent 1px), linear-gradient(90deg, rgba(var(--t-g-rgb), ) 1px, transparent 1px)`,
           backgroundSize: "60px 60px",
         }}
       />
@@ -193,7 +193,7 @@ function InviteAcceptanceInner() {
           textAlign: "center",
           position: "relative",
           zIndex: 10,
-          boxShadow: `0 0 80px rgba(0,255,136,0.08), 0 0 0 1px rgba(0,255,136,0.06)`,
+          boxShadow: `0 0 80px rgba(var(--t-g-rgb), ), 0 0 0 1px rgba(var(--t-g-rgb), )`,
         }}
       >
         <div
@@ -213,7 +213,7 @@ function InviteAcceptanceInner() {
             width: 80,
             height: 80,
             border: `1px solid ${T.border}`,
-            background: "rgba(0,255,136,0.02)",
+            background: "rgba(var(--t-g-rgb), )",
             borderRadius: "8px",
             display: "flex",
             alignItems: "center",

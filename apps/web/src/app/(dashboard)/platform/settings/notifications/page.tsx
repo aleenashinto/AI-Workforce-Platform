@@ -126,7 +126,7 @@ const Toggle = ({ label, description, defaultChecked }: any) => (
             (span.firstChild as HTMLElement).style.transform =
               "translateX(20px)";
           } else {
-            span.style.background = "rgba(0,255,136,0.2)";
+            span.style.background = "rgba(var(--t-g-rgb), )";
             (span.firstChild as HTMLElement).style.transform = "translateX(0)";
           }
         }}
@@ -139,7 +139,7 @@ const Toggle = ({ label, description, defaultChecked }: any) => (
           left: 0,
           right: 0,
           bottom: 0,
-          background: defaultChecked ? T.g : "rgba(0,255,136,0.2)",
+          background: defaultChecked ? T.g : "rgba(var(--t-g-rgb), )",
           transition: ".4s",
           borderRadius: 34,
         }}
@@ -151,7 +151,7 @@ const Toggle = ({ label, description, defaultChecked }: any) => (
             width: 16,
             left: 4,
             bottom: 4,
-            background: "#040810",
+            background: "var(--t-bg)",
             transition: ".4s",
             borderRadius: "50%",
             transform: defaultChecked ? "translateX(20px)" : "translateX(0)",

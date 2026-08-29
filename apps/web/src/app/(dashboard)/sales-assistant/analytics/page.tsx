@@ -36,7 +36,7 @@ const T = {
   border: "var(--t-border)",
   border2: "var(--t-border2)",
   muted: "var(--t-muted)",
-  muted2: "rgba(0,207,255,0.45)",
+  muted2: "rgba(var(--t-g2-rgb), )",
   text: "var(--t-text)",
   glow2: "var(--t-glow2)",
   mono: "var(--t-font-mono)",
@@ -83,7 +83,7 @@ const Skeleton = ({
     style={{
       height,
       width,
-      background: "rgba(0,207,255,0.08)",
+      background: "rgba(var(--t-g2-rgb), )",
       borderRadius: 4,
       animation: "pulse 1.5s ease-in-out infinite",
     }}
@@ -356,7 +356,7 @@ export default function AnalyticsPage() {
               style={{
                 background: days === d ? T.g2 : "transparent",
                 border: `1px solid ${T.border2}`,
-                color: days === d ? "#040810" : T.text,
+                color: days === d ? "var(--t-bg)" : T.text,
                 fontFamily: T.mono,
                 fontSize: "0.75rem",
                 padding: "0.5rem 1rem",
@@ -497,12 +497,12 @@ export default function AnalyticsPage() {
             >
               {funnel.map((stage, i) => {
                 const colors = [
-                  "rgba(0,207,255,0.18)",
-                  "rgba(0,207,255,0.32)",
-                  "rgba(0,207,255,0.46)",
-                  "rgba(0,207,255,0.60)",
-                  "rgba(0,207,255,0.74)",
-                  "rgba(0,207,255,0.87)",
+                  "rgba(var(--t-g2-rgb), )",
+                  "rgba(var(--t-g2-rgb), )",
+                  "rgba(var(--t-g2-rgb), )",
+                  "rgba(var(--t-g2-rgb), )",
+                  "rgba(var(--t-g2-rgb), )",
+                  "rgba(var(--t-g2-rgb), )",
                   T.g2,
                 ];
                 return (
@@ -595,7 +595,7 @@ export default function AnalyticsPage() {
               >
                 <CartesianGrid
                   strokeDasharray="3 3"
-                  stroke="rgba(0,207,255,0.1)"
+                  stroke="rgba(var(--t-g2-rgb), )"
                 />
                 <XAxis
                   dataKey="date"
@@ -717,7 +717,7 @@ export default function AnalyticsPage() {
                   <tr
                     key={s.id}
                     style={{
-                      borderBottom: `1px solid rgba(0,207,255,0.07)`,
+                      borderBottom: `1px solid rgba(var(--t-g2-rgb), )`,
                     }}
                   >
                     <td
@@ -883,7 +883,7 @@ export default function AnalyticsPage() {
                       <tr
                         key={mb.id}
                         style={{
-                          borderBottom: `1px solid rgba(0,207,255,0.07)`,
+                          borderBottom: `1px solid rgba(var(--t-g2-rgb), )`,
                         }}
                       >
                         <td

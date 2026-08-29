@@ -8,7 +8,7 @@ export default function OnboardingLayout({
 }) {
   return (
     <div
-      style={{ minHeight: "100vh", background: "#040810", color: "#c8ffe8" }}
+      style={{ minHeight: "100vh", background: "var(--t-bg)", color: "#c8ffe8" }}
     >
       <ProgressBar />
       <div

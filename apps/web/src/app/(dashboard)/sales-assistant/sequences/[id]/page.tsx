@@ -85,7 +85,7 @@ export default function SequenceEditorPage({
 
   if (loading)
     return (
-      <div className="p-8 text-[#00ff88]/50 font-mono">Loading sequence...</div>
+      <div className="p-8 text-[color:var(--t-g)]/50 font-mono">Loading sequence...</div>
     );
   if (!sequence)
     return (
@@ -93,13 +93,13 @@ export default function SequenceEditorPage({
     );
 
   return (
-    <div className="h-full flex flex-col bg-[#040810]">
+    <div className="h-full flex flex-col bg-[color:var(--t-bg)]">
       {/* HEADER */}
-      <header className="h-16 border-b border-[#00ff88]/20 flex items-center justify-between px-6 bg-[#0a1628] shrink-0">
+      <header className="h-16 border-b border-[color:var(--t-g)]/20 flex items-center justify-between px-6 bg-[color:var(--t-panel)] shrink-0">
         <div className="flex items-center gap-4">
           <Link
             href="/sales-assistant/sequences"
-            className="p-1.5 rounded hover:bg-[#00ff88]/10 text-gray-400 hover:text-[#00ff88] transition-colors"
+            className="p-1.5 rounded hover:bg-[color:var(--t-g)]/10 text-gray-400 hover:text-[color:var(--t-g)] transition-colors"
           >
             <ArrowLeft size={18} />
           </Link>
@@ -109,7 +109,7 @@ export default function SequenceEditorPage({
               <span
                 className={`px-2 py-0.5 rounded text-[10px] uppercase border ${
                   sequence.status === "active"
-                    ? "bg-[#00ff88]/10 text-[#00ff88] border-[#00ff88]/30"
+                    ? "bg-[color:var(--t-g)]/10 text-[color:var(--t-g)] border-[color:var(--t-g)]/30"
                     : sequence.status === "paused"
                       ? "bg-yellow-400/10 text-yellow-400 border-yellow-400/30"
                       : "bg-gray-800 text-gray-400 border-gray-600"
@@ -118,7 +118,7 @@ export default function SequenceEditorPage({
                 {sequence.status}
               </span>
             </span>
-            <span className="text-xs text-[#00ff88]/60 font-mono">
+            <span className="text-xs text-[color:var(--t-g)]/60 font-mono">
               Created {new Date(sequence.created_at).toLocaleDateString()}
             </span>
           </div>
@@ -135,7 +135,7 @@ export default function SequenceEditorPage({
           ) : (
             <button
               onClick={() => handleStatusChange("active")}
-              className="flex items-center gap-2 px-4 py-1.5 rounded border border-[#00ff88]/50 text-[#00ff88] bg-[#00ff88]/10 hover:bg-[#00ff88]/20 transition-colors shadow-[0_0_10px_rgba(0,255,136,0.2)]"
+              className="flex items-center gap-2 px-4 py-1.5 rounded border border-[color:var(--t-g)]/50 text-[color:var(--t-g)] bg-[color:var(--t-g)]/10 hover:bg-[color:var(--t-g)]/20 transition-colors shadow-[0_0_10px_rgba(var(--t-g-rgb), )]"
             >
               <Play size={14} /> ACTIVATE
             </button>
@@ -148,31 +148,31 @@ export default function SequenceEditorPage({
       </header>
 
       {/* TABS */}
-      <div className="flex border-b border-[#00ff88]/20 bg-[#070e1a] px-6 font-mono text-sm shrink-0">
+      <div className="flex border-b border-[color:var(--t-g)]/20 bg-[color:var(--t-bg2)] px-6 font-mono text-sm shrink-0">
         <button
           onClick={() => setActiveTab("builder")}
-          className={`px-6 py-3 border-b-2 transition-colors ${activeTab === "builder" ? "border-[#00ff88] text-[#00ff88]" : "border-transparent text-gray-400 hover:text-white"}`}
+          className={`px-6 py-3 border-b-2 transition-colors ${activeTab === "builder" ? "border-[color:var(--t-g)] text-[color:var(--t-g)]" : "border-transparent text-gray-400 hover:text-white"}`}
         >
           BUILDER
         </button>
         <button
           onClick={() => setActiveTab("enrollments")}
-          className={`px-6 py-3 border-b-2 transition-colors flex items-center gap-2 ${activeTab === "enrollments" ? "border-[#00ff88] text-[#00ff88]" : "border-transparent text-gray-400 hover:text-white"}`}
+          className={`px-6 py-3 border-b-2 transition-colors flex items-center gap-2 ${activeTab === "enrollments" ? "border-[color:var(--t-g)] text-[color:var(--t-g)]" : "border-transparent text-gray-400 hover:text-white"}`}
         >
           ENROLLMENTS{" "}
-          <span className="bg-[#00ff88]/20 text-[#00ff88] px-1.5 rounded text-xs">
+          <span className="bg-[color:var(--t-g)]/20 text-[color:var(--t-g)] px-1.5 rounded text-xs">
             {sequence.stats?.enrolled || 0}
           </span>
         </button>
         <button
           onClick={() => setActiveTab("analytics")}
-          className={`px-6 py-3 border-b-2 transition-colors ${activeTab === "analytics" ? "border-[#00ff88] text-[#00ff88]" : "border-transparent text-gray-400 hover:text-white"}`}
+          className={`px-6 py-3 border-b-2 transition-colors ${activeTab === "analytics" ? "border-[color:var(--t-g)] text-[color:var(--t-g)]" : "border-transparent text-gray-400 hover:text-white"}`}
         >
           ANALYTICS
         </button>
         <button
           onClick={() => setActiveTab("settings")}
-          className={`px-6 py-3 border-b-2 transition-colors ${activeTab === "settings" ? "border-[#00ff88] text-[#00ff88]" : "border-transparent text-gray-400 hover:text-white"}`}
+          className={`px-6 py-3 border-b-2 transition-colors ${activeTab === "settings" ? "border-[color:var(--t-g)] text-[color:var(--t-g)]" : "border-transparent text-gray-400 hover:text-white"}`}
         >
           SETTINGS
         </button>
@@ -185,10 +185,10 @@ export default function SequenceEditorPage({
             {/* Visual Flow */}
             <div className="flex-1 overflow-y-auto p-12 bg-gray-900/50 flex flex-col items-center">
               <div className="mb-6 flex flex-col items-center">
-                <div className="bg-[#0a1628] border border-[#00ff88]/30 px-6 py-2 rounded-full font-mono text-xs text-[#00ff88] shadow-[0_0_15px_rgba(0,255,136,0.1)]">
+                <div className="bg-[color:var(--t-panel)] border border-[color:var(--t-g)]/30 px-6 py-2 rounded-full font-mono text-xs text-[color:var(--t-g)] shadow-[0_0_15px_rgba(var(--t-g-rgb), )]">
                   TRIGGER: LEADS ENROLLED
                 </div>
-                <div className="h-8 w-px bg-[#00ff88]/30 mt-2" />
+                <div className="h-8 w-px bg-[color:var(--t-g)]/30 mt-2" />
               </div>
 
               {steps.map((step, index) => (
@@ -196,10 +196,10 @@ export default function SequenceEditorPage({
                   key={step.id || index}
                   className="flex flex-col items-center w-full max-w-md group"
                 >
-                  <ArrowDown size={16} className="text-[#00ff88]/50 mb-2" />
+                  <ArrowDown size={16} className="text-[color:var(--t-g)]/50 mb-2" />
 
-                  <div className="bg-[#0a1628] border border-gray-700 hover:border-[#00ff88]/50 w-full rounded-lg p-4 flex gap-4 cursor-pointer transition-colors shadow-lg group-hover:shadow-[0_0_15px_rgba(0,255,136,0.1)]">
-                    <div className="w-10 h-10 rounded bg-[#040810] border border-gray-700 flex items-center justify-center shrink-0 text-[#00ff88]">
+                  <div className="bg-[color:var(--t-panel)] border border-gray-700 hover:border-[color:var(--t-g)]/50 w-full rounded-lg p-4 flex gap-4 cursor-pointer transition-colors shadow-lg group-hover:shadow-[0_0_15px_rgba(var(--t-g-rgb), )]">
+                    <div className="w-10 h-10 rounded bg-[color:var(--t-bg)] border border-gray-700 flex items-center justify-center shrink-0 text-[color:var(--t-g)]">
                       {getStepIcon(step.type)}
                     </div>
                     <div className="flex-1">
@@ -224,15 +224,15 @@ export default function SequenceEditorPage({
               ))}
 
               <div className="mt-8">
-                <button className="flex items-center gap-2 bg-[#040810] border-2 border-dashed border-gray-700 hover:border-[#00ff88]/50 text-gray-400 hover:text-[#00ff88] px-8 py-3 rounded-lg font-mono text-sm transition-colors">
+                <button className="flex items-center gap-2 bg-[color:var(--t-bg)] border-2 border-dashed border-gray-700 hover:border-[color:var(--t-g)]/50 text-gray-400 hover:text-[color:var(--t-g)] px-8 py-3 rounded-lg font-mono text-sm transition-colors">
                   <Plus size={16} /> ADD STEP
                 </button>
               </div>
             </div>
 
             {/* Properties Panel (stubbed for now) */}
-            <div className="w-96 bg-[#0a1628] border-l border-[#00ff88]/20 p-6 flex flex-col">
-              <h3 className="font-mono text-[#00ff88] text-sm uppercase mb-6 flex items-center gap-2">
+            <div className="w-96 bg-[color:var(--t-panel)] border-l border-[color:var(--t-g)]/20 p-6 flex flex-col">
+              <h3 className="font-mono text-[color:var(--t-g)] text-sm uppercase mb-6 flex items-center gap-2">
                 <Settings size={16} /> Builder Settings
               </h3>
               <div className="text-xs text-gray-400 font-mono leading-relaxed">
@@ -247,7 +247,7 @@ export default function SequenceEditorPage({
           <div className="p-8 h-full overflow-y-auto">
             <table className="w-full text-left border-collapse">
               <thead>
-                <tr className="bg-[#070e1a] border-b border-[#00ff88]/10 font-mono text-xs text-[#00ff88]/60 uppercase tracking-wider">
+                <tr className="bg-[color:var(--t-bg2)] border-b border-[color:var(--t-g)]/10 font-mono text-xs text-[color:var(--t-g)]/60 uppercase tracking-wider">
                   <th className="p-4 font-normal">Lead</th>
                   <th className="p-4 font-normal">Company</th>
                   <th className="p-4 font-normal">Status</th>
@@ -260,7 +260,7 @@ export default function SequenceEditorPage({
                   <tr>
                     <td
                       colSpan={5}
-                      className="p-8 text-center text-[#00ff88]/50 font-mono"
+                      className="p-8 text-center text-[color:var(--t-g)]/50 font-mono"
                     >
                       No enrollments yet.
                     </td>
@@ -269,7 +269,7 @@ export default function SequenceEditorPage({
                   sequence.enrollments?.map((e: any) => (
                     <tr
                       key={e.id}
-                      className="border-b border-[#00ff88]/5 font-mono text-sm"
+                      className="border-b border-[color:var(--t-g)]/5 font-mono text-sm"
                     >
                       <td className="p-4 font-bold text-white">
                         {e.lead_name}
@@ -279,11 +279,11 @@ export default function SequenceEditorPage({
                         <span
                           className={`px-2 py-0.5 rounded text-xs border ${
                             e.status === "active"
-                              ? "bg-[#00ff88]/10 text-[#00ff88] border-[#00ff88]/30"
+                              ? "bg-[color:var(--t-g)]/10 text-[color:var(--t-g)] border-[color:var(--t-g)]/30"
                               : e.status === "completed"
                                 ? "bg-blue-500/10 text-blue-400 border-blue-500/30"
                                 : e.status === "replied"
-                                  ? "bg-[#00cfff]/10 text-[#00cfff] border-[#00cfff]/30"
+                                  ? "bg-[color:var(--t-g2)]/10 text-[color:var(--t-g2)] border-[color:var(--t-g2)]/30"
                                   : "bg-gray-800 text-gray-400 border-gray-600"
                           } uppercase`}
                         >
@@ -310,23 +310,23 @@ export default function SequenceEditorPage({
               Sequence Performance
             </h2>
             <div className="grid grid-cols-4 gap-6 font-mono mb-8">
-              <div className="bg-[#0a1628] border border-[#00ff88]/20 p-6 rounded-lg">
+              <div className="bg-[color:var(--t-panel)] border border-[color:var(--t-g)]/20 p-6 rounded-lg">
                 <div className="text-4xl font-bold text-white mb-2">
                   {sequence.stats?.enrolled || 0}
                 </div>
-                <div className="text-sm text-[#00ff88]/60 uppercase">
+                <div className="text-sm text-[color:var(--t-g)]/60 uppercase">
                   Enrolled
                 </div>
               </div>
-              <div className="bg-[#0a1628] border border-[#00cfff]/20 p-6 rounded-lg">
-                <div className="text-4xl font-bold text-[#00cfff] mb-2">
+              <div className="bg-[color:var(--t-panel)] border border-[color:var(--t-g2)]/20 p-6 rounded-lg">
+                <div className="text-4xl font-bold text-[color:var(--t-g2)] mb-2">
                   {sequence.stats?.reply_rate || "0.0"}%
                 </div>
-                <div className="text-sm text-[#00cfff]/60 uppercase">
+                <div className="text-sm text-[color:var(--t-g2)]/60 uppercase">
                   Reply Rate
                 </div>
               </div>
-              <div className="bg-[#0a1628] border border-blue-400/20 p-6 rounded-lg">
+              <div className="bg-[color:var(--t-panel)] border border-blue-400/20 p-6 rounded-lg">
                 <div className="text-4xl font-bold text-blue-400 mb-2">
                   {sequence.stats?.replied || 0}
                 </div>
@@ -334,7 +334,7 @@ export default function SequenceEditorPage({
                   Replies
                 </div>
               </div>
-              <div className="bg-[#0a1628] border border-purple-400/20 p-6 rounded-lg">
+              <div className="bg-[color:var(--t-panel)] border border-purple-400/20 p-6 rounded-lg">
                 <div className="text-4xl font-bold text-purple-400 mb-2">
                   0.0%
                 </div>
@@ -343,7 +343,7 @@ export default function SequenceEditorPage({
                 </div>
               </div>
             </div>
-            <div className="bg-[#0a1628] border border-gray-800 p-8 rounded-lg text-center font-mono text-gray-500">
+            <div className="bg-[color:var(--t-panel)] border border-gray-800 p-8 rounded-lg text-center font-mono text-gray-500">
               Detailed step performance funnel goes here.
             </div>
           </div>
@@ -357,21 +357,21 @@ export default function SequenceEditorPage({
 
             <div className="flex flex-col gap-6">
               <div>
-                <label className="block text-xs text-[#00ff88]/60 uppercase mb-2">
+                <label className="block text-xs text-[color:var(--t-g)]/60 uppercase mb-2">
                   Goal
                 </label>
                 <input
                   type="text"
                   value={sequence.goal || ""}
                   readOnly
-                  className="w-full bg-[#0a1628] border border-gray-700 rounded p-2 text-white"
+                  className="w-full bg-[color:var(--t-panel)] border border-gray-700 rounded p-2 text-white"
                 />
               </div>
               <div>
-                <label className="block text-xs text-[#00ff88]/60 uppercase mb-2">
+                <label className="block text-xs text-[color:var(--t-g)]/60 uppercase mb-2">
                   Business Hours
                 </label>
-                <select className="w-full bg-[#0a1628] border border-gray-700 rounded p-2 text-white">
+                <select className="w-full bg-[color:var(--t-panel)] border border-gray-700 rounded p-2 text-white">
                   <option>Mon-Fri, 9:00 AM - 5:00 PM</option>
                   <option>Mon-Sun, Any time</option>
                 </select>
@@ -382,7 +382,7 @@ export default function SequenceEditorPage({
                     type="checkbox"
                     checked
                     readOnly
-                    className="accent-[#00ff88] w-4 h-4"
+                    className="accent-[color:var(--t-g)] w-4 h-4"
                   />
                   <span className="text-sm text-gray-300">
                     Skip Weekends & Holidays
@@ -395,7 +395,7 @@ export default function SequenceEditorPage({
                     type="checkbox"
                     checked
                     readOnly
-                    className="accent-[#00ff88] w-4 h-4"
+                    className="accent-[color:var(--t-g)] w-4 h-4"
                   />
                   <span className="text-sm text-gray-300">
                     Stop sequence when lead replies

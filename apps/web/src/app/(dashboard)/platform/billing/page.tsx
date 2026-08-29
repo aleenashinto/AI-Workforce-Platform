@@ -55,7 +55,7 @@ const PlanCard = ({
 }: any) => (
   <div
     style={{
-      background: isCurrent ? "rgba(0,255,136,0.05)" : T.panel,
+      background: isCurrent ? "rgba(var(--t-g-rgb), )" : T.panel,
       border: `1px solid ${isCurrent ? T.g : T.border}`,
       padding: "2rem",
       position: "relative",

@@ -195,7 +195,7 @@ export default function KnowledgePage() {
           display: "flex",
           gap: "1.5rem",
           marginBottom: "1.5rem",
-          borderBottom: `1px solid rgba(0,255,136,0.1)`,
+          borderBottom: `1px solid rgba(var(--t-g-rgb), )`,
         }}
       >
         {["all", "ready", "processing", "failed"].map((t) => (
@@ -346,7 +346,7 @@ export default function KnowledgePage() {
                     borderBottom:
                       i === filteredSources.length - 1
                         ? "none"
-                        : `1px solid rgba(0,255,136,0.1)`,
+                        : `1px solid rgba(var(--t-g-rgb), )`,
                     transition: "background 0.2s",
                   }}
                 >

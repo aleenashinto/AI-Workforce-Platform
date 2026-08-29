@@ -96,9 +96,9 @@ function ModalField({
           onBlur={() => setFocused(false)}
           style={{
             width: "100%",
-            background: "rgba(0,255,136,0.03)",
-            border: `1px solid ${focused ? "rgba(0,255,136,0.5)" : T.border}`,
-            boxShadow: focused ? "0 0 0 3px rgba(0,255,136,0.08)" : "none",
+            background: "rgba(var(--t-g-rgb), )",
+            border: `1px solid ${focused ? "rgba(var(--t-g-rgb), )" : T.border}`,
+            boxShadow: focused ? "0 0 0 3px rgba(var(--t-g-rgb), )" : "none",
             color: T.text,
             fontFamily: T.mono,
             fontSize: "0.82rem",
@@ -213,7 +213,7 @@ function ResetForm() {
           maxWidth: 420,
           padding: "2.5rem",
           position: "relative",
-          boxShadow: `0 0 60px rgba(0,255,136,0.1), 0 0 0 1px rgba(0,255,136,0.06)`,
+          boxShadow: `0 0 60px rgba(var(--t-g-rgb), ), 0 0 0 1px rgba(var(--t-g-rgb), )`,
         }}
       >
         {/* top gradient bar */}
@@ -277,7 +277,7 @@ function ResetForm() {
 
             <div
               style={{
-                background: "rgba(0,255,136,0.02)",
+                background: "rgba(var(--t-g-rgb), )",
                 border: `1px solid ${T.border}`,
                 padding: "1rem",
                 display: "flex",
@@ -376,7 +376,7 @@ function ResetForm() {
                 textTransform: "uppercase",
                 color: allReqsMet && !loading ? T.bg : T.muted,
                 background:
-                  allReqsMet && !loading ? T.g : "rgba(0,255,136,0.1)",
+                  allReqsMet && !loading ? T.g : "rgba(var(--t-g-rgb), )",
                 border: "none",
                 padding: "0.85rem",
                 cursor: allReqsMet && !loading ? "pointer" : "not-allowed",
@@ -441,7 +441,7 @@ function ResetForm() {
                 fontSize: "0.75rem",
                 lineHeight: 1.6,
                 color: "var(--t-heading)",
-                background: "rgba(0,255,136,0.05)",
+                background: "rgba(var(--t-g-rgb), )",
                 border: `1px dashed ${T.border}`,
                 padding: "1.5rem",
               }}

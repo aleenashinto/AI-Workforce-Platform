@@ -132,7 +132,7 @@ export default function SettingsLayout({
                           gap: "0.8rem",
                           padding: "0.6rem 1rem",
                           background: active
-                            ? "rgba(0,255,136,0.1)"
+                            ? "rgba(var(--t-g-rgb), )"
                             : "transparent",
                           borderLeft: active
                             ? `2px solid ${T.g}`

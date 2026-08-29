@@ -248,7 +248,7 @@ export default function ConversationView() {
                 width: 64,
                 height: 64,
                 borderRadius: "50%",
-                background: "rgba(0,255,136,0.1)",
+                background: "rgba(var(--t-g-rgb), )",
                 border: `1px solid ${T.border}`,
                 display: "flex",
                 alignItems: "center",
@@ -490,7 +490,7 @@ export default function ConversationView() {
                     padding: "0.3rem 0.6rem",
                     background:
                       conversation.status === "active"
-                        ? "rgba(0,255,136,0.1)"
+                        ? "rgba(var(--t-g-rgb), )"
                         : conversation.status === "escalated"
                           ? "rgba(255,170,0,0.1)"
                           : "var(--t-white-05)",
@@ -793,9 +793,9 @@ export default function ConversationView() {
                       background: isUser
                         ? T.panel
                         : isAI
-                          ? "rgba(0,255,136,0.05)"
-                          : "rgba(0,207,255,0.05)",
-                      border: `1px solid ${isUser ? "var(--t-white-10)" : isAI ? "rgba(0,255,136,0.2)" : "rgba(0,207,255,0.2)"}`,
+                          ? "rgba(var(--t-g-rgb), )"
+                          : "rgba(var(--t-g2-rgb), )",
+                      border: `1px solid ${isUser ? "var(--t-white-10)" : isAI ? "rgba(var(--t-g-rgb), )" : "rgba(var(--t-g2-rgb), )"}`,
                       padding: "1rem 1.2rem",
                       maxWidth: "75%",
                       color: "var(--t-heading)",
@@ -806,7 +806,7 @@ export default function ConversationView() {
                         ? "0 12px 12px 12px"
                         : "12px 0 12px 12px",
                       boxShadow: isAI
-                        ? "0 4px 20px rgba(0,255,136,0.05)"
+                        ? "0 4px 20px rgba(var(--t-g-rgb), )"
                         : "none",
                     }}
                   >
@@ -853,7 +853,7 @@ export default function ConversationView() {
                       left: 0,
                       right: 0,
                       padding: "0.6rem 1rem",
-                      background: "rgba(0,255,136,0.1)",
+                      background: "rgba(var(--t-g-rgb), )",
                       border: `1px solid ${T.border}`,
                       borderRadius: "4px",
                       fontFamily: T.mono,
@@ -908,7 +908,7 @@ export default function ConversationView() {
                   onClick={handleCopilot}
                   disabled={isGenerating}
                   style={{
-                    background: "rgba(0,255,136,0.1)",
+                    background: "rgba(var(--t-g-rgb), )",
                     border: `1px solid ${T.border}`,
                     color: T.g,
                     padding: "0.8rem",

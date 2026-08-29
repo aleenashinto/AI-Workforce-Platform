@@ -31,7 +31,7 @@ const T = {
   border: "var(--t-border)",
   border2: "var(--t-border2)",
   muted: "var(--t-muted)",
-  muted2: "rgba(0,207,255,0.45)",
+  muted2: "rgba(var(--t-g2-rgb), )",
   text: "var(--t-text)",
   mono: "var(--t-font-mono)",
   display: "var(--t-font-display)",
@@ -153,7 +153,7 @@ export default function LeadsDashboard() {
             Leads
           </h1>
           <p
-            className="opacity-70 mt-1 text-[#c8ffe8]"
+            className="opacity-70 mt-1 text-[color:var(--t-text)]"
             style={{ fontFamily: T.mono }}
           >
             Manage, qualify, and convert your sales prospects.
@@ -162,11 +162,11 @@ export default function LeadsDashboard() {
         <div className="flex gap-3">
           <Button
             variant="outline"
-            className="border-[#00ff88]/30 text-[#00ff88] hover:bg-[#00ff88]/10 h-10 px-6 font-bold uppercase tracking-wider"
+            className="border-[color:var(--t-g)]/30 text-[color:var(--t-g)] hover:bg-[color:var(--t-g)]/10 h-10 px-6 font-bold uppercase tracking-wider"
           >
             Import
           </Button>
-          <Button className="bg-[#00ff88] hover:bg-[#00ff88]/80 text-black h-10 px-6 font-bold uppercase tracking-wider">
+          <Button className="bg-[color:var(--t-g)] hover:bg-[color:var(--t-g)]/80 text-black h-10 px-6 font-bold uppercase tracking-wider">
             <Plus className="w-4 h-4 mr-2" /> Create Lead
           </Button>
         </div>
@@ -192,7 +192,7 @@ export default function LeadsDashboard() {
         ].map((kpi, i) => (
           <div
             key={i}
-            className="bg-[#0a1628] border border-[rgba(0,255,136,0.15)] rounded-xl p-4 flex flex-col justify-center"
+            className="bg-[color:var(--t-panel)] border border-[rgba(var(--t-g-rgb), )] rounded-xl p-4 flex flex-col justify-center"
           >
             <span className="text-xs text-gray-400 uppercase tracking-wider mb-1 font-bold">
               {kpi.label}
@@ -216,14 +216,14 @@ export default function LeadsDashboard() {
             placeholder="Search leads, companies, contacts..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full bg-[#0a1628] border border-[rgba(0,207,255,0.2)] rounded-lg pl-9 pr-4 py-2 text-white outline-none focus:border-[#00cfff] transition-colors"
+            className="w-full bg-[color:var(--t-panel)] border border-[rgba(var(--t-g2-rgb), )] rounded-lg pl-9 pr-4 py-2 text-white outline-none focus:border-[color:var(--t-g2)] transition-colors"
           />
         </div>
         <div className="flex gap-3 w-full md:w-auto">
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
-            className="bg-[#0a1628] border border-[rgba(0,255,136,0.2)] text-[#00ff88] rounded-lg px-3 py-2 outline-none font-bold text-sm uppercase tracking-wider"
+            className="bg-[color:var(--t-panel)] border border-[rgba(var(--t-g-rgb), )] text-[color:var(--t-g)] rounded-lg px-3 py-2 outline-none font-bold text-sm uppercase tracking-wider"
           >
             <option value="">All Statuses</option>
             <option value="new">New</option>
@@ -235,7 +235,7 @@ export default function LeadsDashboard() {
           <select
             value={sourceFilter}
             onChange={(e) => setSourceFilter(e.target.value)}
-            className="bg-[#0a1628] border border-[rgba(0,207,255,0.2)] text-[#00cfff] rounded-lg px-3 py-2 outline-none font-bold text-sm uppercase tracking-wider"
+            className="bg-[color:var(--t-panel)] border border-[rgba(var(--t-g2-rgb), )] text-[color:var(--t-g2)] rounded-lg px-3 py-2 outline-none font-bold text-sm uppercase tracking-wider"
           >
             <option value="">All Sources</option>
             <option value="AI Lead Discovery">AI Lead Discovery</option>
@@ -247,8 +247,8 @@ export default function LeadsDashboard() {
 
       {/* BULK ACTIONS */}
       {selectedLeads.size > 0 && (
-        <div className="bg-[#00ff88]/10 border border-[#00ff88]/30 rounded-lg p-3 mb-4 flex items-center justify-between animate-in fade-in">
-          <div className="flex items-center gap-2 text-[#00ff88] font-bold text-sm">
+        <div className="bg-[color:var(--t-g)]/10 border border-[color:var(--t-g)]/30 rounded-lg p-3 mb-4 flex items-center justify-between animate-in fade-in">
+          <div className="flex items-center gap-2 text-[color:var(--t-g)] font-bold text-sm">
             <CheckCircle2 className="w-4 h-4" />
             {selectedLeads.size} leads selected
           </div>
@@ -258,7 +258,7 @@ export default function LeadsDashboard() {
                 e.target.value &&
                 handleBulkAction("change_status", e.target.value)
               }
-              className="bg-black/50 border border-[#00ff88]/30 text-white rounded text-xs px-2 py-1 outline-none"
+              className="bg-black/50 border border-[color:var(--t-g)]/30 text-white rounded text-xs px-2 py-1 outline-none"
             >
               <option value="">Change Status...</option>
               <option value="qualified">Qualified</option>
@@ -277,7 +277,7 @@ export default function LeadsDashboard() {
       )}
 
       {/* TABLE */}
-      <div className="flex-1 bg-[#0a1628] border border-[rgba(0,255,136,0.18)] rounded-xl overflow-hidden flex flex-col">
+      <div className="flex-1 bg-[color:var(--t-panel)] border border-[rgba(var(--t-g-rgb), )] rounded-xl overflow-hidden flex flex-col">
         <div className="overflow-x-auto flex-1">
           <table className="w-full text-left text-sm text-gray-300 whitespace-nowrap">
             <thead className="bg-black/40 text-gray-400 sticky top-0 text-xs uppercase font-bold tracking-wider">
@@ -295,7 +295,7 @@ export default function LeadsDashboard() {
                           : new Set(),
                       )
                     }
-                    className="accent-[#00ff88]"
+                    className="accent-[color:var(--t-g)]"
                   />
                 </th>
                 <th className="p-4">Lead</th>
@@ -306,7 +306,7 @@ export default function LeadsDashboard() {
                 <th className="p-4">Assigned To</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[rgba(0,255,136,0.1)]">
+            <tbody className="divide-y divide-[rgba(var(--t-g-rgb), )]">
               {loading ? (
                 <tr>
                   <td colSpan={7} className="p-8 text-center text-gray-500">
@@ -327,14 +327,14 @@ export default function LeadsDashboard() {
                       if ((e.target as any).tagName !== "INPUT")
                         handleRowClick(lead);
                     }}
-                    className="hover:bg-[#00ff88]/5 transition-colors cursor-pointer group"
+                    className="hover:bg-[color:var(--t-g)]/5 transition-colors cursor-pointer group"
                   >
                     <td className="p-4" onClick={(e) => e.stopPropagation()}>
                       <input
                         type="checkbox"
                         checked={selectedLeads.has(lead.id)}
                         onChange={() => toggleSelect(lead.id)}
-                        className="accent-[#00ff88]"
+                        className="accent-[color:var(--t-g)]"
                       />
                     </td>
                     <td className="p-4">
@@ -347,7 +347,7 @@ export default function LeadsDashboard() {
                     </td>
                     <td className="p-4 font-medium text-gray-200">
                       {lead.company}
-                      <div className="text-xs text-[#00cfff]">
+                      <div className="text-xs text-[color:var(--t-g2)]">
                         {lead.company_industry}
                       </div>
                     </td>
@@ -356,11 +356,11 @@ export default function LeadsDashboard() {
                         variant="outline"
                         className={
                           (lead.status === "qualified"
-                            ? "border-[#00ff88] text-[#00ff88]"
+                            ? "border-[color:var(--t-g)] text-[color:var(--t-g)]"
                             : lead.status === "contacted"
                               ? "border-amber-400 text-amber-400"
                               : lead.status === "new"
-                                ? "border-[#00cfff] text-[#00cfff]"
+                                ? "border-[color:var(--t-g2)] text-[color:var(--t-g2)]"
                                 : "border-gray-500 text-gray-400") +
                           " uppercase text-[10px]"
                         }
@@ -407,15 +407,15 @@ export default function LeadsDashboard() {
       {/* PROSPECT DRAWER */}
       {selectedLead && (
         <div className="fixed inset-0 z-50 flex justify-end bg-black/60 backdrop-blur-sm animate-in fade-in">
-          <div className="w-full md:w-[600px] h-full bg-[#070e1a] border-l border-[rgba(0,255,136,0.3)] shadow-2xl flex flex-col animate-in slide-in-from-right overflow-hidden">
+          <div className="w-full md:w-[600px] h-full bg-[color:var(--t-bg2)] border-l border-[rgba(var(--t-g-rgb), )] shadow-2xl flex flex-col animate-in slide-in-from-right overflow-hidden">
             {/* Header */}
-            <div className="p-6 border-b border-[rgba(0,255,136,0.2)] bg-[#0a1628] flex-shrink-0">
+            <div className="p-6 border-b border-[rgba(var(--t-g-rgb), )] bg-[color:var(--t-panel)] flex-shrink-0">
               <div className="flex justify-between items-start mb-4">
                 <div>
                   <h2 className="text-2xl font-bold text-white mb-1">
                     {selectedLead.contact_name}
                   </h2>
-                  <p className="text-[#00cfff] font-medium flex items-center gap-2">
+                  <p className="text-[color:var(--t-g2)] font-medium flex items-center gap-2">
                     {selectedLead.job_title} @ {selectedLead.company}
                   </p>
                 </div>
@@ -433,7 +433,7 @@ export default function LeadsDashboard() {
                           fetchLeads();
                         });
                     }}
-                    className="bg-black/50 border border-[#00ff88]/30 text-[#00ff88] rounded px-3 py-1 outline-none text-xs uppercase font-bold"
+                    className="bg-black/50 border border-[color:var(--t-g)]/30 text-[color:var(--t-g)] rounded px-3 py-1 outline-none text-xs uppercase font-bold"
                   >
                     <option value="new">New</option>
                     <option value="contacted">Contacted</option>
@@ -459,7 +459,7 @@ export default function LeadsDashboard() {
                   className={
                     "text-sm font-bold uppercase tracking-wider pb-2 border-b-2 transition-colors " +
                     (activeTab === "overview"
-                      ? "border-[#00ff88] text-[#00ff88]"
+                      ? "border-[color:var(--t-g)] text-[color:var(--t-g)]"
                       : "border-transparent text-gray-500 hover:text-gray-300")
                   }
                 >
@@ -470,7 +470,7 @@ export default function LeadsDashboard() {
                   className={
                     "text-sm font-bold uppercase tracking-wider pb-2 border-b-2 transition-colors " +
                     (activeTab === "activity"
-                      ? "border-[#00ff88] text-[#00ff88]"
+                      ? "border-[color:var(--t-g)] text-[color:var(--t-g)]"
                       : "border-transparent text-gray-500 hover:text-gray-300")
                   }
                 >
@@ -481,7 +481,7 @@ export default function LeadsDashboard() {
                   className={
                     "text-sm font-bold uppercase tracking-wider pb-2 border-b-2 transition-colors " +
                     (activeTab === "notes"
-                      ? "border-[#00ff88] text-[#00ff88]"
+                      ? "border-[color:var(--t-g)] text-[color:var(--t-g)]"
                       : "border-transparent text-gray-500 hover:text-gray-300")
                   }
                 >
@@ -493,14 +493,14 @@ export default function LeadsDashboard() {
             {/* Scrollable Content */}
             <div className="flex-1 overflow-y-auto p-6 text-gray-300 text-sm">
               {!leadDetail ? (
-                <div className="flex justify-center items-center h-full text-[#00ff88] animate-pulse">
+                <div className="flex justify-center items-center h-full text-[color:var(--t-g)] animate-pulse">
                   Loading lead details...
                 </div>
               ) : activeTab === "overview" ? (
                 <div className="space-y-6">
                   {/* Scores */}
                   <div className="grid grid-cols-2 gap-4">
-                    <div className="bg-[#0a1628] border border-[rgba(0,255,136,0.2)] p-4 rounded-xl">
+                    <div className="bg-[color:var(--t-panel)] border border-[rgba(var(--t-g-rgb), )] p-4 rounded-xl">
                       <div className="text-xs uppercase text-gray-400 tracking-wider mb-1">
                         AI Lead Score
                       </div>
@@ -511,20 +511,20 @@ export default function LeadsDashboard() {
                         {leadDetail.score || "0"}
                       </div>
                     </div>
-                    <div className="bg-[#0a1628] border border-[rgba(0,207,255,0.2)] p-4 rounded-xl">
+                    <div className="bg-[color:var(--t-panel)] border border-[rgba(var(--t-g2-rgb), )] p-4 rounded-xl">
                       <div className="text-xs uppercase text-gray-400 tracking-wider mb-1">
                         Source
                       </div>
-                      <div className="text-lg font-bold text-[#00cfff] mt-1">
+                      <div className="text-lg font-bold text-[color:var(--t-g2)] mt-1">
                         {leadDetail.source}
                       </div>
                     </div>
                   </div>
 
                   {/* AI Intel */}
-                  <div className="bg-[#0a1628] border border-white/10 p-4 rounded-xl">
+                  <div className="bg-[color:var(--t-panel)] border border-white/10 p-4 rounded-xl">
                     <h4 className="font-bold text-white mb-2 uppercase tracking-wider text-xs flex items-center gap-2">
-                      <Activity className="w-4 h-4 text-[#00ff88]" /> AI
+                      <Activity className="w-4 h-4 text-[color:var(--t-g)]" /> AI
                       Intelligence
                     </h4>
                     <p className="text-gray-300 mb-3">
@@ -562,7 +562,7 @@ export default function LeadsDashboard() {
                       <h4 className="font-bold text-white mb-3 uppercase tracking-wider text-xs">
                         Company Details
                       </h4>
-                      <div className="bg-[#0a1628] border border-white/10 rounded-xl p-4 grid grid-cols-2 gap-y-4 text-sm">
+                      <div className="bg-[color:var(--t-panel)] border border-white/10 rounded-xl p-4 grid grid-cols-2 gap-y-4 text-sm">
                         <div>
                           <span className="text-gray-500 block text-[10px] uppercase">
                             Domain
@@ -617,14 +617,14 @@ export default function LeadsDashboard() {
               ) : activeTab === "activity" ? (
                 <div className="space-y-4">
                   <div className="relative pl-6 border-l border-white/10 pb-4">
-                    <div className="absolute w-3 h-3 bg-[#00ff88] rounded-full -left-[6px] top-1"></div>
+                    <div className="absolute w-3 h-3 bg-[color:var(--t-g)] rounded-full -left-[6px] top-1"></div>
                     <div className="text-xs text-gray-500 mb-1">Today</div>
                     <div className="font-bold text-white text-sm">
                       Viewed by Alex
                     </div>
                   </div>
                   <div className="relative pl-6 border-l border-white/10 pb-4">
-                    <div className="absolute w-3 h-3 bg-[#00cfff] rounded-full -left-[6px] top-1"></div>
+                    <div className="absolute w-3 h-3 bg-[color:var(--t-g2)] rounded-full -left-[6px] top-1"></div>
                     <div className="text-xs text-gray-500 mb-1">Yesterday</div>
                     <div className="font-bold text-white text-sm">
                       Discovered via AI Search
@@ -642,9 +642,9 @@ export default function LeadsDashboard() {
                 <div className="space-y-4">
                   <textarea
                     placeholder="Add a note about this lead..."
-                    className="w-full h-32 bg-black/40 border border-white/10 rounded-lg p-3 text-white outline-none focus:border-[#00ff88] text-sm resize-none"
+                    className="w-full h-32 bg-black/40 border border-white/10 rounded-lg p-3 text-white outline-none focus:border-[color:var(--t-g)] text-sm resize-none"
                   ></textarea>
-                  <Button className="bg-[#00ff88] text-black w-full font-bold">
+                  <Button className="bg-[color:var(--t-g)] text-black w-full font-bold">
                     Save Note
                   </Button>
                 </div>
@@ -652,7 +652,7 @@ export default function LeadsDashboard() {
             </div>
 
             {/* Footer Actions */}
-            <div className="p-6 border-t border-[rgba(0,255,136,0.2)] bg-[#0a1628] flex gap-3">
+            <div className="p-6 border-t border-[rgba(var(--t-g-rgb), )] bg-[color:var(--t-panel)] flex gap-3">
               <Button className="flex-1 bg-indigo-600 hover:bg-indigo-500 text-white font-bold">
                 <Mail className="w-4 h-4 mr-2" /> Generate Outreach
               </Button>

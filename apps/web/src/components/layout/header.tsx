@@ -31,7 +31,7 @@ const T = {
   border: "var(--t-border)",
   border2: "var(--t-border2)",
   muted: "var(--t-muted)",
-  muted2: "rgba(0,207,255,0.45)",
+  muted2: "rgba(var(--t-g2-rgb), )",
   text: "var(--t-text)",
   glow: "var(--t-glow)",
   mono: "var(--t-font-mono)",
@@ -182,7 +182,7 @@ export function Header({
         {setMobileMenuOpen && (
           <button
             onClick={() => setMobileMenuOpen(true)}
-            className="md:hidden text-[#00ff88] hover:bg-[rgba(0,255,136,0.1)] p-2 rounded transition-colors"
+            className="md:hidden text-[color:var(--t-g)] hover:bg-[rgba(var(--t-g-rgb), )] p-2 rounded transition-colors"
           >
             <Menu size={24} />
           </button>
@@ -237,7 +237,7 @@ export function Header({
             style={{
               padding: "0.6rem 1rem 0.6rem 2.5rem",
               width: 300,
-              background: "rgba(0,255,136,0.03)",
+              background: "rgba(var(--t-g-rgb), )",
               border: `1px solid ${searchFocused ? T.g : T.border}`,
               color: T.text,
               fontFamily: T.mono,
@@ -307,7 +307,7 @@ export function Header({
                         }}
                         onMouseEnter={(e) =>
                           (e.currentTarget.style.background =
-                            "rgba(0,255,136,0.1)")
+                            "rgba(var(--t-g-rgb), )")
                         }
                         onMouseLeave={(e) =>
                           (e.currentTarget.style.background = "transparent")
@@ -531,7 +531,7 @@ export function Header({
                       }}
                       onMouseEnter={(e) =>
                         (e.currentTarget.style.background =
-                          "rgba(0,255,136,0.1)")
+                          "rgba(var(--t-g-rgb), )")
                       }
                       onMouseLeave={(e) =>
                         (e.currentTarget.style.background = "transparent")
@@ -559,7 +559,7 @@ export function Header({
                       }}
                       onMouseEnter={(e) =>
                         (e.currentTarget.style.background =
-                          "rgba(0,255,136,0.1)")
+                          "rgba(var(--t-g-rgb), )")
                       }
                       onMouseLeave={(e) =>
                         (e.currentTarget.style.background = "transparent")
