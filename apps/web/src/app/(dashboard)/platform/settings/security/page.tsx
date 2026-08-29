@@ -102,7 +102,7 @@ const Select = ({ label, value, onChange, options }: any) => (
       onChange={onChange}
       style={{
         width: "100%",
-        background: "rgba(var(--t-g-rgb), )",
+        background: "rgba(0,255,136,0.03)",
         border: `1px solid ${T.border}`,
         color: T.text,
         fontFamily: T.mono,
@@ -180,7 +180,7 @@ export default function SecuritySettingsPage() {
             <button
               onClick={handleUpdatePolicy}
               style={{
-                background: policySaved ? T.g : "rgba(var(--t-g-rgb), )",
+                background: policySaved ? T.g : "rgba(0,255,136,0.1)",
                 border: `1px solid ${T.g}`,
                 padding: "0.8rem 2rem",
                 color: policySaved ? T.bg : T.g,
@@ -223,7 +223,7 @@ export default function SecuritySettingsPage() {
             <button
               onClick={handleExport}
               style={{
-                background: exported ? "rgba(var(--t-g-rgb), )" : "transparent",
+                background: exported ? "rgba(0,255,136,0.15)" : "transparent",
                 border: `1px solid ${exported ? T.g : T.muted}`,
                 padding: "0.8rem 2rem",
                 color: exported ? T.g : T.text,

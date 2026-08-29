@@ -267,16 +267,16 @@ export default function ConversationPage({
                     transition: "background 0.2s",
                     background:
                       c.id === params.id
-                        ? "rgba(var(--t-g-rgb), )"
+                        ? "rgba(0,255,136,0.05)"
                         : "transparent",
                   }}
                   onMouseEnter={(e) =>
-                    (e.currentTarget.style.background = "rgba(var(--t-g-rgb), )")
+                    (e.currentTarget.style.background = "rgba(0,255,136,0.05)")
                   }
                   onMouseLeave={(e) =>
                     (e.currentTarget.style.background =
                       c.id === params.id
-                        ? "rgba(var(--t-g-rgb), )"
+                        ? "rgba(0,255,136,0.05)"
                         : "transparent")
                   }
                 >
@@ -326,7 +326,7 @@ export default function ConversationPage({
                         fontFamily: T.mono,
                         fontSize: "0.6rem",
                         padding: "0.2rem 0.4rem",
-                        background: "rgba(var(--t-g-rgb), )",
+                        background: "rgba(0,255,136,0.1)",
                         border: `1px solid ${T.border}`,
                         color: T.g,
                       }}
@@ -383,7 +383,7 @@ export default function ConversationPage({
                     width: 40,
                     height: 40,
                     borderRadius: "50%",
-                    background: "rgba(var(--t-g-rgb), )",
+                    background: "rgba(0,255,136,0.1)",
                     border: `1px solid ${T.border}`,
                     display: "flex",
                     alignItems: "center",
@@ -527,7 +527,7 @@ export default function ConversationPage({
                         width: 32,
                         height: 32,
                         borderRadius: "50%",
-                        background: "rgba(var(--t-g-rgb), )",
+                        background: "rgba(0,255,136,0.1)",
                         border: `1px solid ${T.g}`,
                         display: "flex",
                         alignItems: "center",
@@ -558,7 +558,7 @@ export default function ConversationPage({
                       </div>
                       <div
                         style={{
-                          background: "rgba(var(--t-g-rgb), )",
+                          background: "rgba(0,255,136,0.05)",
                           border: `1px solid ${T.border}`,
                           padding: "1rem",
                           fontFamily: T.body,

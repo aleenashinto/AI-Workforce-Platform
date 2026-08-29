@@ -12,7 +12,7 @@ const T = {
   border: "var(--t-border)",
   border2: "var(--t-border2)",
   muted: "var(--t-muted)",
-  muted2: "rgba(var(--t-g2-rgb), )",
+  muted2: "rgba(0,207,255,0.45)",
   text: "var(--t-text)",
   glow2: "var(--t-glow2)",
   mono: "var(--t-font-mono)",
@@ -103,7 +103,7 @@ export default function ResearchPage() {
                 cursor: "pointer",
                 background:
                   activeLead === item.id
-                    ? "rgba(var(--t-g2-rgb), )"
+                    ? "rgba(0,207,255,0.05)"
                     : "transparent",
                 transition: "background 0.2s",
               }}
@@ -283,7 +283,7 @@ export default function ResearchPage() {
               >
                 <div
                   style={{
-                    background: "rgba(var(--t-g2-rgb), )",
+                    background: "rgba(0,207,255,0.03)",
                     border: `1px solid ${T.border2}`,
                     padding: "1rem",
                   }}
@@ -322,7 +322,7 @@ export default function ResearchPage() {
 
                 <div
                   style={{
-                    background: "rgba(var(--t-g2-rgb), )",
+                    background: "rgba(0,207,255,0.03)",
                     border: `1px solid ${T.border2}`,
                     padding: "1rem",
                   }}

@@ -90,9 +90,9 @@ export function ModalField({
           onBlur={() => setFocused(false)}
           style={{
             width: "100%",
-            background: "rgba(var(--t-g-rgb), )",
-            border: `1px solid ${focused ? "rgba(var(--t-g-rgb), )" : T.border}`,
-            boxShadow: focused ? "0 0 0 3px rgba(var(--t-g-rgb), )" : "none",
+            background: "rgba(0,255,136,0.03)",
+            border: `1px solid ${focused ? "rgba(0,255,136,0.5)" : T.border}`,
+            boxShadow: focused ? "0 0 0 3px rgba(0,255,136,0.08)" : "none",
             color: T.text,
             fontFamily: T.mono,
             fontSize: "0.82rem",
@@ -122,9 +122,9 @@ export function ModalField({
           onBlur={() => setFocused(false)}
           style={{
             width: "100%",
-            background: "rgba(var(--t-g-rgb), )",
-            border: `1px solid ${focused ? "rgba(var(--t-g-rgb), )" : T.border}`,
-            boxShadow: focused ? "0 0 0 3px rgba(var(--t-g-rgb), )" : "none",
+            background: "rgba(0,255,136,0.03)",
+            border: `1px solid ${focused ? "rgba(0,255,136,0.5)" : T.border}`,
+            boxShadow: focused ? "0 0 0 3px rgba(0,255,136,0.08)" : "none",
             color: T.text,
             fontFamily: T.mono,
             fontSize: "0.82rem",
@@ -183,7 +183,7 @@ export function ActionBtn({
     } else {
       (e.currentTarget as HTMLElement).style.borderColor = T.g2;
       (e.currentTarget as HTMLElement).style.background =
-        "rgba(var(--t-g2-rgb), )";
+        "rgba(0,207,255,0.07)";
     }
   };
   const handleLeave = (
@@ -269,7 +269,7 @@ export function ProgressBar() {
           style={{
             flex: 1,
             height: 4,
-            background: "rgba(var(--t-g-rgb), )",
+            background: "rgba(0,255,136,0.1)",
             borderRadius: 2,
             overflow: "hidden",
             position: "relative",

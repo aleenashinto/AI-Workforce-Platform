@@ -89,7 +89,7 @@ const Card = ({
         border: `1px solid ${border}`,
         padding: "1.5rem",
         position: "relative",
-        boxShadow: `0 0 30px rgba(var(--t-g-rgb), )`,
+        boxShadow: `0 0 30px rgba(0,255,136,0.03)`,
       }}
     >
       <Corners />
@@ -453,7 +453,7 @@ export default function SupportOverviewPage() {
                         axisLine={false}
                       />
                       <Tooltip
-                        cursor={{ fill: "rgba(var(--t-g-rgb), )" }}
+                        cursor={{ fill: "rgba(0,255,136,0.1)" }}
                         contentStyle={{
                           background: T.panel,
           borderRadius: "var(--t-radius)",
@@ -561,7 +561,7 @@ export default function SupportOverviewPage() {
                         <tr
                           key={c.id}
                           style={{
-                            borderBottom: `1px solid rgba(var(--t-g-rgb), )`,
+                            borderBottom: `1px solid rgba(0,255,136,0.05)`,
                             color: "var(--t-heading)",
                             fontSize: "0.95rem",
                           }}
@@ -590,7 +590,7 @@ export default function SupportOverviewPage() {
                                 textTransform: "uppercase",
                                 background:
                                   c.status === "resolved"
-                                    ? "rgba(var(--t-g-rgb), )"
+                                    ? "rgba(0,255,136,0.1)"
                                     : c.status === "escalated"
                                       ? "rgba(255,170,0,0.1)"
                                       : "var(--t-white-05)",
@@ -703,7 +703,7 @@ export default function SupportOverviewPage() {
                                 index === 0
                                   ? T.g
                                   : index === 1
-                                    ? "var(--t-g2)"
+                                    ? "#00cfff"
                                     : index === 2
                                       ? "var(--t-heading)"
                                       : T.muted

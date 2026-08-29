@@ -105,7 +105,7 @@ const Input = ({ label, value, type = "text", onChange }: any) => (
       onChange={onChange}
       style={{
         width: "100%",
-        background: "rgba(var(--t-g-rgb), )",
+        background: "rgba(0,255,136,0.03)",
         border: `1px solid ${T.border}`,
         color: T.text,
         fontFamily: T.mono,
@@ -138,7 +138,7 @@ const Select = ({ label, value, onChange, options }: any) => (
       onChange={onChange}
       style={{
         width: "100%",
-        background: "rgba(var(--t-g-rgb), )",
+        background: "rgba(0,255,136,0.03)",
         border: `1px solid ${T.border}`,
         color: T.text,
         fontFamily: T.mono,

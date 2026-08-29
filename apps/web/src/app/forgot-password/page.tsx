@@ -89,9 +89,9 @@ function ModalField({
         onBlur={() => setFocused(false)}
         style={{
           width: "100%",
-          background: "rgba(var(--t-g-rgb), )",
-          border: `1px solid ${focused ? "rgba(var(--t-g-rgb), )" : T.border}`,
-          boxShadow: focused ? "0 0 0 3px rgba(var(--t-g-rgb), )" : "none",
+          background: "rgba(0,255,136,0.03)",
+          border: `1px solid ${focused ? "rgba(0,255,136,0.5)" : T.border}`,
+          boxShadow: focused ? "0 0 0 3px rgba(0,255,136,0.08)" : "none",
           color: T.text,
           fontFamily: T.mono,
           fontSize: "0.85rem",
@@ -158,7 +158,7 @@ export default function ForgotPasswordPage() {
           inset: 0,
           zIndex: 0,
           pointerEvents: "none",
-          backgroundImage: `linear-gradient(rgba(var(--t-g-rgb), ) 1px, transparent 1px), linear-gradient(90deg, rgba(var(--t-g-rgb), ) 1px, transparent 1px)`,
+          backgroundImage: `linear-gradient(rgba(0,255,136,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(0,255,136,0.04) 1px, transparent 1px)`,
           backgroundSize: "60px 60px",
         }}
       />
@@ -173,7 +173,7 @@ export default function ForgotPasswordPage() {
           padding: "2.5rem 3rem",
           position: "relative",
           zIndex: 10,
-          boxShadow: `0 0 80px rgba(var(--t-g-rgb), ), 0 0 0 1px rgba(var(--t-g-rgb), )`,
+          boxShadow: `0 0 80px rgba(0,255,136,0.08), 0 0 0 1px rgba(0,255,136,0.06)`,
         }}
       >
         <div
@@ -298,7 +298,7 @@ export default function ForgotPasswordPage() {
                 letterSpacing: "0.1em",
                 textTransform: "uppercase",
                 color: loading ? T.muted : T.bg,
-                background: loading ? "rgba(var(--t-g-rgb), )" : T.g,
+                background: loading ? "rgba(0,255,136,0.1)" : T.g,
                 border: "none",
                 padding: "1rem",
                 cursor: loading ? "not-allowed" : "pointer",

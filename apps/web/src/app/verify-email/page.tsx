@@ -137,7 +137,7 @@ function VerifyContent() {
           maxWidth: 420,
           padding: "2.5rem",
           position: "relative",
-          boxShadow: `0 0 60px rgba(var(--t-g-rgb), ), 0 0 0 1px rgba(var(--t-g-rgb), )`,
+          boxShadow: `0 0 60px rgba(0,255,136,0.1), 0 0 0 1px rgba(0,255,136,0.06)`,
         }}
       >
         <div
@@ -161,7 +161,7 @@ function VerifyContent() {
               width: 56,
               height: 56,
               borderRadius: "50%",
-              background: "rgba(var(--t-g-rgb), )",
+              background: "rgba(0,255,136,0.05)",
               border: `1px solid ${T.border}`,
               marginBottom: "1rem",
               boxShadow: T.glow,
@@ -249,7 +249,7 @@ function VerifyContent() {
               onMouseEnter={(e) => {
                 if (!isResending) {
                   e.currentTarget.style.borderColor = T.g2;
-                  e.currentTarget.style.background = "rgba(var(--t-g2-rgb), )";
+                  e.currentTarget.style.background = "rgba(0,207,255,0.07)";
                   e.currentTarget.style.boxShadow = T.glow2;
                 }
               }}

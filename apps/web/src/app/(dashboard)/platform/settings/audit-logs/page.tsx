@@ -341,11 +341,11 @@ export default function AuditLogsPage() {
                   borderBottom:
                     i === logs.length - 1
                       ? "none"
-                      : `1px solid rgba(var(--t-g-rgb), )`,
+                      : `1px solid rgba(0,255,136,0.1)`,
                   transition: "background 0.2s",
                 }}
                 onMouseEnter={(e) =>
-                  (e.currentTarget.style.background = "rgba(var(--t-g-rgb), )")
+                  (e.currentTarget.style.background = "rgba(0,255,136,0.05)")
                 }
                 onMouseLeave={(e) =>
                   (e.currentTarget.style.background = "transparent")
@@ -408,7 +408,7 @@ export default function AuditLogsPage() {
                       fontFamily: T.mono,
                       fontSize: "0.7rem",
                       color: T.g,
-                      background: "rgba(var(--t-g-rgb), )",
+                      background: "rgba(0,255,136,0.1)",
                       padding: "0.2rem 0.5rem",
                       border: `1px solid ${T.border}`,
                       textTransform: "uppercase",

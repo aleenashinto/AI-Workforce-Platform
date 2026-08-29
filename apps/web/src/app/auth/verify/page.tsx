@@ -91,7 +91,7 @@ export default function EmailVerificationPage() {
           inset: 0,
           zIndex: 0,
           pointerEvents: "none",
-          backgroundImage: `linear-gradient(rgba(var(--t-g-rgb), ) 1px, transparent 1px), linear-gradient(90deg, rgba(var(--t-g-rgb), ) 1px, transparent 1px)`,
+          backgroundImage: `linear-gradient(rgba(0,255,136,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(0,255,136,0.04) 1px, transparent 1px)`,
           backgroundSize: "60px 60px",
         }}
       />
@@ -107,7 +107,7 @@ export default function EmailVerificationPage() {
           textAlign: "center",
           position: "relative",
           zIndex: 10,
-          boxShadow: `0 0 80px rgba(var(--t-g-rgb), ), 0 0 0 1px rgba(var(--t-g-rgb), )`,
+          boxShadow: `0 0 80px rgba(0,255,136,0.08), 0 0 0 1px rgba(0,255,136,0.06)`,
         }}
       >
         <div
@@ -140,7 +140,7 @@ export default function EmailVerificationPage() {
               style={{
                 width: 64,
                 height: 64,
-                border: `2px solid rgba(var(--t-g2-rgb), )`,
+                border: `2px solid rgba(0,207,255,0.2)`,
                 borderTopColor: T.g2,
                 borderRadius: "50%",
                 animation: "spin 1s linear infinite",
@@ -179,7 +179,7 @@ export default function EmailVerificationPage() {
                 width: 64,
                 height: 64,
                 border: `1px solid ${T.border}`,
-                background: "rgba(var(--t-g-rgb), )",
+                background: "rgba(0,255,136,0.05)",
                 borderRadius: "50%",
                 display: "flex",
                 alignItems: "center",
@@ -294,7 +294,7 @@ export default function EmailVerificationPage() {
                   fontFamily: T.mono,
                   fontSize: "0.8rem",
                   padding: "1rem",
-                  background: "rgba(var(--t-g-rgb), )",
+                  background: "rgba(0,255,136,0.1)",
                   border: `1px solid ${T.border}`,
                 }}
               >
@@ -319,7 +319,7 @@ export default function EmailVerificationPage() {
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.borderColor = T.g2;
-                  e.currentTarget.style.background = "rgba(var(--t-g2-rgb), )";
+                  e.currentTarget.style.background = "rgba(0,207,255,0.07)";
                   e.currentTarget.style.boxShadow = T.glow2;
                 }}
                 onMouseLeave={(e) => {

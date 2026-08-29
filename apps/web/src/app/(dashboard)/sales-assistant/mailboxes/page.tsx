@@ -39,7 +39,7 @@ function getStatusIcon(status: string) {
     case "connected":
     case "healthy":
     case "warmup":
-      return <CheckCircle size={14} className="text-[color:var(--t-g)]" />;
+      return <CheckCircle size={14} className="text-[#00ff88]" />;
     case "paused":
       return <Pause size={14} className="text-yellow-400" />;
     case "error":
@@ -52,7 +52,7 @@ function getStatusIcon(status: string) {
 
 function getStatusColor(status: string) {
   if (status === "connected" || status === "healthy" || status === "warmup")
-    return "text-[color:var(--t-g)]";
+    return "text-[#00ff88]";
   if (status === "error" || status === "disconnected") return "text-red-400";
   if (status === "paused") return "text-yellow-400";
   return "text-gray-400";
@@ -185,10 +185,10 @@ export default function MailboxesPage() {
       <div className="flex justify-between items-center mb-8 flex-wrap gap-4">
         <div>
           <h1 className="text-2xl font-bold tracking-wider font-display mb-1 flex items-center gap-3">
-            <Mail className="text-[color:var(--t-g)]" />
+            <Mail className="text-[#00ff88]" />
             MAILBOXES
           </h1>
-          <p className="text-sm text-[color:var(--t-g)]/60 font-mono">
+          <p className="text-sm text-[#00ff88]/60 font-mono">
             Connect and manage the email accounts used by your Sales Assistant.
           </p>
         </div>
@@ -207,7 +207,7 @@ export default function MailboxesPage() {
               setConnectError(null);
               setShowConnectModal(true);
             }}
-            className="bg-[color:var(--t-g)] text-[color:var(--t-bg)] px-4 py-2 rounded font-bold font-mono text-sm hover:bg-[color:var(--t-g2)] transition-colors flex items-center gap-2 shadow-[0_0_15px_rgba(var(--t-g-rgb), )]"
+            className="bg-[#00ff88] text-[color:var(--t-bg)] px-4 py-2 rounded font-bold font-mono text-sm hover:bg-[#00cfff] transition-colors flex items-center gap-2 shadow-[0_0_15px_rgba(0,255,136,0.4)]"
           >
             <Plus size={16} /> CONNECT MAILBOX
           </button>
@@ -231,8 +231,8 @@ export default function MailboxesPage() {
       {/* KPI cards */}
       <div className="grid grid-cols-4 gap-4 mb-8 font-mono">
         {[
-          { label: "Total Mailboxes", value: stats.total, color: "text-white", border: "border-[color:var(--t-g)]/20" },
-          { label: "Connected", value: stats.connected, color: "text-[color:var(--t-g)]", border: "border-[color:var(--t-g)]/20" },
+          { label: "Total Mailboxes", value: stats.total, color: "text-white", border: "border-[#00ff88]/20" },
+          { label: "Connected", value: stats.connected, color: "text-[#00ff88]", border: "border-[#00ff88]/20" },
           { label: "Attention Required", value: stats.attention, color: "text-red-400", border: "border-red-400/20" },
           { label: "Paused", value: stats.paused, color: "text-yellow-400", border: "border-yellow-400/20" },
         ].map(({ label, value, color, border }) => (
@@ -241,19 +241,19 @@ export default function MailboxesPage() {
             className={`bg-[color:var(--t-panel)] border ${border} p-4 rounded-lg text-center`}
           >
             <div className={`text-3xl font-bold ${color} mb-1`}>{value}</div>
-            <div className="text-xs text-[color:var(--t-g)]/60 uppercase">{label}</div>
+            <div className="text-xs text-[#00ff88]/60 uppercase">{label}</div>
           </div>
         ))}
       </div>
 
       {/* Table container */}
-      <div className="bg-[color:var(--t-panel)] border border-[color:var(--t-g)]/20 rounded-lg overflow-hidden flex flex-col min-h-[500px]">
+      <div className="bg-[color:var(--t-panel)] border border-[#00ff88]/20 rounded-lg overflow-hidden flex flex-col min-h-[500px]">
         {/* Filter bar */}
-        <div className="p-4 border-b border-[color:var(--t-g)]/10 flex flex-wrap gap-3 items-center bg-[color:var(--t-bg2)]">
+        <div className="p-4 border-b border-[#00ff88]/10 flex flex-wrap gap-3 items-center bg-[color:var(--t-bg2)]">
           {/* Search */}
           <div className="relative flex-1 min-w-[200px] max-w-md">
             <Search
-              className="absolute left-3 top-1/2 -translate-y-1/2 text-[color:var(--t-g)]/40"
+              className="absolute left-3 top-1/2 -translate-y-1/2 text-[#00ff88]/40"
               size={16}
             />
             <input
@@ -261,7 +261,7 @@ export default function MailboxesPage() {
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               placeholder="Search mailbox..."
-              className="w-full bg-[color:var(--t-bg)] border border-[color:var(--t-g)]/20 rounded-md py-1.5 pl-9 pr-3 text-sm text-white focus:outline-none focus:border-[color:var(--t-g)]/50 font-mono"
+              className="w-full bg-[color:var(--t-bg)] border border-[#00ff88]/20 rounded-md py-1.5 pl-9 pr-3 text-sm text-white focus:outline-none focus:border-[#00ff88]/50 font-mono"
             />
           </div>
 
@@ -269,7 +269,7 @@ export default function MailboxesPage() {
           <select
             value={providerFilter}
             onChange={(e) => setProviderFilter(e.target.value)}
-            className="bg-[color:var(--t-bg)] border border-[color:var(--t-g)]/20 rounded-md py-1.5 px-3 text-sm text-white focus:outline-none focus:border-[color:var(--t-g)]/50 font-mono"
+            className="bg-[color:var(--t-bg)] border border-[#00ff88]/20 rounded-md py-1.5 px-3 text-sm text-white focus:outline-none focus:border-[#00ff88]/50 font-mono"
           >
             <option value="all">Provider: All</option>
             <option value="google">Google Workspace</option>
@@ -280,7 +280,7 @@ export default function MailboxesPage() {
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
-            className="bg-[color:var(--t-bg)] border border-[color:var(--t-g)]/20 rounded-md py-1.5 px-3 text-sm text-white focus:outline-none focus:border-[color:var(--t-g)]/50 font-mono"
+            className="bg-[color:var(--t-bg)] border border-[#00ff88]/20 rounded-md py-1.5 px-3 text-sm text-white focus:outline-none focus:border-[#00ff88]/50 font-mono"
           >
             <option value="all">Status: All</option>
             <option value="connected">Connected</option>
@@ -292,7 +292,7 @@ export default function MailboxesPage() {
           {hasActiveFilters && (
             <button
               onClick={clearFilters}
-              className="flex items-center gap-1 text-xs text-[color:var(--t-g)]/60 hover:text-[color:var(--t-g)] font-mono transition-colors"
+              className="flex items-center gap-1 text-xs text-[#00ff88]/60 hover:text-[#00ff88] font-mono transition-colors"
             >
               <XCircle size={14} /> Clear
             </button>
@@ -308,7 +308,7 @@ export default function MailboxesPage() {
         <div className="overflow-x-auto flex-1">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="bg-[color:var(--t-bg2)] border-b border-[color:var(--t-g)]/10 font-mono text-xs text-[color:var(--t-g)]/60 uppercase tracking-wider">
+              <tr className="bg-[color:var(--t-bg2)] border-b border-[#00ff88]/10 font-mono text-xs text-[#00ff88]/60 uppercase tracking-wider">
                 <th className="p-4 font-normal">Mailbox</th>
                 <th className="p-4 font-normal">Provider</th>
                 <th className="p-4 font-normal">Health</th>
@@ -322,10 +322,10 @@ export default function MailboxesPage() {
               {loading ? (
                 /* Skeleton rows */
                 [1, 2, 3].map((i) => (
-                  <tr key={i} className="border-b border-[color:var(--t-g)]/5">
+                  <tr key={i} className="border-b border-[#00ff88]/5">
                     {[1, 2, 3, 4, 5, 6, 7].map((j) => (
                       <td key={j} className="p-4">
-                        <div className="h-4 bg-[color:var(--t-g)]/5 rounded animate-pulse" />
+                        <div className="h-4 bg-[#00ff88]/5 rounded animate-pulse" />
                       </td>
                     ))}
                   </tr>
@@ -334,7 +334,7 @@ export default function MailboxesPage() {
                 <tr>
                   <td
                     colSpan={7}
-                    className="p-12 text-center text-[color:var(--t-g)]/40 font-mono"
+                    className="p-12 text-center text-[#00ff88]/40 font-mono"
                   >
                     {hasActiveFilters
                       ? "No mailboxes match the current filters."
@@ -345,12 +345,12 @@ export default function MailboxesPage() {
                 filteredMailboxes.map((mb) => (
                   <tr
                     key={mb.id}
-                    className="border-b border-[color:var(--t-g)]/5 hover:bg-[color:var(--t-g)]/5 transition-colors font-mono text-sm"
+                    className="border-b border-[#00ff88]/5 hover:bg-[#00ff88]/5 transition-colors font-mono text-sm"
                   >
                     <td className="p-4">
                       <Link
                         href={`/sales-assistant/mailboxes/${mb.id}`}
-                        className="font-bold text-white hover:text-[color:var(--t-g)] transition-colors block"
+                        className="font-bold text-white hover:text-[#00ff88] transition-colors block"
                       >
                         {mb.display_name || mb.email.split("@")[0]}
                       </Link>
@@ -375,14 +375,14 @@ export default function MailboxesPage() {
                     <td className="p-4 text-gray-400">
                       {mb.stats?.sequences ?? 0}
                     </td>
-                    <td className="p-4 font-bold text-[color:var(--t-g2)]">
+                    <td className="p-4 font-bold text-[#00cfff]">
                       {mb.stats?.reply_rate ?? "0.0"}%
                     </td>
                     <td className="p-4 text-right">
                       <div className="flex items-center justify-end gap-2">
                         <Link
                           href={`/sales-assistant/mailboxes/${mb.id}`}
-                          className="p-1.5 bg-[color:var(--t-g)]/10 text-[color:var(--t-g)] rounded hover:bg-[color:var(--t-g)]/20 transition-colors text-xs font-bold uppercase px-3"
+                          className="p-1.5 bg-[#00ff88]/10 text-[#00ff88] rounded hover:bg-[#00ff88]/20 transition-colors text-xs font-bold uppercase px-3"
                         >
                           Open
                         </Link>
@@ -402,7 +402,7 @@ export default function MailboxesPage() {
       {/* Connect modal */}
       {showConnectModal && (
         <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4">
-          <div className="bg-[color:var(--t-panel)] border border-[color:var(--t-g)]/30 rounded-lg w-full max-w-lg p-6 font-mono relative">
+          <div className="bg-[color:var(--t-panel)] border border-[#00ff88]/30 rounded-lg w-full max-w-lg p-6 font-mono relative">
             <h2 className="text-xl font-bold text-white mb-2">
               Connect your mailbox
             </h2>
@@ -438,7 +438,7 @@ export default function MailboxesPage() {
                   key={provider.id}
                   onClick={() => handleConnect(provider.id)}
                   disabled={connecting}
-                  className="flex items-center justify-between p-4 border border-gray-700 hover:border-[color:var(--t-g)]/50 rounded-lg bg-[color:var(--t-bg)] transition-colors group disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="flex items-center justify-between p-4 border border-gray-700 hover:border-[#00ff88]/50 rounded-lg bg-[color:var(--t-bg)] transition-colors group disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <div className="flex items-center gap-4">
                     <div
@@ -451,7 +451,7 @@ export default function MailboxesPage() {
                       )}
                     </div>
                     <div className="text-left">
-                      <div className="text-white font-bold group-hover:text-[color:var(--t-g)] transition-colors">
+                      <div className="text-white font-bold group-hover:text-[#00ff88] transition-colors">
                         {provider.label}
                       </div>
                       <div className="text-xs text-gray-500">{provider.sub}</div>
@@ -459,7 +459,7 @@ export default function MailboxesPage() {
                   </div>
                   <LinkIcon
                     size={16}
-                    className="text-gray-500 group-hover:text-[color:var(--t-g)]"
+                    className="text-gray-500 group-hover:text-[#00ff88]"
                   />
                 </button>
               ))}

@@ -48,8 +48,8 @@ const GLOBAL_CSS = `
     content: '';
     position: fixed; inset: 0; z-index: 0; pointer-events: none;
     background-image:
-      linear-gradient(rgba(var(--t-g-rgb), ) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(var(--t-g-rgb), ) 1px, transparent 1px);
+      linear-gradient(rgba(0,255,136,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,255,136,0.04) 1px, transparent 1px);
     background-size: 60px 60px;
     animation: grid-shift 20s linear infinite;
   }
@@ -65,7 +65,7 @@ const GLOBAL_CSS = `
   /* Scrollbar */
   ::-webkit-scrollbar { width: 4px; }
   ::-webkit-scrollbar-track { background: ${T.bg2}; }
-  ::-webkit-scrollbar-thumb { background: rgba(var(--t-g-rgb), ); }
+  ::-webkit-scrollbar-thumb { background: rgba(0,255,136,0.3); }
 
   @keyframes blink { 0%,100% { opacity:1; } 50% { opacity:0; } }
   @keyframes spin-pulse { 0%,100% { transform:scale(1); opacity:1; } 50% { transform:scale(0.5); opacity:0.4; } }
@@ -434,7 +434,7 @@ function Navbar({
           }}
           onMouseEnter={(e) => {
             e.currentTarget.style.borderColor = T.g2;
-            e.currentTarget.style.background = "rgba(var(--t-g2-rgb), )";
+            e.currentTarget.style.background = "rgba(0,207,255,0.07)";
             e.currentTarget.style.boxShadow = T.glow2;
           }}
           onMouseLeave={(e) => {
@@ -556,13 +556,13 @@ function Hero({ onDeploy }: { onDeploy: () => void }) {
               background: T.panel,
           
               overflow: "hidden",
-              boxShadow: `0 0 0 1px rgba(var(--t-g-rgb), ), 0 40px 80px rgba(0,0,0,0.6), ${T.glow}`,
+              boxShadow: `0 0 0 1px rgba(0,255,136,0.06), 0 40px 80px rgba(0,0,0,0.6), ${T.glow}`,
             }}
           >
             <Corners />
             <div
               style={{
-                background: "rgba(var(--t-g-rgb), )",
+                background: "rgba(0,255,136,0.06)",
                 borderBottom: `1px solid ${T.border}`,
                 padding: "0.65rem 1rem",
                 display: "flex",
@@ -882,7 +882,7 @@ function AISalesAssistant() {
               marginBottom: "1rem",
               fontFamily: T.mono,
               fontSize: "0.7rem",
-              color: "rgba(var(--t-g2-rgb), )",
+              color: "rgba(0,207,255,0.45)",
             }}
           >
             OUTBOUND_ENGINE_DEMO.exe
@@ -1271,11 +1271,11 @@ function PriceCard({
         padding: "2rem",
         position: "relative",
         overflow: "hidden",
-        border: `1px solid ${plan.featured ? "rgba(var(--t-g-rgb), )" : T.border}`,
+        border: `1px solid ${plan.featured ? "rgba(0,255,136,0.5)" : T.border}`,
         boxShadow: plan.featured
           ? hov
-            ? "0 0 60px rgba(var(--t-g-rgb), )"
-            : "0 0 40px rgba(var(--t-g-rgb), ), inset 0 0 40px rgba(var(--t-g-rgb), )"
+            ? "0 0 60px rgba(0,255,136,0.2)"
+            : "0 0 40px rgba(0,255,136,0.1), inset 0 0 40px rgba(0,255,136,0.03)"
           : "none",
         transform: hov ? "translateY(-6px)" : "",
         transition: "border-color 0.3s, transform 0.25s, box-shadow 0.25s",
@@ -1306,9 +1306,9 @@ function PriceCard({
             fontSize: "0.6rem",
             letterSpacing: "0.12em",
             textTransform: "uppercase",
-            background: "rgba(var(--t-g-rgb), )",
+            background: "rgba(0,255,136,0.15)",
             color: T.g,
-            border: `1px solid rgba(var(--t-g-rgb), )`,
+            border: `1px solid rgba(0,255,136,0.3)`,
             padding: "0.2rem 0.6rem",
           }}
         >
@@ -1395,7 +1395,7 @@ function PriceCard({
               display: "flex",
               alignItems: "center",
               gap: "0.6rem",
-              borderBottom: `1px solid rgba(var(--t-g-rgb), )`,
+              borderBottom: `1px solid rgba(0,255,136,0.05)`,
             }}
           >
             <span
@@ -1549,7 +1549,7 @@ function CTA({ onDeploy }: { onDeploy: () => void }) {
               transition: "box-shadow 0.2s, transform 0.2s",
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.boxShadow = "0 0 40px rgba(var(--t-g-rgb), )";
+              e.currentTarget.style.boxShadow = "0 0 40px rgba(0,255,136,0.5)";
               e.currentTarget.style.transform = "translateY(-3px)";
             }}
             onMouseLeave={(e) => {

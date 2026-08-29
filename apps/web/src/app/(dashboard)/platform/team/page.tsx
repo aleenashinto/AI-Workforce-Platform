@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import {
   Users,
   UserPlus,
@@ -125,12 +125,35 @@ export default function TeamPage() {
   const { hasRole } = useUserContext();
   const canManageMembers = hasRole("owner", "admin");
 
-  const [members, setMembers] = useState<Member[]>([
-    { name: "Aleena",     email: "aleena@company.com",  roles: ["owner"],                        status: "Active",  lastActive: "Just now" },
-    { name: "John Doe",   email: "john@company.com",    roles: ["admin"],                        status: "Active",  lastActive: "2h ago"   },
-    { name: "Sarah Smith",email: "sarah@company.com",   roles: ["support_agent", "sales_rep"],   status: "Pending", lastActive: "Never"    },
-    { name: "Marcus Lee", email: "marcus@company.com",  roles: ["support_lead"],                 status: "Active",  lastActive: "1h ago"   },
-  ]);
+  const [members, setMembers] = useState<Member[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch('/api/v1/team')
+      .then(res => res.json())
+      .then(data => {
+        if (data && data.members) {
+          const mappedMembers = [
+            ...data.members.map((m: any) => ({
+              name: m.name || m.email,
+              email: m.email,
+              roles: [m.role],
+              status: m.status === 'active' ? 'Active' : 'Pending',
+              lastActive: 'Unknown'
+            })),
+            ...(data.invitations || []).map((i: any) => ({
+              name: i.email,
+              email: i.email,
+              roles: [i.role],
+              status: 'Pending',
+              lastActive: 'Never'
+            }))
+          ];
+          setMembers(mappedMembers);
+        }
+      })
+      .finally(() => setLoading(false));
+  }, []);
 
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
   const [hoveredRow, setHoveredRow]   = useState<number | null>(null);
@@ -224,7 +247,7 @@ export default function TeamPage() {
       {/* ── Header ─────────────────────────────────────────────────────── */}
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "2.5rem" }}>
         <div>
-          <h1 style={{ fontFamily: T.display, fontSize: "2.2rem", fontWeight: 700, color: "var(--t-heading)", marginBottom: "0.5rem", display: "flex", alignItems: "center", gap: "1rem", textShadow: "0 0 20px rgba(var(--t-g-rgb), )" }}>
+          <h1 style={{ fontFamily: T.display, fontSize: "2.2rem", fontWeight: 700, color: "var(--t-heading)", marginBottom: "0.5rem", display: "flex", alignItems: "center", gap: "1rem", textShadow: "0 0 20px rgba(0,255,136,0.2)" }}>
             <Users color={T.g} size={32} /> Team Members
           </h1>
           <p style={{ fontFamily: T.mono, fontSize: "0.9rem", color: T.g, letterSpacing: "0.05em", opacity: 0.8 }}>
@@ -260,7 +283,7 @@ export default function TeamPage() {
             onChange={(e) => setSearchTerm(e.target.value)}
             placeholder="Search by name or email..."
             style={{
-              width: "100%", background: "rgba(var(--t-g-rgb), )", border: `1px solid ${T.border}`,
+              width: "100%", background: "rgba(0,255,136,0.03)", border: `1px solid ${T.border}`,
               padding: "0.8rem 2.8rem 0.8rem 2.8rem", color: T.text, fontFamily: T.mono,
               fontSize: "0.85rem", outline: "none", boxSizing: "border-box",
             }}
@@ -278,7 +301,7 @@ export default function TeamPage() {
         <button
           onClick={() => setShowFilter((v) => !v)}
           style={{
-            background: showFilter ? "rgba(var(--t-g-rgb), )" : "rgba(var(--t-g-rgb), )",
+            background: showFilter ? "rgba(0,255,136,0.12)" : "rgba(0,255,136,0.05)",
             border: `1px solid ${showFilter ? T.g : T.border}`,
             padding: "0.8rem 1.2rem", color: showFilter ? T.g : T.muted,
             fontFamily: T.mono, fontSize: "0.85rem",
@@ -316,7 +339,7 @@ export default function TeamPage() {
                   style={{
                     fontFamily: T.mono, fontSize: "0.7rem", cursor: "pointer",
                     padding: "0.4rem 0.9rem", textTransform: "uppercase",
-                    background: filterStatus === s ? "rgba(var(--t-g-rgb), )" : "rgba(var(--t-g-rgb), )",
+                    background: filterStatus === s ? "rgba(0,255,136,0.15)" : "rgba(0,255,136,0.03)",
                     border: `1px solid ${filterStatus === s ? T.g : T.border}`,
                     color: filterStatus === s ? T.g : T.muted,
                     transition: "all 0.15s",
@@ -342,7 +365,7 @@ export default function TeamPage() {
                     style={{
                       fontFamily: T.mono, fontSize: "0.65rem", cursor: "pointer",
                       padding: "0.4rem 0.9rem", textTransform: "uppercase",
-                      background: active ? (c?.bg ?? "rgba(var(--t-g-rgb), )") : "rgba(var(--t-g-rgb), )",
+                      background: active ? (c?.bg ?? "rgba(0,255,136,0.15)") : "rgba(0,255,136,0.03)",
                       border: `1px solid ${active ? (c?.border ?? T.g) : T.border}`,
                       color: active ? (c?.color ?? T.g) : T.muted,
                       transition: "all 0.15s",
@@ -409,8 +432,8 @@ export default function TeamPage() {
                     onMouseEnter={() => setHoveredRow(i)}
                     onMouseLeave={() => setHoveredRow(null)}
                     style={{
-                      borderBottom: i === filteredMembers.length - 1 ? "none" : `1px solid rgba(var(--t-g-rgb), )`,
-                      background: hoveredRow === i ? "rgba(var(--t-g-rgb), )" : "transparent",
+                      borderBottom: i === filteredMembers.length - 1 ? "none" : `1px solid rgba(0,255,136,0.05)`,
+                      background: hoveredRow === i ? "rgba(0,255,136,0.02)" : "transparent",
                       transition: "background 0.2s",
                     }}
                   >
@@ -492,9 +515,9 @@ export default function TeamPage() {
                         ) : (
                           <button
                             onClick={() => setEditingIndex(realIdx)}
-                            style={{ background: "rgba(var(--t-g-rgb), )", border: `1px solid ${T.border}`, color: T.text, fontFamily: T.mono, fontSize: "0.7rem", padding: "0.5rem 1rem", cursor: "pointer", textTransform: "uppercase", transition: "all 0.2s" }}
-                            onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(var(--t-g-rgb), )"; e.currentTarget.style.borderColor = T.g; }}
-                            onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(var(--t-g-rgb), )"; e.currentTarget.style.borderColor = T.border; }}
+                            style={{ background: "rgba(0,255,136,0.05)", border: `1px solid ${T.border}`, color: T.text, fontFamily: T.mono, fontSize: "0.7rem", padding: "0.5rem 1rem", cursor: "pointer", textTransform: "uppercase", transition: "all 0.2s" }}
+                            onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(0,255,136,0.15)"; e.currentTarget.style.borderColor = T.g; }}
+                            onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(0,255,136,0.05)"; e.currentTarget.style.borderColor = T.border; }}
                           >
                             Edit Access
                           </button>
@@ -549,7 +572,7 @@ export default function TeamPage() {
                     value={inviteName}
                     onChange={(e) => setInviteName(e.target.value)}
                     placeholder="e.g. Jane Smith"
-                    style={{ width: "100%", background: "rgba(var(--t-g-rgb), )", border: `1px solid ${T.border}`, padding: "0.75rem 1rem", color: T.text, fontFamily: T.mono, fontSize: "0.85rem", outline: "none", boxSizing: "border-box" }}
+                    style={{ width: "100%", background: "rgba(0,255,136,0.03)", border: `1px solid ${T.border}`, padding: "0.75rem 1rem", color: T.text, fontFamily: T.mono, fontSize: "0.85rem", outline: "none", boxSizing: "border-box" }}
                     onFocus={(e) => { e.currentTarget.style.borderColor = T.g; }}
                     onBlur={(e)  => { e.currentTarget.style.borderColor = T.border; }}
                   />
@@ -563,7 +586,7 @@ export default function TeamPage() {
                     value={inviteEmail}
                     onChange={(e) => setInviteEmail(e.target.value)}
                     placeholder="jane@company.com"
-                    style={{ width: "100%", background: "rgba(var(--t-g-rgb), )", border: `1px solid ${T.border}`, padding: "0.75rem 1rem", color: T.text, fontFamily: T.mono, fontSize: "0.85rem", outline: "none", boxSizing: "border-box" }}
+                    style={{ width: "100%", background: "rgba(0,255,136,0.03)", border: `1px solid ${T.border}`, padding: "0.75rem 1rem", color: T.text, fontFamily: T.mono, fontSize: "0.85rem", outline: "none", boxSizing: "border-box" }}
                     onFocus={(e) => { e.currentTarget.style.borderColor = T.g; }}
                     onBlur={(e)  => { e.currentTarget.style.borderColor = T.border; }}
                     onKeyDown={(e) => e.key === "Enter" && handleInvite()}

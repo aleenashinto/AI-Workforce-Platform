@@ -26,7 +26,7 @@ const T = {
   border: "var(--t-border)",
   border2: "var(--t-border2)",
   muted: "var(--t-muted)",
-  muted2: "rgba(var(--t-g2-rgb), )",
+  muted2: "rgba(0,207,255,0.45)",
   text: "var(--t-text)",
   glow2: "var(--t-glow2)",
   mono: "var(--t-font-mono)",
@@ -233,11 +233,11 @@ export default function LeadDetailsPage() {
 
           <div
             style={{
-              background: "rgba(var(--t-g-rgb), )",
+              background: "rgba(0,255,136,0.05)",
               border: `1px solid ${T.border}`,
               padding: "1rem 2rem",
               textAlign: "center",
-              boxShadow: "0 0 20px rgba(var(--t-g-rgb), )",
+              boxShadow: "0 0 20px rgba(0,255,136,0.15)",
             }}
           >
             <div
@@ -397,7 +397,7 @@ export default function LeadDetailsPage() {
                     style={{
                       width: "100%",
                       height: 6,
-                      background: "rgba(var(--t-g2-rgb), )",
+                      background: "rgba(0,207,255,0.1)",
                       borderRadius: 3,
                     }}
                   >
@@ -453,7 +453,7 @@ export default function LeadDetailsPage() {
                     fontFamily: T.mono,
                     fontSize: "0.7rem",
                     color: T.g,
-                    background: "rgba(var(--t-g-rgb), )",
+                    background: "rgba(0,255,136,0.1)",
                     padding: "0.2rem 0.5rem",
                     border: `1px solid ${T.border}`,
                     display: "flex",

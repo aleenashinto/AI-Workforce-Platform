@@ -97,9 +97,9 @@ export function PhoneField({
       <div
         style={{
           display: "flex",
-          background: "rgba(var(--t-g-rgb), )",
-          border: `1px solid ${focused ? "rgba(var(--t-g-rgb), )" : T.border}`,
-          boxShadow: focused ? "0 0 0 3px rgba(var(--t-g-rgb), )" : "none",
+          background: "rgba(0,255,136,0.03)",
+          border: `1px solid ${focused ? "rgba(0,255,136,0.5)" : T.border}`,
+          boxShadow: focused ? "0 0 0 3px rgba(0,255,136,0.08)" : "none",
           transition: "border-color 0.2s, box-shadow 0.2s",
           alignItems: "center",
         }}

@@ -73,9 +73,9 @@ const Input = ({ label, value, type = "text", onChange, readOnly }: any) => {
           style={{
             width: "100%",
             background: readOnly
-              ? "rgba(var(--t-g-rgb), )"
-              : "rgba(var(--t-g-rgb), )",
-            border: `1px solid ${readOnly ? "rgba(var(--t-g-rgb), )" : T.border}`,
+              ? "rgba(0,255,136,0.02)"
+              : "rgba(0,255,136,0.03)",
+            border: `1px solid ${readOnly ? "rgba(0,255,136,0.08)" : T.border}`,
             color: readOnly ? T.muted : T.text,
             fontFamily: T.mono,
             fontSize: "0.85rem",
@@ -354,7 +354,7 @@ export default function ProfilePage() {
                 borderRadius: "50%",
                 background: avatarUrl
                   ? `url(${avatarUrl}) center/cover`
-                  : "rgba(var(--t-g-rgb), )",
+                  : "rgba(0,255,136,0.08)",
                 border: `2px solid ${T.g}`,
                 display: "flex",
                 alignItems: "center",

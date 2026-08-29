@@ -23,7 +23,7 @@ const T = {
   border: "var(--t-border)",
   border2: "var(--t-border2)",
   muted: "var(--t-muted)",
-  muted2: "rgba(var(--t-g2-rgb), )",
+  muted2: "rgba(0,207,255,0.45)",
   text: "var(--t-text)",
   glow: "var(--t-glow)",
   mono: "var(--t-font-mono)",
@@ -211,7 +211,7 @@ export default function ConversationsHistory() {
               fontSize: "0.75rem",
               letterSpacing: "0.1em",
               color: T.g,
-              background: "rgba(var(--t-g-rgb), )",
+              background: "rgba(0,255,136,0.1)",
               border: `1px solid ${T.g}`,
               padding: "0.6rem 1.2rem",
               cursor: "pointer",
@@ -311,7 +311,7 @@ export default function ConversationsHistory() {
             <tr
               style={{
                 borderBottom: `1px solid ${T.border}`,
-                background: "rgba(var(--t-g-rgb), )",
+                background: "rgba(0,255,136,0.02)",
               }}
             >
               <th
@@ -425,12 +425,12 @@ export default function ConversationsHistory() {
                 <tr
                   key={d.id}
                   style={{
-                    borderBottom: `1px solid rgba(var(--t-g-rgb), )`,
+                    borderBottom: `1px solid rgba(0,255,136,0.05)`,
                     cursor: "pointer",
                     transition: "background 0.2s",
                   }}
                   onMouseEnter={(e) =>
-                    (e.currentTarget.style.background = "rgba(var(--t-g-rgb), )")
+                    (e.currentTarget.style.background = "rgba(0,255,136,0.05)")
                   }
                   onMouseLeave={(e) =>
                     (e.currentTarget.style.background = "transparent")

@@ -268,7 +268,7 @@ export default function IntegrationsPage() {
                       style={{
                         width: 40,
                         height: 40,
-                        background: "rgba(var(--t-g-rgb), )",
+                        background: "rgba(0,255,136,0.05)",
                         border: `1px solid ${T.border}`,
                         display: "flex",
                         alignItems: "center",
@@ -305,7 +305,7 @@ export default function IntegrationsPage() {
                         width: "100%",
                         background:
                           item.status === "Connected"
-                            ? "rgba(var(--t-g-rgb), )"
+                            ? "rgba(0,255,136,0.1)"
                             : "transparent",
                         border: `1px solid ${item.status === "Connected" ? T.g : T.border}`,
                         color: item.status === "Connected" ? T.g : T.text,

@@ -52,9 +52,9 @@ export default function DraftsWorkspacePage() {
   const getIconForType = (type: string) => {
     switch (type) {
       case "email":
-        return <Mail size={16} className="text-[color:var(--t-g)]" />;
+        return <Mail size={16} className="text-[#00ff88]" />;
       case "research_report":
-        return <FileSearch size={16} className="text-[color:var(--t-g2)]" />;
+        return <FileSearch size={16} className="text-[#00cfff]" />;
       case "support_response":
         return <Bot size={16} className="text-orange-400" />;
       default:
@@ -96,15 +96,15 @@ export default function DraftsWorkspacePage() {
       <div className="flex justify-between items-center mb-8">
         <div>
           <h1 className="text-2xl font-bold tracking-wider font-display mb-1 flex items-center gap-3">
-            <FileText className="text-[color:var(--t-g)]" />
+            <FileText className="text-[#00ff88]" />
             DRAFTS WORKSPACE
           </h1>
-          <p className="text-sm text-[color:var(--t-g)]/60 font-mono">
+          <p className="text-sm text-[#00ff88]/60 font-mono">
             AI ASSISTS. HUMAN APPROVES. SYSTEM EXECUTES.
           </p>
         </div>
         <button
-          className="bg-[color:var(--t-g)]/10 text-[color:var(--t-g)] border border-[color:var(--t-g)]/30 px-4 py-2 rounded font-mono text-sm hover:bg-[color:var(--t-g)]/20 transition-colors"
+          className="bg-[#00ff88]/10 text-[#00ff88] border border-[#00ff88]/30 px-4 py-2 rounded font-mono text-sm hover:bg-[#00ff88]/20 transition-colors"
           onClick={() => {
             // Mock generate new draft
             apiClient
@@ -124,13 +124,13 @@ export default function DraftsWorkspacePage() {
       </div>
 
       <div className="grid grid-cols-4 gap-4 mb-8 font-mono">
-        <div className="bg-[color:var(--t-panel)] border border-[color:var(--t-g)]/20 p-4 rounded-lg flex items-center gap-4">
-          <div className="p-3 bg-[color:var(--t-g)]/10 rounded text-[color:var(--t-g)]">
+        <div className="bg-[color:var(--t-panel)] border border-[#00ff88]/20 p-4 rounded-lg flex items-center gap-4">
+          <div className="p-3 bg-[#00ff88]/10 rounded text-[#00ff88]">
             <FileText size={24} />
           </div>
           <div>
             <div className="text-2xl font-bold">{drafts.length}</div>
-            <div className="text-xs text-[color:var(--t-g)]/60 uppercase">
+            <div className="text-xs text-[#00ff88]/60 uppercase">
               Total Drafts
             </div>
           </div>
@@ -178,23 +178,23 @@ export default function DraftsWorkspacePage() {
         </div>
       </div>
 
-      <div className="bg-[color:var(--t-panel)] border border-[color:var(--t-g)]/20 rounded-lg overflow-hidden flex flex-col">
-        <div className="p-4 border-b border-[color:var(--t-g)]/10 flex gap-4 items-center bg-[color:var(--t-bg2)]">
+      <div className="bg-[color:var(--t-panel)] border border-[#00ff88]/20 rounded-lg overflow-hidden flex flex-col">
+        <div className="p-4 border-b border-[#00ff88]/10 flex gap-4 items-center bg-[color:var(--t-bg2)]">
           <div className="relative flex-1 max-w-md">
             <Search
-              className="absolute left-3 top-1/2 -translate-y-1/2 text-[color:var(--t-g)]/40"
+              className="absolute left-3 top-1/2 -translate-y-1/2 text-[#00ff88]/40"
               size={16}
             />
             <input
               type="text"
               placeholder="Search drafts..."
-              className="w-full bg-[color:var(--t-bg)] border border-[color:var(--t-g)]/20 rounded-md py-1.5 pl-9 pr-3 text-sm text-white focus:outline-none focus:border-[color:var(--t-g)]/50 font-mono"
+              className="w-full bg-[color:var(--t-bg)] border border-[#00ff88]/20 rounded-md py-1.5 pl-9 pr-3 text-sm text-white focus:outline-none focus:border-[#00ff88]/50 font-mono"
             />
           </div>
           <select
             value={filterType}
             onChange={(e) => setFilterType(e.target.value)}
-            className="bg-[color:var(--t-bg)] border border-[color:var(--t-g)]/20 rounded-md py-1.5 px-3 text-sm text-white focus:outline-none focus:border-[color:var(--t-g)]/50 font-mono"
+            className="bg-[color:var(--t-bg)] border border-[#00ff88]/20 rounded-md py-1.5 px-3 text-sm text-white focus:outline-none focus:border-[#00ff88]/50 font-mono"
           >
             <option value="all">All Types</option>
             <option value="email">Email</option>
@@ -206,7 +206,7 @@ export default function DraftsWorkspacePage() {
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="bg-[color:var(--t-bg2)] border-b border-[color:var(--t-g)]/10 font-mono text-xs text-[color:var(--t-g)]/60 uppercase tracking-wider">
+              <tr className="bg-[color:var(--t-bg2)] border-b border-[#00ff88]/10 font-mono text-xs text-[#00ff88]/60 uppercase tracking-wider">
                 <th className="p-4 w-10"></th>
                 <th className="p-4 font-normal">Type</th>
                 <th className="p-4 font-normal">Title / Subject</th>
@@ -221,7 +221,7 @@ export default function DraftsWorkspacePage() {
                 <tr>
                   <td
                     colSpan={7}
-                    className="p-8 text-center text-[color:var(--t-g)]/50 font-mono"
+                    className="p-8 text-center text-[#00ff88]/50 font-mono"
                   >
                     Loading drafts...
                   </td>
@@ -230,7 +230,7 @@ export default function DraftsWorkspacePage() {
                 <tr>
                   <td
                     colSpan={7}
-                    className="p-8 text-center text-[color:var(--t-g)]/50 font-mono"
+                    className="p-8 text-center text-[#00ff88]/50 font-mono"
                   >
                     No drafts found.
                   </td>
@@ -239,10 +239,10 @@ export default function DraftsWorkspacePage() {
                 drafts.map((draft) => (
                   <tr
                     key={draft.id}
-                    className="border-b border-[color:var(--t-g)]/5 hover:bg-[color:var(--t-g)]/5 transition-colors font-mono text-sm"
+                    className="border-b border-[#00ff88]/5 hover:bg-[#00ff88]/5 transition-colors font-mono text-sm"
                   >
                     <td className="p-4 text-center">
-                      <div className="w-8 h-8 rounded bg-[color:var(--t-bg)] border border-[color:var(--t-g)]/20 flex items-center justify-center">
+                      <div className="w-8 h-8 rounded bg-[color:var(--t-bg)] border border-[#00ff88]/20 flex items-center justify-center">
                         {getIconForType(draft.type)}
                       </div>
                     </td>
@@ -252,13 +252,13 @@ export default function DraftsWorkspacePage() {
                     <td className="p-4">
                       <Link
                         href={`/drafts/${draft.id}`}
-                        className="text-white hover:text-[color:var(--t-g)] font-semibold truncate block max-w-[300px]"
+                        className="text-white hover:text-[#00ff88] font-semibold truncate block max-w-[300px]"
                       >
                         {draft.title || draft.subject || "Untitled Draft"}
                       </Link>
                     </td>
                     <td className="p-4">{getStatusBadge(draft.status)}</td>
-                    <td className="p-4 text-[color:var(--t-g)]/70 capitalize">
+                    <td className="p-4 text-[#00ff88]/70 capitalize">
                       {draft.source_type || "-"}
                     </td>
                     <td className="p-4 text-gray-500 text-xs">
@@ -268,7 +268,7 @@ export default function DraftsWorkspacePage() {
                       <div className="flex items-center justify-end gap-2">
                         <Link
                           href={`/drafts/${draft.id}`}
-                          className="p-1.5 hover:bg-[color:var(--t-g)]/10 rounded text-gray-400 hover:text-[color:var(--t-g)] transition-colors"
+                          className="p-1.5 hover:bg-[#00ff88]/10 rounded text-gray-400 hover:text-[#00ff88] transition-colors"
                         >
                           <FileText size={16} />
                         </Link>

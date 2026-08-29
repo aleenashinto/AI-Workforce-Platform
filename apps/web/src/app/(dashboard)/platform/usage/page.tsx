@@ -96,7 +96,7 @@ const UsageBar = ({ label, used, total, icon: Icon, unit }: any) => {
         style={{
           width: "100%",
           height: 8,
-          background: "rgba(var(--t-g-rgb), )",
+          background: "rgba(0,255,136,0.1)",
           borderRadius: 4,
           overflow: "hidden",
           marginBottom: "1rem",

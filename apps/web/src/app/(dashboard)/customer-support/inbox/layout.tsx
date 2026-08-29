@@ -223,7 +223,7 @@ export default function InboxLayout({
                     background: "transparent",
                   }}
                   onMouseEnter={(e) =>
-                    (e.currentTarget.style.background = "rgba(var(--t-g-rgb), )")
+                    (e.currentTarget.style.background = "rgba(0,255,136,0.05)")
                   }
                   onMouseLeave={(e) =>
                     (e.currentTarget.style.background = "transparent")
@@ -278,7 +278,7 @@ export default function InboxLayout({
                         fontFamily: T.mono,
                         fontSize: "0.6rem",
                         padding: "0.2rem 0.4rem",
-                        background: "rgba(var(--t-g-rgb), )",
+                        background: "rgba(0,255,136,0.1)",
                         border: `1px solid ${T.border}`,
                         color: T.g,
                       }}
@@ -291,8 +291,8 @@ export default function InboxLayout({
                           fontFamily: T.mono,
                           fontSize: "0.6rem",
                           padding: "0.2rem 0.4rem",
-                          background: "rgba(var(--t-g2-rgb), )",
-                          border: `1px solid rgba(var(--t-g2-rgb), )`,
+                          background: "rgba(0,207,255,0.1)",
+                          border: `1px solid rgba(0,207,255,0.3)`,
                           color: T.g2,
                         }}
                       >

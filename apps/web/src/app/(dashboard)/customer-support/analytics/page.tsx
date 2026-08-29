@@ -20,7 +20,7 @@ const T = {
   border: "var(--t-border)",
   border2: "var(--t-border2)",
   muted: "var(--t-muted)",
-  muted2: "rgba(var(--t-g2-rgb), )",
+  muted2: "rgba(0,207,255,0.45)",
   text: "var(--t-text)",
   glow: "var(--t-glow)",
   mono: "var(--t-font-mono)",
@@ -215,7 +215,7 @@ export default function SupportAnalyticsPage() {
                   style={{
                     width: "100%",
                     height: `${h}%`,
-                    background: `linear-gradient(0deg, rgba(var(--t-g-rgb), ), ${T.g})`,
+                    background: `linear-gradient(0deg, rgba(0,255,136,0.1), ${T.g})`,
                     borderTop: `2px solid ${T.g}`,
                   }}
                 />
@@ -273,7 +273,7 @@ export default function SupportAnalyticsPage() {
                   style={{
                     width: "100%",
                     height: `${h}%`,
-                    background: `linear-gradient(0deg, rgba(var(--t-g-rgb), ), ${T.g})`,
+                    background: `linear-gradient(0deg, rgba(0,255,136,0.1), ${T.g})`,
                     borderTop: `2px solid ${T.g}`,
                   }}
                 />
@@ -447,7 +447,7 @@ export default function SupportAnalyticsPage() {
         </div>
         <table style={{ width: "100%", borderCollapse: "collapse" }}>
           <thead>
-            <tr style={{ borderBottom: `1px solid rgba(var(--t-g-rgb), )` }}>
+            <tr style={{ borderBottom: `1px solid rgba(0,255,136,0.1)` }}>
               <th
                 style={{
                   textAlign: "left",

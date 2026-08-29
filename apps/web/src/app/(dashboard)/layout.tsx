@@ -25,7 +25,7 @@ export default function DashboardLayout({
           inset: 0,
           zIndex: 0,
           pointerEvents: "none",
-          backgroundImage: `linear-gradient(rgba(var(--t-g-rgb), ) 1px, transparent 1px), linear-gradient(90deg, rgba(var(--t-g-rgb), ) 1px, transparent 1px)`,
+          backgroundImage: `linear-gradient(rgba(0,255,136,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(0,255,136,0.04) 1px, transparent 1px)`,
           backgroundSize: "60px 60px",
         }}
       />

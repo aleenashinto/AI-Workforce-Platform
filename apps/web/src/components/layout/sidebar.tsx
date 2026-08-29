@@ -222,7 +222,7 @@ export function Sidebar({
             style={{
               width: 32,
               height: 32,
-              background: "rgba(var(--t-g-rgb), )",
+              background: "rgba(0,255,136,0.1)",
               border: `1px solid ${T.g}`,
               borderRadius: 4,
               display: "flex",
@@ -344,7 +344,7 @@ export function Sidebar({
       <div
         style={{
           borderTop: `1px solid ${T.border}`,
-          background: "rgba(var(--t-g-rgb), )",
+          background: "rgba(0,255,136,0.02)",
         }}
       >
         <div style={{ padding: "1.5rem" }}>
@@ -354,7 +354,7 @@ export function Sidebar({
               alignItems: "center",
               gap: "0.75rem",
               padding: "0.75rem",
-              background: "rgba(var(--t-g-rgb), )",
+              background: "rgba(0,255,136,0.05)",
               border: `1px solid ${T.border}`,
               borderRadius: "4px",
             }}
@@ -477,7 +477,7 @@ function NavItem({
         fontSize: "0.78rem",
         letterSpacing: "0.05em",
         background: active
-          ? "rgba(var(--t-g-rgb), )"
+          ? "rgba(0,255,136,0.1)"
           : hov
             ? "var(--t-white-03)"
             : "transparent",

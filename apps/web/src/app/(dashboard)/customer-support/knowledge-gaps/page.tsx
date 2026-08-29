@@ -344,7 +344,7 @@ export default function KnowledgeGapsPage() {
             <tr
               style={{
                 borderBottom: `1px solid ${T.border}`,
-                background: "rgba(var(--t-g-rgb), )",
+                background: "rgba(0,255,136,0.05)",
               }}
             >
               <th
@@ -474,7 +474,7 @@ export default function KnowledgeGapsPage() {
                       borderBottom:
                         i === filteredGaps.length - 1
                           ? "none"
-                          : `1px solid rgba(var(--t-g-rgb), )`,
+                          : `1px solid rgba(0,255,136,0.1)`,
                       transition: "background 0.2s",
                     }}
                   >
@@ -534,7 +534,7 @@ export default function KnowledgeGapsPage() {
                           background:
                             gap.status === "open"
                               ? "rgba(255,170,0,0.1)"
-                              : "rgba(var(--t-g-rgb), )",
+                              : "rgba(0,255,136,0.1)",
                           padding: "0.2rem 0.6rem",
                           border:
                             gap.status === "open"

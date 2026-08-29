@@ -62,7 +62,7 @@ export default function ResearchWorkspace() {
 
   if (!project) {
     return (
-      <div className="p-8 text-[color:var(--t-g)] font-bold animate-pulse">
+      <div className="p-8 text-[#00ff88] font-bold animate-pulse">
         Initializing Workspace...
       </div>
     );
@@ -84,7 +84,7 @@ export default function ResearchWorkspace() {
   return (
     <div className="flex flex-col h-full bg-[color:var(--t-bg)] text-[color:var(--t-text)] font-mono">
       {/* HEADER */}
-      <div className="bg-[color:var(--t-bg2)] border-b border-[color:var(--t-g)]/20 p-4 md:px-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+      <div className="bg-[color:var(--t-bg2)] border-b border-[#00ff88]/20 p-4 md:px-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
           <button
             onClick={() => router.push("/research")}
@@ -109,9 +109,9 @@ export default function ResearchWorkspace() {
             className={
               "flex items-center gap-2 px-3 py-1.5 rounded font-bold uppercase tracking-widest text-xs " +
               (project.status === "completed"
-                ? "bg-[color:var(--t-g)]/10 text-[color:var(--t-g)]"
+                ? "bg-[#00ff88]/10 text-[#00ff88]"
                 : isGenerating
-                  ? "bg-[color:var(--t-g2)]/10 text-[color:var(--t-g2)]"
+                  ? "bg-[#00cfff]/10 text-[#00cfff]"
                   : "bg-red-500/10 text-red-500")
             }
           >
@@ -127,18 +127,18 @@ export default function ResearchWorkspace() {
 
       {isGenerating ? (
         <div className="flex-1 flex flex-col items-center justify-center p-8">
-          <div className="w-16 h-16 border-4 border-[color:var(--t-g)]/20 border-t-[color:var(--t-g)] rounded-full animate-spin mb-6"></div>
+          <div className="w-16 h-16 border-4 border-[#00ff88]/20 border-t-[#00ff88] rounded-full animate-spin mb-6"></div>
           <h2 className="text-xl font-bold text-white mb-2 uppercase tracking-widest">
             Researching...
           </h2>
           <div className="space-y-3 w-64 mt-4">
-            <div className="flex items-center text-[color:var(--t-g)]">
+            <div className="flex items-center text-[#00ff88]">
               <CheckCircle className="w-4 h-4 mr-2" /> Understanding question
             </div>
-            <div className="flex items-center text-[color:var(--t-g)]">
+            <div className="flex items-center text-[#00ff88]">
               <CheckCircle className="w-4 h-4 mr-2" /> Creating research plan
             </div>
-            <div className="flex items-center text-[color:var(--t-g2)] font-bold">
+            <div className="flex items-center text-[#00cfff] font-bold">
               <Clock className="w-4 h-4 mr-2 animate-pulse" /> Searching &
               Analyzing sources
             </div>
@@ -150,12 +150,12 @@ export default function ResearchWorkspace() {
       ) : (
         <div className="flex flex-1 overflow-hidden">
           {/* SIDEBAR TABS */}
-          <div className="w-64 bg-[color:var(--t-panel)] border-r border-[color:var(--t-g)]/10 p-4 flex flex-col gap-2 overflow-y-auto">
+          <div className="w-64 bg-[color:var(--t-panel)] border-r border-[#00ff88]/10 p-4 flex flex-col gap-2 overflow-y-auto">
             {tabs.map((tab) => (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`flex items-center gap-3 px-4 py-3 rounded-lg font-bold uppercase tracking-wider text-xs transition-colors ${activeTab === tab.id ? "bg-[color:var(--t-g)]/10 text-[color:var(--t-g)] border border-[color:var(--t-g)]/30" : "text-gray-400 hover:text-white hover:bg-white/5 border border-transparent"}`}
+                className={`flex items-center gap-3 px-4 py-3 rounded-lg font-bold uppercase tracking-wider text-xs transition-colors ${activeTab === tab.id ? "bg-[#00ff88]/10 text-[#00ff88] border border-[#00ff88]/30" : "text-gray-400 hover:text-white hover:bg-white/5 border border-transparent"}`}
               >
                 <tab.icon className="w-4 h-4" /> {tab.label}
               </button>
@@ -166,7 +166,7 @@ export default function ResearchWorkspace() {
           <div className="flex-1 overflow-y-auto p-6 md:p-8 bg-black/20">
             {activeTab === "overview" && (
               <div className="max-w-4xl space-y-8">
-                <div className="bg-[color:var(--t-panel)] border border-[color:var(--t-g)]/20 rounded-xl p-6">
+                <div className="bg-[color:var(--t-panel)] border border-[#00ff88]/20 rounded-xl p-6">
                   <h3 className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-2">
                     Research Question
                   </h3>
@@ -177,7 +177,7 @@ export default function ResearchWorkspace() {
 
                 <div className="grid grid-cols-3 gap-4">
                   <div className="bg-[color:var(--t-bg2)] border border-white/10 rounded-xl p-6 flex flex-col items-center justify-center text-center">
-                    <span className="text-4xl font-bold text-[color:var(--t-g2)] mb-2">
+                    <span className="text-4xl font-bold text-[#00cfff] mb-2">
                       {payload.sources?.length || 0}
                     </span>
                     <span className="text-xs uppercase text-gray-500 font-bold">
@@ -185,7 +185,7 @@ export default function ResearchWorkspace() {
                     </span>
                   </div>
                   <div className="bg-[color:var(--t-bg2)] border border-white/10 rounded-xl p-6 flex flex-col items-center justify-center text-center">
-                    <span className="text-4xl font-bold text-[color:var(--t-g)] mb-2">
+                    <span className="text-4xl font-bold text-[#00ff88] mb-2">
                       {payload.findings?.length || 0}
                     </span>
                     <span className="text-xs uppercase text-gray-500 font-bold">
@@ -203,8 +203,8 @@ export default function ResearchWorkspace() {
                 </div>
 
                 {payload.report?.executiveSummary && (
-                  <div className="bg-[color:var(--t-panel)] border border-[color:var(--t-g)]/20 rounded-xl p-6">
-                    <h3 className="text-lg font-bold text-[color:var(--t-g)] uppercase tracking-widest mb-4">
+                  <div className="bg-[color:var(--t-panel)] border border-[#00ff88]/20 rounded-xl p-6">
+                    <h3 className="text-lg font-bold text-[#00ff88] uppercase tracking-widest mb-4">
                       Executive Summary
                     </h3>
                     <div className="text-gray-300 font-sans leading-relaxed whitespace-pre-wrap">
@@ -220,8 +220,8 @@ export default function ResearchWorkspace() {
                 <h2 className="text-xl font-bold text-white uppercase tracking-widest">
                   Research Plan
                 </h2>
-                <div className="bg-[color:var(--t-panel)] border border-[color:var(--t-g)]/20 rounded-xl p-6">
-                  <h3 className="text-[color:var(--t-g)] font-bold uppercase tracking-widest mb-4">
+                <div className="bg-[color:var(--t-panel)] border border-[#00ff88]/20 rounded-xl p-6">
+                  <h3 className="text-[#00ff88] font-bold uppercase tracking-widest mb-4">
                     Generated Search Queries
                   </h3>
                   <ul className="space-y-3">
@@ -246,7 +246,7 @@ export default function ResearchWorkspace() {
                 {payload.sources?.map((s: any, i: number) => (
                   <div
                     key={i}
-                    className="bg-[color:var(--t-panel)] border border-[color:var(--t-g)]/20 rounded-xl p-5 flex flex-col md:flex-row gap-4 justify-between items-start"
+                    className="bg-[color:var(--t-panel)] border border-[#00ff88]/20 rounded-xl p-5 flex flex-col md:flex-row gap-4 justify-between items-start"
                   >
                     <div className="flex-1">
                       <div className="flex items-center gap-2 mb-2">
@@ -266,14 +266,14 @@ export default function ResearchWorkspace() {
                         href={s.url}
                         target="_blank"
                         rel="noreferrer"
-                        className="text-[color:var(--t-g2)] hover:underline text-sm flex items-center gap-1 font-sans"
+                        className="text-[#00cfff] hover:underline text-sm flex items-center gap-1 font-sans"
                       >
                         {s.url} <ExternalLink className="w-3 h-3" />
                       </a>
                     </div>
                     <div className="flex flex-col items-end gap-2">
                       <div className="text-right">
-                        <div className="text-3xl font-bold text-[color:var(--t-g)]">
+                        <div className="text-3xl font-bold text-[#00ff88]">
                           {s.relevanceScore}%
                         </div>
                         <div className="text-[10px] uppercase text-gray-500 font-bold">
@@ -294,17 +294,17 @@ export default function ResearchWorkspace() {
                 {payload.findings?.map((f: any, i: number) => (
                   <div
                     key={i}
-                    className="bg-[color:var(--t-panel)] border border-[color:var(--t-g)]/20 rounded-xl p-6"
+                    className="bg-[color:var(--t-panel)] border border-[#00ff88]/20 rounded-xl p-6"
                   >
                     <div className="flex justify-between items-start mb-3">
-                      <h3 className="text-lg font-bold text-[color:var(--t-g)]">
+                      <h3 className="text-lg font-bold text-[#00ff88]">
                         {f.title}
                       </h3>
                       <span
                         className={
                           "px-2 py-1 rounded text-xs font-bold uppercase " +
                           (f.confidence === "High"
-                            ? "bg-[color:var(--t-g)]/20 text-[color:var(--t-g)]"
+                            ? "bg-[#00ff88]/20 text-[#00ff88]"
                             : "bg-yellow-500/20 text-yellow-500")
                         }
                       >
@@ -376,8 +376,8 @@ export default function ResearchWorkspace() {
                           </p>
                         </div>
                       </div>
-                      <div className="bg-[color:var(--t-panel)] p-4 rounded border border-[color:var(--t-g2)]/20">
-                        <span className="text-xs uppercase text-[color:var(--t-g2)] font-bold block mb-1">
+                      <div className="bg-[color:var(--t-panel)] p-4 rounded border border-[#00cfff]/20">
+                        <span className="text-xs uppercase text-[#00cfff] font-bold block mb-1">
                           Possible Explanation
                         </span>
                         <p className="text-gray-300 font-sans text-sm">

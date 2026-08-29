@@ -18,10 +18,8 @@
   --foreground: #0f172a;
   
   /* LIGHT MODE (Clean SaaS) */
-  --t-g: #2563eb;
-  --t-g-rgb: 37, 99, 235; 
-  --t-g2: #351c75;
-  --t-g2-rgb: 53, 28, 117; 
+  --t-g: #2563eb; 
+  --t-g2: #3b82f6; 
   --t-warn: #eab308;
   --t-red: #ef4444;
   --t-bg: #f1f5f9; 
@@ -68,9 +66,7 @@
   
   /* DARK MODE */
   --t-g: #00ff88;
-  --t-g-rgb: 0, 255, 136;
   --t-g2: #00cfff;
-  --t-g2-rgb: 0, 207, 255;
   --t-warn: #ffaa00;
   --t-red: #ff3355;
   --t-bg: #040810;

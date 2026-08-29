@@ -80,7 +80,7 @@ export default function CompletePage() {
         border: `1px solid ${T.border}`,
         padding: "3rem",
         position: "relative",
-        boxShadow: `0 0 60px rgba(var(--t-g-rgb), ), 0 0 0 1px rgba(var(--t-g-rgb), )`,
+        boxShadow: `0 0 60px rgba(0,255,136,0.1), 0 0 0 1px rgba(0,255,136,0.06)`,
         textAlign: "center",
       }}
     >
@@ -104,7 +104,7 @@ export default function CompletePage() {
           width: 64,
           height: 64,
           borderRadius: "50%",
-          background: "rgba(var(--t-g-rgb), )",
+          background: "rgba(0,255,136,0.1)",
           border: `1px solid ${T.border}`,
           marginBottom: "2rem",
           boxShadow: T.glow,
@@ -159,7 +159,7 @@ export default function CompletePage() {
 
       <div
         style={{
-          background: "rgba(var(--t-g-rgb), )",
+          background: "rgba(0,255,136,0.02)",
           border: `1px solid ${T.border}`,
           padding: "1.5rem",
           display: "flex",
@@ -189,7 +189,7 @@ export default function CompletePage() {
                 width: 20,
                 height: 20,
                 borderRadius: "50%",
-                background: "rgba(var(--t-g-rgb), )",
+                background: "rgba(0,255,136,0.1)",
                 border: `1px solid ${T.border}`,
               }}
             >

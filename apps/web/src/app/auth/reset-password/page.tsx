@@ -89,9 +89,9 @@ function ModalField({
         onBlur={() => setFocused(false)}
         style={{
           width: "100%",
-          background: "rgba(var(--t-g-rgb), )",
-          border: `1px solid ${focused ? "rgba(var(--t-g-rgb), )" : T.border}`,
-          boxShadow: focused ? "0 0 0 3px rgba(var(--t-g-rgb), )" : "none",
+          background: "rgba(0,255,136,0.03)",
+          border: `1px solid ${focused ? "rgba(0,255,136,0.5)" : T.border}`,
+          boxShadow: focused ? "0 0 0 3px rgba(0,255,136,0.08)" : "none",
           color: T.text,
           fontFamily: T.mono,
           fontSize: "0.85rem",
@@ -149,7 +149,7 @@ export default function ResetPasswordPage() {
           inset: 0,
           zIndex: 0,
           pointerEvents: "none",
-          backgroundImage: `linear-gradient(rgba(var(--t-g-rgb), ) 1px, transparent 1px), linear-gradient(90deg, rgba(var(--t-g-rgb), ) 1px, transparent 1px)`,
+          backgroundImage: `linear-gradient(rgba(0,255,136,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(0,255,136,0.04) 1px, transparent 1px)`,
           backgroundSize: "60px 60px",
         }}
       />
@@ -164,7 +164,7 @@ export default function ResetPasswordPage() {
           padding: "2.5rem 3rem",
           position: "relative",
           zIndex: 10,
-          boxShadow: `0 0 80px rgba(var(--t-g-rgb), ), 0 0 0 1px rgba(var(--t-g-rgb), )`,
+          boxShadow: `0 0 80px rgba(0,255,136,0.08), 0 0 0 1px rgba(0,255,136,0.06)`,
         }}
       >
         <div
@@ -219,7 +219,7 @@ export default function ResetPasswordPage() {
               background: "rgba(0,0,0,0.2)",
               padding: "1rem",
               borderRadius: "4px",
-              border: `1px solid rgba(var(--t-g-rgb), )`,
+              border: `1px solid rgba(0,255,136,0.1)`,
             }}
           >
             <div
@@ -308,7 +308,7 @@ export default function ResetPasswordPage() {
               letterSpacing: "0.1em",
               textTransform: "uppercase",
               color: !allReqsMet || !match ? "var(--t-white-20)" : T.bg,
-              background: !allReqsMet || !match ? "rgba(var(--t-g-rgb), )" : T.g,
+              background: !allReqsMet || !match ? "rgba(0,255,136,0.1)" : T.g,
               border: "none",
               padding: "1rem",
               cursor: !allReqsMet || !match ? "not-allowed" : "pointer",
