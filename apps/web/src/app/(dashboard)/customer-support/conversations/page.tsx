@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   Filter,
   MessageSquare,
@@ -8,6 +8,7 @@ import {
   Search,
   CheckCircle,
   ShieldAlert,
+  ChevronDown,
 } from "lucide-react";
 import { fetchApi } from "@/lib/api";
 
@@ -67,6 +68,21 @@ export default function ConversationsHistory() {
   const [filterStatus, setFilterStatus] = useState<string>("all");
   const [showFilters, setShowFilters] = useState(false);
   const [loading, setLoading] = useState(true);
+
+  const filterRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        filterRef.current &&
+        !filterRef.current.contains(event.target as Node)
+      ) {
+        setShowFilters(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   useEffect(() => {
     fetchApi("/agent/conversations")
@@ -205,69 +221,122 @@ export default function ConversationsHistory() {
               }}
             />
           </div>
-          <button
-            style={{
-              fontFamily: T.mono,
-              fontSize: "0.75rem",
-              letterSpacing: "0.1em",
-              color: T.g,
-              background: "rgba(0,255,136,0.1)",
-              border: `1px solid ${T.g}`,
-              padding: "0.6rem 1.2rem",
-              cursor: "pointer",
-              display: "flex",
-              alignItems: "center",
-              gap: "0.5rem",
-              position: "relative",
-            }}
-            onClick={() => setShowFilters(!showFilters)}
-          >
+          {/* Filter button & popover */}
+          <div style={{ position: "relative" }} ref={filterRef}>
+            <button
+              style={{
+                fontFamily: T.mono,
+                fontSize: "0.75rem",
+                letterSpacing: "0.1em",
+                color: showFilters ? T.g : T.text,
+                background: showFilters ? "rgba(var(--t-g-rgb), 0.15)" : "var(--t-bg2)",
+                border: `1px solid ${showFilters ? T.g : T.border}`,
+                padding: "0.6rem 1.2rem",
+                cursor: "pointer",
+                display: "flex",
+                alignItems: "center",
+                gap: "0.5rem",
+                borderRadius: "var(--t-radius)",
+                transition: "all 0.2s",
+              }}
+              onClick={() => setShowFilters((prev) => !prev)}
+            >
+              <Filter size={14} color={showFilters ? T.g : "currentColor"} />
+              <span>FILTER</span>
+              {filterStatus !== "all" && (
+                <span
+                  style={{
+                    background: T.g,
+                    color: T.bg,
+                    borderRadius: "50%",
+                    width: 14,
+                    height: 14,
+                    fontSize: "0.55rem",
+                    fontWeight: "bold",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  1
+                </span>
+              )}
+              <ChevronDown
+                size={12}
+                style={{
+                  transform: showFilters ? "rotate(180deg)" : "none",
+                  transition: "transform 0.2s",
+                }}
+              />
+            </button>
+
             {showFilters && (
               <div
                 style={{
                   position: "absolute",
-                  top: "100%",
+                  top: "calc(100% + 0.5rem)",
                   right: 0,
-                  marginTop: "0.5rem",
                   background: T.panel,
-          
+                  borderRadius: "var(--t-radius)",
+                  border: `1px solid ${T.border}`,
+                  padding: "0.8rem",
+                  boxShadow: "0 10px 30px rgba(0,0,0,0.5)",
+                  zIndex: 100,
+                  minWidth: 200,
                   display: "flex",
                   flexDirection: "column",
                   gap: "0.5rem",
-                  minWidth: 150,
                 }}
               >
                 <div
                   style={{
-                    color: T.text,
-                    fontSize: "0.75rem",
-                    textAlign: "left",
-                  }}
-                >
-                  Status Filter:
-                </div>
-                <select
-                  value={filterStatus}
-                  onChange={(e) => setFilterStatus(e.target.value)}
-                  onClick={(e) => e.stopPropagation()}
-                  style={{
-                    background: T.bg,
-                    color: T.text,
-                    border: `1px solid ${T.border}`,
-                    padding: "0.4rem",
-                    outline: "none",
                     fontFamily: T.mono,
+                    fontSize: "0.65rem",
+                    color: T.muted,
+                    textTransform: "uppercase",
+                    letterSpacing: "0.1em",
+                    marginBottom: "0.2rem",
                   }}
                 >
-                  <option value="all">All</option>
-                  <option value="active">Active / Open</option>
-                  <option value="resolved">Resolved</option>
-                  <option value="escalated">Escalated</option>
-                </select>
+                  Status Filter
+                </div>
+                <div style={{ display: "flex", flexDirection: "column", gap: "0.3rem" }}>
+                  {[
+                    { label: "All Statuses", value: "all" },
+                    { label: "Active / Open", value: "active" },
+                    { label: "Resolved", value: "resolved" },
+                    { label: "Escalated", value: "escalated" },
+                  ].map((opt) => (
+                    <button
+                      key={opt.value}
+                      onClick={() => {
+                        setFilterStatus(opt.value);
+                        setShowFilters(false);
+                      }}
+                      style={{
+                        fontFamily: T.mono,
+                        fontSize: "0.75rem",
+                        padding: "0.45rem 0.75rem",
+                        textAlign: "left",
+                        cursor: "pointer",
+                        background: filterStatus === opt.value ? "rgba(var(--t-g-rgb), 0.15)" : "transparent",
+                        border: `1px solid ${filterStatus === opt.value ? T.g : "transparent"}`,
+                        color: filterStatus === opt.value ? T.g : T.text,
+                        borderRadius: "4px",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                        transition: "all 0.15s",
+                      }}
+                    >
+                      <span>{opt.label}</span>
+                      {filterStatus === opt.value && <CheckCircle size={12} color={T.g} />}
+                    </button>
+                  ))}
+                </div>
               </div>
             )}
-            <Filter size={14} /> FILTER
-          </button>
+          </div>
           <button
             style={{
               fontFamily: T.mono,
