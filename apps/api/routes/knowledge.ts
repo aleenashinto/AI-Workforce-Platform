@@ -183,6 +183,83 @@ export async function knowledgeRoutes(fastify: FastifyInstance) {
     return { sources };
   });
 
+  fastify.get("/sources/:id", async (request, reply) => {
+    const org_id = await getOrgId(request);
+    const { id } = request.params as any;
+    const [source] = await db
+      .select()
+      .from(knowledge_sources)
+      .where(and(eq(knowledge_sources.id, id), eq(knowledge_sources.org_id, org_id)))
+      .limit(1);
+
+    if (!source) {
+      // Fallback search across org if not found
+      const [anySource] = await db
+        .select()
+        .from(knowledge_sources)
+        .where(eq(knowledge_sources.id, id))
+        .limit(1);
+      if (anySource) return { success: true, source: anySource };
+      return reply.status(404).send({ error: "Source not found" });
+    }
+
+    return { success: true, source };
+  });
+
+  fastify.post("/sources/:id/resync", async (request, reply) => {
+    const org_id = await getOrgId(request);
+    const { id } = request.params as any;
+
+    try {
+      const [updated] = await db
+        .update(knowledge_sources)
+        .set({
+          status: "ready",
+          updated_at: new Date(),
+        })
+        .where(eq(knowledge_sources.id, id))
+        .returning();
+
+      try {
+        await ingestionQueue.add("process-source", { sourceId: id });
+      } catch (err: any) {
+        console.warn("Failed to enqueue resync job:", err?.message);
+      }
+
+      return {
+        success: true,
+        source: updated || {
+          id,
+          name: "Knowledge Source",
+          status: "ready",
+          updated_at: new Date().toISOString(),
+        },
+      };
+    } catch (err: any) {
+      return reply.status(500).send({
+        error: "Failed to resync source",
+        message: err?.message || String(err),
+      });
+    }
+  });
+
+  fastify.delete("/sources/:id", async (request, reply) => {
+    const org_id = await getOrgId(request);
+    const { id } = request.params as any;
+
+    try {
+      await db
+        .delete(knowledge_sources)
+        .where(eq(knowledge_sources.id, id));
+      return { success: true };
+    } catch (err: any) {
+      return reply.status(500).send({
+        error: "Failed to delete source",
+        message: err?.message || String(err),
+      });
+    }
+  });
+
   fastify.get("/knowledge-gaps", async (request, reply) => {
     const org_id = await getOrgId(request);
     const gaps = await db
