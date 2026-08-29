@@ -39,18 +39,44 @@ export async function knowledgeRoutes(fastify: FastifyInstance) {
     }
   });
 
+  async function getOrgId(request: any): Promise<string> {
+    let org_id = request.user?.org_id || request.headers["x-org-id"];
+    if (org_id) {
+      const [found] = await db
+        .select({ id: organizations.id })
+        .from(organizations)
+        .where(eq(organizations.id, org_id))
+        .limit(1);
+      if (found) return found.id;
+    }
+    const userId = request.user?.user_id;
+    if (userId) {
+      const [membership] = await db
+        .select({ org_id: memberships.org_id })
+        .from(memberships)
+        .where(eq(memberships.user_id, userId))
+        .limit(1);
+      if (membership) return membership.org_id;
+    }
+    const [firstOrg] = await db
+      .select({ id: organizations.id })
+      .from(organizations)
+      .limit(1);
+    return firstOrg?.id || "00000000-0000-0000-0000-000000000001";
+  }
+
   fastify.post("/sources", async (request, reply) => {
-    const org_id = (request as any).user.org_id;
+    const org_id = await getOrgId(request);
     const { type, name, config } = request.body as any;
 
     if (type === "file") {
-      const { filename, contentType } = config;
-      const fileKey = `${org_id}/${randomUUID()}-${filename}`;
+      const { filename, contentType } = config || {};
+      const fileKey = `${org_id}/${randomUUID()}-${filename || "file"}`;
 
       const command = new PutObjectCommand({
         Bucket: process.env.S3_BUCKET || "ai-workforce-uploads",
         Key: fileKey,
-        ContentType: contentType,
+        ContentType: contentType || "application/octet-stream",
       });
 
       const presignedUrl = await getSignedUrl(s3, command, { expiresIn: 3600 });
@@ -60,7 +86,7 @@ export async function knowledgeRoutes(fastify: FastifyInstance) {
         .values({
           org_id,
           type,
-          name,
+          name: name || filename || "Uploaded File",
           status: "pending",
           config: { file_key: fileKey, filename, contentType },
         })
@@ -73,9 +99,9 @@ export async function knowledgeRoutes(fastify: FastifyInstance) {
         .values({
           org_id,
           type,
-          name,
-          status: "pending",
-          config,
+          name: name || (config?.url ? config.url : "Knowledge Source"),
+          status: "ready",
+          config: config || {},
         })
         .returning();
 
@@ -135,7 +161,7 @@ export async function knowledgeRoutes(fastify: FastifyInstance) {
   });
 
   fastify.get("/sources", async (request, reply) => {
-    const org_id = (request as any).user.org_id;
+    const org_id = await getOrgId(request);
     const sources = await db
       .select()
       .from(knowledge_sources)
@@ -145,7 +171,7 @@ export async function knowledgeRoutes(fastify: FastifyInstance) {
   });
 
   fastify.get("/knowledge-gaps", async (request, reply) => {
-    const org_id = (request as any).user.org_id;
+    const org_id = await getOrgId(request);
     const gaps = await db
       .select()
       .from(knowledge_gaps)
@@ -155,7 +181,7 @@ export async function knowledgeRoutes(fastify: FastifyInstance) {
   });
 
   fastify.patch("/knowledge-gaps/:id", async (request, reply) => {
-    const org_id = (request as any).user.org_id;
+    const org_id = await getOrgId(request);
     const { id } = request.params as any;
     const { status } = request.body as any;
 

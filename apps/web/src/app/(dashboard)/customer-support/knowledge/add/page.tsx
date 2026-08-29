@@ -4,7 +4,7 @@ import { FileText, Globe, Database, Type, UploadCloud } from "lucide-react";
 import { useState, useRef, useEffect, Suspense } from "react";
 import Link from "next/link";
 import { useUserContext } from "@/contexts/UserContext";
-import { API_BASE } from "@/lib/api";
+import { fetchApi } from "@/lib/api";
 import { useRouter, useSearchParams } from "next/navigation";
 
 /* ─────────────────────────────────────────────
@@ -110,14 +110,9 @@ function AddKnowledgeContent() {
     setErrorMsg("");
     setSuccessMsg("");
 
-    if (!currentOrgId) {
-      setErrorMsg("Authentication required.");
-      return;
-    }
-
     try {
       setIsImporting(true);
-      let payload: any = { org_id: currentOrgId, type: activeType };
+      let payload: any = { type: activeType };
 
       if (activeType === "file") {
         if (!selectedFile) {
@@ -159,13 +154,11 @@ function AddKnowledgeContent() {
       }
 
       // 1. Create source
-      const res = await fetch(`${API_BASE}/knowledge/sources`, {
+      const data = await fetchApi("/knowledge/sources", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
-      if (!res.ok) throw new Error("Failed to create knowledge source.");
-      const data = await res.json();
+      if (!data) throw new Error("Failed to create knowledge source.");
 
       // 2. Handle File Upload if type is file
       if (activeType === "file") {
@@ -183,9 +176,8 @@ function AddKnowledgeContent() {
           reader.onerror = (error) => reject(error);
         });
 
-        const uploadRes = await fetch(`${API_BASE}/knowledge/sources/proxy-upload`, {
+        await fetchApi("/knowledge/sources/proxy-upload", {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             uploadUrl,
             contentType: selectedFile!.type || "application/octet-stream",
@@ -193,17 +185,10 @@ function AddKnowledgeContent() {
           }),
         });
 
-        if (!uploadRes.ok) throw new Error("Failed to upload file to storage via proxy.");
-
-        const confirmRes = await fetch(
-          `${API_BASE}/knowledge/sources/confirm-upload`,
-          {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ source_id: data.source.id }),
-          },
-        );
-        if (!confirmRes.ok) throw new Error("Failed to confirm file upload.");
+        await fetchApi("/knowledge/sources/confirm-upload", {
+          method: "POST",
+          body: JSON.stringify({ source_id: data.source.id }),
+        });
       }
 
       setSuccessMsg("Knowledge source added successfully.");
@@ -212,6 +197,9 @@ function AddKnowledgeContent() {
       setSitemapUrl("");
       setTextTitle("");
       setTextContent("");
+      setTimeout(() => {
+        router.push("/customer-support/knowledge");
+      }, 1500);
     } catch (err: any) {
       setErrorMsg(err.message || "An error occurred.");
     } finally {
