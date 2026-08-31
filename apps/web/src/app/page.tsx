@@ -317,10 +317,10 @@ const ClipBtn = ({
 ───────────────────────────────────────────── */
 function Navbar({
   onLogin,
-  
+  onSignup,
 }: {
   onLogin: () => void;
-  
+  onSignup: () => void;
 }) {
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
@@ -445,6 +445,32 @@ function Navbar({
         >
           Login
           </button>
+
+          <button
+          onClick={onSignup}
+          style={{
+            fontFamily: T.mono,
+            fontSize: "0.75rem",
+            letterSpacing: "0.1em",
+            textTransform: "uppercase",
+            color: T.bg,
+            background: T.g,
+            border: `1px solid ${T.g}`,
+            padding: "0.45rem 1.1rem",
+            cursor: "pointer",
+            transition: "background 0.2s, box-shadow 0.2s, transform 0.15s",
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.boxShadow = T.glow;
+            e.currentTarget.style.transform = "translateY(-1px)";
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.boxShadow = "";
+            e.currentTarget.style.transform = "";
+          }}
+        >
+          Sign Up
+          </button>
         </div>
 
       </div>
@@ -456,7 +482,7 @@ function Navbar({
    SECTIONS
 ───────────────────────────────────────────── */
 
-function Hero({ onDeploy }: { onDeploy: () => void }) {
+function Hero({ onDeploy, onLogin, onSignup }: { onDeploy: () => void; onLogin: () => void; onSignup: () => void }) {
   return (
     <section
       id="hero"
@@ -545,6 +571,12 @@ function Hero({ onDeploy }: { onDeploy: () => void }) {
               }
             >
               ◈ How It Works
+            </ClipBtn>
+            <ClipBtn onClick={onLogin}>
+              Log In
+            </ClipBtn>
+            <ClipBtn onClick={onSignup}>
+              Sign Up
             </ClipBtn>
           </div>
         </div>
@@ -1595,11 +1627,11 @@ export default function Home() {
 
       <Navbar
         onLogin={() => router.push("/login")}
-        
+        onSignup={() => router.push("/signup")}
       />
 
       <main>
-        <Hero onDeploy={handleDeploy} />
+        <Hero onDeploy={handleDeploy} onLogin={() => router.push("/login")} onSignup={() => router.push("/signup")} />
         <AISupportAgent />
         <AISalesAssistant />
         <HowItWorks />
