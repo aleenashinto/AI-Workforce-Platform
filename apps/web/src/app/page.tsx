@@ -366,8 +366,8 @@ function Navbar({
         </a>
 
         <div
+          className="hidden lg:flex"
           style={{
-            display: "flex",
             alignItems: "center",
             gap: 2,
             marginLeft: "auto",
@@ -402,7 +402,7 @@ function Navbar({
           ))}
         </div>
 
-        <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+        <div className="flex items-center gap-2 lg:gap-4 ml-auto lg:ml-0">
 
             
             <button
@@ -476,14 +476,11 @@ function Hero({ onDeploy, onLogin, onSignup }: { onDeploy: () => void; onLogin: 
       style={{ position: "relative", zIndex: 2, padding: "6rem 0 4rem" }}
     >
       <div
+        className="grid grid-cols-1 lg:grid-cols-2 items-center gap-8 lg:gap-16"
         style={{
           maxWidth: 1200,
           margin: "0 auto",
           padding: "0 1.5rem",
-          display: "grid",
-          gridTemplateColumns: "1fr 1fr",
-          alignItems: "center",
-          gap: "4rem",
         }}
       >
         <div>
@@ -618,11 +615,7 @@ function Hero({ onDeploy, onLogin, onSignup }: { onDeploy: () => void; onLogin: 
             </div>
 
             <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "1fr 1fr",
-                height: "300px",
-              }}
+              className="grid grid-cols-1 sm:grid-cols-2 min-h-[300px]"
             >
               <div
                 style={{
@@ -736,14 +729,11 @@ function AISupportAgent() {
       }}
     >
       <div
+        className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center"
         style={{
           maxWidth: 1200,
           margin: "0 auto",
           padding: "0 1.5rem",
-          display: "grid",
-          gridTemplateColumns: "1fr 1fr",
-          gap: "4rem",
-          alignItems: "center",
         }}
       >
         <div className="reveal">
@@ -874,14 +864,11 @@ function AISalesAssistant() {
       style={{ padding: "5rem 0", position: "relative", zIndex: 2 }}
     >
       <div
+        className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center"
         style={{
           maxWidth: 1200,
           margin: "0 auto",
           padding: "0 1.5rem",
-          display: "grid",
-          gridTemplateColumns: "1fr 1fr",
-          gap: "4rem",
-          alignItems: "center",
         }}
       >
         <div
@@ -1096,13 +1083,7 @@ function Features() {
         </div>
 
         <div
-          className="reveal"
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(3, 1fr)",
-            gap: "2rem",
-            marginTop: "4rem",
-          }}
+          className="reveal grid grid-cols-1 md:grid-cols-3 gap-8 mt-16"
         >
           <div
             style={{
@@ -1246,12 +1227,7 @@ function Pricing({ onDeploy }: { onDeploy: () => void }) {
           sub="No credit card required for the first 100 messages and 25 leads."
         />
         <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(3,1fr)",
-            gap: "1.5rem",
-            marginTop: "3rem",
-          }}
+          className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12"
         >
           {PLANS.map((p) => (
             <PriceCard key={p.name} plan={p} onClick={onDeploy} />
