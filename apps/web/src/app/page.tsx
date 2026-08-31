@@ -1,8 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useTheme } from "next-themes";
-import { Sun, Moon } from "lucide-react";
+
 
 /* ─────────────────────────────────────────────
    DESIGN TOKENS
@@ -322,9 +321,7 @@ function Navbar({
   onLogin: () => void;
   onSignup: () => void;
 }) {
-  const { theme, setTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
+
   const links = [
     "support-agent",
     "sales-assistant",
@@ -406,17 +403,7 @@ function Navbar({
         </div>
 
         <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-            {mounted && (
-              <div
-                onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-                style={{ cursor: "pointer", transition: "color 0.2s", color: T.muted }}
-                onMouseEnter={(e) => (e.currentTarget.style.color = T.g)}
-                onMouseLeave={(e) => (e.currentTarget.style.color = T.muted)}
-                title="Toggle Theme"
-              >
-                {theme === "dark" ? <Sun size={20} /> : <Moon size={20} />}
-              </div>
-            )}
+
             
             <button
           onClick={onLogin}
