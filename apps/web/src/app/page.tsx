@@ -348,6 +348,8 @@ function Navbar({
           padding: "0 1.5rem",
           display: "flex",
           alignItems: "center",
+          justifyContent: "space-between",
+          flexWrap: "wrap",
           gap: "0.8rem",
         }}
       >
