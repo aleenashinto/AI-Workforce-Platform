@@ -326,15 +326,9 @@ export default function SupportOverviewPage() {
       )}
 
       {!loading && data && (
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 300px), 1fr))",
-            gap: "1.5rem",
-          }}
-        >
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
           {/* KPI Cards */}
-          <div style={{ gridColumn: "span 12" }}>
+          <div className="lg:col-span-12">
             <div
               style={{
                 display: "grid",
@@ -393,8 +387,8 @@ export default function SupportOverviewPage() {
 
           {/* Main Content Area - Charts & Tables */}
           <div
+            className="lg:col-span-8"
             style={{
-              gridColumn: "span 8",
               display: "flex",
               flexDirection: "column",
               gap: "1.5rem",
@@ -649,8 +643,8 @@ export default function SupportOverviewPage() {
 
           {/* Side Content Area */}
           <div
+            className="lg:col-span-4"
             style={{
-              gridColumn: "span 4",
               display: "flex",
               flexDirection: "column",
               gap: "1.5rem",

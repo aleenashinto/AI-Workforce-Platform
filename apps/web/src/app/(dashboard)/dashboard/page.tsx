@@ -207,15 +207,9 @@ export default function DashboardPage() {
         </p>
       </div>
 
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 300px), 1fr))",
-          gap: "1.5rem",
-        }}
-      >
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Support Metrics */}
-        <div style={{ gridColumn: "span 12" }}>
+        <div className="lg:col-span-12">
           <div
             style={{
               fontFamily: T.mono,
@@ -266,7 +260,7 @@ export default function DashboardPage() {
         </div>
 
         {/* Sales Metrics */}
-        <div style={{ gridColumn: "span 12", marginTop: "1rem" }}>
+        <div className="lg:col-span-12 mt-4">
           <div
             style={{
               fontFamily: T.mono,
@@ -329,9 +323,8 @@ export default function DashboardPage() {
 
         {/* Main Content Area */}
         <div
+          className="lg:col-span-8 mt-4"
           style={{
-            gridColumn: "span 8",
-            marginTop: "1rem",
             display: "flex",
             flexDirection: "column",
             gap: "1.5rem",
@@ -443,9 +436,8 @@ export default function DashboardPage() {
 
         {/* Side Content Area */}
         <div
+          className="lg:col-span-4 mt-4"
           style={{
-            gridColumn: "span 4",
-            marginTop: "1rem",
             display: "flex",
             flexDirection: "column",
             gap: "1.5rem",
