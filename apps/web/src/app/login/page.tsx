@@ -468,6 +468,25 @@ export default function LoginPage() {
           </button>
         </form>
 
+        <div style={{ textAlign: "center", marginTop: "1rem" }}>
+          <span style={{ fontFamily: T.body, fontSize: "0.85rem", color: T.muted }}>
+            Don't have an account?{" "}
+          </span>
+          <Link
+            href="/signup"
+            style={{
+              fontFamily: T.mono,
+              fontSize: "0.85rem",
+              color: T.g,
+              textDecoration: "none",
+            }}
+            onMouseEnter={(e) => (e.currentTarget.style.textShadow = T.glow)}
+            onMouseLeave={(e) => (e.currentTarget.style.textShadow = "")}
+          >
+            Sign up
+          </Link>
+        </div>
+
 
       </div>
     </div>
