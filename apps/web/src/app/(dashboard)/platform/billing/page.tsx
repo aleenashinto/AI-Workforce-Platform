@@ -225,7 +225,7 @@ export default function BillingPage() {
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "repeat(4, 1fr)",
+          gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 300px), 1fr))",
           gap: "1.5rem",
           marginBottom: "3rem",
         }}

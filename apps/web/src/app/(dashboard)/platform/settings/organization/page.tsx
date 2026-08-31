@@ -195,7 +195,7 @@ export default function OrganizationSettingsPage() {
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "1fr 1fr",
+            gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 300px), 1fr))",
             gap: "1rem",
           }}
         >

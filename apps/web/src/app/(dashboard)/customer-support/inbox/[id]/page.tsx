@@ -315,7 +315,7 @@ export default function ConversationView() {
             <div
               style={{
                 display: "grid",
-                gridTemplateColumns: "1fr 1fr",
+                gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 300px), 1fr))",
                 gap: "0.5rem",
               }}
             >
@@ -1007,8 +1007,8 @@ export default function ConversationView() {
                 border: `1px solid rgba(255,170,0,0.5)`,
                 padding: "2rem",
                 borderRadius: "8px",
-                width: "400px",
-                maxWidth: "90%",
+                width: "100%", 
+                maxWidth: "400px",
               }}
             >
               <h3
@@ -1088,8 +1088,8 @@ export default function ConversationView() {
                 border: `1px solid ${T.border}`,
                 padding: "2rem",
                 borderRadius: "8px",
-                width: "400px",
-                maxWidth: "90%",
+                width: "100%", 
+                maxWidth: "400px",
               }}
             >
               <h3

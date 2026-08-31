@@ -410,7 +410,7 @@ export default function AnalyticsPage() {
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
+          gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 300px), 1fr))",
           gap: "1.5rem",
           marginBottom: "2rem",
         }}
@@ -466,7 +466,7 @@ export default function AnalyticsPage() {
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "1fr 1.6fr",
+          gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 300px), 1fr))",
           gap: "2rem",
           marginBottom: "2rem",
         }}

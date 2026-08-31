@@ -242,7 +242,7 @@ function AddKnowledgeContent() {
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "repeat(4, 1fr)",
+          gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 300px), 1fr))",
           gap: "1rem",
           marginBottom: "2.5rem",
         }}
@@ -413,7 +413,7 @@ function AddKnowledgeContent() {
               <div
                 style={{
                   display: "grid",
-                  gridTemplateColumns: "1fr 1fr",
+                  gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 300px), 1fr))",
                   gap: "1.5rem",
                 }}
               >

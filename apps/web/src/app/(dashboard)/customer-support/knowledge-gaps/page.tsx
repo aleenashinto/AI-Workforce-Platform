@@ -201,7 +201,7 @@ export default function KnowledgeGapsPage() {
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
+          gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 300px), 1fr))",
           gap: "1.5rem",
         }}
       >
@@ -716,7 +716,7 @@ export default function KnowledgeGapsPage() {
             <div
               style={{
                 display: "grid",
-                gridTemplateColumns: "1fr 2fr",
+                gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 300px), 1fr))",
                 gap: "3rem",
                 marginBottom: "2rem",
               }}

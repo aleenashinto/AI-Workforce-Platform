@@ -306,7 +306,7 @@ export default function SupportOverviewPage() {
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(12, 1fr)",
+            gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 300px), 1fr))",
             gap: "1.5rem",
           }}
         >
@@ -329,7 +329,7 @@ export default function SupportOverviewPage() {
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(12, 1fr)",
+            gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 300px), 1fr))",
             gap: "1.5rem",
           }}
         >
@@ -338,7 +338,7 @@ export default function SupportOverviewPage() {
             <div
               style={{
                 display: "grid",
-                gridTemplateColumns: "repeat(6, 1fr)",
+                gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 300px), 1fr))",
                 gap: "1rem",
               }}
             >
