@@ -3,10 +3,11 @@ import { db } from "@ai-workforce/db";
 import {
   users,
   memberships,
+  membership_roles,
   organization_invitations,
   organizations,
 } from "@ai-workforce/db/schema";
-import { eq, and } from "drizzle-orm";
+import { eq, and, sql } from "drizzle-orm";
 import { v4 as uuidv4 } from "uuid";
 import nodemailer from "nodemailer";
 
@@ -19,44 +20,50 @@ type JwtUser = {
 export default async function teamRoutes(fastify: FastifyInstance) {
   // GET /v1/team
   fastify.get("/", async (req: FastifyRequest, reply) => {
-    const user = req.user as JwtUser;
-    if (!user || !user.org_id) {
-      return reply.status(401).send({ error: "Unauthorized" });
+    try {
+      const user = req.user as JwtUser;
+      if (!user || !user.org_id) {
+        return reply.status(401).send({ error: "Unauthorized" });
+      }
+
+      // Get active members
+      const activeMembers = await db
+        .select({
+          id: users.id,
+          name: users.name,
+          email: users.email,
+          role: membership_roles.role,
+          status: sql<string>`'active'`,
+        })
+        .from(memberships)
+        .innerJoin(users, eq(memberships.user_id, users.id))
+        .leftJoin(membership_roles, eq(memberships.id, membership_roles.membership_id))
+        .where(eq(memberships.org_id, user.org_id));
+
+      // Get pending invitations
+      const pendingInvites = await db
+        .select({
+          id: organization_invitations.id,
+          email: organization_invitations.email,
+          role: organization_invitations.role,
+          status: organization_invitations.status,
+        })
+        .from(organization_invitations)
+        .where(
+          and(
+            eq(organization_invitations.org_id, user.org_id),
+            eq(organization_invitations.status, "pending")
+          )
+        );
+
+      return {
+        members: activeMembers,
+        invitations: pendingInvites,
+      };
+    } catch (err: any) {
+      console.error("TEAM ROUTE ERROR:", err);
+      return reply.status(500).send({ error: "Internal Server Error", detail: err.message });
     }
-
-    // Get active members
-    const activeMembers = await db
-      .select({
-        id: users.id,
-        name: users.name,
-        email: users.email,
-        role: memberships.role,
-        status: memberships.status,
-      })
-      .from(memberships)
-      .innerJoin(users, eq(memberships.user_id, users.id))
-      .where(eq(memberships.org_id, user.org_id));
-
-    // Get pending invitations
-    const pendingInvites = await db
-      .select({
-        id: organization_invitations.id,
-        email: organization_invitations.email,
-        role: organization_invitations.role,
-        status: organization_invitations.status,
-      })
-      .from(organization_invitations)
-      .where(
-        and(
-          eq(organization_invitations.org_id, user.org_id),
-          eq(organization_invitations.status, "pending")
-        )
-      );
-
-    return {
-      members: activeMembers,
-      invitations: pendingInvites,
-    };
   });
 
   // POST /v1/team/invite
